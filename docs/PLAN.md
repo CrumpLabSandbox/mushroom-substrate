@@ -2,9 +2,10 @@
 
 Written 2026-11-09 from [notes.md](../notes.md) and Matt's answers to four scoping questions.
 
-**Status of the science in this plan:** the biology, model names and numbers below come from
-general knowledge, not from the research phase, which has not started. Phase 1 checks all of it
-against sources. Treat every figure here as a starting estimate.
+**Status of the science in this plan:** revised 2026-11-09 after the first research pass
+([docs/research/README.md](research/README.md)). Sections 4, 5, 6 and 11 reflect it. That pass
+was cut short by a search limit and has not been independently verified, so figures here are
+still starting estimates unless the research reports tag them as sourced and read.
 
 ## 1. What we are building
 
@@ -57,43 +58,55 @@ explicit number for how much faster than real time it is running. Nothing is "pe
 
 ## 4. Making it computationally tractable
 
-The real thing is far out of reach: a gram of soil can hold hundreds of metres of hyphae, each a
-few micrometres wide. Four ideas keep it tractable, and research will add or replace some.
+The real thing is far out of reach: a gram of forest soil holds somewhere between tens of metres and
+kilometres of hyphae (the research reports disagree), each a few micrometres wide. The first version of this section was too optimistic; the
+models research ([research/03-models.md](research/03-models.md)) corrected it. The rules now:
 
-1. **Store a graph, not a volume.** The network is nodes (tips, branch points, fusion points) and
-   edges (straight runs of hypha with a length, width and age). Only tips do work each step. An
-   old, quiet part of the network costs almost nothing.
-2. **Coarse fields for the surroundings.** Nutrients, water, temperature and inhibitors live on a
-   grid much coarser than a hypha. Tips read from and write to the grid.
-3. **Spatial hashing for fusion.** Finding which hyphae a tip is about to touch uses a grid of
-   buckets, so cost grows with the number of tips, not the square of the network.
-4. **Three scales, one at a time.** Hyphal scale (micrometres, minutes), colony scale
-   (centimetres, days), stand scale (metres, seasons). Small tiers pick one. Large tiers show
-   individual hyphae near the camera and bundle the rest into cords with summary values.
+1. **Cap the tips.** Tip numbers grow exponentially if left alone. Every engine has branching
+   that slows as local density rises, and tips that die or go dormant.
+2. **Two graphs.** *Segments* hold geometry. *Links* are unbranched runs between junctions and
+   hold width, flow and electrical state. Flow is solved on links only, which are far fewer.
+   Where the network is a tree, flow is one pass from the tips inward with no solver; loops are
+   handled by a warm-started iterative solve with a fixed number of iterations.
+3. **The old network is not free.** Transport, recycling, signaling and drawing all run on it,
+   so each has its own budget and update rate.
+4. **Two clocks.** Substrate diffusion on a 100 µm grid needs steps of about 7 seconds, while a
+   tip takes about 20 minutes to cross a cell. Fields step often and cheaply; tips step rarely.
+5. **Coarse fields for the surroundings.** Nutrients, water, temperature and the "crowding"
+   signal tips steer by live on a grid. Tips read the grid, which keeps steering linear in cost.
+6. **Fusion.** A grid of buckets finds nearby hyphae. Steps are never longer than a cell. In 3D,
+   lines never exactly meet, so fusion uses a capture radius, and a meeting becomes a fusion only
+   with a species-set probability.
+7. **Scale by representation, not by camera.** Small scenes are explicit hyphae. Large scenes
+   are density fields plus an explicit graph of cords. Fine hyphae near the camera in a large
+   scene are generated for display from the seed and never feed back into the model, so what you
+   look at cannot change the result.
+8. **Repeatability.** Worker results are applied at a fixed step lag, never "when they arrive".
+   No GPU arithmetic in the model. No reliance on `Math.sin` or `Math.cos` matching across
+   browsers (use tables or polynomials in the core).
 
-Slow global solves (flow through the whole network, the electrical model) run at a lower rate
-than tip growth, in a Web Worker from the 400K tier up.
+**Size targets, estimates to be measured:**
 
-**Size targets, to be measured not assumed:**
-
-| Tier | Network size at interactive speed | Species parameters |
+| Tier | Size at interactive speed | Species parameters |
 |---|---|---|
-| 4K | about 1,000 edges | about 8 numbers |
-| 40K | about 10,000 | about 40 |
-| 400K | about 100,000 | about 150 |
-| 4M | about 1,000,000 | whole record plus reference data |
+| 4K | up to about 20,000 tips on a 512 x 512 bitmap | about 8 numbers |
+| 40K | 20,000 to 50,000 segments, 2,000 to 5,000 links | about 40 |
+| 400K | 100,000 to 300,000 segments, up to 20,000 live tips | about 150 |
+| 4M | fields plus a cord graph over a plot; display hyphae on top | whole record plus reference data |
 
 ## 5. What each tier models
 
 Each tier is built from the one below and keeps everything it did.
 
 **4K, 2D. The one trick: a network that grows like a fungus.**
-Tips extend, branch at a species-set rate and angle, steer away from their own crowding, and fuse
-when they meet another hypha. One nutrient field that tips deplete. Output signals: tip count,
-total length, branch and fusion events.
+No stored graph: tips move over a bitmap. They extend, branch at a species-set rate and angle
+(more where there is more nutrient, less where it is crowded), steer away from occupied pixels,
+and fuse when the pixel ahead is already occupied. One nutrient field that tips deplete. Output
+signals: tip count, total length, branch and fusion events.
 
 **40K, 2D. A colony in a patchy world.**
-- A real graph with widths: used links thicken into cords, unused ones are recycled.
+- A real graph (segments and links) with widths: links that carry flow thicken into cords,
+  unused ones are recycled.
 - Nutrient uptake, diffusion in the substrate, and movement of resources inside the network
   toward growing fronts.
 - Patchy substrate: wood blocks, litter, bare soil. Moisture and temperature response curves per
@@ -107,8 +120,9 @@ total length, branch and fusion events.
 - Soil layers, buried wood, tree roots. Hand-written WebGL.
 - Flow: pressure-driven movement of water and nutrients through the graph, solved as a network
   flow problem.
-- Electrical activity: an excitable-medium model on the graph, tuned per species to published
-  spike rates where they exist.
+- Electrical activity as switchable modes (integrate-and-fire, an excitable-medium model, or a
+  "voltage" derived from flow), tuned per species to published spike rates where they exist, and
+  labelled as modelling disputed measurements.
 - Mycorrhizal exchange with roots; saprotrophs decaying wood (and the wood changing as it goes).
 - Two or more individuals meeting: fusion if compatible, combat zones if not.
 - 3D fruiting bodies from a parametric shape per species (cap profile, stem, gills or pores,
@@ -116,9 +130,10 @@ total length, branch and fusion events.
 - A weather and season driver. Save and load a network as JSON. Worker thread.
 
 **4M, 3D. The closest emulation.**
-- Multi-scale: hyphae near the camera, bundled cords beyond, over a plot with several trees and
-  logs.
-- Fruiting bodies that grow by expansion rather than appearing as finished shapes.
+- Multi-scale: density fields plus an explicit cord graph are the model, over a plot with
+  several trees and logs. Fine hyphae near the camera are display only.
+- Fruiting bodies grown by a swarm of tips following a scheduled steering program (the one
+  published route to mushroom shape), then expanded by water uptake.
 - Spore release and dispersal as physical events (ballistic discharge, puffing, splash).
 - Embedded reference data: measured growth curves and network statistics per species to tune
   against, and textures.
@@ -141,8 +156,12 @@ selection grid is:
 - **How much is known:** well-studied lab and cultivated species (oyster, shiitake, button, ink
   cap, split gill, honey fungus) come first because their numbers can be sourced.
 
-Research first produces a short list of **network families** (expected 8 to 12). Each species
-belongs to one family and inherits its defaults, which is what makes 100 species affordable.
+Research produced 12 **network families** (listed in [research/README.md](research/README.md)):
+fast dung colony, confined wood decayer, short-range and long-range cord foragers, rhizomorph
+system, fairy ring, litter mycelium, three mycorrhizal types, host-confined, and insect-tended.
+Each species belongs to one family and inherits its defaults, which is what makes 100 species
+affordable. The candidate list of 100 and a proposed flagship six are in
+[research/08-species-survey.md](research/08-species-survey.md).
 
 **Species file** (`species/<slug>.json`), in sections: identity and taxonomy; ecology and habitat
 (substrates, hosts, biomes, season); hyphae (diameter, tip speed, branching rate and angle, fusion
@@ -256,11 +275,11 @@ export/                       Worldbuilder pack and saved networks (later)
 
 ## 11. Open questions
 
-- **Do fungi make sound at all?** Unknown until research. The plan does not depend on it.
-- **How literal should the electrical model be?** The measurements exist; what they mean is
-  disputed. Proposed: model the measured spiking, claim nothing about meaning.
-- **Mushroom-forming only?** Proposed: yes, with a few exceptions that have unusual networks
-  (for example insect-farmed fungi). Arbuscular mycorrhizal fungi make no mushrooms and are left
-  out unless Matt wants them.
-- **How much research before building?** Proposed: topics 1 to 4 and a first species short list
-  before the 4K engine; the rest alongside.
+- **Do fungi make sound?** Answered: mycelium makes none on record. Only explosive spore
+  discharge has been heard. The sound work will rely on speeding rhythms up and on event streams.
+- **How literal should the electrical model be?** Settled as above: switchable modes, labelled.
+- **Research still owed** (see "Biggest gaps" in [research/README.md](research/README.md)): the
+  closed-access growth-model papers, kinetic constants and growth rates for the flagship species,
+  death and recycling rates, and a verification pass over anything tagged as from memory.
+- **For Matt:** the flagship choices, whether *Psilocybe cubensis* stays, whether the three
+  entries that make no real mushroom stay, and whether to hold back about 10 of the 100 slots.

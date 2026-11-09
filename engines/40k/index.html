@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mycelium 40K</title>
+<style>
+  body { margin: 0; background: #14110c; color: #e9dcbc; font: 14px/1.5 system-ui, sans-serif }
+  main { max-width: 1180px; margin: 0 auto; padding: 16px; display: grid; gap: 16px; grid-template-columns: minmax(0, 768px) minmax(240px, 1fr) }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr } }
+  canvas { width: 100%; display: block; background: #1b1812; border-radius: 6px }
+  #plot { margin-top: 8px; height: 90px }
+  label { display: block; margin: 0 0 10px; color: #a89c82; font-size: 12px }
+  select, input, button { font: inherit; width: 100%; box-sizing: border-box; background: #221e16; color: inherit; border: 1px solid #3a3326; border-radius: 4px; padding: 4px 6px }
+  input[type=range] { padding: 0 }
+  .row { display: flex; gap: 8px; margin-bottom: 12px }
+  h1 { font-size: 18px; margin: 0 0 12px }
+  #out { margin: 12px 0; font-variant-numeric: tabular-nums }
+  small { color: #a89c82 } a { color: inherit } i.k { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin: 0 4px 0 10px }
+</style>
+<main>
+  <div>
+    <canvas id="c" width="1024" height="1024"></canvas>
+    <canvas id="plot" width="1024" height="120"></canvas>
+    <small>Over time:<i class="k" style="background:#e9dcbc"></i>tips<i class="k" style="background:#f2c94c"></i>reserve<i class="k" style="background:#7fbf8b"></i>uptake<i class="k" style="background:#58b4ee"></i>flow. Each line is scaled to its own peak.</small>
+  </div>
+  <div>
+    <h1>Mycelium 40K</h1>
+    <label>Species <select id="sp"></select></label>
+    <label>World <select id="scn"></select></label>
+    <label>Show <select id="mode"><option value="network">network (width = cord thickness)<option value="reserve">reserve inside hyphae<option value="flow">flow toward growth</select></label>
+    <label>Temperature <span id="tv"></span> <input id="temp" type="range" min="0" max="45" step="1"></label>
+    <label>Speed <input id="speed" type="range" min="1" max="12" value="2"></label>
+    <label>Seed <input id="seed" type="number" value="1"></label>
+    <div class="row"><button id="go">restart</button><button id="pause">pause</button><button id="csv">save signals</button></div>
+    <div id="out"></div>
+    <p><small>The field is 25.6 mm across. Brown is wood, olive is leaf litter, red dots are root tips, dark is soil; patches fade as they are used up. Faint lines are hyphae the fungus has abandoned. Discs are fruiting sites, drawn up to button size (a full mushroom would not fit). Lower the temperature to trigger fruiting in species that need a cold spell.</small></p>
+    <p><small>Substrate is counted in units of "the cost of one 0.1 mm piece of hypha". Many values are tuning values, not measurements: see the <a href="https://github.com/CrumpLabSandbox/mushroom-substrate/blob/main/docs/MODEL.md">model notes</a>. <a href="../../">About</a></small></p>
+  </div>
+</main>
+<script src="core.js"></script>
+<script src="view.js"></script>
+</html>

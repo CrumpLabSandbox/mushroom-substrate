@@ -106,3 +106,8 @@
 - They are copyrighted, so `docs/papers/` is git-ignored and stays local. The repo is public.
 - The Boswell equations are now checked: [docs/research/09-boswell-check.md](docs/research/09-boswell-check.md).
 - Fricker 2017 still needs a full read before the 40K engine is tuned.
+
+## 40K engine built (2026-11-09)
+- `engines/40k/`: a lattice-free graph model with seven species, five worlds, flow, cord thickening, pruning and fruiting sites. About 20 KB of the 41 KB limit.
+- Its limits are listed under "What it honestly is not" in [docs/MODEL.md](docs/MODEL.md) section 4. The biggest: flow ignores loops, and most coefficients are tuning values.
+- Fricker 2017 has been read in full: [docs/research/10-fricker-2017.md](docs/research/10-fricker-2017.md).

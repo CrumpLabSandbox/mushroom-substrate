@@ -13,8 +13,8 @@ each a research-backed data file, loaded into one of four simulator engines of i
 ## Status
 
 The first research pass is done ([docs/research/README.md](docs/research/README.md)), the model
-is specified ([docs/MODEL.md](docs/MODEL.md)), and the 4K engine is built with three species. The
-40K, 400K and 4M engines are not built yet.
+is specified ([docs/MODEL.md](docs/MODEL.md)), and the 4K and 40K engines are built with seven
+species. The 400K and 4M engines are not built yet.
 
 ## Run
 

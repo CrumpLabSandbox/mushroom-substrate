@@ -3,8 +3,8 @@
 Version 0.1, 2026-11-09. This is the reference the engines are written from, and later the C++
 port. It follows the research in [research/](research/README.md).
 
-**Status.** Section 3 (the 4K model) is implemented and tested. Sections 4 to 6 are the design for
-tiers not yet built. The growth and substrate equations in section 4 were checked against the
+**Status.** Sections 3 and 4 (the 4K and 40K models) are implemented and tested. Section 5 is
+the design for tiers not yet built. The growth and substrate equations in section 4 were checked against the
 published papers on 2026-11-09 ([research/09-boswell-check.md](research/09-boswell-check.md)).
 Their coefficients were calibrated on *Rhizoctonia solani*, which is not a mushroom former, so
 they are a starting point and not species data.
@@ -39,7 +39,8 @@ at least:
 | `step()` | advance by one `dt` |
 | `t` | simulation time, s |
 | `dt` | seconds per step |
-| `tips`, `len`, `br`, `fu` | signals: live tips, total hyphal length (in engine length units), branch count, fusion count |
+| `len`, `br`, `fu` | signals: total hyphal length (pixels in 4K, µm of live hypha in 40K), branch count, fusion count |
+| live tips | `T.length` in the 4K core, `ntips` in the 40K core |
 | `ev` | optional callback `ev(type, x, y)` called on each event; `type` 0 = branch, 1 = fusion |
 
 Larger tiers add signals and events (section 6) but keep these names.
@@ -68,8 +69,13 @@ The parameters the 4K engine reads, and where each tier's packed file takes them
 | u | `hyphae.uptake` | per pixel laid | nutrient removed from a cell per pixel of new hypha |
 | τ | `hyphae.turn` | degrees | size of one steering correction |
 
+The 4K steering, fusion and uptake values live under `tuning_4k` in the species file, apart
+from the values the 40K engine reads, because the two engines mean different things by them.
+
 `tools/pack.js` writes `engines/<tier>/species/<slug>.json` from the full file. For 4K that is
-the species name and the eight numbers in the order above.
+the species name and the eight numbers in the order above. For 40K it is the name, the default
+world, two display colours and 35 numbers; the order is the `keys` list in `tools/pack.js`,
+which matches the first line of the 40K core.
 
 Later tiers add the sections listed in the plan (network, transport, electrical, fruiting,
 environment response, `lite`).
@@ -131,64 +137,107 @@ and there is a hard cap on tips. Fusion removes tips where the network is dense.
 **Signals.** `tips` (count), `len` (pixels; × 20 for µm), `br`, `fu`, `t`. Events: branch and
 fusion with position.
 
-## 4. The 40K model: a graph in a patchy world (design)
+## 4. The 40K model: a graph in a patchy world (implemented)
 
-Scale: colony, 2D, lattice-free. Two graphs: **segments** (straight pieces with geometry) and
-**links** (unbranched runs of segments between junctions, carrying state).
+Scale: colony, 2D, lattice-free. The field is 25.6 mm across. Hyphae are straight segments of
+100 µm. Fields live on a 128 × 128 grid (cells of 200 µm). One step is the time a tip at full
+speed takes to lay one segment (`dt` = 100 µm ÷ E).
 
-**Per link:** length `l`, cross-sectional area `a`, internal substrate `si`, flux `Q`, age,
-active flag. **Fields** on a 128² to 256² grid: external substrate `se`, hyphal density `m`,
-moisture, temperature.
+**Units.** Substrate is counted in units of "the cost of laying one segment". It is not moles.
 
-**Growth** (after Hopkins & Boswell 2012, read, and research/01 level 1 rules):
-- Heading is a biased random walk: keep the heading or turn by a fixed step, with the odds
-  biased toward lower crowding. The crowding field is hyphal density `m` or a diffusing
-  inhibitor that hyphae emit. No steering on nutrient.
-- A tip extends only if its segment's internal substrate exceeds the cost of one segment.
-- Speed `v = E × g(si) × r_T(T) × r_W(ψ)`, where `r_T` and `r_W` are the temperature and
-  water-potential response curves from research/06 (tabulated).
-- New lateral branches start slow and reach full speed over 400 to 850 µm. Speed and diameter
-  fall with branch order as 100 : 62 : 26 and 100 : 66 : 42.
-- Inter-branch spacing drawn from a gamma distribution, shape 1.3 to 1.7.
-- About 25% of tips dormant at any time.
-- Branch angle defaults to a normal distribution, mean 79°, standard deviation 10°
-  (Hopkins & Boswell 2012), unless the species has its own.
-- Fusion: a spatial hash finds hits; a hit fuses with probability f and closes a loop.
+**State per segment:** end points, parent segment (the one it grew from), internal substrate
+`si`, cross-section `ar` (1 = a single hypha), smoothed flux `Q`, birth time, and a state:
+active, inactive (abandoned) or gone. Because a child is always created after its parent, the
+segments form a tree in index order; fusions are stored as extra pairs.
 
-**Substrate** (Boswell et al. 2003, 2007; Hopkins & Boswell 2012; all read):
+**Fields:** substrate type, external substrate `se`, moisture (fixed, from the seed), hyphal
+density, and a diffusing inhibitor that hyphae emit.
 
-```
-uptake per segment  U = c1 · si/(c2 + si) · se · dt             si += U,  se −= U/efficiency
-                    (needs internal substrate to run; saturates in si, linear in se;
-                     efficiency 0.9; a segment has a maximum capacity)
-cost of growth      si −= one segment's cost, taken when a tip extends or a branch forms
-maintenance         si −= c5 · length · dt; below a floor ω the hypha turns inactive
-inactive hypha      degrades at rate di (0 in the calibration; none was seen in 15 h)
-passive transport   between joined segments, ∝ difference in si
-active transport    toward the nearest tip, by distance through the network, ∝ si;
-                    costs c4 per unit moved
-external field      ∂se/∂t = De ∇²se − uptake        (implicit relaxation; it is stiff)
-```
+**Worlds.** Five substrate types: soil (poor, 0.6 units per cell), wood (400), leaf litter (60),
+root tip (40, resupplied by the tree at 6 units per hour), agar (25, and the only one whose
+substrate diffuses freely). Five worlds built from the seed: a dish of agar, wood blocks in soil,
+litter patches, tree roots in soil, one large log.
 
-`De` for glucose in agar is 400 µm²/s (Olsson 1995, via Boswell 2002). The other coefficients
-are in research/09 section 3. Active transport toward tips is the published stand-in for flow;
-the flow model below replaces it where flow is computed.
+**One step, in order:**
 
-**Flow** (Heaton et al. 2010, read): each link that grew draws half its new volume at each end
-node; the inoculum balances the total. On a tree, the flux in a link is the summed demand
-downstream of it: one pass, no solver. With loops, `A·p = q` with conductance `C = σ·a/l`,
-solved by warm-started conjugate gradient with a fixed iteration count, one pressure pinned.
+1. **Tips.** A tip needs 1 unit in its segment to extend. Its progress per step is the product
+   of the temperature response, the moisture response, a ramp for young branches (0.3 rising to
+   1 over 600 µm), and the species' willingness to grow over bare soil. Heading changes by a
+   random wobble plus a turn away from the more crowded side, read from the inhibitor field
+   400 µm ahead-left and ahead-right. Laying a segment costs 1 unit; the rest is split with the
+   new segment. If the new segment crosses a hypha in a place where density is above 1 per cell,
+   it fuses with the species' probability, ending there and closing a loop; otherwise it
+   crosses. After each segment laid, with probability `(100 µm ÷ G) × (1 − density ÷ cap)`, a
+   branch starts from a segment 1 to 5 back along the hypha, at the branch angle (normal, with
+   the species' mean and spread), either side.
+2. **Every active segment.** Uptake
+   `U = rate · dt · affinity(type) · rT · rW · si/(k + si) · se/(se + 5)`, limited by what the
+   cell holds and by the segment's capacity (`capacity × ar`); the fungus keeps 90%. Maintenance
+   removes a fixed amount per hour. Cross-section relaxes toward `1 + cord_max · Q/(Q + 1)`. A
+   segment that has no tip, carries no flow, is older than the inactivation age and is nearly
+   empty is abandoned at the inactivation rate, returning half its contents plus 0.3 units to
+   its parent. Abandoned segments disappear at the degradation rate.
+3. **Fruiting.** Once the colony is old enough, the temperature is at or below
+   `t_opt − cold_drop`, and the reserve is either twice the threshold or above the threshold
+   with uptake below 60% of its peak, initials start at random well-fed segments, at least 3 mm
+   apart, up to 14. Each initial draws from its segment at a rate that rises with its own mass,
+   so early starters win. An initial that gets nothing for 80 steps aborts and returns half its
+   mass. One that reaches the mature mass is a fruiting site.
+4. **Flow.** Each extension and each initial's draw is a demand. One pass from the youngest
+   segment to the oldest sums the demand downstream of every segment (Heaton et al. 2010: on a
+   tree no solver is needed). `Q` is a running average of that.
+5. **Translocation**, 2 to 8 passes per step: between each segment and its parent, a passive
+   part proportional to the difference in `si`, and a directed part that moves substrate toward
+   demand in proportion to the child's share of the parent's flux. Fusion links carry the
+   passive part only.
+6. **Fields.** Root tips are resupplied. Substrate spreads where the type allows. The inhibitor
+   is emitted in proportion to hyphal density, spreads and decays.
 
-**Transport.** `si` is advected upwind at `Q/a` and diffuses along links.
+**Response curves.** Temperature: the cardinal temperature model, a rational curve that is 0 at
+`t_min` and `t_max` and 1 at `t_opt` (the standard Rosso et al. 1993 form; not yet checked
+against the paper). Moisture: `max(0.1, 1 − ((wet − wet_opt)/wet_width)²)`, a stand-in.
 
-**Remodelling.** Tero's law, `da/dt = f(|Q|) − r·a`: links that carry flow thicken into cords.
-Links below a minimum area and above a minimum age become inactive and return a fraction of
-their biomass to neighbours (after Falconer et al. 2005). Target: loopiness alpha of 0.11 to 0.20
-and a rise-then-fall in link count for *Phanerochaete velutina* (Bebber et al. 2007).
+**Signals** (also recorded every 10 steps, and saved as CSV from the page): time, growing tips,
+live hyphal length, reserve, uptake per hour, flow from the centre per hour, front radius,
+fruiting sites, cord segments, and alpha. Events: branch, fusion, tip stop, segment abandoned,
+initial started, initial aborted, fruiting site matured.
 
-**Fruiting.** A site starts a primordium when reserves nearby exceed a threshold and the trigger
-holds (nutrient falling, temperature down 5 to 10 °C). Many initials start; they compete for the
-same reserve and most are drained (research/05).
+**What was checked.** Same seed gives the same state, and a different seed a different one, for
+all seven species (`tools/test.js`). In the browser, all species grow without errors and look
+different from each other: sparse cord networks with thick trunks for *Phanerochaete* and
+*Serpula*, a few long rhizomorphs for *Armillaria*, a dense mat held to its log for *Pleurotus*,
+a network strung along root tips for *Laccaria*. After 250 steps alpha is 0.09 for
+*Phanerochaete velutina*, against 0.11 to 0.20 measured in much larger and older networks
+(Bebber et al. 2007). Nothing else has been compared with measurements.
+
+**What it honestly is not.**
+- **Flow ignores loops.** Flux is computed on the growth tree only. Fusion links carry no flow,
+  so loops cannot yet reroute supply, which is the main thing loops are for.
+- **Alpha counts true fusions only**, over every hypha ever laid, including abandoned ones.
+  Measured networks are extracted from photographs, where every crossing looks like a junction
+  (Fricker et al. 2017), so the two numbers are not directly comparable.
+- **Uptake is uniform along a hypha.** The review says uptake falls sharply behind the tip and
+  that cords are insulated.
+- **Fusion is too simple.** Real fusion is mostly secondary branches behind the front homing on
+  neighbours; here any tip that crosses a hypha in a dense area may fuse.
+- **Directed translocation has no physical counterpart.** It stands in for mass flow. Real
+  motor transport is capped near 4 µm/s and real cords carry tracer both ways at once.
+- **Translocation speed scales with tip speed** (it is counted in passes per step), not with
+  time. Measured solute speeds in *P. velutina* cords are 20 to 100 mm/h; the engine's are far
+  lower and have not been calibrated.
+- **Flow-driven thickening is an inference.** The review supports a correlation between flow and
+  cord thickness and says how cords are chosen for strengthening is unknown.
+- **The scale is wrong for cord data.** Measured cord networks are 24 to 50 cm across and 3 to
+  14 weeks old; this field is 2.5 cm and runs for days.
+- **Nothing steers toward wood.** Finding a bait block is by chance. The measured response
+  (thicken the connecting route, abandon the rest) appears only as far as flow-driven
+  thickening and starvation pruning produce it.
+- **Fruiting sites are symbols.** A real mushroom of most of these species is larger than the
+  field.
+- **Most coefficients are tuning values.** Uptake rate, capacity, maintenance, transport, cord
+  growth, the fruiting thresholds and the substrate amounts have no measurement behind them and
+  are marked `unknown` in the species files. The uptake rate is simply set so that one feeding
+  segment can supply about one growing tip.
 
 ## 5. The 400K and 4M models (outline)
 

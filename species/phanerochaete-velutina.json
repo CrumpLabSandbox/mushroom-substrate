@@ -4,6 +4,11 @@
   "common_name": "",
   "family": "CORD-L",
   "tier": "flagship",
+  "scenario": 1,
+  "display": {
+    "mycelium": "#f2ead0",
+    "cap": "#d8cfae"
+  },
   "hyphae": {
     "tip_speed": {
       "value": 350,
@@ -16,7 +21,7 @@
       "value": 1000,
       "unit": "um",
       "basis": "inferred",
-      "note": "no measurement for this species; fast-explorer value suggested in research/01 section 4, by analogy with Podospora anserina (990 to 1,670 um)"
+      "note": "no measurement for this species; fast-explorer value suggested in research/01 section 4"
     },
     "branch_angle": {
       "value": 45,
@@ -24,6 +29,210 @@
       "basis": "inferred",
       "note": "no measurement for this species; fast-explorer value suggested in research/01 section 4"
     },
+    "branch_angle_sd": {
+      "value": 10,
+      "unit": "deg",
+      "basis": "inferred",
+      "note": "default from Hopkins & Boswell 2012 (79 +/- 10 deg, research/09); not measured for this species"
+    },
+    "wobble": {
+      "value": 6,
+      "unit": "deg",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "sensitivity": {
+      "value": 0.3,
+      "unit": "",
+      "basis": "unknown",
+      "note": "how strongly tips turn away from crowding; model coefficient"
+    },
+    "fusion_probability": {
+      "value": 0.7,
+      "unit": "",
+      "basis": "unknown",
+      "note": "chance a tip that meets a hypha fuses and does not cross; no measurement found"
+    }
+  },
+  "network": {
+    "density_cap": {
+      "value": 4,
+      "unit": "segments per cell",
+      "basis": "unknown",
+      "note": "hyphal density at which branching stops; tuning value"
+    },
+    "cord_rate": {
+      "value": 0.05,
+      "unit": "1/h",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "cord_max": {
+      "value": 60,
+      "unit": "",
+      "basis": "unknown",
+      "note": "largest cord cross-section, in single hyphae; cords of 48 to 480 um are measured (research/02) but this is a tuning value"
+    },
+    "explore": {
+      "value": 1,
+      "unit": "",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 3.5,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    },
+    "uptake_half": {
+      "value": 0.3,
+      "unit": "units",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "capacity": {
+      "value": 4,
+      "unit": "units",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "maintenance": {
+      "value": 0.004,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "inactivation_rate": {
+      "value": 0.03,
+      "unit": "1/h",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "inactivation_age": {
+      "value": 36,
+      "unit": "h",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "degradation_rate": {
+      "value": 0.002,
+      "unit": "1/h",
+      "basis": "unknown",
+      "note": "none seen in 15 h in R. solani; small value so dead hyphae clear"
+    },
+    "passive_transport": {
+      "value": 0.08,
+      "unit": "per pass",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "active_transport": {
+      "value": 0.5,
+      "unit": "per pass",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "affinity": {
+      "soil": {
+        "value": 0.3,
+        "unit": "",
+        "basis": "unknown",
+        "note": "how well it feeds on this substrate; from its ecology, not measured"
+      },
+      "wood": {
+        "value": 1,
+        "unit": "",
+        "basis": "unknown",
+        "note": "how well it feeds on this substrate; from its ecology, not measured"
+      },
+      "litter": {
+        "value": 0.6,
+        "unit": "",
+        "basis": "unknown",
+        "note": "how well it feeds on this substrate; from its ecology, not measured"
+      },
+      "root": {
+        "value": 0,
+        "unit": "",
+        "basis": "unknown",
+        "note": "how well it feeds on this substrate; from its ecology, not measured"
+      },
+      "agar": {
+        "value": 1,
+        "unit": "",
+        "basis": "unknown",
+        "note": "how well it feeds on this substrate; from its ecology, not measured"
+      }
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 25,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "extension rises with temperature from 5 to 20 or 27 C (research/08 [14])"
+    },
+    "t_min": {
+      "value": 2,
+      "unit": "C",
+      "basis": "unknown",
+      "note": "no measurement found"
+    },
+    "t_max": {
+      "value": 33,
+      "unit": "C",
+      "basis": "unknown",
+      "note": "no measurement found"
+    },
+    "wet_opt": {
+      "value": 0.6,
+      "unit": "",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "wet_width": {
+      "value": 0.5,
+      "unit": "",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    }
+  },
+  "fruiting": {
+    "reserve_threshold": {
+      "value": 600,
+      "unit": "units",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "cold_drop": {
+      "value": 0,
+      "unit": "C",
+      "basis": "unknown",
+      "note": "no cold requirement known"
+    },
+    "min_age": {
+      "value": 120,
+      "unit": "h",
+      "basis": "unknown",
+      "note": "no measurement found"
+    },
+    "initial_rate": {
+      "value": 0.5,
+      "unit": "1/h",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "mature_mass": {
+      "value": 400,
+      "unit": "units",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    }
+  },
+  "tuning_4k": {
     "wobble": {
       "value": 5,
       "unit": "deg",

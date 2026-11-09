@@ -21,6 +21,7 @@ usable only if its report tags it as sourced and read.
 | 7 | [Sound and rhythm](07-sound-rhythm.md) | Whether fungi make sound, timescales of every rhythm, signal taps |
 | 8 | [Species survey](08-species-survey.md) | The 100 species, flagship six, coverage and gaps |
 | 9 | [Boswell check](09-boswell-check.md) | The growth-model equations and values, checked against the papers Matt supplied |
+| 10 | [Fricker 2017](10-fricker-2017.md) | Full read of "The Mycelium as a Network": transport speeds, cord behaviour, and where the 40K design departs from it |
 
 ## What the research says
 
@@ -117,8 +118,8 @@ re-tagging: its CORD splits into CORD-S and CORD-L.
 
 1. **The core growth model's equations.** Resolved: Matt supplied the papers and report 9 gives
    the published equations and values. Remaining caveat: the values are for *Rhizoctonia
-   solani*, not a mushroom former. Fricker et al. 2017 was supplied too and still needs a full
-   read.
+   solani*, not a mushroom former. Fricker et al. 2017 has been read too (report 10); it gives no
+   network statistics, so those still rest on Bebber et al. 2007.
 2. **Kinetic constants for mushroom-forming fungi.** Hyphal growth unit, peripheral growth zone
    and specific growth rate were found only for moulds.
 3. **Growth rates.** Sourced for 10 of 100 species. Missing for two proposed flagships

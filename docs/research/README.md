@@ -20,6 +20,7 @@ usable only if its report tags it as sourced and read.
 | 6 | [Environment](06-environment.md) | Substrates, decay, temperature and moisture response, combat, grazing, climate |
 | 7 | [Sound and rhythm](07-sound-rhythm.md) | Whether fungi make sound, timescales of every rhythm, signal taps |
 | 8 | [Species survey](08-species-survey.md) | The 100 species, flagship six, coverage and gaps |
+| 9 | [Boswell check](09-boswell-check.md) | The growth-model equations and values, checked against the papers Matt supplied |
 
 ## What the research says
 
@@ -114,9 +115,10 @@ re-tagging: its CORD splits into CORD-S and CORD-L.
 
 ## Biggest gaps
 
-1. **The core growth model's equations.** The recommended backbone (Boswell et al. 2002, 2003,
-   2007; Hopkins & Boswell 2012) is closed access. Its equations in report 3 are from memory,
-   with no parameter values.
+1. **The core growth model's equations.** Resolved: Matt supplied the papers and report 9 gives
+   the published equations and values. Remaining caveat: the values are for *Rhizoctonia
+   solani*, not a mushroom former. Fricker et al. 2017 was supplied too and still needs a full
+   read.
 2. **Kinetic constants for mushroom-forming fungi.** Hyphal growth unit, peripheral growth zone
    and specific growth rate were found only for moulds.
 3. **Growth rates.** Sourced for 10 of 100 species. Missing for two proposed flagships

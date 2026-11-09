@@ -37,6 +37,7 @@ notes are in [notes.md](notes.md).
 | `docs/PLAN.md` | The plan |
 | `docs/MODEL.md` | The model specification (Phase 2) |
 | `docs/research/` | Research write-ups with sources |
+| `docs/papers/` | Local copies of copyrighted papers. Git-ignored; never commit or publish them |
 | `species/` | `schema.json`, `families/*.json`, one `<slug>.json` per species |
 | `engines/4k` `40k` `400k` `4m` | One engine each: `core.js`, `view.js`, `index.html` |
 | `tools/check.js` | Byte limits, and that every species value has a valid basis |

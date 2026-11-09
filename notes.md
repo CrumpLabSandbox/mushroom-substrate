@@ -100,3 +100,9 @@
 - ***Psilocybe cubensis*:** stays. It is there as a well-documented tropical dung species, and the site only simulates mycelium.
 - **Slots:** hold back about 10 of the 100 for later additions (the survey's ten weakest go to the bench).
 - **Network families:** the merged 12 in [docs/research/README.md](docs/research/README.md).
+
+## Papers supplied (2026-11-09)
+- Matt put five PDFs in `docs/papers/`: Boswell 2002, 2003, 2007 (file `boswell2006.pdf`), Hopkins & Boswell 2012, and Fricker et al. 2017.
+- They are copyrighted, so `docs/papers/` is git-ignored and stays local. The repo is public.
+- The Boswell equations are now checked: [docs/research/09-boswell-check.md](docs/research/09-boswell-check.md).
+- Fricker 2017 still needs a full read before the 40K engine is tuned.

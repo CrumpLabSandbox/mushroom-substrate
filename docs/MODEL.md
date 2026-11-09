@@ -4,10 +4,10 @@ Version 0.1, 2026-11-09. This is the reference the engines are written from, and
 port. It follows the research in [research/](research/README.md).
 
 **Status.** Section 3 (the 4K model) is implemented and tested. Sections 4 to 6 are the design for
-tiers not yet built, and parts of them are provisional: the five-variable growth equations are
-reconstructed from memory of closed-access papers (Boswell et al. 2002, 2003) and must be checked
-against the originals before the 40K engine is frozen. Anything marked *provisional* has that
-status.
+tiers not yet built. The growth and substrate equations in section 4 were checked against the
+published papers on 2026-11-09 ([research/09-boswell-check.md](research/09-boswell-check.md)).
+Their coefficients were calibrated on *Rhizoctonia solani*, which is not a mushroom former, so
+they are a starting point and not species data.
 
 ## 1. Conventions
 
@@ -121,11 +121,17 @@ and there is a hard cap on tips. Fusion removes tips where the network is dense.
   hypha joined which.
 - A, ω, τ, f and u are not measured quantities. They are tuning values, marked `unknown` in the
   species files.
+- Steering on nutrient is a stand-in. The published models steer tips away from biomass, and
+  Boswell et al. 2003 state that tips do not generally respond to external nutrient gradients.
+  Here nutrient is low exactly where hypha has been laid, so the nutrient term acts as a blurred
+  crowding field. From 40K up, steering reads a density or inhibitor field, never nutrient.
+- In the published lattice-free model every meeting fuses. The fusion probability below 1 rests
+  only on the observation that hyphae also cross each other.
 
 **Signals.** `tips` (count), `len` (pixels; × 20 for µm), `br`, `fu`, `t`. Events: branch and
 fusion with position.
 
-## 4. The 40K model: a graph in a patchy world (design, provisional)
+## 4. The 40K model: a graph in a patchy world (design)
 
 Scale: colony, 2D, lattice-free. Two graphs: **segments** (straight pieces with geometry) and
 **links** (unbranched runs of segments between junctions, carrying state).
@@ -134,24 +140,39 @@ Scale: colony, 2D, lattice-free. Two graphs: **segments** (straight pieces with 
 active flag. **Fields** on a 128² to 256² grid: external substrate `se`, hyphal density `m`,
 moisture, temperature.
 
-**Growth** (after Hopkins & Boswell 2012 and research/01 level 1 rules):
-- Heading = persistence + wobble − w_A·∇m + w_N·∇se.
+**Growth** (after Hopkins & Boswell 2012, read, and research/01 level 1 rules):
+- Heading is a biased random walk: keep the heading or turn by a fixed step, with the odds
+  biased toward lower crowding. The crowding field is hyphal density `m` or a diffusing
+  inhibitor that hyphae emit. No steering on nutrient.
+- A tip extends only if its segment's internal substrate exceeds the cost of one segment.
 - Speed `v = E × g(si) × r_T(T) × r_W(ψ)`, where `r_T` and `r_W` are the temperature and
   water-potential response curves from research/06 (tabulated).
 - New lateral branches start slow and reach full speed over 400 to 850 µm. Speed and diameter
   fall with branch order as 100 : 62 : 26 and 100 : 66 : 42.
 - Inter-branch spacing drawn from a gamma distribution, shape 1.3 to 1.7.
 - About 25% of tips dormant at any time.
+- Branch angle defaults to a normal distribution, mean 79°, standard deviation 10°
+  (Hopkins & Boswell 2012), unless the species has its own.
 - Fusion: a spatial hash finds hits; a hit fuses with probability f and closes a loop.
 
-**Substrate** (after Boswell et al., *provisional*):
+**Substrate** (Boswell et al. 2003, 2007; Hopkins & Boswell 2012; all read):
 
 ```
-uptake per link     U = Vmax · se/(Km + se) · surface · dt       si += U,  se −= U
-cost of growth      si −= c_g per unit length laid
-maintenance         si −= c_m · volume · dt
+uptake per segment  U = c1 · si/(c2 + si) · se · dt             si += U,  se −= U/efficiency
+                    (needs internal substrate to run; saturates in si, linear in se;
+                     efficiency 0.9; a segment has a maximum capacity)
+cost of growth      si −= one segment's cost, taken when a tip extends or a branch forms
+maintenance         si −= c5 · length · dt; below a floor ω the hypha turns inactive
+inactive hypha      degrades at rate di (0 in the calibration; none was seen in 15 h)
+passive transport   between joined segments, ∝ difference in si
+active transport    toward the nearest tip, by distance through the network, ∝ si;
+                    costs c4 per unit moved
 external field      ∂se/∂t = De ∇²se − uptake        (implicit relaxation; it is stiff)
 ```
+
+`De` for glucose in agar is 400 µm²/s (Olsson 1995, via Boswell 2002). The other coefficients
+are in research/09 section 3. Active transport toward tips is the published stand-in for flow;
+the flow model below replaces it where flow is computed.
 
 **Flow** (Heaton et al. 2010, read): each link that grew draws half its new volume at each end
 node; the inoculum balances the total. On a tree, the flux in a link is the summed demand
@@ -207,8 +228,9 @@ Recording is in simulation time. A speed-up is applied only on playback, never s
 
 ## 7. Known gaps in this specification
 
-1. The five-variable growth equations and their parameter values (Boswell et al.): closed access,
-   reconstructed, *provisional*.
+1. The growth equations are now checked (research/09), but their coefficients are for
+   *Rhizoctonia solani* on rich agar at 30 °C, and the authors call several of them crude
+   estimates or working hypotheses. Exponents were read from extracted text, not page images.
 2. G, the peripheral growth zone and µ: measured only in moulds. Values for mushroom-forming
    species are inferred.
 3. Uptake kinetics: no Vmax found, no Km for a basidiomycete. Until then substrate is

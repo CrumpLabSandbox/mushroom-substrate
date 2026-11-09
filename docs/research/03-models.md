@@ -84,6 +84,10 @@ have named physiological terms.
 
 ### 2.4 Boswell, Jacobs, Davidson, Gadd & Ritz (2002, 2003): the five-variable model
 
+> **Superseded 2026-11-09.** The papers have since been read. The equations and values are in
+> [09-boswell-check.md](09-boswell-check.md); the "as I remember it" system below has errors
+> (hypha creation, tip movement, a maintenance term that is not in these papers).
+
 **Represents.** *Rhizoctonia solani* on a plane. Five densities: active hyphae `m` (they
 translocate), inactive hyphae `m'` (moribund, no transport), tips `p`, internal substrate `si`,
 external substrate `se`. One generic limiting nutrient, taken to be carbon.

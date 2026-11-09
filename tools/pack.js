@@ -17,7 +17,7 @@ const TIERS = {
     keys: ['hyphae.tip_speed', 'hyphae.growth_unit', 'hyphae.branch_angle', 'hyphae.branch_angle_sd', 'hyphae.wobble',
       'hyphae.sensitivity', 'hyphae.fusion_probability', 'network.density_cap', 'substrate.uptake_rate', 'substrate.uptake_half',
       'substrate.capacity', 'substrate.maintenance', 'substrate.inactivation_rate', 'substrate.inactivation_age',
-      'substrate.degradation_rate', 'substrate.passive_transport', 'substrate.active_transport', 'network.cord_rate',
+      'substrate.degradation_rate', 'substrate.passive_transport', 'substrate.transport_speed', 'network.cord_rate',
       'network.cord_max', 'environment.t_opt', 'environment.t_min', 'environment.t_max', 'environment.wet_opt',
       'environment.wet_width', 'network.explore', 'fruiting.reserve_threshold', 'fruiting.cold_drop', 'fruiting.min_age',
       'fruiting.initial_rate', 'fruiting.mature_mass', 'substrate.affinity.soil', 'substrate.affinity.wood',

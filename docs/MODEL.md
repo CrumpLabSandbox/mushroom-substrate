@@ -74,7 +74,7 @@ from the values the 40K engine reads, because the two engines mean different thi
 
 `tools/pack.js` writes `engines/<tier>/species/<slug>.json` from the full file. For 4K that is
 the species name and the eight numbers in the order above. For 40K it is the name, the default
-world, two display colours and 35 numbers; the order is the `keys` list in `tools/pack.js`,
+world, two display colours and 35 numbers (the seventeenth is the transport speed); the order is the `keys` list in `tools/pack.js`,
 which matches the first line of the 40K core.
 
 Later tiers add the sections listed in the plan (network, transport, electrical, fruiting,
@@ -160,7 +160,11 @@ litter patches, tree roots in soil, one large log.
 
 **One step, in order:**
 
-1. **Tips.** A tip needs 1 unit in its segment to extend. Its progress per step is the product
+1. **Tips.** A tip needs 1 unit in its segment to extend. If it is short, mass flow delivers the
+   difference from upstream: the tip draws from its ancestors along the hypha, nearest first, as
+   far back as substrate could travel in one step at the species' transport speed (for
+   *Phanerochaete velutina*, 20 mm/h, the low end of the measured 20 to 100 mm/h, which is 57
+   segments per step). Its progress per step is the product
    of the temperature response, the moisture response, a ramp for young branches (0.3 rising to
    1 over 600 µm), and the species' willingness to grow over bare soil. Heading changes by a
    random wobble plus a turn away from the more crowded side, read from the inhibitor field
@@ -171,9 +175,15 @@ litter patches, tree roots in soil, one large log.
    branch starts from a segment 1 to 5 back along the hypha, at the branch angle (normal, with
    the species' mean and spread), either side.
 2. **Every active segment.** Uptake
-   `U = rate · dt · affinity(type) · rT · rW · si/(k + si) · se/(se + 5)`, limited by what the
-   cell holds and by the segment's capacity (`capacity × ar`); the fungus keeps 90%. Maintenance
-   removes a fixed amount per hour. Cross-section relaxes toward `1 + cord_max · Q/(Q + 1)`. A
+   `U = rate · dt · age · affinity(type) · rT · rW · si/(k + si) · se/(se + 5)`, limited by what
+   the cell holds and by the segment's capacity (`capacity × ar`); the fungus keeps 90%. The
+   `age` factor is `1 / (1 + (age ÷ TU)²)` with `TU` the time a tip takes to travel 3 mm, so
+   uptake is concentrated behind the growing front. Its floor is 0.03 on agar and soil (old
+   colony centres are measured at 3% of the margin's uptake, research/01) and 0.5 inside wood,
+   litter and root tips (an assumption: hyphae inside a food source keep feeding). Cords
+   (cross-section above 4) take up at one fifth, as they are insulated. Maintenance
+   removes a fixed amount per hour. Cross-section relaxes toward `1 + cord_max · |Q|/(|Q| + 1)`, where `Q` includes the loop
+   correction below. A
    segment that has no tip, carries no flow, is older than the inactivation age and is nearly
    empty is abandoned at the inactivation rate, returning half its contents plus 0.3 units to
    its parent. Abandoned segments disappear at the degradation rate.
@@ -185,11 +195,16 @@ litter patches, tree roots in soil, one large log.
    mass. One that reaches the mature mass is a fruiting site.
 4. **Flow.** Each extension and each initial's draw is a demand. One pass from the youngest
    segment to the oldest sums the demand downstream of every segment (Heaton et al. 2010: on a
-   tree no solver is needed). `Q` is a running average of that.
-5. **Translocation**, 2 to 8 passes per step: between each segment and its parent, a passive
-   part proportional to the difference in `si`, and a directed part that moves substrate toward
-   demand in proportion to the child's share of the parent's flux. Fusion links carry the
-   passive part only.
+   tree no solver is needed). `Q` is a running average of that. Then loops: every fusion closes
+   one loop, made of the fusion and the two paths back to their common ancestor. For up to 300
+   loops per step, in rotation, the engine balances the head around the loop (head loss in a
+   segment = flux ÷ cross-section) by adding a circulating flow. This is Hardy Cross relaxation,
+   the standard hand method for pipe networks; repeated over steps it converges on the flow a
+   full pressure solve would give. Flux in a segment can come out reversed.
+5. **Translocation**, 2 to 8 passes per step: diffusion between each segment and its parent; a
+   segment that is more than 80% full pushes a quarter of the surplus toward the centre, so a
+   food source that a branch has found feeds the trunk; and each fusion carries substrate across
+   in the direction of its loop flow.
 6. **Fields.** Root tips are resupplied. Substrate spreads where the type allows. The inhibitor
    is emitted in proportion to hyphal density, spreads and decays.
 
@@ -206,32 +221,37 @@ initial started, initial aborted, fruiting site matured.
 all seven species (`tools/test.js`). In the browser, all species grow without errors and look
 different from each other: sparse cord networks with thick trunks for *Phanerochaete* and
 *Serpula*, a few long rhizomorphs for *Armillaria*, a dense mat held to its log for *Pleurotus*,
-a network strung along root tips for *Laccaria*. After 250 steps alpha is 0.09 for
-*Phanerochaete velutina*, against 0.11 to 0.20 measured in much larger and older networks
-(Bebber et al. 2007). Nothing else has been compared with measurements.
+a network strung along root tips for *Laccaria*. For *Phanerochaete velutina* after 300 steps,
+alpha is 0.10 from fusions and 0.13 with crossings counted, against 0.11 to 0.20 measured in
+much larger and older networks (Bebber et al. 2007). Loop flows stay finite and smaller than
+the tree flows they correct. Nothing else has been compared with measurements.
 
 **What it honestly is not.**
-- **Flow ignores loops.** Flux is computed on the growth tree only. Fusion links carry no flow,
-  so loops cannot yet reroute supply, which is the main thing loops are for.
-- **Alpha counts true fusions only**, over every hypha ever laid, including abandoned ones.
-  Measured networks are extracted from photographs, where every crossing looks like a junction
-  (Fricker et al. 2017), so the two numbers are not directly comparable.
-- **Uptake is uniform along a hypha.** The review says uptake falls sharply behind the tip and
-  that cords are insulated.
+- **Loop flow is approximate.** It is relaxed a few hundred loops per step and lags the growth
+  it responds to. Delivery to a starving tip still draws only from its own ancestors, not
+  through fusions.
+- **Alpha is over every hypha ever laid**, including abandoned ones. Two versions are reported:
+  from true fusions, and with every crossing counted as a junction, which is what a network
+  extracted from a photograph would show (Fricker et al. 2017). The second is the one to
+  compare with measurements.
+- **The shape of the uptake fall-off is a guess.** That uptake falls behind the tip and that
+  cords are insulated is from the literature; the curve, the 3 mm scale and the one-fifth
+  factor are not.
 - **Fusion is too simple.** Real fusion is mostly secondary branches behind the front homing on
   neighbours; here any tip that crosses a hypha in a dense area may fuse.
-- **Directed translocation has no physical counterpart.** It stands in for mass flow. Real
-  motor transport is capped near 4 µm/s and real cords carry tracer both ways at once.
-- **Translocation speed scales with tip speed** (it is counted in passes per step), not with
-  time. Measured solute speeds in *P. velutina* cords are 20 to 100 mm/h; the engine's are far
-  lower and have not been calibrated.
+- **Delivery is a reach, not a moving front.** Transport speed sets how far upstream a sink can
+  draw within one step. It is sourced for three species and inferred for the rest. Substrate
+  does not travel as a visible pulse, and the measured 11 to 12 hour oscillation in
+  *P. velutina* is not modelled.
+- **Diffusion inside hyphae is too slow.** It is counted in passes per step; the measured
+  coefficient (1 to 2 × 10⁻⁹ m²/s) would spread substrate several times further.
 - **Flow-driven thickening is an inference.** The review supports a correlation between flow and
   cord thickness and says how cords are chosen for strengthening is unknown.
 - **The scale is wrong for cord data.** Measured cord networks are 24 to 50 cm across and 3 to
   14 weeks old; this field is 2.5 cm and runs for days.
-- **Nothing steers toward wood.** Finding a bait block is by chance. The measured response
-  (thicken the connecting route, abandon the rest) appears only as far as flow-driven
-  thickening and starvation pruning produce it.
+- **Bait blocks are found by chance.** That matches the literature (tips do not sense nutrient
+  at a distance). The measured response afterwards, thickening the connecting route and
+  abandoning the rest, does appear in runs, but it has only been seen by eye, not measured.
 - **Fruiting sites are symbols.** A real mushroom of most of these species is larger than the
   field.
 - **Most coefficients are tuning values.** Uptake rate, capacity, maintenance, transport, cord

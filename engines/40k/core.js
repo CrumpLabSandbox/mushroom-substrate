@@ -2,17 +2,18 @@
 // Lengths in um, rates per hour, substrate in units of "the cost of one segment".
 // No DOM, no Math.sin/cos/exp/pow, no Math.random: same species + seed + scenario = same result.
 var M = (P, seed, scn) => {
-  const [E, GU, BA, BS, WOB, SENS, FUSE, CAP, UP, KU, SMAX, C5, DA, TOLD, DI, TP, TA, CR, CMAX,
+  const [E, GU, BA, BS, WOB, SENS, FUSE, CAP, UP, KU, SMAX, C5, DA, TOLD, DI, TP, VT, CR, CMAX,
     TOPT, TMIN, TMAX, WOPT, WWID, EXPL, RF, DROP, AGEF, FRATE, MM, A0, A1, A2, A3, A4] = P
   const W = 25600, L = 100, G = 128, CS = 200, N = 1 << 17, GG = G * G, AF = [A0, A1, A2, A3, A4],
     SE0 = [.6, 400, 60, 40, 25], MOB = [.1, 0, 0, 0, 1], // soil, wood, litter, root tip, agar
-    F = () => new Float32Array(N), min = Math.min, max = Math.max,
-    x0 = F(), y0 = F(), x1 = F(), y1 = F(), si = F(), ar = F(), Q = F(), qr = F(), dl = F(), born = F(),
+    F = () => new Float32Array(N), min = Math.min, max = Math.max, ab = Math.abs,
+    REACH = max(1, min(400, VT / E | 0)), TU = 3000 / E, // hops substrate can be drawn per step; age (h) at which uptake has fallen
+    x0 = F(), y0 = F(), x1 = F(), y1 = F(), si = F(), ar = F(), Q = F(), qc = F(), qr = F(), dl = F(), born = F(), dep = new Uint16Array(N), fq = [],
     par = new Int32Array(N), nxt = new Int32Array(N), st = new Uint8Array(N), brd = new Uint8Array(N),
     tc = new Uint8Array(N), head = new Int32Array(GG).fill(-1), typ = new Uint8Array(GG),
     den = new Uint16Array(GG), wet = new Float32Array(GG), tips = [], fus = [], fr = [], rec = [], D = []
   let se = new Float32Array(GG), sb = new Float32Array(GG), inh = new Float32Array(GG), ib = new Float32Array(GG),
-    n = 0, th = 0, steps = 0, upE = 0, upPk = 0, a = seed >>> 0, c = 1, s = 0, i, j, S, hj, ht
+    n = 0, th = 0, steps = 0, upE = 0, upPk = 0, lp = 0, a = seed >>> 0, c = 1, s = 0, i, j, S, hj, ht
   const r = _ => (a = a + 0x6D2B79F5 | 0, _ = Math.imul(a ^ a >>> 15, 1 | a), _ = _ + Math.imul(_ ^ _ >>> 7, 61 | _) ^ _, ((_ ^ _ >>> 14) >>> 0) / 4294967296),
     tri = () => r() + r() - 1, K = 256 / 360,
     ci = (x, y) => (y / CS | 0) * G + (x / CS | 0),
@@ -24,7 +25,7 @@ var M = (P, seed, scn) => {
     add = (xa, ya, xb, yb, p, sub) => {
       if (n >= N) return -1
       let q = n++, c = ci((xa + xb) / 2, (ya + yb) / 2)
-      x0[q] = xa; y0[q] = ya; x1[q] = xb; y1[q] = yb; par[q] = p; si[q] = sub; ar[q] = 1; born[q] = th; st[q] = 1
+      x0[q] = xa; y0[q] = ya; x1[q] = xb; y1[q] = yb; par[q] = p; dep[q] = p < 0 ? 0 : dep[p] + 1; si[q] = sub; ar[q] = 1; born[q] = th; st[q] = 1
       nxt[q] = head[c]; head[c] = q; den[c]++; S.len += L
       return q
     },
@@ -41,6 +42,8 @@ var M = (P, seed, scn) => {
           t > .001 && t <= 1 && o >= 0 && o <= 1 && t < ht && (ht = t, hj = k)
         }
     },
+    // mass flow delivers substrate to a sink from up to REACH segments upstream within one step
+    pull = (s, need) => { for (let b = par[s], k = REACH, g; b >= 0 && k-- && need > 0 && st[b] == 1; b = par[b]) g = min(need, si[b] - .3), g > 0 && (si[b] -= g, si[s] += g, need -= g) },
     kill = i => { tc[tips[i][0]]--; tips[i] = tips[tips.length - 1]; tips.pop() }
 
   for (i = 0; i < 256; i++) D.push(c, s), [c, s] = [c * .9996988186962042 - s * .024541228522912288, c * .024541228522912288 + s * .9996988186962042]
@@ -63,8 +66,8 @@ var M = (P, seed, scn) => {
       wet[i] = (v[k] * (1 - fx) + v[k + 1] * fx) * (1 - fy) + (v[k + 9] * (1 - fx) + v[k + 10] * fx) * fy } }
 
   S = {
-    W, L, G, CS, x0, y0, x1, y1, si, ar, Q, st, typ, wet, den, tips, fr, rec, SE0, SMAX, MM,
-    t: 0, dt: L / E * 3600, temp: TOPT - DROP, len: 0, br: 0, fu: 0, res: 0, up: 0, flow: 0, front: 0, cords: 0, fruits: 0, alpha: 0, ntips: 0,
+    W, L, G, CS, x0, y0, x1, y1, si, ar, Q, qc, st, typ, wet, den, tips, fr, rec, SE0, SMAX, MM,
+    t: 0, dt: L / E * 3600, temp: TOPT - DROP, len: 0, br: 0, fu: 0, res: 0, up: 0, flow: 0, front: 0, cords: 0, fruits: 0, alpha: 0, alphaX: 0, cross: 0, ntips: 0,
     get n() { return n }, get se() { return se }, get inh() { return inh },
     step() {
       const dt = L / E, T = rt(S.temp)
@@ -76,6 +79,7 @@ var M = (P, seed, scn) => {
         t = tips[i]; s = t[0]
         if (st[s] != 1) { kill(i--); continue }
         c = ci(x1[s], y1[s])
+        si[s] < 1 && pull(s, 1 - si[s])
         if (si[s] < 1) { if (++t[4] > 60) { S.ev && S.ev(2, x1[s], y1[s]); kill(i--) } continue }
         t[4] = 0
         t[2] += T * rw(c) * min(1, .3 + t[3] * .12) * (typ[c] ? 1 : EXPL)
@@ -90,8 +94,9 @@ var M = (P, seed, scn) => {
         hit(x1[s], y1[s], u, e)
         if (hj >= 0 && den[c] > 1 && r() < FUSE) { // fusion happens behind the front, where hyphae are dense
           q = add(x1[s], y1[s], x1[s] + (u - x1[s]) * ht, y1[s] + (e - y1[s]) * ht, s, 0)
-          q >= 0 && fus.push(q, hj); S.fu++; S.ev && S.ev(1, u, e); kill(i--); continue
+          q >= 0 && (fus.push(q, hj), fq.push(0)); S.fu++; S.ev && S.ev(1, u, e); kill(i--); continue
         }
+        hj >= 0 && S.cross++
         f = si[s] / 2; si[s] = f; q = add(x1[s], y1[s], u, e, s, f)
         if (q < 0) { kill(i--); continue }
         tc[s]--; tc[q]++; t[0] = q; t[3]++
@@ -108,12 +113,13 @@ var M = (P, seed, scn) => {
       for (i = 0; i < n; i++) {
         if (st[i] != 1) { st[i] == 2 && (i & 7) == (steps & 7) && r() < DI * dt * 8 && (st[i] = 3); continue }
         c = ci(x1[i], y1[i]); m = SMAX * ar[i]
-        u = min(UP * dt * AF[typ[c]] * T * rw(c) * si[i] / (KU + si[i]) * se[c] / (se[c] + 5), se[c], m - si[i])
+        g = (th - born[i]) / TU; g = max(typ[c] && typ[c] < 4 ? .5 : .03, 1 / (1 + g * g)) * (ar[i] > 4 ? .2 : 1) // uptake falls behind the tip; cords are insulated
+        u = min(UP * dt * g * AF[typ[c]] * T * rw(c) * si[i] / (KU + si[i]) * se[c] / (se[c] + 5), se[c], m - si[i])
         u > 0 && (se[c] -= u, si[i] += u * .9, up += u)
         si[i] = max(0, si[i] - C5 * dt)
-        ar[i] += dt * CR * (1 + CMAX * Q[i] / (Q[i] + 1) - ar[i]); ar[i] > 4 && cords++
+        g = ab(Q[i] + qc[i]); ar[i] += dt * CR * (1 + CMAX * g / (g + 1) - ar[i]); ar[i] > 4 && cords++
         res += si[i]
-        if ((i & 7) == (steps & 7) && par[i] >= 0 && !tc[i] && Q[i] < .02 && th - born[i] > TOLD && si[i] < .2 && r() < DA * dt * 32) { // starved, idle and old: abandon it
+        if ((i & 7) == (steps & 7) && par[i] >= 0 && !tc[i] && g < .02 && th - born[i] > TOLD && si[i] < .2 && r() < DA * dt * 32) { // starved, idle and old: abandon it
           st[i] = 2; den[c]--; S.len -= L; st[par[i]] == 1 && (si[par[i]] += si[i] * .5 + .3); res -= si[i]; si[i] = 0
           S.ev && S.ev(3, x1[i], y1[i])
         }
@@ -126,7 +132,8 @@ var M = (P, seed, scn) => {
         if (st[i] == 1 && si[i] > 1 && !fr.some(o => (o.x - x1[i]) * (o.x - x1[i]) + (o.y - y1[i]) * (o.y - y1[i]) < 9e6)) { fr.push({ i, x: x1[i], y: y1[i], m: 0, s: 0, z: 0 }); S.ev && S.ev(4, x1[i], y1[i]) }
       }
       for (const o of fr) if (!o.s) {
-        g = st[o.i] == 1 ? min(si[o.i], dt * .5 * (1 + o.m * .2)) : 0
+        g = dt * .5 * (1 + o.m * .2); st[o.i] == 1 && si[o.i] < g && pull(o.i, g - si[o.i])
+        g = st[o.i] == 1 ? min(si[o.i], g) : 0
         si[o.i] -= g; o.m += g; qr[o.i] += g
         if (g < .01) { if (++o.z > 80) { o.s = 2; st[o.i] == 1 && (si[o.i] += o.m * .5); S.ev && S.ev(5, o.x, o.y) } } else o.z = 0
         if (o.m >= MM) { o.s = 1; S.fruits++; S.ev && S.ev(6, o.x, o.y) }
@@ -135,16 +142,29 @@ var M = (P, seed, scn) => {
       // 4. growth-induced flow: on a tree, the flux in a hypha is the demand of everything downstream
       for (i = n - 1, f = 0; i >= 0; i--) { p = par[i]; p >= 0 ? st[i] == 1 && (qr[p] += qr[i]) : f += qr[i]; Q[i] = Q[i] * .95 + qr[i] * .05 }
 
-      // 5. translocation: passive (down the gradient) and directed (toward demand), 2 to 8 passes per step
+      // 4b. loops: a fusion gives flow a second route. Hardy Cross relaxation, a few hundred loops per step:
+      // for each fusion, balance the head around the loop it closes (head loss = flux / cross-section).
+      for (k = min(fq.length, 300); k--;) {
+        lp = (lp + 1) % fq.length; u = fus[2 * lp]; e = fus[2 * lp + 1]; h = fq[lp]; m = 1; b = 1; p = u; q = e
+        while (p != q) {
+          if (q < 0 || p >= 0 && dep[p] >= dep[q]) { if (st[p] != 1) { b = 0; break } h += (Q[p] + qc[p]) / ar[p]; m += 1 / ar[p]; p = par[p] }
+          else { if (st[q] != 1) { b = 0; break } h -= (Q[q] + qc[q]) / ar[q]; m += 1 / ar[q]; q = par[q] }
+        }
+        g = b ? -h / m : -fq[lp]
+        if (g) { fq[lp] += g; p = u; q = e; while (p != q) q < 0 || p >= 0 && dep[p] >= dep[q] ? (qc[p] += g, p = par[p]) : (qc[q] -= g, q = par[q]) }
+      }
+
+      // 5. translocation, 2 to 8 passes per step: diffusion along hyphae, surplus pushed toward the centre,
+      // and substrate carried across fusions in the direction of the loop flow
       for (k = min(8, max(2, dt * 10 + .5 | 0)); k--;) {
         dl.fill(0, 0, n)
         for (i = 0; i < n; i++) {
           p = par[i]; if (p < 0 || st[i] != 1 || st[p] != 1) continue
-          g = TP * (si[p] - si[i]) + (Q[i] > 0 ? TA * si[p] * min(1, Q[i] / (Q[p] + 1e-9)) : 0)
-          g > 0 && (m = SMAX * ar[i] - si[i], g > m && (g = max(0, m)))
+          g = TP * (si[p] - si[i]); m = si[i] - .8 * SMAX * ar[i]; m > 0 && (g -= .25 * m)
+          g > 0 ? (m = SMAX * ar[i] - si[i], g > m && (g = max(0, m))) : (m = SMAX * ar[p] - si[p], -g > m && (g = -max(0, m)))
           dl[i] += g; dl[p] -= g
         }
-        for (j = 0; j < fus.length; j += 2) { p = fus[j]; q = fus[j + 1]; st[p] == 1 && st[q] == 1 && (g = TP * (si[p] - si[q]), dl[q] += g, dl[p] -= g) }
+        for (j = 0; j < fus.length; j += 2) { p = fus[j]; q = fus[j + 1]; e = fq[j / 2]; st[p] == 1 && st[q] == 1 && (g = TP * (si[p] - si[q]) + (e > 0 ? .25 * si[p] * min(1, e / (ab(Q[p] + qc[p]) + 1e-9)) : -.25 * si[q] * min(1, -e / (ab(Q[q] + qc[q]) + 1e-9))), dl[q] += g, dl[p] -= g) }
         for (i = 0; i < n; i++) si[i] = max(0, si[i] + dl[i])
       }
 
@@ -165,7 +185,7 @@ var M = (P, seed, scn) => {
 
       // signals
       S.t = th * 3600; S.ntips = tips.length; S.res = res; S.up = up / dt; S.flow = f / dt; S.cords = cords
-      S.alpha = S.fu / (4 * S.br + 2 * 10 - 3)
+      S.alpha = S.fu / (4 * S.br + 17); S.alphaX = (S.fu + S.cross) / (4 * S.br + 2 * S.cross + 17) // nodes = 2·branches + 11, plus one per crossing
       ext && (S.front = Math.sqrt(fsum / ext))
       steps % 10 || rec.length < 6000 && rec.push([th, tips.length, S.len, res, S.up, S.flow, S.front, S.fruits])
     }

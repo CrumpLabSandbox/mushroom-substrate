@@ -66,7 +66,8 @@ function readout() {
   $('out').innerHTML = `<b>${P.n}</b> in ${SCN[$('scn').value]}, ${d(S.temp, 0)} °C` +
     `<br>${d(h, 0)} h (${d(h / 24)} days), running ${d(S.dt * $('speed').value * 60 / 3600, 0)} simulated hours per second` +
     `<br>${S.ntips} growing tips · ${d(S.len / 1e4)} cm of live hypha · front ${d(S.front / 1e3)} mm from the centre` +
-    `<br>${S.br} branches · ${S.fu} fusions · loopiness (alpha) ${d(S.alpha, 3)} · ${S.cords} cord segments` +
+    `<br>${S.br} branches · ${S.fu} fusions · ${S.cords} cord segments` +
+    `<br>loopiness (alpha) ${d(S.alpha, 3)} from fusions, ${d(S.alphaX, 3)} if every crossing counts` +
     `<br>reserve ${d(S.res, 0)} · uptake ${d(S.up)} per h · flow from the centre ${d(S.flow)} per h` +
     `<br>fruiting: ${f.filter(o => o.s == 1).length} mature, ${f.filter(o => !o.s).length} growing, ${f.filter(o => o.s == 2).length} aborted`
 }

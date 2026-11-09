@@ -124,16 +124,10 @@
       "note": "none seen in 15 h in R. solani; small value so dead hyphae clear"
     },
     "passive_transport": {
-      "value": 0.08,
+      "value": 0.2,
       "unit": "per pass",
       "basis": "unknown",
-      "note": "model coefficient; no measurement found"
-    },
-    "active_transport": {
-      "value": 0.5,
-      "unit": "per pass",
-      "basis": "unknown",
-      "note": "model coefficient; no measurement found"
+      "note": "diffusion between neighbouring segments; measured diffusion inside hyphae (1 to 2 x 10^-9 m2/s, research/10) is several times faster than the passes allow"
     },
     "affinity": {
       "soil": {
@@ -166,6 +160,13 @@
         "basis": "unknown",
         "note": "how well it feeds on this substrate; from its ecology, not measured"
       }
+    },
+    "transport_speed": {
+      "value": 20000,
+      "unit": "um/h",
+      "basis": "sourced",
+      "source": "research/09-boswell-check.md section 6 (Fricker et al. 2017)",
+      "note": "more than 20 mm/h reported for Armillaria"
     }
   },
   "environment": {

@@ -8,7 +8,10 @@ notes are in [notes.md](notes.md).
 - Work on `main` and push to `main`. No feature branches or pull requests.
 - GitHub Pages is built by `.github/workflows/pages.yml` on every push. The build fails if a tier
   is over its byte limit.
-- Before pushing: `node tools/check.js`.
+- Before pushing: `node tools/pack.js`, `node tools/check.js`, `node tools/test.js`. If a core's
+  behaviour changed on purpose, `node tools/test.js --update` rewrites the stored hashes.
+- No `Math.sin`, `Math.cos`, `Math.exp` or `Math.pow` in a core (not bit-identical across
+  browsers). See docs/MODEL.md section 1.
 
 ## Rules
 
@@ -36,6 +39,8 @@ notes are in [notes.md](notes.md).
 | `docs/research/` | Research write-ups with sources |
 | `species/` | `schema.json`, `families/*.json`, one `<slug>.json` per species |
 | `engines/4k` `40k` `400k` `4m` | One engine each: `core.js`, `view.js`, `index.html` |
-| `tools/check.js` | Byte limits (schema and repeatability checks to be added) |
+| `tools/check.js` | Byte limits, and that every species value has a valid basis |
+| `tools/pack.js` | Writes each engine's packed species files from `species/` |
+| `tools/test.js` | Repeatability (stored hashes in `tools/hashes.json`) and speed |
 | `tools/build-site.js` | Assembles `_site/` for Pages |
 | `site/` | Landing page and, later, the species browser and comparison pages |

@@ -1,0 +1,58 @@
+{
+  "slug": "phanerochaete-velutina",
+  "name": "Phanerochaete velutina",
+  "common_name": "",
+  "family": "CORD-L",
+  "tier": "flagship",
+  "hyphae": {
+    "tip_speed": {
+      "value": 350,
+      "unit": "um/h",
+      "basis": "sourced",
+      "source": "research/01-growth-biology.md [22]",
+      "note": "from a search snippet (8.4 mm/day); the paper was not opened"
+    },
+    "growth_unit": {
+      "value": 1000,
+      "unit": "um",
+      "basis": "inferred",
+      "note": "no measurement for this species; fast-explorer value suggested in research/01 section 4, by analogy with Podospora anserina (990 to 1,670 um)"
+    },
+    "branch_angle": {
+      "value": 45,
+      "unit": "deg",
+      "basis": "inferred",
+      "note": "no measurement for this species; fast-explorer value suggested in research/01 section 4"
+    },
+    "wobble": {
+      "value": 5,
+      "unit": "deg",
+      "basis": "unknown",
+      "note": "tuning value for the 4K engine; not a measured quantity"
+    },
+    "avoidance": {
+      "value": 2,
+      "unit": "",
+      "basis": "unknown",
+      "note": "tuning value for the 4K engine; not a measured quantity"
+    },
+    "fusion_probability": {
+      "value": 0.3,
+      "unit": "",
+      "basis": "unknown",
+      "note": "tuning value for the 4K engine; not a measured quantity"
+    },
+    "uptake": {
+      "value": 0.1,
+      "unit": "per pixel",
+      "basis": "unknown",
+      "note": "tuning value for the 4K engine; not a measured quantity"
+    },
+    "turn": {
+      "value": 6,
+      "unit": "deg",
+      "basis": "unknown",
+      "note": "tuning value for the 4K engine; not a measured quantity"
+    }
+  }
+}

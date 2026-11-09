@@ -46,7 +46,29 @@ function measure(tier) {
   };
 }
 
+// Every measured value in a species file is { value, unit, basis } with basis sourced (needs a
+// source), inferred (needs a note) or unknown.
+function speciesProblems() {
+  const dir = path.join(ROOT, 'species');
+  const problems = [];
+  const visit = (file, key, v) => {
+    if (!v || typeof v !== 'object') return;
+    if ('value' in v) {
+      if (!['sourced', 'inferred', 'unknown'].includes(v.basis)) problems.push(`${file}: ${key} has no valid basis`);
+      if (v.basis === 'sourced' && !v.source) problems.push(`${file}: ${key} is sourced but names no source`);
+      if (v.basis === 'inferred' && !v.note) problems.push(`${file}: ${key} is inferred but has no note`);
+      return;
+    }
+    for (const k of Object.keys(v)) visit(file, key ? key + '.' + k : k, v[k]);
+  };
+  const files = fs.readdirSync(dir).filter((f) => f.endsWith('.json') && f !== 'schema.json');
+  for (const f of files) visit(f, '', JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')));
+  if (files.length > 100) problems.push(`${files.length} species: the cap is 100`);
+  return problems;
+}
+
 const results = TIERS.map(measure);
+const problems = speciesProblems();
 if (process.argv.includes('--json')) {
   console.log(JSON.stringify(results, null, 2));
 } else {
@@ -59,4 +81,5 @@ if (process.argv.includes('--json')) {
     );
   }
 }
-process.exit(results.every((r) => r.ok) ? 0 : 1);
+if (!process.argv.includes('--json')) for (const p of problems) console.log('species: ' + p);
+process.exit(results.every((r) => r.ok) && problems.length === 0 ? 0 : 1);

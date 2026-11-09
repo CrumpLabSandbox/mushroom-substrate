@@ -93,3 +93,10 @@
 
 ## Plan
 - The comprehensive plan is in [docs/PLAN.md](docs/PLAN.md).
+
+## Decisions (2026-11-09, after the first research pass; Matt: "go with your recommendations")
+- **Next step:** write the model specification and build the 4K engine now; fill research gaps later.
+- **Flagship six:** keep the survey's proposal: *Coprinopsis cinerea*, *Pleurotus ostreatus*, *Phanerochaete velutina*, *Armillaria gallica*, *Laccaria bicolor*, *Serpula lacrymans*. *Suillus luteus* and *Marasmius oreades* are first in the second tier, so the long-distance mycorrhizal and fairy-ring families still get early attention.
+- ***Psilocybe cubensis*:** stays. It is there as a well-documented tropical dung species, and the site only simulates mycelium.
+- **Slots:** hold back about 10 of the 100 for later additions (the survey's ten weakest go to the bench).
+- **Network families:** the merged 12 in [docs/research/README.md](docs/research/README.md).

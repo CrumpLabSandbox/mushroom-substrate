@@ -24,6 +24,10 @@ jobs:
           node-version: 22
       - name: Check byte limits
         run: node tools/check.js
+      - name: Check packed species are current
+        run: node tools/pack.js && git diff --exit-code engines
+      - name: Test repeatability
+        run: node tools/test.js
       - name: Build site
         run: node tools/build-site.js
       - uses: actions/configure-pages@v5

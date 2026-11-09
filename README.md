@@ -12,7 +12,9 @@ each a research-backed data file, loaded into one of four simulator engines of i
 
 ## Status
 
-Research and setup. No engine is built yet.
+The first research pass is done ([docs/research/README.md](docs/research/README.md)), the model
+is specified ([docs/MODEL.md](docs/MODEL.md)), and the 4K engine is built with three species. The
+40K, 400K and 4M engines are not built yet.
 
 ## Run
 
@@ -23,6 +25,21 @@ node tools/check.js
 ```
 
 prints each tier's size against its limit.
+
+```bash
+node tools/test.js
+```
+
+checks that each engine gives the same result for the same seed, and prints its speed.
+
+```bash
+node tools/pack.js
+```
+
+rewrites each engine's packed species files from `species/`. Run it after editing a species.
+
+To see an engine locally, serve the repo root (`python3 -m http.server 4173`) and open
+`http://localhost:4173/engines/4k/`.
 
 ```bash
 node tools/build-site.js

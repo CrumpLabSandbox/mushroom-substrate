@@ -1,0 +1,60 @@
+{
+  "slug": "mycena-chlorophos",
+  "name": "Mycena chlorophos",
+  "common_name": "",
+  "family": "LIT",
+  "tier": "third",
+  "data_richness": 1,
+  "survey_number": 19,
+  "display": {
+    "mycelium": "#ece6d6",
+    "cap": "#b9b4a2"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Mycenaceae"
+  },
+  "ecology": {
+    "trophic": "white-rot",
+    "substrate": "fallen twigs and woody litter",
+    "hosts": "",
+    "biomes": [
+      "TRF"
+    ],
+    "continents": [
+      "AS",
+      "AU",
+      "SA"
+    ],
+    "season": "warm, wet season (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        1,
+        3
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#b9b4a2",
+    "stem_colour": "#d9d6c8",
+    "bioluminescent": true
+  },
+  "lite": {
+    "family": "LIT",
+    "form": "agaric",
+    "size_cm": 2,
+    "colours": [
+      "#b9b4a2",
+      "#d9d6c8"
+    ],
+    "biomes": [
+      "TRF"
+    ],
+    "abundance": 1
+  },
+  "notes": "A tiny glowing cap; brightness is reported (unchecked) to depend on temperature."
+}

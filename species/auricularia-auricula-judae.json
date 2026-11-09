@@ -1,0 +1,67 @@
+{
+  "slug": "auricularia-auricula-judae",
+  "name": "Auricularia auricula-judae",
+  "common_name": "wood ear",
+  "family": "MAT",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 14,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#7b4a33"
+  },
+  "taxonomy": {
+    "order": "Auriculariales",
+    "family": "Auriculariaceae"
+  },
+  "ecology": {
+    "trophic": "white-rot",
+    "substrate": "elder and other broadleaf branches",
+    "hosts": "",
+    "biomes": [
+      "TBL",
+      "TRF",
+      "URB"
+    ],
+    "continents": [
+      "NA",
+      "SA",
+      "EU",
+      "AS",
+      "AF",
+      "AU"
+    ],
+    "season": "all year; dries and rehydrates repeatedly (unchecked)"
+  },
+  "fruit": {
+    "form": "jelly",
+    "size_cm": {
+      "value": [
+        3,
+        10
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#7b4a33",
+    "stem_colour": "#6a3d2a",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "jelly",
+    "size_cm": 6.5,
+    "colours": [
+      "#7b4a33",
+      "#6a3d2a"
+    ],
+    "biomes": [
+      "TBL",
+      "TRF",
+      "URB"
+    ],
+    "abundance": 3
+  },
+  "notes": "One file for a species group that is cosmopolitan only as a group. Jelly ear form; the Asian A. heimuer is reported (unchecked) to be a major crop."
+}

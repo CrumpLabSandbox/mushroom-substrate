@@ -1,0 +1,59 @@
+{
+  "slug": "moniliophthora-perniciosa",
+  "name": "Moniliophthora perniciosa",
+  "common_name": "witches' broom",
+  "family": "HOST",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 84,
+  "display": {
+    "mycelium": "#e8e0cf",
+    "cap": "#e0a0a8"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Marasmiaceae"
+  },
+  "ecology": {
+    "trophic": "tree-parasite",
+    "substrate": "living and dead cacao shoots",
+    "hosts": "cacao",
+    "biomes": [
+      "TRF"
+    ],
+    "continents": [
+      "SA",
+      "NA"
+    ],
+    "season": "fruits on dead brooms in the wet season (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        0.5,
+        2.5
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#e0a0a8",
+    "stem_colour": "#ecd8d4",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "HOST",
+    "form": "agaric",
+    "size_cm": 1.5,
+    "colours": [
+      "#e0a0a8",
+      "#ecd8d4"
+    ],
+    "biomes": [
+      "TRF"
+    ],
+    "abundance": 2
+  },
+  "notes": "A two-phase parasite: it first lives between plant cells, then kills and feeds. Genome reported (unchecked); the survey lists South America and the Caribbean, the latter entered here as NA."
+}

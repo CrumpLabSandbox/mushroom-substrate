@@ -267,5 +267,61 @@
       "basis": "unknown",
       "note": "tuning value for the 4K engine; not a measured quantity"
     }
-  }
+  },
+  "data_richness": 3,
+  "survey_number": 21,
+  "taxonomy": {
+    "order": "Boletales",
+    "family": "Serpulaceae"
+  },
+  "ecology": {
+    "trophic": "brown-rot",
+    "substrate": "structural softwood in buildings; wild on conifer logs",
+    "hosts": "",
+    "biomes": [
+      "URB",
+      "ALP",
+      "TCF"
+    ],
+    "continents": [
+      "NA",
+      "SA",
+      "EU",
+      "AS",
+      "AF",
+      "AU"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "crust",
+    "size_cm": {
+      "value": [
+        10,
+        100
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#b5642a",
+    "stem_colour": "#e8e2d2",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "CORD-L",
+    "form": "crust",
+    "size_cm": 55,
+    "colours": [
+      "#b5642a",
+      "#e8e2d2"
+    ],
+    "biomes": [
+      "URB",
+      "ALP",
+      "TCF"
+    ],
+    "abundance": 2
+  },
+  "notes": "Strands 1 to several mm wide cross plaster and brick, carry water and nutrients over non-nutrient surfaces and use calcium and iron from masonry; genome 42.7 Mbp, 12,789 genes [16]. Worldwide in buildings; wild in the Himalaya, northern California, Czechia and East Asia [16]."
 }

@@ -1,0 +1,80 @@
+{
+  "slug": "morchella-importuna",
+  "name": "Morchella importuna",
+  "common_name": "black morel",
+  "family": "DIF",
+  "tier": "second",
+  "data_richness": 2,
+  "survey_number": 40,
+  "display": {
+    "mycelium": "#e6e0d0",
+    "cap": "#4a3a2c"
+  },
+  "taxonomy": {
+    "order": "Pezizales",
+    "family": "Morchellaceae"
+  },
+  "ecology": {
+    "trophic": "litter-soil",
+    "substrate": "disturbed soil, wood chips, burns",
+    "hosts": "",
+    "biomes": [
+      "URB",
+      "TCF",
+      "MED"
+    ],
+    "continents": [
+      "NA",
+      "EU",
+      "AS"
+    ],
+    "season": "spring (unchecked)"
+  },
+  "fruit": {
+    "form": "morel",
+    "size_cm": {
+      "value": [
+        5,
+        15
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08); height"
+    },
+    "cap_colour": "#4a3a2c",
+    "stem_colour": "#e2d6bc",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "DIF",
+    "form": "morel",
+    "size_cm": 10,
+    "colours": [
+      "#4a3a2c",
+      "#e2d6bc"
+    ],
+    "biomes": [
+      "URB",
+      "TCF",
+      "MED"
+    ],
+    "abundance": 2
+  },
+  "notes": "An ascomycete that forms sclerotia [23]. Reported (unchecked) to be field-cultivated in China with external nutrient bags and to have a sequenced genome.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 860,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Morchella on PDA at 26 C: 20.6 mm/day, species not stated; M. angusticeps 5.2 mm/day at 25 C (research/08 [23], snippets). Genus figure, not this species"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 8.6,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value tied to tip speed"
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "slug": "fomitopsis-betulina",
+  "name": "Fomitopsis betulina",
+  "common_name": "birch polypore",
+  "family": "MAT",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 26,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#c9b79c"
+  },
+  "taxonomy": {
+    "order": "Polyporales",
+    "family": "Fomitopsidaceae"
+  },
+  "ecology": {
+    "trophic": "brown-rot",
+    "substrate": "birch only",
+    "hosts": "birch",
+    "biomes": [
+      "BOR",
+      "TBL"
+    ],
+    "continents": [
+      "EU",
+      "NA",
+      "AS"
+    ],
+    "season": "autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "bracket",
+    "size_cm": {
+      "value": [
+        10,
+        25
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#c9b79c",
+    "stem_colour": "#efe8d8",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "bracket",
+    "size_cm": 18,
+    "colours": [
+      "#c9b79c",
+      "#efe8d8"
+    ],
+    "biomes": [
+      "BOR",
+      "TBL"
+    ],
+    "abundance": 3
+  },
+  "notes": "One host. Reported (unchecked) to sit latent in the living tree and decay it after death: a latent-then-burst life history."
+}

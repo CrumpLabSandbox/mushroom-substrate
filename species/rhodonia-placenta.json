@@ -264,5 +264,58 @@
       "basis": "unknown",
       "note": "tuning value for the 4K engine; not a measured quantity"
     }
-  }
+  },
+  "data_richness": 3,
+  "survey_number": 23,
+  "taxonomy": {
+    "order": "Polyporales",
+    "family": "Dacryobolaceae"
+  },
+  "ecology": {
+    "trophic": "brown-rot",
+    "substrate": "conifer timber",
+    "hosts": "",
+    "biomes": [
+      "TCF",
+      "BOR",
+      "URB"
+    ],
+    "continents": [
+      "NA",
+      "EU",
+      "AS"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "crust",
+    "size_cm": {
+      "value": [
+        5,
+        20
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#cfc6ae",
+    "stem_colour": "#cfc6ae",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "crust",
+    "size_cm": 13,
+    "colours": [
+      "#cfc6ae",
+      "#cfc6ae"
+    ],
+    "biomes": [
+      "TCF",
+      "BOR",
+      "URB"
+    ],
+    "abundance": 2
+  },
+  "notes": "Reported (unchecked) to be the model for brown-rot chemistry, with a sequenced genome and decay that advances in two stages behind the hyphal front. The survey marks it second tier; this file keeps the tier it already had."
 }

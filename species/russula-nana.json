@@ -1,0 +1,60 @@
+{
+  "slug": "russula-nana",
+  "name": "Russula nana",
+  "common_name": "",
+  "family": "ECM-S",
+  "tier": "third",
+  "data_richness": 1,
+  "survey_number": 66,
+  "display": {
+    "mycelium": "#e6dccb",
+    "cap": "#c8262c"
+  },
+  "taxonomy": {
+    "order": "Russulales",
+    "family": "Russulaceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "soil around dwarf shrub roots",
+    "hosts": "dwarf willow, mountain avens, alpine bistort",
+    "biomes": [
+      "ALP"
+    ],
+    "continents": [
+      "EU",
+      "NA",
+      "AS"
+    ],
+    "season": "short late-summer season (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        2,
+        5
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#c8262c",
+    "stem_colour": "#f4f1ea",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-S",
+    "form": "agaric",
+    "size_cm": 3.5,
+    "colours": [
+      "#c8262c",
+      "#f4f1ea"
+    ],
+    "biomes": [
+      "ALP"
+    ],
+    "abundance": 2
+  },
+  "notes": "The arctic-alpine representative; its hosts are shrubs 5 cm tall. Family is inferred, not sourced."
+}

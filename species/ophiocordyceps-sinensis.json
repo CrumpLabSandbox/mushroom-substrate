@@ -1,0 +1,58 @@
+{
+  "slug": "ophiocordyceps-sinensis",
+  "name": "Ophiocordyceps sinensis",
+  "common_name": "caterpillar fungus",
+  "family": "HOST",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 88,
+  "display": {
+    "mycelium": "#e8e0cf",
+    "cap": "#6a4a2e"
+  },
+  "taxonomy": {
+    "order": "Hypocreales",
+    "family": "Ophiocordycipitaceae"
+  },
+  "ecology": {
+    "trophic": "insect-parasite",
+    "substrate": "ghost moth larvae in alpine soil",
+    "hosts": "ghost moth larvae (Hepialidae; 57 host taxa)",
+    "biomes": [
+      "ALP"
+    ],
+    "continents": [
+      "AS"
+    ],
+    "season": "infects in late autumn, emerges in early spring, sheds spores in late summer"
+  },
+  "fruit": {
+    "form": "club",
+    "size_cm": {
+      "value": [
+        4,
+        10
+      ],
+      "unit": "cm",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [35]"
+    },
+    "cap_colour": "#6a4a2e",
+    "stem_colour": "#c9a060",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "HOST",
+    "form": "club",
+    "size_cm": 7,
+    "colours": [
+      "#6a4a2e",
+      "#c9a060"
+    ],
+    "biomes": [
+      "ALP"
+    ],
+    "abundance": 1
+  },
+  "notes": "The highest-altitude species on the list, at 3,000 to 5,000 m on the Tibetan Plateau and in the Himalaya; described as slow-growing; Vulnerable on the IUCN list [35]."
+}

@@ -1,0 +1,49 @@
+{
+  "slug": "psathyrella-aquatica",
+  "name": "Psathyrella aquatica",
+  "common_name": "",
+  "family": "LIT",
+  "tier": "third",
+  "data_richness": 1,
+  "survey_number": 100,
+  "display": {
+    "mycelium": "#ece6d6",
+    "cap": "#9a7a52"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Psathyrellaceae"
+  },
+  "ecology": {
+    "trophic": "other",
+    "substrate": "submerged wood, silt and gravel in a river",
+    "hosts": "",
+    "biomes": [
+      "TCF"
+    ],
+    "continents": [
+      "NA"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "agaric",
+    "cap_colour": "#9a7a52",
+    "stem_colour": "#d9cfb8",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "LIT",
+    "form": "agaric",
+    "size_cm": null,
+    "colours": [
+      "#9a7a52",
+      "#d9cfb8"
+    ],
+    "biomes": [
+      "TCF"
+    ],
+    "abundance": 1
+  },
+  "notes": "Fruits under water, about 0.5 m deep in cold spring-fed water, on one 1 km stretch of the Rogue River, Oregon; spores collect in gas bubbles under the cap and float up; fruited in the lab [31]. No fruit body size was found."
+}

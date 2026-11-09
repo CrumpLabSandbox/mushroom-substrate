@@ -1,0 +1,60 @@
+{
+  "slug": "neonothopanus-gardneri",
+  "name": "Neonothopanus gardneri",
+  "common_name": "flor de coco",
+  "family": "MAT",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 18,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#e2c75a"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Omphalotaceae"
+  },
+  "ecology": {
+    "trophic": "white-rot",
+    "substrate": "base of palms (Attalea) and decaying palm leaves",
+    "hosts": "Attalea palms",
+    "biomes": [
+      "SAV",
+      "TRF"
+    ],
+    "continents": [
+      "SA"
+    ],
+    "season": "tropical"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        1,
+        9
+      ],
+      "unit": "cm",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [30]"
+    },
+    "cap_colour": "#e2c75a",
+    "stem_colour": "#d9c27a",
+    "bioluminescent": true
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "agaric",
+    "size_cm": 5,
+    "colours": [
+      "#e2c75a",
+      "#d9c27a"
+    ],
+    "biomes": [
+      "SAV",
+      "TRF"
+    ],
+    "abundance": 1
+  },
+  "notes": "The brightest known glowing mushroom, from Goias, Piaui and Tocantins in Brazil [30]. Its glow is reported (unchecked, Oliveira 2015) to follow a daily clock and draw insects."
+}

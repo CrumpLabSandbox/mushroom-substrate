@@ -1,0 +1,84 @@
+{
+  "slug": "lentinula-edodes",
+  "name": "Lentinula edodes",
+  "common_name": "shiitake",
+  "family": "MAT",
+  "tier": "second",
+  "data_richness": 3,
+  "survey_number": 3,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#7a5234"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Omphalotaceae"
+  },
+  "ecology": {
+    "trophic": "white-rot",
+    "substrate": "dead logs of the oak and beech family (Fagaceae)",
+    "hosts": "",
+    "biomes": [
+      "TBL"
+    ],
+    "continents": [
+      "AS"
+    ],
+    "season": "spring and autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        5,
+        15
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#7a5234",
+    "stem_colour": "#d8c6a8",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "agaric",
+    "size_cm": 10,
+    "colours": [
+      "#7a5234",
+      "#d8c6a8"
+    ],
+    "biomes": [
+      "TBL"
+    ],
+    "abundance": 2
+  },
+  "notes": "Growth is inhibited at 30 C and above [19]. Reported (unchecked) to be the second most cultivated mushroom, with a sequenced genome, and to form a brown crust on the log surface before fruiting; native to Asia, cultivated worldwide.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 390,
+      "unit": "um/h",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [19]",
+      "note": "8.8 to 10.0 mm/day at 25 C for two strains (8.7 mm/day on PDA); middle used; from a search snippet, attribution to one of three papers not confirmed"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 3.9,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value tied to tip speed"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 25,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [19]",
+      "note": "optimum 25 C; inhibited at 30 C and above; snippet"
+    }
+  }
+}

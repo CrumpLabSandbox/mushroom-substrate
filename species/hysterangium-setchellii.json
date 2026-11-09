@@ -1,0 +1,58 @@
+{
+  "slug": "hysterangium-setchellii",
+  "name": "Hysterangium setchellii",
+  "common_name": "",
+  "family": "ECM-M",
+  "tier": "third",
+  "data_richness": 1,
+  "survey_number": 74,
+  "display": {
+    "mycelium": "#e9dcc8",
+    "cap": "#c9bfae"
+  },
+  "taxonomy": {
+    "order": "Hysterangiales",
+    "family": "Hysterangiaceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "soil around Douglas-fir roots",
+    "hosts": "Douglas-fir",
+    "biomes": [
+      "TCF"
+    ],
+    "continents": [
+      "NA"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "truffle",
+    "size_cm": {
+      "value": [
+        1,
+        3
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#c9bfae",
+    "stem_colour": "#c9bfae",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-M",
+    "form": "truffle",
+    "size_cm": 2,
+    "colours": [
+      "#c9bfae",
+      "#c9bfae"
+    ],
+    "biomes": [
+      "TCF"
+    ],
+    "abundance": 1
+  },
+  "notes": "A false truffle. Reported (unchecked) to be a medium-distance mat type whose dense mats change soil chemistry over square metres."
+}

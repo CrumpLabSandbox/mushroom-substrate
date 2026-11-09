@@ -1,0 +1,69 @@
+{
+  "slug": "pyronema-omphalodes",
+  "name": "Pyronema omphalodes",
+  "common_name": "",
+  "family": "DIF",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 47,
+  "display": {
+    "mycelium": "#f3d9c4",
+    "cap": "#f08a3c"
+  },
+  "taxonomy": {
+    "order": "Pezizales",
+    "family": "Pyronemataceae"
+  },
+  "ecology": {
+    "trophic": "litter-soil",
+    "substrate": "burnt or steam-sterilised soil",
+    "hosts": "",
+    "biomes": [
+      "TCF",
+      "BOR",
+      "MED",
+      "URB"
+    ],
+    "continents": [
+      "NA",
+      "SA",
+      "EU",
+      "AS",
+      "AF",
+      "AU"
+    ],
+    "season": "within weeks of a fire (unchecked)"
+  },
+  "fruit": {
+    "form": "cup",
+    "size_cm": {
+      "value": [
+        0.1,
+        0.2
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#f08a3c",
+    "stem_colour": "#f0c9a0",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "DIF",
+    "form": "cup",
+    "size_cm": 0.2,
+    "colours": [
+      "#f08a3c",
+      "#f0c9a0"
+    ],
+    "biomes": [
+      "TCF",
+      "BOR",
+      "MED",
+      "URB"
+    ],
+    "abundance": 2
+  },
+  "notes": "A fire specialist and an ascomycete: extremely fast, first on fresh burns, and it loses to competitors once soil life returns. Reported (unchecked) to have a sequenced genome."
+}

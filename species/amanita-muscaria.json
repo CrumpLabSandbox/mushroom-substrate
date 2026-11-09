@@ -1,0 +1,69 @@
+{
+  "slug": "amanita-muscaria",
+  "name": "Amanita muscaria",
+  "common_name": "fly agaric",
+  "family": "ECM-M",
+  "tier": "second",
+  "data_richness": 2,
+  "survey_number": 54,
+  "display": {
+    "mycelium": "#e9dcc8",
+    "cap": "#d6281c"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Amanitaceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "soil around tree roots",
+    "hosts": "birch, pine, spruce; eucalypt and southern beech where introduced",
+    "biomes": [
+      "BOR",
+      "TCF",
+      "TBL",
+      "ALP"
+    ],
+    "continents": [
+      "NA",
+      "EU",
+      "AS",
+      "AU",
+      "SA",
+      "AF"
+    ],
+    "season": "late summer to autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        8,
+        20
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#d6281c",
+    "stem_colour": "#f4f0e6",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-M",
+    "form": "agaric",
+    "size_cm": 14,
+    "colours": [
+      "#d6281c",
+      "#f4f0e6"
+    ],
+    "biomes": [
+      "BOR",
+      "TCF",
+      "TBL",
+      "ALP"
+    ],
+    "abundance": 3
+  },
+  "notes": "Medium-distance smooth exploration type at genus level [13]. Native to NA, EU and AS; invasive in AU, SA and AF, where it is reported (unchecked) to be spreading with planted pines; genome reported (unchecked)."
+}

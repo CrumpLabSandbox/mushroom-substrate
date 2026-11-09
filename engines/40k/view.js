@@ -1,14 +1,12 @@
 // 40K view: draws the substrate, the network (by width, reserve or flow), fruiting sites, the
 // signal plot and the readout. Reads the core's state; never changes it except the temperature.
 const $ = id => document.getElementById(id), cv = $('c'), x = cv.getContext('2d'), pl = $('plot'), px = pl.getContext('2d'),
-  bg = document.createElement('canvas'), bx = bg.getContext('2d'), SLUGS = ['phanerochaete-velutina', 'serpula-lacrymans',
-    'armillaria-gallica', 'laccaria-bicolor', 'coprinopsis-cinerea', 'pleurotus-ostreatus', 'rhodonia-placenta'],
+  bg = document.createElement('canvas'), bx = bg.getContext('2d'),
   SCN = ['dish of agar', 'wood blocks in soil', 'leaf litter patches', 'tree roots in soil', 'one large log'],
   TYPE = [[42, 36, 28], [112, 74, 38], [84, 78, 36], [150, 70, 70], [44, 50, 58]], // soil, wood, litter, root, agar
   RAMP = { reserve: ['#4a3a12', '#8a6a14', '#c99a1c', '#f2c94c', '#fff3b0'], flow: ['#3a5f95', '#3f7fc0', '#4a9fe0', '#7cc6f5', '#e2f5ff'] }
 let S, P, run = 1, frame = 0
 bg.width = bg.height = 128
-SLUGS.forEach(s => $('sp').add(new Option(s.replace('-', ' ').replace(/^./, c => c.toUpperCase()), s)))
 SCN.forEach((s, i) => $('scn').add(new Option(s, i)))
 
 async function load(keepScn) {
@@ -91,4 +89,7 @@ $('csv').onclick = () => {
   a.href = URL.createObjectURL(new Blob(['hours,tips,live_length_um,reserve,uptake_per_h,flow_per_h,front_um,fruits\n' + S.rec.map(r => r.join(',')).join('\n')], { type: 'text/csv' }))
   a.download = $('sp').value + '-seed' + $('seed').value + '.csv'; a.click()
 }
-load().then(() => { $('tv').textContent = S.temp + ' °C'; tick() })
+fetch('list.json').then(r => r.json()).then(list => {
+  for (const [slug, name, common] of list) $('sp').add(new Option(name + (common ? ' (' + common + ')' : ''), slug))
+  $('sp').value = 'phanerochaete-velutina'; load().then(tick)
+})

@@ -1,0 +1,69 @@
+{
+  "slug": "trametes-versicolor",
+  "name": "Trametes versicolor",
+  "common_name": "turkey tail",
+  "family": "MAT",
+  "tier": "second",
+  "data_richness": 3,
+  "survey_number": 5,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#8a6f55"
+  },
+  "taxonomy": {
+    "order": "Polyporales",
+    "family": "Polyporaceae"
+  },
+  "ecology": {
+    "trophic": "white-rot",
+    "substrate": "dead broadleaf wood",
+    "hosts": "",
+    "biomes": [
+      "TBL",
+      "BOR",
+      "TCF",
+      "URB"
+    ],
+    "continents": [
+      "NA",
+      "SA",
+      "EU",
+      "AS",
+      "AF",
+      "AU"
+    ],
+    "season": "all year"
+  },
+  "fruit": {
+    "form": "bracket",
+    "size_cm": {
+      "value": [
+        2,
+        8
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#8a6f55",
+    "stem_colour": "#e8e0cf",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "bracket",
+    "size_cm": 5,
+    "colours": [
+      "#8a6f55",
+      "#e8e0cf"
+    ],
+    "biomes": [
+      "TBL",
+      "BOR",
+      "TCF",
+      "URB"
+    ],
+    "abundance": 3
+  },
+  "notes": "Reported (unchecked) to be the standard test fungus for wood decay and for fungus-against-fungus combat experiments, with a sequenced genome. In beech-block trials it is an early secondary coloniser that deadlocks with Hypholoma fasciculare and is replaced by Phanerochaete velutina (research/06 [4])."
+}

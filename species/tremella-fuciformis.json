@@ -1,0 +1,64 @@
+{
+  "slug": "tremella-fuciformis",
+  "name": "Tremella fuciformis",
+  "common_name": "snow fungus",
+  "family": "HOST",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 94,
+  "display": {
+    "mycelium": "#e8e0cf",
+    "cap": "#f4f2ea"
+  },
+  "taxonomy": {
+    "order": "Tremellales",
+    "family": "Tremellaceae"
+  },
+  "ecology": {
+    "trophic": "mycoparasite",
+    "substrate": "the mycelium of a wood-decay ascomycete, on dead broadleaf wood",
+    "hosts": "Annulohypoxylon (a wood-decay ascomycete)",
+    "biomes": [
+      "TRF",
+      "TBL"
+    ],
+    "continents": [
+      "AS",
+      "SA",
+      "AF",
+      "AU",
+      "NA"
+    ],
+    "season": "warm, wet (unchecked)"
+  },
+  "fruit": {
+    "form": "jelly",
+    "size_cm": {
+      "value": [
+        5,
+        15
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#f4f2ea",
+    "stem_colour": "#ece8dc",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "HOST",
+    "form": "jelly",
+    "size_cm": 10,
+    "colours": [
+      "#f4f2ea",
+      "#ece8dc"
+    ],
+    "biomes": [
+      "TRF",
+      "TBL"
+    ],
+    "abundance": 2
+  },
+  "notes": "A parasite of another fungus, from a separate class (Tremellomycetes). Reported (unchecked) to have a yeast phase plus hyphae that tap the host's hyphae, to be cultivated in China as a two-fungus culture and to have a sequenced genome."
+}

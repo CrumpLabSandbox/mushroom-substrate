@@ -264,5 +264,53 @@
       "basis": "unknown",
       "note": "tuning value for the 4K engine; not a measured quantity"
     }
-  }
+  },
+  "data_richness": 3,
+  "survey_number": 7,
+  "taxonomy": {
+    "order": "Polyporales",
+    "family": "Phanerochaetaceae"
+  },
+  "ecology": {
+    "trophic": "white-rot",
+    "substrate": "fallen broadleaf wood; grows through soil between pieces",
+    "hosts": "",
+    "biomes": [
+      "TBL"
+    ],
+    "continents": [
+      "EU",
+      "NA"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "crust",
+    "size_cm": {
+      "value": [
+        5,
+        30
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08); patch width"
+    },
+    "cap_colour": "#d8cfae",
+    "stem_colour": "#d8cfae",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "CORD-L",
+    "form": "crust",
+    "size_cm": 18,
+    "colours": [
+      "#d8cfae",
+      "#d8cfae"
+    ],
+    "biomes": [
+      "TBL"
+    ],
+    "abundance": 2
+  },
+  "notes": "Extension is roughly linear in time and rises with temperature from 5 to 20 or 27 C [14]; smaller inocula and grazing by soil animals slow it [15]. Reported (unchecked) to be the best-measured foraging network of any fungus (Boddy and Fricker groups)."
 }

@@ -1,0 +1,63 @@
+{
+  "slug": "ascobolus-immersus",
+  "name": "Ascobolus immersus",
+  "common_name": "",
+  "family": "DIF",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 52,
+  "display": {
+    "mycelium": "#e6e0d0",
+    "cap": "#b9a86a"
+  },
+  "taxonomy": {
+    "order": "Pezizales",
+    "family": "Ascobolaceae"
+  },
+  "ecology": {
+    "trophic": "dung",
+    "substrate": "herbivore dung",
+    "hosts": "",
+    "biomes": [
+      "GRS"
+    ],
+    "continents": [
+      "NA",
+      "SA",
+      "EU",
+      "AS",
+      "AF",
+      "AU"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "cup",
+    "size_cm": {
+      "value": [
+        0.05,
+        0.2
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#b9a86a",
+    "stem_colour": "#b9a86a",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "DIF",
+    "form": "cup",
+    "size_cm": 0.1,
+    "colours": [
+      "#b9a86a",
+      "#b9a86a"
+    ],
+    "biomes": [
+      "GRS"
+    ],
+    "abundance": 2
+  },
+  "notes": "An ascomycete with a minute cup. Reported (unchecked) to be a classic genetics model and to shoot large spores toward light so that grazers eat them."
+}

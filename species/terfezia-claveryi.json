@@ -1,0 +1,62 @@
+{
+  "slug": "terfezia-claveryi",
+  "name": "Terfezia claveryi",
+  "common_name": "desert truffle",
+  "family": "ECM-S",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 70,
+  "display": {
+    "mycelium": "#e6dccb",
+    "cap": "#b9946a"
+  },
+  "taxonomy": {
+    "order": "Pezizales",
+    "family": "Pezizaceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "arid soil around rockrose roots",
+    "hosts": "rockrose family herbs and shrubs (Helianthemum)",
+    "biomes": [
+      "DES",
+      "MED"
+    ],
+    "continents": [
+      "AF",
+      "AS",
+      "EU"
+    ],
+    "season": "spring, after autumn rain (unchecked)"
+  },
+  "fruit": {
+    "form": "truffle",
+    "size_cm": {
+      "value": [
+        3,
+        10
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#b9946a",
+    "stem_colour": "#b9946a",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-S",
+    "form": "truffle",
+    "size_cm": 6.5,
+    "colours": [
+      "#b9946a",
+      "#b9946a"
+    ],
+    "biomes": [
+      "DES",
+      "MED"
+    ],
+    "abundance": 2
+  },
+  "notes": "A hot-desert mycorrhiza; family is inferred. Its mycorrhiza form is reported (unchecked) to change with moisture, and it is reported to be cultivated in Spain."
+}

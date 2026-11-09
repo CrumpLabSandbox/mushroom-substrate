@@ -1,0 +1,65 @@
+{
+  "slug": "calvatia-gigantea",
+  "name": "Calvatia gigantea",
+  "common_name": "giant puffball",
+  "family": "RING",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 33,
+  "display": {
+    "mycelium": "#ebe4d0",
+    "cap": "#f2efe6"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Agaricaceae"
+  },
+  "ecology": {
+    "trophic": "litter-soil",
+    "substrate": "meadow and woodland-edge soil",
+    "hosts": "",
+    "biomes": [
+      "GRS",
+      "TBL",
+      "URB"
+    ],
+    "continents": [
+      "NA",
+      "EU",
+      "AS"
+    ],
+    "season": "late summer and autumn"
+  },
+  "fruit": {
+    "form": "puffball",
+    "size_cm": {
+      "value": [
+        10,
+        50
+      ],
+      "unit": "cm",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [28]",
+      "note": "occasionally to 80 cm"
+    },
+    "cap_colour": "#f2efe6",
+    "stem_colour": "#e6e0d0",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "RING",
+    "form": "puffball",
+    "size_cm": 30,
+    "colours": [
+      "#f2efe6",
+      "#e6e0d0"
+    ],
+    "biomes": [
+      "GRS",
+      "TBL",
+      "URB"
+    ],
+    "abundance": 2
+  },
+  "notes": "Record fruit body 23 kg; several trillion spores per fruit body is quoted without a citation in the source; spores leave in passive puffs [28]. The source gives its range only as temperate regions worldwide, so the continent list here is a reading of that."
+}

@@ -1,0 +1,72 @@
+{
+  "slug": "suillus-luteus",
+  "name": "Suillus luteus",
+  "common_name": "slippery jack",
+  "family": "ECM-L",
+  "tier": "second",
+  "data_richness": 3,
+  "survey_number": 57,
+  "display": {
+    "mycelium": "#eadfc6",
+    "cap": "#7a4a2a"
+  },
+  "taxonomy": {
+    "order": "Boletales",
+    "family": "Suillaceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "soil around pine roots",
+    "hosts": "pines only",
+    "biomes": [
+      "TCF",
+      "BOR"
+    ],
+    "continents": [
+      "EU",
+      "AS",
+      "SA",
+      "AF",
+      "AU"
+    ],
+    "season": "autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "bolete",
+    "size_cm": {
+      "value": [
+        5,
+        12
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#7a4a2a",
+    "stem_colour": "#e9dfa8",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-L",
+    "form": "bolete",
+    "size_cm": 8.5,
+    "colours": [
+      "#7a4a2a",
+      "#e9dfa8"
+    ],
+    "biomes": [
+      "TCF",
+      "BOR"
+    ],
+    "abundance": 3
+  },
+  "notes": "Long-distance exploration type [13]; native to EU and AS, invasive with pine in SA, AF and AU. Ectomycorrhizal isolates including Suillus grew 0.25 to 0.95 mm/day on agar at 22 C [25], a group figure that is not entered as this species' tip speed. Its relative S. bovinus is reported (unchecked) to be the classic species in root-window microcosms showing carbon moving between seedlings.",
+  "environment": {
+    "t_opt": {
+      "value": 22,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "22 C suited Suillus isolates in one study (research/08 [25], snippet); genus level, not a measured optimum"
+    }
+  }
+}

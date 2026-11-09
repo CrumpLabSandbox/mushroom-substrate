@@ -1,0 +1,62 @@
+{
+  "slug": "calocera-viscosa",
+  "name": "Calocera viscosa",
+  "common_name": "yellow stagshorn",
+  "family": "MAT",
+  "tier": "third",
+  "data_richness": 1,
+  "survey_number": 29,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#f2a51e"
+  },
+  "taxonomy": {
+    "order": "Dacrymycetales",
+    "family": "Dacrymycetaceae"
+  },
+  "ecology": {
+    "trophic": "brown-rot",
+    "substrate": "buried conifer wood and stumps",
+    "hosts": "",
+    "biomes": [
+      "TCF",
+      "BOR"
+    ],
+    "continents": [
+      "EU",
+      "NA",
+      "AS"
+    ],
+    "season": "autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "jelly",
+    "size_cm": {
+      "value": [
+        3,
+        8
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08); height"
+    },
+    "cap_colour": "#f2a51e",
+    "stem_colour": "#f0b93a",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "jelly",
+    "size_cm": 5.5,
+    "colours": [
+      "#f2a51e",
+      "#f0b93a"
+    ],
+    "biomes": [
+      "TCF",
+      "BOR"
+    ],
+    "abundance": 2
+  },
+  "notes": "A brown rot from a separate class (Dacrymycetes), with an orange jelly fruit body shaped like antlers."
+}

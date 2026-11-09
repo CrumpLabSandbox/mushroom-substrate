@@ -1,0 +1,53 @@
+{
+  "slug": "piloderma-croceum",
+  "name": "Piloderma croceum",
+  "common_name": "",
+  "family": "ECM-M",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 73,
+  "display": {
+    "mycelium": "#ecd040",
+    "cap": "#e8c832"
+  },
+  "taxonomy": {
+    "order": "Atheliales",
+    "family": "Atheliaceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "boreal humus and rotting wood around tree roots",
+    "hosts": "spruce, pine, oak",
+    "biomes": [
+      "BOR",
+      "TCF"
+    ],
+    "continents": [
+      "EU",
+      "NA",
+      "AS"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "crust",
+    "cap_colour": "#e8c832",
+    "stem_colour": "#e8c832",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-M",
+    "form": "crust",
+    "size_cm": null,
+    "colours": [
+      "#e8c832",
+      "#e8c832"
+    ],
+    "biomes": [
+      "BOR",
+      "TCF"
+    ],
+    "abundance": 3
+  },
+  "notes": "Bright yellow mycelium fills boreal humus; the fruit body is a thin yellow crust under wood, in patches with no size given. Medium-distance fringe type, a sequenced genome and its use as an indicator of old forest are reported but unchecked."
+}

@@ -1,0 +1,61 @@
+{
+  "slug": "marasmius-crinis-equi",
+  "name": "Marasmius crinis-equi",
+  "common_name": "horsehair fungus",
+  "family": "RHIZ",
+  "tier": "third",
+  "data_richness": 1,
+  "survey_number": 37,
+  "display": {
+    "mycelium": "#2a2420",
+    "cap": "#c9a070"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Marasmiaceae"
+  },
+  "ecology": {
+    "trophic": "litter-soil",
+    "substrate": "living and dead leaves and twigs in the canopy and understorey",
+    "hosts": "",
+    "biomes": [
+      "TRF"
+    ],
+    "continents": [
+      "AS",
+      "AF",
+      "AU",
+      "SA"
+    ],
+    "season": "wet tropics (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        0.3,
+        1
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#c9a070",
+    "stem_colour": "#1c1917",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "RHIZ",
+    "form": "agaric",
+    "size_cm": 0.7,
+    "colours": [
+      "#c9a070",
+      "#1c1917"
+    ],
+    "biomes": [
+      "TRF"
+    ],
+    "abundance": 2
+  },
+  "notes": "The only network on the list that hangs in air: black wiry aerial rhizomorphs are reported (unchecked) to net and catch falling litter, and birds are reported to use them as nest material."
+}

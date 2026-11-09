@@ -1,0 +1,62 @@
+{
+  "slug": "fomes-fomentarius",
+  "name": "Fomes fomentarius",
+  "common_name": "tinder hoof",
+  "family": "MAT",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 11,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#8e8a82"
+  },
+  "taxonomy": {
+    "order": "Polyporales",
+    "family": "Polyporaceae"
+  },
+  "ecology": {
+    "trophic": "white-rot",
+    "substrate": "birch and beech trunks",
+    "hosts": "birch, beech",
+    "biomes": [
+      "BOR",
+      "TBL"
+    ],
+    "continents": [
+      "EU",
+      "NA",
+      "AS"
+    ],
+    "season": "perennial; sheds spores in spring (unchecked)"
+  },
+  "fruit": {
+    "form": "bracket",
+    "size_cm": {
+      "value": [
+        10,
+        40
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#8e8a82",
+    "stem_colour": "#6b5a48",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "bracket",
+    "size_cm": 25,
+    "colours": [
+      "#8e8a82",
+      "#6b5a48"
+    ],
+    "biomes": [
+      "BOR",
+      "TBL"
+    ],
+    "abundance": 3
+  },
+  "notes": "A weak parasite and then a saprotroph that forms a decay column inside the trunk. Reported (unchecked) to be cold-hardy, with a fruit body that adds a layer each year for decades."
+}

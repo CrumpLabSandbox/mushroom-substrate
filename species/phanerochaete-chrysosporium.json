@@ -1,0 +1,53 @@
+{
+  "slug": "phanerochaete-chrysosporium",
+  "name": "Phanerochaete chrysosporium",
+  "common_name": "",
+  "family": "DIF",
+  "tier": "second",
+  "data_richness": 3,
+  "survey_number": 8,
+  "display": {
+    "mycelium": "#e6e0d0",
+    "cap": "#e9e2cf"
+  },
+  "taxonomy": {
+    "order": "Polyporales",
+    "family": "Phanerochaetaceae"
+  },
+  "ecology": {
+    "trophic": "white-rot",
+    "substrate": "wood chips, compost piles",
+    "hosts": "",
+    "biomes": [
+      "TBL",
+      "URB"
+    ],
+    "continents": [
+      "NA",
+      "EU",
+      "AS"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "crust",
+    "cap_colour": "#e9e2cf",
+    "stem_colour": "#e9e2cf",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "DIF",
+    "form": "crust",
+    "size_cm": null,
+    "colours": [
+      "#e9e2cf",
+      "#e9e2cf"
+    ],
+    "biomes": [
+      "TBL",
+      "URB"
+    ],
+    "abundance": 2
+  },
+  "notes": "Very fast and makes asexual spores. Reported (unchecked) to be heat-loving, the first basidiomycete with a sequenced genome and the laboratory model for lignin breakdown."
+}

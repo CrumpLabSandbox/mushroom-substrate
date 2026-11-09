@@ -1,0 +1,54 @@
+{
+  "slug": "leucoagaricus-gongylophorus",
+  "name": "Leucoagaricus gongylophorus",
+  "common_name": "",
+  "family": "GARDEN",
+  "tier": "second",
+  "data_richness": 3,
+  "survey_number": 91,
+  "display": {
+    "mycelium": "#f0ece0",
+    "cap": "#e9e0c8"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Agaricaceae"
+  },
+  "ecology": {
+    "trophic": "insect-farmed",
+    "substrate": "leaf fragments cut and tended by ants",
+    "hosts": "leafcutter ants (Atta, Acromyrmex)",
+    "biomes": [
+      "TRF",
+      "SAV",
+      "GRS"
+    ],
+    "continents": [
+      "SA",
+      "NA"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "agaric",
+    "cap_colour": "#e9e0c8",
+    "stem_colour": "#f0eadb",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "GARDEN",
+    "form": "agaric",
+    "size_cm": null,
+    "colours": [
+      "#e9e0c8",
+      "#f0eadb"
+    ],
+    "biomes": [
+      "TRF",
+      "SAV",
+      "GRS"
+    ],
+    "abundance": 3
+  },
+  "notes": "Makes swollen food tips for the ants; the lineage has been passed nest to nest for over 23 million years, in a five-way symbiosis with a garden parasite and protective bacteria [34]. The mushroom is rarely seen: ants remove young ones and it fruits after a nest is abandoned [34], so no size is given. Central America and the Caribbean are entered as NA."
+}

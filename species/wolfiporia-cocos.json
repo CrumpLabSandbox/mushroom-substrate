@@ -1,0 +1,61 @@
+{
+  "slug": "wolfiporia-cocos",
+  "name": "Wolfiporia cocos",
+  "common_name": "fu ling, tuckahoe",
+  "family": "MAT",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 28,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#5a4030"
+  },
+  "taxonomy": {
+    "order": "Polyporales",
+    "family": "Laetiporaceae"
+  },
+  "ecology": {
+    "trophic": "brown-rot",
+    "substrate": "pine roots",
+    "hosts": "pines",
+    "biomes": [
+      "TBL",
+      "TCF"
+    ],
+    "continents": [
+      "AS",
+      "NA"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "crust",
+    "size_cm": {
+      "value": [
+        10,
+        30
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08); the sclerotium; the fruit body is a thin crust"
+    },
+    "cap_colour": "#5a4030",
+    "stem_colour": "#e9e2d0",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "crust",
+    "size_cm": 20,
+    "colours": [
+      "#5a4030",
+      "#e9e2d0"
+    ],
+    "biomes": [
+      "TBL",
+      "TCF"
+    ],
+    "abundance": 1
+  },
+  "notes": "Forms a sclerotium weighing kilograms. Reported (unchecked) to be farmed in China on buried pine and to have a sequenced genome."
+}

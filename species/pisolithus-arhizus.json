@@ -1,0 +1,67 @@
+{
+  "slug": "pisolithus-arhizus",
+  "name": "Pisolithus arhizus",
+  "common_name": "dyeball",
+  "family": "ECM-L",
+  "tier": "second",
+  "data_richness": 3,
+  "survey_number": 56,
+  "display": {
+    "mycelium": "#d9b84a",
+    "cap": "#5a4326"
+  },
+  "taxonomy": {
+    "order": "Boletales",
+    "family": "Sclerodermataceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "hot, dry, acid or metal-rich soil around tree roots (unchecked)",
+    "hosts": "pine, oak, eucalypt",
+    "biomes": [
+      "MED",
+      "DES",
+      "URB"
+    ],
+    "continents": [
+      "NA",
+      "SA",
+      "EU",
+      "AS",
+      "AF",
+      "AU"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "puffball",
+    "size_cm": {
+      "value": [
+        5,
+        20
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#5a4326",
+    "stem_colour": "#8a6a2e",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-L",
+    "form": "puffball",
+    "size_cm": 13,
+    "colours": [
+      "#5a4326",
+      "#8a6a2e"
+    ],
+    "biomes": [
+      "MED",
+      "DES",
+      "URB"
+    ],
+    "abundance": 2
+  },
+  "notes": "One file for a species group (syn. P. tinctorius), cosmopolitan only as a group; long-distance type is reported for the family (unchecked). Reported (unchecked) to be the most used commercial inoculant, to have a sequenced genome and yellow rhizomorphs, and to tolerate mine waste."
+}

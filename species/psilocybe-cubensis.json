@@ -1,0 +1,65 @@
+{
+  "slug": "psilocybe-cubensis",
+  "name": "Psilocybe cubensis",
+  "common_name": "",
+  "family": "DIF",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 49,
+  "display": {
+    "mycelium": "#e6e0d0",
+    "cap": "#c9a05a"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Hymenogastraceae"
+  },
+  "ecology": {
+    "trophic": "dung",
+    "substrate": "cattle dung",
+    "hosts": "",
+    "biomes": [
+      "GRS",
+      "SAV",
+      "TRF"
+    ],
+    "continents": [
+      "SA",
+      "AF",
+      "AS",
+      "AU"
+    ],
+    "season": "warm, humid (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        2,
+        8
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#c9a05a",
+    "stem_colour": "#ece4d0",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "DIF",
+    "form": "agaric",
+    "size_cm": 5,
+    "colours": [
+      "#c9a05a",
+      "#ece4d0"
+    ],
+    "biomes": [
+      "GRS",
+      "SAV",
+      "TRF"
+    ],
+    "abundance": 2
+  },
+  "notes": "Diffuse with some strands. Very widely grown, so hobby-level growth data are abundant but rarely peer-reviewed; reported (unchecked) to have a sequenced genome. A controlled species in many places (survey section 6 asks whether to keep it)."
+}

@@ -1,0 +1,64 @@
+{
+  "slug": "ophiocordyceps-unilateralis",
+  "name": "Ophiocordyceps unilateralis",
+  "common_name": "zombie-ant fungus",
+  "family": "HOST",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 87,
+  "display": {
+    "mycelium": "#e8e0cf",
+    "cap": "#5a4636"
+  },
+  "taxonomy": {
+    "order": "Hypocreales",
+    "family": "Ophiocordycipitaceae"
+  },
+  "ecology": {
+    "trophic": "insect-parasite",
+    "substrate": "the body of a living ant",
+    "hosts": "carpenter ants",
+    "biomes": [
+      "TRF",
+      "TBL"
+    ],
+    "continents": [
+      "SA",
+      "AS",
+      "AF",
+      "AU",
+      "NA"
+    ],
+    "season": "humid understorey (unchecked)"
+  },
+  "fruit": {
+    "form": "club",
+    "size_cm": {
+      "value": [
+        1,
+        3
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#5a4636",
+    "stem_colour": "#4a3a2e",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "HOST",
+    "form": "club",
+    "size_cm": 2,
+    "colours": [
+      "#5a4636",
+      "#4a3a2e"
+    ],
+    "biomes": [
+      "TRF",
+      "TBL"
+    ],
+    "abundance": 2
+  },
+  "notes": "One file for a species group. Reported (unchecked): cells link into a network around muscle inside the ant, and the ant bites onto a leaf at a set height before death; spores rain onto ant trails. Hosts die at 20 to 30 C and 94 to 95% humidity, 4 to 10 days after infection (research/06 [27])."
+}

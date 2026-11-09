@@ -1,0 +1,63 @@
+{
+  "slug": "volvariella-volvacea",
+  "name": "Volvariella volvacea",
+  "common_name": "paddy straw mushroom",
+  "family": "DIF",
+  "tier": "second",
+  "data_richness": 3,
+  "survey_number": 39,
+  "display": {
+    "mycelium": "#e6e0d0",
+    "cap": "#6f6a66"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Pluteaceae"
+  },
+  "ecology": {
+    "trophic": "litter-soil",
+    "substrate": "rice straw, oil palm waste",
+    "hosts": "",
+    "biomes": [
+      "TRF",
+      "SAV",
+      "URB"
+    ],
+    "continents": [
+      "AS",
+      "AF"
+    ],
+    "season": "needs heat; killed by chilling (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        5,
+        12
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#6f6a66",
+    "stem_colour": "#ece8de",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "DIF",
+    "form": "agaric",
+    "size_cm": 8.5,
+    "colours": [
+      "#6f6a66",
+      "#ece8de"
+    ],
+    "biomes": [
+      "TRF",
+      "SAV",
+      "URB"
+    ],
+    "abundance": 2
+  },
+  "notes": "Very fast, and grows from an egg-like sac. Reported (unchecked) to have the fastest crop cycle of the cultivated mushrooms, to be killed by chilling and to have a sequenced genome."
+}

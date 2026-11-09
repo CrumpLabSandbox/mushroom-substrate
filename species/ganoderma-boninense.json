@@ -1,0 +1,59 @@
+{
+  "slug": "ganoderma-boninense",
+  "name": "Ganoderma boninense",
+  "common_name": "",
+  "family": "HOST",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 80,
+  "display": {
+    "mycelium": "#e8e0cf",
+    "cap": "#7a3a22"
+  },
+  "taxonomy": {
+    "order": "Polyporales",
+    "family": "Ganodermataceae"
+  },
+  "ecology": {
+    "trophic": "tree-parasite",
+    "substrate": "roots and stem bases of palms",
+    "hosts": "oil palm, coconut",
+    "biomes": [
+      "TRF"
+    ],
+    "continents": [
+      "AS",
+      "AU"
+    ],
+    "season": "humid tropics (unchecked)"
+  },
+  "fruit": {
+    "form": "bracket",
+    "size_cm": {
+      "value": [
+        5,
+        20
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#7a3a22",
+    "stem_colour": "#e6dcc4",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "HOST",
+    "form": "bracket",
+    "size_cm": 13,
+    "colours": [
+      "#7a3a22",
+      "#e6dcc4"
+    ],
+    "biomes": [
+      "TRF"
+    ],
+    "abundance": 2
+  },
+  "notes": "Causes basal stem rot of oil palm in plantations and spreads by root contact. Genome reported (unchecked)."
+}

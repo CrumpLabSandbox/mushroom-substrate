@@ -1,0 +1,66 @@
+{
+  "slug": "paxillus-involutus",
+  "name": "Paxillus involutus",
+  "common_name": "brown roll-rim",
+  "family": "ECM-L",
+  "tier": "second",
+  "data_richness": 3,
+  "survey_number": 58,
+  "display": {
+    "mycelium": "#eadfc6",
+    "cap": "#8a6238"
+  },
+  "taxonomy": {
+    "order": "Boletales",
+    "family": "Paxillaceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "soil around tree roots",
+    "hosts": "birch, spruce and many others",
+    "biomes": [
+      "BOR",
+      "TBL",
+      "TCF",
+      "URB"
+    ],
+    "continents": [
+      "EU",
+      "NA",
+      "AS"
+    ],
+    "season": "summer to autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        5,
+        15
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#8a6238",
+    "stem_colour": "#9a7448",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-L",
+    "form": "agaric",
+    "size_cm": 10,
+    "colours": [
+      "#8a6238",
+      "#9a7448"
+    ],
+    "biomes": [
+      "BOR",
+      "TBL",
+      "TCF",
+      "URB"
+    ],
+    "abundance": 3
+  },
+  "notes": "Long-distance exploration type [13]; a gilled relative of the boletes. Reported (unchecked) to be the model for how mycorrhizal fungi break down organic matter, to be easy in culture and to have a sequenced genome."
+}

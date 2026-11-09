@@ -1,0 +1,67 @@
+{
+  "slug": "gloeophyllum-trabeum",
+  "name": "Gloeophyllum trabeum",
+  "common_name": "",
+  "family": "MAT",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 24,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#8a5a33"
+  },
+  "taxonomy": {
+    "order": "Gloeophyllales",
+    "family": "Gloeophyllaceae"
+  },
+  "ecology": {
+    "trophic": "brown-rot",
+    "substrate": "sun-heated timber, decking, poles",
+    "hosts": "",
+    "biomes": [
+      "URB",
+      "TCF",
+      "SAV"
+    ],
+    "continents": [
+      "NA",
+      "SA",
+      "EU",
+      "AS",
+      "AF",
+      "AU"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "bracket",
+    "size_cm": {
+      "value": [
+        2,
+        8
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#8a5a33",
+    "stem_colour": "#70482a",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "bracket",
+    "size_cm": 5,
+    "colours": [
+      "#8a5a33",
+      "#70482a"
+    ],
+    "biomes": [
+      "URB",
+      "TCF",
+      "SAV"
+    ],
+    "abundance": 2
+  },
+  "notes": "Reported (unchecked) to be heat and drought tolerant, to have a sequenced genome and to be the third standard brown-rot test species."
+}

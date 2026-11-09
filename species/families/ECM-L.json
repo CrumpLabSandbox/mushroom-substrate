@@ -1,0 +1,293 @@
+{
+  "code": "ECM-L",
+  "name": "Mycorrhizal, long-distance",
+  "description": "A few thick, differentiated rhizomorphs with hollow vessel hyphae carry water and nutrients over decimetres or more. Individuals can be tens of metres across and colonise many trees, and this is the family in which tree-to-tree links are best documented.",
+  "type_species": "suillus-luteus",
+  "scenario": 3,
+  "display": {
+    "mycelium": "#eadfc6",
+    "cap": "#7a4a2a"
+  },
+  "hyphae": {
+    "tip_speed": {
+      "value": 140,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "the family is put at decimetres per month (research/02 section 4): 1 dm/month is about 3.3 mm/day. On agar, ectomycorrhizal isolates including Suillus grew only 0.25 to 0.95 mm/day at 22 C (research/08 [25])"
+    },
+    "growth_unit": {
+      "value": 1200,
+      "unit": "um",
+      "basis": "unknown",
+      "note": "no measurement found; set long for a few sparsely branched rhizomorphs, as for Armillaria"
+    },
+    "branch_angle": {
+      "value": 45,
+      "unit": "deg",
+      "basis": "inferred",
+      "note": "no measurement; fast-explorer value suggested in research/01 section 4, as used for Phanerochaete velutina"
+    },
+    "branch_angle_sd": {
+      "value": 10,
+      "unit": "deg",
+      "basis": "inferred",
+      "note": "default from Hopkins & Boswell 2012 (79 +/- 10 deg, research/09); not measured for this family"
+    },
+    "wobble": {
+      "value": 6,
+      "unit": "deg",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "sensitivity": {
+      "value": 0.3,
+      "unit": "",
+      "basis": "unknown",
+      "note": "how strongly tips turn away from crowding; model coefficient"
+    },
+    "fusion_probability": {
+      "value": 0.6,
+      "unit": "",
+      "basis": "unknown",
+      "note": "chance a tip that meets a hypha fuses and does not cross; set a little low for a low target alpha of 0.05 to 0.15 (research/02 section 4); no measurement found"
+    }
+  },
+  "network": {
+    "density_cap": {
+      "value": 3,
+      "unit": "segments per cell",
+      "basis": "unknown",
+      "note": "hyphal density at which branching stops; tuning value for a sparse system"
+    },
+    "cord_rate": {
+      "value": 0.05,
+      "unit": "1/h",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "cord_max": {
+      "value": 100,
+      "unit": "",
+      "basis": "unknown",
+      "note": "largest rhizomorph cross-section, in single hyphae; persistent links of 0.1 to 1 mm are given for the family (research/02 section 4); tuning value"
+    },
+    "explore": {
+      "value": 1,
+      "unit": "",
+      "basis": "unknown",
+      "note": "willingness to grow over bare soil; tuning value"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 1.4,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / 100 so that one feeding segment can supply about one growing tip; no measurement found"
+    },
+    "uptake_half": {
+      "value": 0.3,
+      "unit": "units",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "capacity": {
+      "value": 4,
+      "unit": "units",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "maintenance": {
+      "value": 0.004,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "inactivation_rate": {
+      "value": 0.02,
+      "unit": "1/h",
+      "basis": "inferred",
+      "note": "from Rhizoctonia solani (Boswell et al. 2003, research/09); not a member of this family (0.5 per day)"
+    },
+    "inactivation_age": {
+      "value": 36,
+      "unit": "h",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "degradation_rate": {
+      "value": 0.002,
+      "unit": "1/h",
+      "basis": "unknown",
+      "note": "none seen in 15 h in R. solani; small value so dead hyphae clear"
+    },
+    "passive_transport": {
+      "value": 0.2,
+      "unit": "per pass",
+      "basis": "unknown",
+      "note": "diffusion between neighbouring segments; measured diffusion inside hyphae (1 to 2 x 10^-9 m2/s, research/10) is several times faster than the passes allow"
+    },
+    "affinity": {
+      "soil": {
+        "value": 0.3,
+        "unit": "",
+        "basis": "unknown",
+        "note": "how well it feeds on this substrate; from the family's ecology, not measured"
+      },
+      "wood": {
+        "value": 0,
+        "unit": "",
+        "basis": "unknown",
+        "note": "how well it feeds on this substrate; from the family's ecology, not measured"
+      },
+      "litter": {
+        "value": 0.3,
+        "unit": "",
+        "basis": "unknown",
+        "note": "how well it feeds on this substrate; from the family's ecology, not measured"
+      },
+      "root": {
+        "value": 4,
+        "unit": "",
+        "basis": "unknown",
+        "note": "a mycorrhizal root tip is wrapped in a mantle with a large exchange surface, so uptake there is set well above a single hypha's; tuning value, as in Laccaria bicolor"
+      },
+      "agar": {
+        "value": 0.6,
+        "unit": "",
+        "basis": "unknown",
+        "note": "how well it feeds on this substrate; from the family's ecology, not measured"
+      }
+    },
+    "transport_speed": {
+      "value": 20000,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "no measurement for this family; rhizomorphs have hollow vessel hyphae, so the low end of the 20 to 100 mm/h measured in Phanerochaete velutina cords is used (research/10)"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 22,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "22 C suited Suillus isolates in one study (research/08 [25], snippet); not a measured optimum"
+    },
+    "t_min": {
+      "value": 2,
+      "unit": "C",
+      "basis": "unknown",
+      "note": "no measurement found"
+    },
+    "t_max": {
+      "value": 32,
+      "unit": "C",
+      "basis": "unknown",
+      "note": "no measurement found"
+    },
+    "wet_opt": {
+      "value": 0.6,
+      "unit": "",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "wet_width": {
+      "value": 0.5,
+      "unit": "",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    }
+  },
+  "fruiting": {
+    "reserve_threshold": {
+      "value": 600,
+      "unit": "units",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "cold_drop": {
+      "value": 6,
+      "unit": "C",
+      "basis": "unknown",
+      "note": "most members fruit in summer to autumn (research/08, unchecked); size of the drop is a guess"
+    },
+    "min_age": {
+      "value": 120,
+      "unit": "h",
+      "basis": "unknown",
+      "note": "no measurement found"
+    },
+    "initial_rate": {
+      "value": 0.5,
+      "unit": "1/h",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "mature_mass": {
+      "value": 400,
+      "unit": "units",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    }
+  },
+  "tuning_4k": {
+    "wobble": {
+      "value": 5,
+      "unit": "deg",
+      "basis": "unknown",
+      "note": "tuning value for the 4K engine; not a measured quantity"
+    },
+    "avoidance": {
+      "value": 2,
+      "unit": "",
+      "basis": "unknown",
+      "note": "tuning value for the 4K engine; not a measured quantity"
+    },
+    "fusion_probability": {
+      "value": 0.3,
+      "unit": "",
+      "basis": "unknown",
+      "note": "tuning value for the 4K engine; not a measured quantity"
+    },
+    "uptake": {
+      "value": 0.1,
+      "unit": "per pixel",
+      "basis": "unknown",
+      "note": "tuning value for the 4K engine; not a measured quantity"
+    },
+    "turn": {
+      "value": 6,
+      "unit": "deg",
+      "basis": "unknown",
+      "note": "tuning value for the 4K engine; not a measured quantity"
+    }
+  },
+  "electrical": {
+    "spike_interval": {
+      "value": 60,
+      "unit": "min",
+      "basis": "unknown",
+      "note": "default; no recording for any member of this family (research/04)"
+    },
+    "spike_duration": {
+      "value": 10,
+      "unit": "min",
+      "basis": "unknown",
+      "note": "default; no recording for any member of this family (research/04)"
+    },
+    "spike_amplitude": {
+      "value": 0.5,
+      "unit": "mV",
+      "basis": "unknown",
+      "note": "default; no recording for any member of this family (research/04)"
+    }
+  },
+  "combat": {
+    "score": {
+      "value": 0.5,
+      "unit": "",
+      "basis": "unknown",
+      "note": "default; mycorrhizal fungi are not in the wood-decay combat hierarchy (research/06)"
+    }
+  }
+}

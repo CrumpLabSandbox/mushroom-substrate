@@ -1,0 +1,61 @@
+{
+  "slug": "laetiporus-sulphureus",
+  "name": "Laetiporus sulphureus",
+  "common_name": "chicken of the woods",
+  "family": "MAT",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 27,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#f0a22e"
+  },
+  "taxonomy": {
+    "order": "Polyporales",
+    "family": "Laetiporaceae"
+  },
+  "ecology": {
+    "trophic": "brown-rot",
+    "substrate": "heartwood of living oak and other trees",
+    "hosts": "oak and other broadleaf trees",
+    "biomes": [
+      "TBL",
+      "URB"
+    ],
+    "continents": [
+      "EU",
+      "NA"
+    ],
+    "season": "late spring to autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "bracket",
+    "size_cm": {
+      "value": [
+        10,
+        50
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#f0a22e",
+    "stem_colour": "#f2d24a",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "bracket",
+    "size_cm": 30,
+    "colours": [
+      "#f0a22e",
+      "#f2d24a"
+    ],
+    "biomes": [
+      "TBL",
+      "URB"
+    ],
+    "abundance": 2
+  },
+  "notes": "Parasite and saprotroph: a heart rot in the standing trunk that hollows trees. The survey codes it MAT/HOST."
+}

@@ -1,0 +1,59 @@
+{
+  "slug": "rigidoporus-microporus",
+  "name": "Rigidoporus microporus",
+  "common_name": "white root rot",
+  "family": "RHIZ",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 81,
+  "display": {
+    "mycelium": "#f1ede2",
+    "cap": "#d9783a"
+  },
+  "taxonomy": {
+    "order": "Hymenochaetales",
+    "family": "Meripilaceae"
+  },
+  "ecology": {
+    "trophic": "tree-parasite",
+    "substrate": "roots of tropical trees",
+    "hosts": "rubber and other tropical trees",
+    "biomes": [
+      "TRF"
+    ],
+    "continents": [
+      "AS",
+      "AF"
+    ],
+    "season": "humid tropics (unchecked)"
+  },
+  "fruit": {
+    "form": "bracket",
+    "size_cm": {
+      "value": [
+        5,
+        20
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#d9783a",
+    "stem_colour": "#e9c9a0",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "RHIZ",
+    "form": "bracket",
+    "size_cm": 13,
+    "colours": [
+      "#d9783a",
+      "#e9c9a0"
+    ],
+    "biomes": [
+      "TRF"
+    ],
+    "abundance": 2
+  },
+  "notes": "A tropical rhizomorph parasite: white rhizomorphs are reported (unchecked) to run ahead of the rot. The survey leaves the order open (Hymenochaetales or Polyporales, placement revised) and gives no family; both entries here need checking."
+}

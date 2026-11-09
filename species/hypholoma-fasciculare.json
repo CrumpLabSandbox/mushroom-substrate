@@ -1,0 +1,64 @@
+{
+  "slug": "hypholoma-fasciculare",
+  "name": "Hypholoma fasciculare",
+  "common_name": "sulphur tuft",
+  "family": "CORD-S",
+  "tier": "second",
+  "data_richness": 3,
+  "survey_number": 9,
+  "display": {
+    "mycelium": "#efe6b8",
+    "cap": "#d9b23a"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Strophariaceae"
+  },
+  "ecology": {
+    "trophic": "white-rot",
+    "substrate": "stumps and buried wood",
+    "hosts": "",
+    "biomes": [
+      "TBL",
+      "TCF",
+      "BOR"
+    ],
+    "continents": [
+      "EU",
+      "NA",
+      "AS"
+    ],
+    "season": "autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        2,
+        7
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#d9b23a",
+    "stem_colour": "#d6c36a",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "CORD-S",
+    "form": "agaric",
+    "size_cm": 4.5,
+    "colours": [
+      "#d9b23a",
+      "#d6c36a"
+    ],
+    "biomes": [
+      "TBL",
+      "TCF",
+      "BOR"
+    ],
+    "abundance": 3
+  },
+  "notes": "Extension rate rises with temperature from 5 to 20 C [14]; the numeric rates are in papers that could not be opened. Reported (unchecked) to be strongly combative, shorter-range than Phanerochaete velutina, and used as a biocontrol against Armillaria."
+}

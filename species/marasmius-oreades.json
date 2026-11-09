@@ -1,0 +1,80 @@
+{
+  "slug": "marasmius-oreades",
+  "name": "Marasmius oreades",
+  "common_name": "fairy ring mushroom",
+  "family": "RING",
+  "tier": "second",
+  "data_richness": 2,
+  "survey_number": 31,
+  "display": {
+    "mycelium": "#ebe4d0",
+    "cap": "#c9a36e"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Marasmiaceae"
+  },
+  "ecology": {
+    "trophic": "litter-soil",
+    "substrate": "lawn and pasture thatch",
+    "hosts": "",
+    "biomes": [
+      "GRS",
+      "URB"
+    ],
+    "continents": [
+      "EU",
+      "NA",
+      "AS",
+      "AU"
+    ],
+    "season": "late spring to autumn; all year where mild"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        1,
+        5
+      ],
+      "unit": "cm",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [22]"
+    },
+    "cap_colour": "#c9a36e",
+    "stem_colour": "#d9c29a",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "RING",
+    "form": "agaric",
+    "size_cm": 3,
+    "colours": [
+      "#c9a36e",
+      "#d9c29a"
+    ],
+    "biomes": [
+      "GRS",
+      "URB"
+    ],
+    "abundance": 3
+  },
+  "notes": "Grass is stimulated at the live edge of the ring with a dead zone behind, and fruit bodies revive after drying [22]. Europe and North America are sourced [22]; Asia and Australasia, and a genome sequenced from rings (Hiltunen 2019), are reported but unchecked.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 23,
+      "unit": "um/h",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [22]",
+      "note": "ring radius grows about 10 to 30 cm/year (secondary and century-old sources); 20 cm/year taken as a year-round average, so the tip speed while active will be higher"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.23,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value tied to tip speed"
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "slug": "lichenomphalia-umbellifera",
+  "name": "Lichenomphalia umbellifera",
+  "common_name": "",
+  "family": "LIT",
+  "tier": "third",
+  "data_richness": 1,
+  "survey_number": 98,
+  "display": {
+    "mycelium": "#7a8a5a",
+    "cap": "#d9c79a"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Hygrophoraceae"
+  },
+  "ecology": {
+    "trophic": "other",
+    "substrate": "peat and rotting wood, as a film of algal granules",
+    "hosts": "green algae (lichen partner)",
+    "biomes": [
+      "ALP",
+      "BOR"
+    ],
+    "continents": [
+      "EU",
+      "NA",
+      "AS"
+    ],
+    "season": "cold, wet (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        0.5,
+        2
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#d9c79a",
+    "stem_colour": "#d0bb8c",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "LIT",
+    "form": "agaric",
+    "size_cm": 1.3,
+    "colours": [
+      "#d9c79a",
+      "#d0bb8c"
+    ],
+    "biomes": [
+      "ALP",
+      "BOR"
+    ],
+    "abundance": 2
+  },
+  "notes": "A lichen: the fungus wraps green algae and is fed by them, not by decay, so the litter-family defaults fit it loosely."
+}

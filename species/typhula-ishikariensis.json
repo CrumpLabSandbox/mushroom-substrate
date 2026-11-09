@@ -1,0 +1,78 @@
+{
+  "slug": "typhula-ishikariensis",
+  "name": "Typhula ishikariensis",
+  "common_name": "grey snow mould",
+  "family": "DIF",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 99,
+  "display": {
+    "mycelium": "#e6e0d0",
+    "cap": "#c9b79a"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Typhulaceae"
+  },
+  "ecology": {
+    "trophic": "other",
+    "substrate": "grasses and winter cereals under snow",
+    "hosts": "grasses, winter cereals",
+    "biomes": [
+      "ALP",
+      "BOR",
+      "GRS"
+    ],
+    "continents": [
+      "EU",
+      "AS",
+      "NA"
+    ],
+    "season": "under snow; needs over 150 days of snow cover"
+  },
+  "fruit": {
+    "form": "club",
+    "cap_colour": "#c9b79a",
+    "stem_colour": "#b9a688",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "DIF",
+    "form": "club",
+    "size_cm": null,
+    "colours": [
+      "#c9b79a",
+      "#b9a688"
+    ],
+    "biomes": [
+      "ALP",
+      "BOR",
+      "GRS"
+    ],
+    "abundance": 2
+  },
+  "notes": "A parasite of grasses with the coldest growth range on the list, reaching Svalbard, Greenland and Alaska; it forms sclerotia sized to the snow season [33]. No fruit body size was found.",
+  "environment": {
+    "t_opt": {
+      "value": 7.5,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [33]",
+      "note": "optimum 5 to 10 C; middle used. The temperature paragraph has no inline citation in the source page"
+    },
+    "t_min": {
+      "value": -7,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [33]",
+      "note": "minimum below -7 C"
+    },
+    "t_max": {
+      "value": 20,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [33]",
+      "note": "maximum 20 C"
+    }
+  }
+}

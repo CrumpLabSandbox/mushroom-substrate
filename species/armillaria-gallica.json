@@ -264,5 +264,80 @@
       "basis": "unknown",
       "note": "tuning value for the 4K engine; not a measured quantity"
     }
+  },
+  "data_richness": 3,
+  "survey_number": 77,
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Physalacriaceae"
+  },
+  "ecology": {
+    "trophic": "tree-parasite",
+    "substrate": "roots and wood of stressed trees; soil between them",
+    "hosts": "stressed oak and many others",
+    "biomes": [
+      "TBL",
+      "URB"
+    ],
+    "continents": [
+      "EU",
+      "NA",
+      "AS",
+      "AF"
+    ],
+    "season": "autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        2.5,
+        9.5
+      ],
+      "unit": "cm",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [7]"
+    },
+    "cap_colour": "#b98d4f",
+    "stem_colour": "#d9c9a3",
+    "bioluminescent": true
+  },
+  "lite": {
+    "family": "RHIZ",
+    "form": "agaric",
+    "size_cm": 6,
+    "colours": [
+      "#b98d4f",
+      "#d9c9a3"
+    ],
+    "biomes": [
+      "TBL",
+      "URB"
+    ],
+    "abundance": 3
+  },
+  "notes": "Black rhizomorphs 1 to 3 mm thick form a looped soil network and extend 0.3 to 0.6 m/year (Rishbeth 1991); the Michigan individual covered 15 ha, over 9,500 kg and 1,500 years (1992), revised in 2018 to 2,500 years and about 400 tonnes; the mycelium glows, brighter when disturbed [7][8]. Introduced in AF [7].",
+  "electrical": {
+    "spike_interval": {
+      "value": 0.017,
+      "unit": "min",
+      "basis": "sourced",
+      "source": "research/04-transport-signaling.md [14] via [25]",
+      "note": "spontaneous firing at 0.5 to 5 Hz, taken as 1 Hz; recorded under the old name Armillaria bulbosa (Olsson and Hansson 1995). Intracellular microelectrode recording, reported second-hand, paper not opened: not comparable with the extracellular figures in other species files"
+    },
+    "spike_duration": {
+      "value": 0.004,
+      "unit": "min",
+      "basis": "sourced",
+      "source": "research/04-transport-signaling.md [14]",
+      "note": "20 to 500 ms, from a search summary; about 250 ms used"
+    },
+    "spike_amplitude": {
+      "value": 20,
+      "unit": "mV",
+      "basis": "sourced",
+      "source": "research/04-transport-signaling.md [14] via [25]",
+      "note": "5 to 50 mV, intracellular; low confidence (secondary report)"
+    }
   }
 }

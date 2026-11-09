@@ -1,0 +1,65 @@
+{
+  "slug": "sphaerobolus-stellatus",
+  "name": "Sphaerobolus stellatus",
+  "common_name": "artillery fungus",
+  "family": "LIT",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 46,
+  "display": {
+    "mycelium": "#ece6d6",
+    "cap": "#e6c77a"
+  },
+  "taxonomy": {
+    "order": "Geastrales",
+    "family": "Geastraceae"
+  },
+  "ecology": {
+    "trophic": "litter-soil",
+    "substrate": "wood mulch, dung, rotting wood",
+    "hosts": "",
+    "biomes": [
+      "URB",
+      "TBL"
+    ],
+    "continents": [
+      "NA",
+      "SA",
+      "EU",
+      "AS",
+      "AF",
+      "AU"
+    ],
+    "season": "cool wet weather (unchecked)"
+  },
+  "fruit": {
+    "form": "birdsnest",
+    "size_cm": {
+      "value": [
+        0.2,
+        0.2
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#e6c77a",
+    "stem_colour": "#d9cfae",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "LIT",
+    "form": "birdsnest",
+    "size_cm": 0.2,
+    "colours": [
+      "#e6c77a",
+      "#d9cfae"
+    ],
+    "biomes": [
+      "URB",
+      "TBL"
+    ],
+    "abundance": 2
+  },
+  "notes": "A tiny star-shaped cup. The inner cup is reported (unchecked; distance not verified) to flip inside-out and throw a 1 mm spore ball several metres toward light."
+}

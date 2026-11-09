@@ -1,0 +1,64 @@
+{
+  "slug": "cortinarius-caperatus",
+  "name": "Cortinarius caperatus",
+  "common_name": "gypsy",
+  "family": "ECM-M",
+  "tier": "third",
+  "data_richness": 1,
+  "survey_number": 61,
+  "display": {
+    "mycelium": "#e9dcc8",
+    "cap": "#c9a468"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Cortinariaceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "soil around tree roots",
+    "hosts": "pine, spruce, birch, heath",
+    "biomes": [
+      "BOR",
+      "TCF",
+      "ALP"
+    ],
+    "continents": [
+      "EU",
+      "NA",
+      "AS"
+    ],
+    "season": "late summer to autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        5,
+        12
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#c9a468",
+    "stem_colour": "#e6dcc4",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-M",
+    "form": "agaric",
+    "size_cm": 8.5,
+    "colours": [
+      "#c9a468",
+      "#e6dcc4"
+    ],
+    "biomes": [
+      "BOR",
+      "TCF",
+      "ALP"
+    ],
+    "abundance": 2
+  },
+  "notes": "Medium-distance fringe type at genus level [13]. Stands for the largest mushroom genus; cannot be cultured easily."
+}

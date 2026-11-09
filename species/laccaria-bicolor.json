@@ -262,5 +262,57 @@
       "basis": "unknown",
       "note": "tuning value for the 4K engine; not a measured quantity"
     }
-  }
+  },
+  "data_richness": 3,
+  "survey_number": 53,
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Hydnangiaceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "soil around tree roots",
+    "hosts": "pine, spruce, Douglas-fir, poplar",
+    "biomes": [
+      "TCF",
+      "BOR",
+      "TBL"
+    ],
+    "continents": [
+      "NA",
+      "EU"
+    ],
+    "season": "autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        2,
+        7
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#b9744f",
+    "stem_colour": "#b98a6a",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-M",
+    "form": "agaric",
+    "size_cm": 4.5,
+    "colours": [
+      "#b9744f",
+      "#b98a6a"
+    ],
+    "biomes": [
+      "TCF",
+      "BOR",
+      "TBL"
+    ],
+    "abundance": 2
+  },
+  "notes": "Medium-distance smooth exploration type at genus level [13]. Reported (unchecked) to be the first ectomycorrhizal genome (Martin 2008), a standard lab partner of poplar, a nursery inoculant and able to take nitrogen from springtails; field fruit bodies showed potentials above 100 mV after rain (research/04 [21], press release only), which is not a spike rate and is not entered as one."
 }

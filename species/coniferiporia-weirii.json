@@ -1,0 +1,59 @@
+{
+  "slug": "coniferiporia-weirii",
+  "name": "Coniferiporia weirii",
+  "common_name": "laminated root rot",
+  "family": "HOST",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 82,
+  "display": {
+    "mycelium": "#e8e0cf",
+    "cap": "#6a4628"
+  },
+  "taxonomy": {
+    "order": "Hymenochaetales",
+    "family": "Hymenochaetaceae"
+  },
+  "ecology": {
+    "trophic": "tree-parasite",
+    "substrate": "roots of living conifers",
+    "hosts": "Douglas-fir, cedar",
+    "biomes": [
+      "TCF"
+    ],
+    "continents": [
+      "NA",
+      "AS"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "crust",
+    "size_cm": {
+      "value": [
+        10,
+        100
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#6a4628",
+    "stem_colour": "#6a4628",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "HOST",
+    "form": "crust",
+    "size_cm": 55,
+    "colours": [
+      "#6a4628",
+      "#6a4628"
+    ],
+    "biomes": [
+      "TCF"
+    ],
+    "abundance": 2
+  },
+  "notes": "Mycelium runs along the root surface (syn. Phellinus weirii). Disease centres are reported (unchecked) to last centuries and the fungus to survive decades in stumps."
+}

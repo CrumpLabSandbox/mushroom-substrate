@@ -1,0 +1,62 @@
+{
+  "slug": "cyathus-striatus",
+  "name": "Cyathus striatus",
+  "common_name": "fluted bird's nest",
+  "family": "CORD-S",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 45,
+  "display": {
+    "mycelium": "#b9a183",
+    "cap": "#6b5440"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Nidulariaceae"
+  },
+  "ecology": {
+    "trophic": "litter-soil",
+    "substrate": "woody debris, mulch",
+    "hosts": "",
+    "biomes": [
+      "TBL",
+      "URB"
+    ],
+    "continents": [
+      "NA",
+      "EU",
+      "AS"
+    ],
+    "season": "summer to autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "birdsnest",
+    "size_cm": {
+      "value": [
+        0.6,
+        1
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#6b5440",
+    "stem_colour": "#5a4634",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "CORD-S",
+    "form": "birdsnest",
+    "size_cm": 0.8,
+    "colours": [
+      "#6b5440",
+      "#5a4634"
+    ],
+    "biomes": [
+      "TBL",
+      "URB"
+    ],
+    "abundance": 2
+  },
+  "notes": "A brown mat that binds debris (the survey codes it CORD/LIT). Raindrops splash the \"eggs\" out at 67 to 73 degrees and up to 1 m (research/05 [22]); each egg is reported (unchecked) to trail a sticky cord that wraps around a stem."
+}

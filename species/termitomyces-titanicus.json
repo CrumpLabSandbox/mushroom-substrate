@@ -1,0 +1,59 @@
+{
+  "slug": "termitomyces-titanicus",
+  "name": "Termitomyces titanicus",
+  "common_name": "",
+  "family": "GARDEN",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 90,
+  "display": {
+    "mycelium": "#f0ece0",
+    "cap": "#d9c7a0"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Lyophyllaceae"
+  },
+  "ecology": {
+    "trophic": "insect-farmed",
+    "substrate": "plant matter chewed by termites, on the comb inside the mound",
+    "hosts": "Macrotermes termites",
+    "biomes": [
+      "SAV"
+    ],
+    "continents": [
+      "AF"
+    ],
+    "season": "fruits in the rains (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        null,
+        100
+      ],
+      "unit": "cm",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [27]",
+      "note": "cap to about 100 cm across, stalk to 57 cm; upper limits only, no lower bound given"
+    },
+    "cap_colour": "#d9c7a0",
+    "stem_colour": "#e9dfc8",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "GARDEN",
+    "form": "agaric",
+    "size_cm": 60,
+    "colours": [
+      "#d9c7a0",
+      "#e9dfc8"
+    ],
+    "biomes": [
+      "SAV"
+    ],
+    "abundance": 1
+  },
+  "notes": "The largest gilled mushroom, described only in 1980, from West Africa, Zambia and DR Congo [27]. Reported (unchecked): the comb sits inside the mound with a long root-like stalk to the surface, and the termites hold the mound interior near constant warmth."
+}

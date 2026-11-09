@@ -1,0 +1,61 @@
+{
+  "slug": "phellinus-ellipsoideus",
+  "name": "Phellinus ellipsoideus",
+  "common_name": "",
+  "family": "MAT",
+  "tier": "third",
+  "data_richness": 1,
+  "survey_number": 20,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#6b4a2e"
+  },
+  "taxonomy": {
+    "order": "Hymenochaetales",
+    "family": "Hymenochaetaceae"
+  },
+  "ecology": {
+    "trophic": "white-rot",
+    "substrate": "fallen oak logs (Quercus subgenus Cyclobalanopsis)",
+    "hosts": "",
+    "biomes": [
+      "TRF",
+      "TBL"
+    ],
+    "continents": [
+      "AS"
+    ],
+    "season": "perennial"
+  },
+  "fruit": {
+    "form": "bracket",
+    "size_cm": {
+      "value": [
+        82,
+        1085
+      ],
+      "unit": "cm",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [26]",
+      "note": "one record specimen, not a typical range: 1,085 cm long, 82 to 88 cm wide, 4.6 to 5.5 cm thick"
+    },
+    "cap_colour": "#6b4a2e",
+    "stem_colour": "#4d3522",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "bracket",
+    "size_cm": 100,
+    "colours": [
+      "#6b4a2e",
+      "#4d3522"
+    ],
+    "biomes": [
+      "TRF",
+      "TBL"
+    ],
+    "abundance": 1
+  },
+  "notes": "Holds the record for the largest fruit body: 400 to 500 kg, about 20 years old, found on Hainan in 2010 [26]."
+}

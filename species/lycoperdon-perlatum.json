@@ -1,0 +1,69 @@
+{
+  "slug": "lycoperdon-perlatum",
+  "name": "Lycoperdon perlatum",
+  "common_name": "common puffball",
+  "family": "LIT",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 34,
+  "display": {
+    "mycelium": "#ece6d6",
+    "cap": "#ddd3bd"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Agaricaceae"
+  },
+  "ecology": {
+    "trophic": "litter-soil",
+    "substrate": "woodland soil and litter",
+    "hosts": "",
+    "biomes": [
+      "TBL",
+      "TCF",
+      "BOR",
+      "URB"
+    ],
+    "continents": [
+      "NA",
+      "SA",
+      "EU",
+      "AS",
+      "AF",
+      "AU"
+    ],
+    "season": "summer to autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "puffball",
+    "size_cm": {
+      "value": [
+        2,
+        6
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#ddd3bd",
+    "stem_colour": "#cfc3a8",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "LIT",
+    "form": "puffball",
+    "size_cm": 4,
+    "colours": [
+      "#ddd3bd",
+      "#cfc3a8"
+    ],
+    "biomes": [
+      "TBL",
+      "TCF",
+      "BOR",
+      "URB"
+    ],
+    "abundance": 3
+  },
+  "notes": "White strands at the base. Raindrops striking the skin are reported (unchecked) to puff spores out through a pore, which makes it a good small test for a spore-release model."
+}

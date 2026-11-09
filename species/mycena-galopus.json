@@ -1,0 +1,63 @@
+{
+  "slug": "mycena-galopus",
+  "name": "Mycena galopus",
+  "common_name": "milking bonnet",
+  "family": "LIT",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 36,
+  "display": {
+    "mycelium": "#ece6d6",
+    "cap": "#8f8676"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Mycenaceae"
+  },
+  "ecology": {
+    "trophic": "litter-soil",
+    "substrate": "leaf and needle litter",
+    "hosts": "",
+    "biomes": [
+      "TBL",
+      "TCF",
+      "BOR"
+    ],
+    "continents": [
+      "EU",
+      "NA"
+    ],
+    "season": "autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        1,
+        2
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#8f8676",
+    "stem_colour": "#b9b2a4",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "LIT",
+    "form": "agaric",
+    "size_cm": 1.5,
+    "colours": [
+      "#8f8676",
+      "#b9b2a4"
+    ],
+    "biomes": [
+      "TBL",
+      "TCF",
+      "BOR"
+    ],
+    "abundance": 3
+  },
+  "notes": "Many small individuals per square metre. Reported (unchecked) to be the classic field-studied litter decomposer (Frankland)."
+}

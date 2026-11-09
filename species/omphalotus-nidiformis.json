@@ -1,0 +1,76 @@
+{
+  "slug": "omphalotus-nidiformis",
+  "name": "Omphalotus nidiformis",
+  "common_name": "ghost fungus",
+  "family": "MAT",
+  "tier": "second",
+  "data_richness": 2,
+  "survey_number": 17,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#e8dcc0"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Omphalotaceae"
+  },
+  "ecology": {
+    "trophic": "white-rot",
+    "substrate": "dead and living eucalypt and other wood",
+    "hosts": "eucalypts (weak parasite)",
+    "biomes": [
+      "TBL",
+      "MED"
+    ],
+    "continents": [
+      "AU"
+    ],
+    "season": "autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        5,
+        30
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#e8dcc0",
+    "stem_colour": "#d8c9a8",
+    "bioluminescent": true
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "agaric",
+    "size_cm": 18,
+    "colours": [
+      "#e8dcc0",
+      "#d8c9a8"
+    ],
+    "biomes": [
+      "TBL",
+      "MED"
+    ],
+    "abundance": 2
+  },
+  "notes": "Bioluminescent, and also a weak parasite. Spikes every 92 min on average at 0.007 mV, the smallest amplitude of the four species recorded [9].",
+  "electrical": {
+    "spike_interval": {
+      "value": 92,
+      "unit": "min",
+      "basis": "sourced",
+      "source": "research/04-transport-signaling.md [16]",
+      "note": "mean of 1,117 spikes, colonised substrate; extracellular needle electrodes, 21 C, darkness (Adamatzky 2022); whether such spikes are fungal membrane activity is disputed (research/04 section 2.4)"
+    },
+    "spike_amplitude": {
+      "value": 0.007,
+      "unit": "mV",
+      "basis": "sourced",
+      "source": "research/04-transport-signaling.md [16]",
+      "note": "mean; lies below the 0.03 mV minimum stated in the same paper's abstract"
+    }
+  }
+}

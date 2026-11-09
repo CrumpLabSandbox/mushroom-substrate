@@ -28,10 +28,21 @@ const ENGINES = {
   },
 };
 
+ENGINES['400k'] = {
+  steps: 150,
+  // hashes are stored for these; every other species gets a short smoke run (it must grow and stay finite)
+  full: ['armillaria-gallica', 'coprinopsis-cinerea', 'laccaria-bicolor', 'phanerochaete-velutina', 'pleurotus-ostreatus', 'serpula-lacrymans', 'amanita-muscaria', 'marasmius-oreades'],
+  make: (M, sp, seed) => M([{ id: sp.id, p: sp.p }], seed, sp.s),
+  hash(S) { const h = fnv(), n = S.n; for (const a of [S.x1, S.y1, S.z1, S.si, S.ar]) for (const b of bytes(a, n)) h.add(b); for (let i = 0; i < n; i++) h.add(S.st[i]); for (const b of bytes(S.trace, 4096)) h.add(b); return h.hex(); },
+  summary: (S) => `segments ${S.n}  tips ${S.ntips}  branches ${S.br}  fusions ${S.fu}  spikes ${S.spikes}  fruits ${S.fruits}`,
+  events: (S, ev) => ev[0] === S.br && ev[1] === S.fu && (ev[6] || 0) === S.fruits && (ev[9] || 0) === S.spikes,
+};
+
 const stored = fs.existsSync(HASHES) ? JSON.parse(fs.readFileSync(HASHES, 'utf8')) : {};
 const update = process.argv.includes('--update');
 const next = {};
 let failed = false;
+let smoke = 0;
 for (const [tier, eng] of Object.entries(ENGINES)) {
   const core = path.join(ROOT, 'engines', tier, 'core.js');
   if (!fs.existsSync(core)) continue;
@@ -50,6 +61,12 @@ for (const [tier, eng] of Object.entries(ENGINES)) {
   for (const file of fs.readdirSync(dir).sort()) {
     const sp = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'));
     const key = tier + '/' + file.replace('.json', '');
+    if (eng.full && !eng.full.includes(file.replace('.json', ''))) {
+      const S = eng.make(M, sp, 1); for (let i = 0; i < 40; i++) S.step();
+      let bad = S.n < 20; for (let i = 0; i < S.n; i++) if (!isFinite(S.si[i]) || !isFinite(S.x1[i])) bad = true;
+      if (bad) { failed = true; console.log(`${key.padEnd(28)} smoke run FAIL (segments ${S.n})`); } else smoke++;
+      continue;
+    }
     const a = run(sp, 1), again = run(sp, 1), other = run(sp, 2);
     next[key] = a.hash;
     const problems = [];
@@ -63,5 +80,24 @@ for (const [tier, eng] of Object.entries(ENGINES)) {
       `${(a.ms / eng.steps).toFixed(2)} ms/step  ${problems.length ? 'FAIL: ' + problems.join('; ') : 'ok'}`);
   }
 }
+// 400K only: two individuals in one block must also repeat, and must meet.
+{
+  const core = path.join(ROOT, 'engines/400k/core.js');
+  if (fs.existsSync(core)) {
+    const M = new Function(fs.readFileSync(core, 'utf8') + ';return M')();
+    const load = (slug) => JSON.parse(fs.readFileSync(path.join(ROOT, 'engines/400k/species', slug + '.json'), 'utf8'));
+    const a = load('phanerochaete-velutina'), b = load('pleurotus-ostreatus');
+    const run = () => { const S = M([{ id: a.id, p: a.p }, { id: b.id, p: b.p }], 1, 1); for (let i = 0; i < 400; i++) S.step(); return S; };
+    const one = run(), two = run(), h1 = ENGINES['400k'].hash(one), key = '400k/two-individuals';
+    next[key] = h1;
+    const problems = [];
+    if (h1 !== ENGINES['400k'].hash(two)) problems.push('two runs differ');
+    if (!one.wars) problems.push('the two individuals never met');
+    if (!update && stored[key] !== h1) problems.push(stored[key] ? `hash ${h1} differs from stored ${stored[key]}` : 'no stored hash (run with --update)');
+    if (problems.length) failed = true;
+    console.log(`${key.padEnd(28)} ${h1}  400 steps  segments ${one.n}  tips ${one.tipsOf.join(' + ')}  meetings ${one.wars}  ${problems.length ? 'FAIL: ' + problems.join('; ') : 'ok'}`);
+  }
+}
+console.log(`smoke runs passed: ${smoke}`);
 if (update) fs.writeFileSync(HASHES, JSON.stringify(next, null, 2) + '\n');
 process.exit(failed ? 1 : 0);

@@ -1,0 +1,62 @@
+{
+  "slug": "pleurotus-tuber-regium",
+  "name": "Pleurotus tuber-regium",
+  "common_name": "king tuber",
+  "family": "MAT",
+  "tier": "third",
+  "data_richness": 1,
+  "survey_number": 2,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#c9a977"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Pleurotaceae"
+  },
+  "ecology": {
+    "trophic": "white-rot",
+    "substrate": "buried dead wood",
+    "hosts": "",
+    "biomes": [
+      "TRF",
+      "SAV"
+    ],
+    "continents": [
+      "AF",
+      "AS",
+      "AU"
+    ],
+    "season": "warm tropics; fruits in the rains (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        8,
+        20
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08); cap; the sclerotium reaches 30 cm"
+    },
+    "cap_colour": "#c9a977",
+    "stem_colour": "#d9c39c",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "agaric",
+    "size_cm": 14,
+    "colours": [
+      "#c9a977",
+      "#d9c39c"
+    ],
+    "biomes": [
+      "TRF",
+      "SAV"
+    ],
+    "abundance": 2
+  },
+  "notes": "Reported (unchecked) to form a large underground sclerotium that fruits when wetted, and to be cultivated in West Africa."
+}

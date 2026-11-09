@@ -1,0 +1,59 @@
+{
+  "slug": "russula-cyanoxantha",
+  "name": "Russula cyanoxantha",
+  "common_name": "charcoal burner",
+  "family": "ECM-M",
+  "tier": "third",
+  "data_richness": 1,
+  "survey_number": 65,
+  "display": {
+    "mycelium": "#e9dcc8",
+    "cap": "#6a5a7a"
+  },
+  "taxonomy": {
+    "order": "Russulales",
+    "family": "Russulaceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "soil around tree roots",
+    "hosts": "beech, oak",
+    "biomes": [
+      "TBL"
+    ],
+    "continents": [
+      "EU",
+      "AS"
+    ],
+    "season": "summer to autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        5,
+        15
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#6a5a7a",
+    "stem_colour": "#f2efe8",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-M",
+    "form": "agaric",
+    "size_cm": 10,
+    "colours": [
+      "#6a5a7a",
+      "#f2efe8"
+    ],
+    "biomes": [
+      "TBL"
+    ],
+    "abundance": 3
+  },
+  "notes": "Stands for the largest ectomycorrhizal genus. The survey codes it ECM-M/ECM-S: the genus is listed as medium-distance smooth [13], but many Russula are reported (unchecked) to be contact type, and research/02 lists the genus under contact."
+}

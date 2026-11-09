@@ -1,0 +1,74 @@
+{
+  "slug": "phallus-indusiatus",
+  "name": "Phallus indusiatus",
+  "common_name": "bamboo fungus, veiled lady",
+  "family": "CORD-L",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 44,
+  "display": {
+    "mycelium": "#f2ead0",
+    "cap": "#5a5230"
+  },
+  "taxonomy": {
+    "order": "Phallales",
+    "family": "Phallaceae"
+  },
+  "ecology": {
+    "trophic": "litter-soil",
+    "substrate": "rich soil with rotted wood; bamboo groves",
+    "hosts": "",
+    "biomes": [
+      "TRF",
+      "URB"
+    ],
+    "continents": [
+      "AF",
+      "AS",
+      "AU",
+      "SA",
+      "NA"
+    ],
+    "season": "after heavy rain"
+  },
+  "fruit": {
+    "form": "stinkhorn",
+    "size_cm": {
+      "value": [
+        null,
+        25
+      ],
+      "unit": "cm",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [32]",
+      "note": "to 25 cm tall, egg to 6 cm; no lower bound given"
+    },
+    "cap_colour": "#5a5230",
+    "stem_colour": "#f4f1e8",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "CORD-L",
+    "form": "stinkhorn",
+    "size_cm": 20,
+    "colours": [
+      "#5a5230",
+      "#f4f1e8"
+    ],
+    "biomes": [
+      "TRF",
+      "URB"
+    ],
+    "abundance": 2
+  },
+  "notes": "The best data on expansion-type fruiting: the fruit body rose 12.5 cm in one hour and was fully out in 10 to 15 h; cultivated in China since 1979 [32]. The source lists Central America, entered here as NA.",
+  "environment": {
+    "t_opt": {
+      "value": 24,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [32]",
+      "note": "optimum about 24 C at 90 to 95% humidity, as given for cultivation; not stated to be a mycelial growth optimum"
+    }
+  }
+}

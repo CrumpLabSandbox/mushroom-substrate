@@ -1,0 +1,66 @@
+{
+  "slug": "chlorophyllum-molybdites",
+  "name": "Chlorophyllum molybdites",
+  "common_name": "green-spored parasol",
+  "family": "RING",
+  "tier": "third",
+  "data_richness": 1,
+  "survey_number": 42,
+  "display": {
+    "mycelium": "#ebe4d0",
+    "cap": "#ece5d2"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Agaricaceae"
+  },
+  "ecology": {
+    "trophic": "litter-soil",
+    "substrate": "lawns and pasture",
+    "hosts": "",
+    "biomes": [
+      "GRS",
+      "URB",
+      "SAV"
+    ],
+    "continents": [
+      "SA",
+      "AF",
+      "AS",
+      "AU",
+      "NA"
+    ],
+    "season": "warm, wet season (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        10,
+        30
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#ece5d2",
+    "stem_colour": "#e2d9c2",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "RING",
+    "form": "agaric",
+    "size_cm": 20,
+    "colours": [
+      "#ece5d2",
+      "#e2d9c2"
+    ],
+    "biomes": [
+      "GRS",
+      "URB",
+      "SAV"
+    ],
+    "abundance": 3
+  },
+  "notes": "Makes large fairy rings in tropical and subtropical lawns and pasture."
+}

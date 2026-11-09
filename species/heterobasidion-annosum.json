@@ -1,0 +1,77 @@
+{
+  "slug": "heterobasidion-annosum",
+  "name": "Heterobasidion annosum",
+  "common_name": "root rot",
+  "family": "HOST",
+  "tier": "second",
+  "data_richness": 3,
+  "survey_number": 79,
+  "display": {
+    "mycelium": "#e8e0cf",
+    "cap": "#6a4a36"
+  },
+  "taxonomy": {
+    "order": "Russulales",
+    "family": "Bondarzewiaceae"
+  },
+  "ecology": {
+    "trophic": "tree-parasite",
+    "substrate": "roots and stumps of living and felled conifers",
+    "hosts": "pine, spruce",
+    "biomes": [
+      "TCF",
+      "BOR"
+    ],
+    "continents": [
+      "EU"
+    ],
+    "season": "perennial; spores infect fresh stumps (unchecked)"
+  },
+  "fruit": {
+    "form": "bracket",
+    "size_cm": {
+      "value": [
+        5,
+        25
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#6a4a36",
+    "stem_colour": "#ece4d0",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "HOST",
+    "form": "bracket",
+    "size_cm": 15,
+    "colours": [
+      "#6a4a36",
+      "#ece4d0"
+    ],
+    "biomes": [
+      "TCF",
+      "BOR"
+    ],
+    "abundance": 3
+  },
+  "notes": "Spread is set by the layout of the roots, not by the fungus: it is reported (unchecked) to have no free soil mycelium and to move through root contacts. Reported (unchecked) to be the most costly forest disease in Europe; close relatives occur in NA and AS.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 29,
+      "unit": "um/h",
+      "basis": "sourced",
+      "source": "research/06-environment.md [25]",
+      "note": "Heterobasidion spread in Norway spruce: 9 cm/year in living roots, 25 in stump roots, up to 52 in stems; 25 cm/year as a year-round average. The source was not opened by the research agent"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.29,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value tied to tip speed"
+    }
+  }
+}

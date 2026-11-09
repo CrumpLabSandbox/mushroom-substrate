@@ -1,0 +1,98 @@
+{
+  "slug": "agaricus-bisporus",
+  "name": "Agaricus bisporus",
+  "common_name": "button mushroom",
+  "family": "DIF",
+  "tier": "second",
+  "data_richness": 3,
+  "survey_number": 30,
+  "display": {
+    "mycelium": "#e6e0d0",
+    "cap": "#e9e2d3"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Agaricaceae"
+  },
+  "ecology": {
+    "trophic": "litter-soil",
+    "substrate": "composted litter and manure; wild under cypress and on coastal litter",
+    "hosts": "",
+    "biomes": [
+      "GRS",
+      "MED",
+      "URB"
+    ],
+    "continents": [
+      "EU",
+      "NA"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        5,
+        12
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#e9e2d3",
+    "stem_colour": "#f1ece1",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "DIF",
+    "form": "agaric",
+    "size_cm": 8.5,
+    "colours": [
+      "#e9e2d3",
+      "#f1ece1"
+    ],
+    "biomes": [
+      "GRS",
+      "MED",
+      "URB"
+    ],
+    "abundance": 2
+  },
+  "notes": "The most cultivated mushroom; a fluffy front that is reported (unchecked) to form strands behind it. Reported (unchecked) to fruit in repeating flushes about a week apart and to need a casing layer and bacteria to fruit; water flow in its single hyphae is calculated at 50 um/s (research/04 [7]).",
+  "hyphae": {
+    "tip_speed": {
+      "value": 210,
+      "unit": "um/h",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [20]",
+      "note": "about 5 mm/day in sterile compost (7.2 mm/day in compost pre-grown with Scytalidium; 2.7 rising to 5.3 mm/day on agar at 24 C); temperature of the compost figure not in the snippet"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 2.1,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value tied to tip speed"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 25,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [20]",
+      "note": "optimum about 25 to 26 C, falls off above 28 C; research/06 [13][28] gives 24 C; snippets"
+    }
+  },
+  "fruiting": {
+    "cold_drop": {
+      "value": 9,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "research/05-fruiting.md [2]",
+      "note": "initials stop at about 2 mm unless the temperature falls to about 16 C; taken from the 25 C optimum used here"
+    }
+  }
+}

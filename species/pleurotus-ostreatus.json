@@ -264,5 +264,84 @@
       "basis": "unknown",
       "note": "tuning value for the 4K engine; not a measured quantity"
     }
+  },
+  "data_richness": 3,
+  "survey_number": 1,
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Pleurotaceae"
+  },
+  "ecology": {
+    "trophic": "white-rot",
+    "substrate": "dead and dying broadleaf trunks; cultivated on straw",
+    "hosts": "",
+    "biomes": [
+      "TBL",
+      "BOR",
+      "URB"
+    ],
+    "continents": [
+      "NA",
+      "SA",
+      "EU",
+      "AS",
+      "AF",
+      "AU"
+    ],
+    "season": "autumn to winter, cold-triggered (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        5,
+        25
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#b9b3a6",
+    "stem_colour": "#efeae0",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "agaric",
+    "size_cm": 15,
+    "colours": [
+      "#b9b3a6",
+      "#efeae0"
+    ],
+    "biomes": [
+      "TBL",
+      "BOR",
+      "URB"
+    ],
+    "abundance": 3
+  },
+  "notes": "Cultivated worldwide and the species with the most growth data here [18]. Reported (unchecked) to trap nematodes and to have a sequenced genome; intracellular spikes of 0.5 to 5 Hz and 5 to 50 mV are reported second-hand from Olsson and Hansson 1995 (research/04 [14]), and its relative P. djamor spikes at 2.6 and 14 minute periods [10].",
+  "electrical": {
+    "spike_interval": {
+      "value": 70,
+      "unit": "min",
+      "basis": "sourced",
+      "source": "research/04-transport-signaling.md [17]",
+      "note": "about one spike per 70 min in mycelium on hemp (27 min in another recording); fell to one per 254 min under chloroform; extracellular recording"
+    },
+    "spike_duration": {
+      "value": 1.03,
+      "unit": "min",
+      "basis": "sourced",
+      "source": "research/04-transport-signaling.md [17]",
+      "note": "median 62 s"
+    },
+    "spike_amplitude": {
+      "value": 0.5,
+      "unit": "mV",
+      "basis": "sourced",
+      "source": "research/04-transport-signaling.md [17]",
+      "note": "median 0.48 to 0.51 mV; extracellular. Intracellular figures (5 to 50 mV at 0.5 to 5 Hz, research/04 [14]) are a different kind of measurement and are not used"
+    }
   }
 }

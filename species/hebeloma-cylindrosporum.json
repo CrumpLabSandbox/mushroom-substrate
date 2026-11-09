@@ -1,0 +1,60 @@
+{
+  "slug": "hebeloma-cylindrosporum",
+  "name": "Hebeloma cylindrosporum",
+  "common_name": "",
+  "family": "ECM-M",
+  "tier": "third",
+  "data_richness": 3,
+  "survey_number": 63,
+  "display": {
+    "mycelium": "#e9dcc8",
+    "cap": "#c9a57a"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Hymenogastraceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "coastal dune sand around pine roots",
+    "hosts": "maritime pine",
+    "biomes": [
+      "MED",
+      "TCF"
+    ],
+    "continents": [
+      "EU"
+    ],
+    "season": "autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        2,
+        6
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#c9a57a",
+    "stem_colour": "#e6dcc8",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-M",
+    "form": "agaric",
+    "size_cm": 4,
+    "colours": [
+      "#c9a57a",
+      "#e6dcc8"
+    ],
+    "biomes": [
+      "MED",
+      "TCF"
+    ],
+    "abundance": 1
+  },
+  "notes": "Medium-distance fringe type at genus level [13]. A lab model that completes its life cycle in culture; a sequenced genome and field-mapped short-lived individuals are reported (unchecked)."
+}

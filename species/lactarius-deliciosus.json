@@ -1,0 +1,64 @@
+{
+  "slug": "lactarius-deliciosus",
+  "name": "Lactarius deliciosus",
+  "common_name": "saffron milk cap",
+  "family": "ECM-S",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 67,
+  "display": {
+    "mycelium": "#e6dccb",
+    "cap": "#e08a3c"
+  },
+  "taxonomy": {
+    "order": "Russulales",
+    "family": "Russulaceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "soil around pine roots",
+    "hosts": "pines",
+    "biomes": [
+      "MED",
+      "TCF"
+    ],
+    "continents": [
+      "EU",
+      "AS",
+      "AU",
+      "SA",
+      "AF"
+    ],
+    "season": "autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        5,
+        15
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#e08a3c",
+    "stem_colour": "#e6a05a",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-S",
+    "form": "agaric",
+    "size_cm": 10,
+    "colours": [
+      "#e08a3c",
+      "#e6a05a"
+    ],
+    "biomes": [
+      "MED",
+      "TCF"
+    ],
+    "abundance": 2
+  },
+  "notes": "Contact type at genus level [13], though this species is reported (unchecked) to have rhizomorphs. Bleeds orange; reported (unchecked) to have been fruited in plantations on inoculated seedlings; introduced in AU, SA and AF."
+}

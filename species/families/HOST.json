@@ -1,0 +1,293 @@
+{
+  "code": "HOST",
+  "name": "Confined to a living host (insect, trunk, other fungus)",
+  "description": "The mycelium grows inside an insect, a gall, a living trunk or root system, or another fungus, and has no free-foraging network. Its spread is set by the size and layout of the host, and it usually ends in a single fruit body or stalk.",
+  "type_species": "ophiocordyceps-unilateralis",
+  "scenario": 4,
+  "display": {
+    "mycelium": "#e8e0cf",
+    "cap": "#5a4636"
+  },
+  "hyphae": {
+    "tip_speed": {
+      "value": 40,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "growth is host-limited (research/02 section 4). Heterobasidion spreads 9 to 52 cm/year through spruce roots and stems, about 10 to 60 um/h as a year-round average (research/06 [25], source not opened); no figure for an insect parasite"
+    },
+    "growth_unit": {
+      "value": 200,
+      "unit": "um",
+      "basis": "unknown",
+      "note": "no measurement found"
+    },
+    "branch_angle": {
+      "value": 79,
+      "unit": "deg",
+      "basis": "inferred",
+      "note": "default from Hopkins & Boswell 2012 (79 +/- 10 deg, research/09); not measured for this family"
+    },
+    "branch_angle_sd": {
+      "value": 10,
+      "unit": "deg",
+      "basis": "inferred",
+      "note": "default from Hopkins & Boswell 2012 (79 +/- 10 deg, research/09); not measured for this family"
+    },
+    "wobble": {
+      "value": 6,
+      "unit": "deg",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "sensitivity": {
+      "value": 0.3,
+      "unit": "",
+      "basis": "unknown",
+      "note": "how strongly tips turn away from crowding; model coefficient"
+    },
+    "fusion_probability": {
+      "value": 0.7,
+      "unit": "",
+      "basis": "unknown",
+      "note": "chance a tip that meets a hypha fuses and does not cross; no measurement found"
+    }
+  },
+  "network": {
+    "density_cap": {
+      "value": 14,
+      "unit": "segments per cell",
+      "basis": "unknown",
+      "note": "hyphal density at which branching stops; tuning value for a mycelium that fills its host"
+    },
+    "cord_rate": {
+      "value": 0.05,
+      "unit": "1/h",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "cord_max": {
+      "value": 0,
+      "unit": "",
+      "basis": "unknown",
+      "note": "does not form cords"
+    },
+    "explore": {
+      "value": 0.02,
+      "unit": "",
+      "basis": "unknown",
+      "note": "willingness to grow over bare soil; stays inside its host; tuning value"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.4,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / 100 so that one feeding segment can supply about one growing tip; no measurement found"
+    },
+    "uptake_half": {
+      "value": 0.3,
+      "unit": "units",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "capacity": {
+      "value": 4,
+      "unit": "units",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "maintenance": {
+      "value": 0.004,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "inactivation_rate": {
+      "value": 0.02,
+      "unit": "1/h",
+      "basis": "inferred",
+      "note": "from Rhizoctonia solani (Boswell et al. 2003, research/09); not a member of this family (0.5 per day)"
+    },
+    "inactivation_age": {
+      "value": 36,
+      "unit": "h",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "degradation_rate": {
+      "value": 0.002,
+      "unit": "1/h",
+      "basis": "unknown",
+      "note": "none seen in 15 h in R. solani; small value so dead hyphae clear"
+    },
+    "passive_transport": {
+      "value": 0.2,
+      "unit": "per pass",
+      "basis": "unknown",
+      "note": "diffusion between neighbouring segments; measured diffusion inside hyphae (1 to 2 x 10^-9 m2/s, research/10) is several times faster than the passes allow"
+    },
+    "affinity": {
+      "soil": {
+        "value": 0.02,
+        "unit": "",
+        "basis": "unknown",
+        "note": "how well it feeds on this substrate; from the family's ecology, not measured"
+      },
+      "wood": {
+        "value": 1,
+        "unit": "",
+        "basis": "unknown",
+        "note": "how well it feeds on this substrate; from the family's ecology, not measured"
+      },
+      "litter": {
+        "value": 0.1,
+        "unit": "",
+        "basis": "unknown",
+        "note": "how well it feeds on this substrate; from the family's ecology, not measured"
+      },
+      "root": {
+        "value": 0.8,
+        "unit": "",
+        "basis": "unknown",
+        "note": "how well it feeds on this substrate; from the family's ecology, not measured"
+      },
+      "agar": {
+        "value": 0.8,
+        "unit": "",
+        "basis": "unknown",
+        "note": "how well it feeds on this substrate; from the family's ecology, not measured"
+      }
+    },
+    "transport_speed": {
+      "value": 14000,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "no measurement for this family; near the 14.4 mm/h ceiling for motor transport and the 18 mm/h mass flow measured in Neurospora (research/10)"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 25,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "ants infected by Ophiocordyceps unilateralis die at 20 to 30 C and 94 to 95% humidity (research/06 [27]); conditions at host death, not a measured growth optimum"
+    },
+    "t_min": {
+      "value": 5,
+      "unit": "C",
+      "basis": "unknown",
+      "note": "no measurement found"
+    },
+    "t_max": {
+      "value": 35,
+      "unit": "C",
+      "basis": "unknown",
+      "note": "no measurement found"
+    },
+    "wet_opt": {
+      "value": 0.6,
+      "unit": "",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "wet_width": {
+      "value": 0.5,
+      "unit": "",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    }
+  },
+  "fruiting": {
+    "reserve_threshold": {
+      "value": 600,
+      "unit": "units",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "cold_drop": {
+      "value": 0,
+      "unit": "C",
+      "basis": "unknown",
+      "note": "no cold requirement known"
+    },
+    "min_age": {
+      "value": 120,
+      "unit": "h",
+      "basis": "unknown",
+      "note": "no measurement found"
+    },
+    "initial_rate": {
+      "value": 0.5,
+      "unit": "1/h",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    },
+    "mature_mass": {
+      "value": 400,
+      "unit": "units",
+      "basis": "unknown",
+      "note": "model coefficient; no measurement found"
+    }
+  },
+  "tuning_4k": {
+    "wobble": {
+      "value": 10,
+      "unit": "deg",
+      "basis": "unknown",
+      "note": "tuning value for the 4K engine; not a measured quantity"
+    },
+    "avoidance": {
+      "value": 1,
+      "unit": "",
+      "basis": "unknown",
+      "note": "tuning value for the 4K engine; not a measured quantity"
+    },
+    "fusion_probability": {
+      "value": 0.3,
+      "unit": "",
+      "basis": "unknown",
+      "note": "tuning value for the 4K engine; not a measured quantity"
+    },
+    "uptake": {
+      "value": 0.14,
+      "unit": "per pixel",
+      "basis": "unknown",
+      "note": "tuning value for the 4K engine; not a measured quantity"
+    },
+    "turn": {
+      "value": 6,
+      "unit": "deg",
+      "basis": "unknown",
+      "note": "tuning value for the 4K engine; not a measured quantity"
+    }
+  },
+  "electrical": {
+    "spike_interval": {
+      "value": 116,
+      "unit": "min",
+      "basis": "inferred",
+      "note": "from a family member, Cordyceps militaris: mean of 881 spikes on colonised substrate, extracellular (research/04 [16])"
+    },
+    "spike_duration": {
+      "value": 10,
+      "unit": "min",
+      "basis": "unknown",
+      "note": "default; not given for Cordyceps militaris (research/04 [16])"
+    },
+    "spike_amplitude": {
+      "value": 0.2,
+      "unit": "mV",
+      "basis": "inferred",
+      "note": "from a family member, Cordyceps militaris: mean (research/04 [16])"
+    }
+  },
+  "combat": {
+    "score": {
+      "value": 0.4,
+      "unit": "",
+      "basis": "unknown",
+      "note": "default; no ranking found. The host shields the fungus from most competitors, and trunk heart rots behave like early colonisers"
+    }
+  }
+}

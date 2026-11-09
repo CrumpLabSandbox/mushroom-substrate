@@ -1,0 +1,60 @@
+{
+  "slug": "hericium-erinaceus",
+  "name": "Hericium erinaceus",
+  "common_name": "lion's mane",
+  "family": "MAT",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 13,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#f1ead8"
+  },
+  "taxonomy": {
+    "order": "Russulales",
+    "family": "Hericiaceae"
+  },
+  "ecology": {
+    "trophic": "white-rot",
+    "substrate": "wounds on old beech and oak",
+    "hosts": "beech, oak",
+    "biomes": [
+      "TBL"
+    ],
+    "continents": [
+      "EU",
+      "NA",
+      "AS"
+    ],
+    "season": "late summer to autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "tooth",
+    "size_cm": {
+      "value": [
+        10,
+        30
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#f1ead8",
+    "stem_colour": "#e6dcc4",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "tooth",
+    "size_cm": 20,
+    "colours": [
+      "#f1ead8",
+      "#e6dcc4"
+    ],
+    "biomes": [
+      "TBL"
+    ],
+    "abundance": 1
+  },
+  "notes": "A slow heart rot with a tooth-cushion fruit body. Reported (unchecked) to be cultivated and to have a sequenced genome."
+}

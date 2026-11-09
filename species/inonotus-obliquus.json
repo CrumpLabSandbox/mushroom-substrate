@@ -1,0 +1,60 @@
+{
+  "slug": "inonotus-obliquus",
+  "name": "Inonotus obliquus",
+  "common_name": "chaga",
+  "family": "HOST",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 83,
+  "display": {
+    "mycelium": "#e8e0cf",
+    "cap": "#1c1714"
+  },
+  "taxonomy": {
+    "order": "Hymenochaetales",
+    "family": "Hymenochaetaceae"
+  },
+  "ecology": {
+    "trophic": "tree-parasite",
+    "substrate": "heartwood of living birch trunks",
+    "hosts": "birch",
+    "biomes": [
+      "BOR"
+    ],
+    "continents": [
+      "EU",
+      "AS",
+      "NA"
+    ],
+    "season": "cold climates (unchecked)"
+  },
+  "fruit": {
+    "form": "crust",
+    "size_cm": {
+      "value": [
+        10,
+        40
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08); the sterile black canker; the true fruit body is a hidden crust"
+    },
+    "cap_colour": "#1c1714",
+    "stem_colour": "#a8642a",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "HOST",
+    "form": "crust",
+    "size_cm": 25,
+    "colours": [
+      "#1c1714",
+      "#a8642a"
+    ],
+    "biomes": [
+      "BOR"
+    ],
+    "abundance": 2
+  },
+  "notes": "A trunk heart rot that grows for decades in the living tree and fruits once, after the tree dies. What is seen is a sterile black canker, not the fruit body."
+}

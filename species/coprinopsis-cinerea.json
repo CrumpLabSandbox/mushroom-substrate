@@ -265,5 +265,56 @@
       "basis": "unknown",
       "note": "tuning value for the 4K engine; not a measured quantity"
     }
-  }
+  },
+  "data_richness": 3,
+  "survey_number": 48,
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Psathyrellaceae"
+  },
+  "ecology": {
+    "trophic": "dung",
+    "substrate": "horse dung, compost",
+    "hosts": "",
+    "biomes": [
+      "GRS",
+      "URB"
+    ],
+    "continents": [
+      "AS",
+      "EU",
+      "NA"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        2,
+        5
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#9a9488",
+    "stem_colour": "#e6e0d0",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "DIF",
+    "form": "agaric",
+    "size_cm": 3.5,
+    "colours": [
+      "#9a9488",
+      "#e6e0d0"
+    ],
+    "biomes": [
+      "GRS",
+      "URB"
+    ],
+    "abundance": 2
+  },
+  "notes": "The model mushroom for development: genome 37.5 Mb; light and dark steps gate each fruiting stage, and the stalk elongates without a cap in darkness [17]. The whole cycle is reported (unchecked) to take about two weeks in the lab."
 }

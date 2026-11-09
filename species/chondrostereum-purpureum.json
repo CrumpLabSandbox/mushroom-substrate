@@ -1,0 +1,64 @@
+{
+  "slug": "chondrostereum-purpureum",
+  "name": "Chondrostereum purpureum",
+  "common_name": "silver leaf",
+  "family": "MAT",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 86,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#7a4a7a"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Cyphellaceae"
+  },
+  "ecology": {
+    "trophic": "tree-parasite",
+    "substrate": "fresh wounds and stumps of broadleaf trees",
+    "hosts": "plum, cherry, birch, poplar",
+    "biomes": [
+      "TBL",
+      "URB",
+      "BOR"
+    ],
+    "continents": [
+      "NA",
+      "EU",
+      "AS"
+    ],
+    "season": "autumn to spring (unchecked)"
+  },
+  "fruit": {
+    "form": "crust",
+    "size_cm": {
+      "value": [
+        2,
+        5
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#7a4a7a",
+    "stem_colour": "#b9a6b0",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "crust",
+    "size_cm": 3.5,
+    "colours": [
+      "#7a4a7a",
+      "#b9a6b0"
+    ],
+    "biomes": [
+      "TBL",
+      "URB",
+      "BOR"
+    ],
+    "abundance": 2
+  },
+  "notes": "Enters fresh wounds (the survey codes it MAT/HOST); its toxin silvers leaves far from the mycelium. Reported (unchecked) to be sold as a stump-killing treatment."
+}

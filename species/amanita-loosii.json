@@ -1,0 +1,58 @@
+{
+  "slug": "amanita-loosii",
+  "name": "Amanita loosii",
+  "common_name": "",
+  "family": "ECM-M",
+  "tier": "third",
+  "data_richness": 1,
+  "survey_number": 55,
+  "display": {
+    "mycelium": "#e9dcc8",
+    "cap": "#ede6d2"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Amanitaceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "soil around tree roots",
+    "hosts": "miombo trees (Brachystegia, Julbernardia) (unchecked)",
+    "biomes": [
+      "SAV"
+    ],
+    "continents": [
+      "AF"
+    ],
+    "season": "early rainy season (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        10,
+        25
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#ede6d2",
+    "stem_colour": "#f2ede0",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-M",
+    "form": "agaric",
+    "size_cm": 18,
+    "colours": [
+      "#ede6d2",
+      "#f2ede0"
+    ],
+    "biomes": [
+      "SAV"
+    ],
+    "abundance": 2
+  },
+  "notes": "The African savanna-woodland representative (syn. A. zambiana). The survey could not verify the name or any detail of this entry; its family is inferred from the genus."
+}

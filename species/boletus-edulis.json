@@ -1,0 +1,70 @@
+{
+  "slug": "boletus-edulis",
+  "name": "Boletus edulis",
+  "common_name": "porcini, cep",
+  "family": "ECM-L",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 59,
+  "display": {
+    "mycelium": "#eadfc6",
+    "cap": "#8a5a32"
+  },
+  "taxonomy": {
+    "order": "Boletales",
+    "family": "Boletaceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "soil around tree roots",
+    "hosts": "spruce, pine, oak, beech, chestnut",
+    "biomes": [
+      "BOR",
+      "TBL",
+      "TCF",
+      "MED",
+      "ALP"
+    ],
+    "continents": [
+      "EU",
+      "NA",
+      "AS",
+      "AF",
+      "AU"
+    ],
+    "season": "summer to autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "bolete",
+    "size_cm": {
+      "value": [
+        8,
+        25
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#8a5a32",
+    "stem_colour": "#e2d3b4",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-L",
+    "form": "bolete",
+    "size_cm": 17,
+    "colours": [
+      "#8a5a32",
+      "#e2d3b4"
+    ],
+    "biomes": [
+      "BOR",
+      "TBL",
+      "TCF",
+      "MED",
+      "ALP"
+    ],
+    "abundance": 2
+  },
+  "notes": "Long-distance exploration type [13]. Not cultivated; introduced in AF and AU; genome reported (unchecked)."
+}

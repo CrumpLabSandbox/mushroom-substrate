@@ -1,0 +1,58 @@
+{
+  "slug": "rhizopogon-vinicolor",
+  "name": "Rhizopogon vinicolor",
+  "common_name": "",
+  "family": "ECM-L",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 60,
+  "display": {
+    "mycelium": "#eadfc6",
+    "cap": "#9a6a52"
+  },
+  "taxonomy": {
+    "order": "Boletales",
+    "family": "Rhizopogonaceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "soil around Douglas-fir roots",
+    "hosts": "Douglas-fir only",
+    "biomes": [
+      "TCF"
+    ],
+    "continents": [
+      "NA"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "truffle",
+    "size_cm": {
+      "value": [
+        1,
+        4
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#9a6a52",
+    "stem_colour": "#9a6a52",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-L",
+    "form": "truffle",
+    "size_cm": 2.5,
+    "colours": [
+      "#9a6a52",
+      "#9a6a52"
+    ],
+    "biomes": [
+      "TCF"
+    ],
+    "abundance": 2
+  },
+  "notes": "Long-distance exploration type [13]; treated together with R. vesiculosus. Reported (unchecked, Beiler 2010) to be the only species with a mapped tree-to-tree network in a real forest; spores are spread by small mammals."
+}

@@ -1,0 +1,63 @@
+{
+  "slug": "amylostereum-areolatum",
+  "name": "Amylostereum areolatum",
+  "common_name": "",
+  "family": "GARDEN",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 93,
+  "display": {
+    "mycelium": "#f0ece0",
+    "cap": "#8a6a4a"
+  },
+  "taxonomy": {
+    "order": "Russulales",
+    "family": "Amylostereaceae"
+  },
+  "ecology": {
+    "trophic": "insect-farmed",
+    "substrate": "pine trunks, white rot",
+    "hosts": "Sirex woodwasp, which injects it into pines (unchecked)",
+    "biomes": [
+      "TCF"
+    ],
+    "continents": [
+      "EU",
+      "AS",
+      "AF",
+      "AU",
+      "SA",
+      "NA"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "crust",
+    "size_cm": {
+      "value": [
+        2,
+        10
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#8a6a4a",
+    "stem_colour": "#8a6a4a",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "GARDEN",
+    "form": "crust",
+    "size_cm": 6,
+    "colours": [
+      "#8a6a4a",
+      "#8a6a4a"
+    ],
+    "biomes": [
+      "TCF"
+    ],
+    "abundance": 2
+  },
+  "notes": "A white rot in the trunk, spread as clones by the woodwasp (the survey codes it GARDEN/MAT). A nematode used for biocontrol is reported (unchecked) to eat it. Native to EU, AS and north AF; invasive in AU, SA, south AF and NA."
+}

@@ -1,0 +1,73 @@
+{
+  "slug": "cenococcum-geophilum",
+  "name": "Cenococcum geophilum",
+  "common_name": "",
+  "family": "ECM-S",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 71,
+  "display": {
+    "mycelium": "#2a2622",
+    "cap": "#141210"
+  },
+  "taxonomy": {
+    "order": "Mytilinidiales",
+    "family": "Gloniaceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "soil around tree roots",
+    "hosts": "almost any ectomycorrhizal tree",
+    "biomes": [
+      "BOR",
+      "TBL",
+      "TCF",
+      "MED",
+      "TRF",
+      "ALP"
+    ],
+    "continents": [
+      "NA",
+      "SA",
+      "EU",
+      "AS",
+      "AF",
+      "AU"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "none",
+    "size_cm": {
+      "value": [
+        0.1,
+        0.4
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08); black sclerotia; there is no fruit body"
+    },
+    "cap_colour": "#141210",
+    "stem_colour": "#141210",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-S",
+    "form": "none",
+    "size_cm": 0.3,
+    "colours": [
+      "#141210",
+      "#141210"
+    ],
+    "biomes": [
+      "BOR",
+      "TBL",
+      "TCF",
+      "MED",
+      "TRF",
+      "ALP"
+    ],
+    "abundance": 3
+  },
+  "notes": "Makes no fruit body at all, only black sclerotia that persist for years; short-distance type [12]. Reported (unchecked) to be possibly the most widespread ectomycorrhizal fungus, drought tolerant, with a sequenced genome. The survey gives the class (Dothideomycetes) where an order is expected; the order here is from general knowledge, unchecked."
+}

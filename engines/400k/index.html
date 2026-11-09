@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mycelium 400K</title>
+<style>
+  body { margin: 0; background: #14110c; color: #e9dcbc; font: 14px/1.5 system-ui, sans-serif }
+  main { max-width: 1280px; margin: 0 auto; padding: 16px; display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr) 300px }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr } }
+  #c { width: 100%; aspect-ratio: 4 / 3; display: block; border-radius: 6px; touch-action: none; cursor: grab }
+  .plot { width: 100%; height: 70px; display: block; background: #1b1812; border-radius: 6px; margin-top: 8px }
+  label { display: block; margin: 0 0 9px; color: #a89c82; font-size: 12px }
+  label.in { display: flex; gap: 6px; align-items: center; font-size: 13px; color: inherit }
+  select, input, button { font: inherit; width: 100%; box-sizing: border-box; background: #221e16; color: inherit; border: 1px solid #3a3326; border-radius: 4px; padding: 4px 6px }
+  input[type=range] { padding: 0 } input[type=checkbox] { width: auto }
+  .row { display: flex; gap: 6px; margin-bottom: 9px }
+  h1 { font-size: 18px; margin: 0 0 12px }
+  #out { margin: 12px 0; font-variant-numeric: tabular-nums }
+  small { color: #a89c82 } a { color: inherit } i.k { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin: 0 4px 0 10px }
+</style>
+<main>
+  <div>
+    <canvas id="c"></canvas>
+    <canvas id="plot" class="plot" width="1024" height="90"></canvas>
+    <small>Over time:<i class="k" style="background:#e9dcbc"></i>tips<i class="k" style="background:#f2c94c"></i>reserve<i class="k" style="background:#7fbf8b"></i>uptake<i class="k" style="background:#e08572"></i>surface temperature. Each is scaled to its own peak.</small>
+    <canvas id="volt" class="plot" width="1024" height="90"></canvas>
+    <small>Voltage between the two electrodes (red minus blue), most recent 4,096 samples.</small>
+  </div>
+  <div>
+    <h1>Mycelium 400K</h1>
+    <label>Species <select id="sp"></select></label>
+    <label>Second individual <select id="sp2"><option value="">none<option value="same">another of the same species</select></label>
+    <label>World <select id="scn"></select></label>
+    <label>Colour by <select id="mode"><option value="network">individual (width = cord thickness)<option value="reserve">reserve inside hyphae<option value="flow">flow<option value="voltage">voltage</select></label>
+    <label>Electrical model <select id="emode"><option value="2">excitable network (FitzHugh-Nagumo)<option value="1">integrate and fire<option value="3">voltage follows flow<option value="0">off</select></label>
+    <label>Mean temperature <span id="tv"></span> <input id="temp" type="range" min="0" max="45" step="1"></label>
+    <label>Speed <input id="speed" type="range" min="1" max="10" value="2"></label>
+    <label>Seed <input id="seed" type="number" value="1"></label>
+    <div class="row"><label class="in"><input id="weather" type="checkbox" checked> weather</label><label class="in"><input id="soil" type="checkbox" checked> show soil</label><label class="in"><input id="real" type="checkbox"> real-size mushrooms</label></div>
+    <div class="row"><button id="go">restart</button><button id="pause">pause</button><button id="rain">rain</button></div>
+    <div class="row"><button id="csv">save signals</button><button id="wav">save voltage</button><button id="net">save network</button></div>
+    <div id="out"></div>
+    <p><small>Drag to turn, scroll to zoom. The block is 25.6 mm square and 12.8 mm deep: leaf litter on top, organic soil, then mineral soil. Faint lines are hyphae the fungus has abandoned. The red and blue posts are the electrodes. Mushrooms are drawn small unless "real-size" is ticked.</small></p>
+    <p><small>The electrical models reproduce disputed measurements and claim nothing about what the spikes mean. Many values are tuning values: see the <a href="https://github.com/CrumpLabSandbox/mushroom-substrate/blob/main/docs/MODEL.md">model notes</a>. <a href="../../">About</a></small></p>
+  </div>
+</main>
+<script src="view.js"></script>
+</html>

@@ -63,6 +63,8 @@ function speciesProblems() {
   };
   const files = fs.readdirSync(dir).filter((f) => f.endsWith('.json') && f !== 'schema.json');
   for (const f of files) visit(f, '', JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')));
+  const fam = path.join(dir, 'families');
+  for (const f of fs.readdirSync(fam).filter((x) => x.endsWith('.json'))) visit('families/' + f, '', JSON.parse(fs.readFileSync(path.join(fam, f), 'utf8')));
   if (files.length > 100) problems.push(`${files.length} species: the cap is 100`);
   return problems;
 }

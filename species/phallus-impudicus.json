@@ -1,0 +1,63 @@
+{
+  "slug": "phallus-impudicus",
+  "name": "Phallus impudicus",
+  "common_name": "common stinkhorn",
+  "family": "CORD-L",
+  "tier": "second",
+  "data_richness": 2,
+  "survey_number": 43,
+  "display": {
+    "mycelium": "#f2ead0",
+    "cap": "#4f4a2e"
+  },
+  "taxonomy": {
+    "order": "Phallales",
+    "family": "Phallaceae"
+  },
+  "ecology": {
+    "trophic": "litter-soil",
+    "substrate": "buried rotting wood",
+    "hosts": "",
+    "biomes": [
+      "TBL",
+      "TCF",
+      "URB"
+    ],
+    "continents": [
+      "EU",
+      "AS"
+    ],
+    "season": "summer to autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "stinkhorn",
+    "size_cm": {
+      "value": [
+        10,
+        25
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08); height"
+    },
+    "cap_colour": "#4f4a2e",
+    "stem_colour": "#f2efe6",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "CORD-L",
+    "form": "stinkhorn",
+    "size_cm": 18,
+    "colours": [
+      "#4f4a2e",
+      "#f2efe6"
+    ],
+    "biomes": [
+      "TBL",
+      "TCF",
+      "URB"
+    ],
+    "abundance": 2
+  },
+  "notes": "Thick white cords lead to \"eggs\" that expand in hours; flies carry the spores. Extension rate rises with temperature from 5 to 20 C [14], but the numeric rates were not obtained."
+}

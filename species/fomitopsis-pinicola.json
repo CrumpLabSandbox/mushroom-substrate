@@ -1,0 +1,63 @@
+{
+  "slug": "fomitopsis-pinicola",
+  "name": "Fomitopsis pinicola",
+  "common_name": "red-belted conk",
+  "family": "MAT",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 25,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#a8452a"
+  },
+  "taxonomy": {
+    "order": "Polyporales",
+    "family": "Fomitopsidaceae"
+  },
+  "ecology": {
+    "trophic": "brown-rot",
+    "substrate": "dead conifers and birch",
+    "hosts": "",
+    "biomes": [
+      "BOR",
+      "TCF",
+      "ALP"
+    ],
+    "continents": [
+      "EU",
+      "AS"
+    ],
+    "season": "perennial; cold-hardy (unchecked)"
+  },
+  "fruit": {
+    "form": "bracket",
+    "size_cm": {
+      "value": [
+        10,
+        40
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#a8452a",
+    "stem_colour": "#3a2c26",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "bracket",
+    "size_cm": 25,
+    "colours": [
+      "#a8452a",
+      "#3a2c26"
+    ],
+    "biomes": [
+      "BOR",
+      "TCF",
+      "ALP"
+    ],
+    "abundance": 3
+  },
+  "notes": "A main decayer of boreal dead wood, reaching the alpine treeline; reported (unchecked) to have a sequenced genome. North American forms are now split off as other species."
+}

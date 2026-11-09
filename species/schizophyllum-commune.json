@@ -1,0 +1,115 @@
+{
+  "slug": "schizophyllum-commune",
+  "name": "Schizophyllum commune",
+  "common_name": "split gill",
+  "family": "MAT",
+  "tier": "second",
+  "data_richness": 3,
+  "survey_number": 4,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#cfc8bb"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Schizophyllaceae"
+  },
+  "ecology": {
+    "trophic": "white-rot",
+    "substrate": "dead wood of almost any kind",
+    "hosts": "",
+    "biomes": [
+      "BOR",
+      "TBL",
+      "TCF",
+      "MED",
+      "TRF",
+      "URB"
+    ],
+    "continents": [
+      "NA",
+      "SA",
+      "EU",
+      "AS",
+      "AF",
+      "AU"
+    ],
+    "season": "all year; fruit bodies dry out and revive (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        1,
+        4
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#cfc8bb",
+    "stem_colour": "#bfb6a6",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "agaric",
+    "size_cm": 2.5,
+    "colours": [
+      "#cfc8bb",
+      "#bfb6a6"
+    ],
+    "biomes": [
+      "BOR",
+      "TBL",
+      "TCF",
+      "MED",
+      "TRF",
+      "URB"
+    ],
+    "abundance": 3
+  },
+  "notes": "A thin, fast mat former and a model organism for mating and hyphal growth; reported (unchecked) to have a sequenced genome and thousands of mating types. Spikes every 41 min on average at 0.03 mV [9].",
+  "hyphae": {
+    "tip_speed": {
+      "value": 454,
+      "unit": "um/h",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [21]",
+      "note": "10.9 +/- 0.4 mm/day on malt extract agar, pH 6, 30 C; from a search snippet"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 4.54,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value tied to tip speed"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 32,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [21]",
+      "note": "best growth at 30 to 35 C, least at 15 C; middle used; snippet"
+    }
+  },
+  "electrical": {
+    "spike_interval": {
+      "value": 41,
+      "unit": "min",
+      "basis": "sourced",
+      "source": "research/04-transport-signaling.md [16]",
+      "note": "mean of 530 spikes, on wood, 1.5 days of recording; extracellular needle electrodes, 21 C, darkness (Adamatzky 2022); whether such spikes are fungal membrane activity is disputed (research/04 section 2.4)"
+    },
+    "spike_amplitude": {
+      "value": 0.03,
+      "unit": "mV",
+      "basis": "sourced",
+      "source": "research/04-transport-signaling.md [16]",
+      "note": "mean"
+    }
+  }
+}

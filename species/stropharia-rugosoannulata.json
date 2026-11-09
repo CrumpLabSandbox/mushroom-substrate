@@ -1,0 +1,62 @@
+{
+  "slug": "stropharia-rugosoannulata",
+  "name": "Stropharia rugosoannulata",
+  "common_name": "wine cap",
+  "family": "CORD-S",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 38,
+  "display": {
+    "mycelium": "#efe6c4",
+    "cap": "#7a2f3a"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Strophariaceae"
+  },
+  "ecology": {
+    "trophic": "litter-soil",
+    "substrate": "wood chips, straw mulch",
+    "hosts": "",
+    "biomes": [
+      "URB",
+      "TBL"
+    ],
+    "continents": [
+      "EU",
+      "NA",
+      "AS"
+    ],
+    "season": "spring to autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        5,
+        20
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#7a2f3a",
+    "stem_colour": "#ece6d6",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "CORD-S",
+    "form": "agaric",
+    "size_cm": 13,
+    "colours": [
+      "#7a2f3a",
+      "#ece6d6"
+    ],
+    "biomes": [
+      "URB",
+      "TBL"
+    ],
+    "abundance": 2
+  },
+  "notes": "Thick white cords in mulch; cultivated outdoors. Reported (unchecked) to have spiny cells that kill nematodes; its relative S. caerulea is a Boddy-lab cord species [15]."
+}

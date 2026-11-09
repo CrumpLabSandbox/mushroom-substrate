@@ -3,8 +3,8 @@
 Version 0.1, 2026-11-09. This is the reference the engines are written from, and later the C++
 port. It follows the research in [research/](research/README.md).
 
-**Status.** Sections 3 and 4 (the 4K and 40K models) are implemented and tested. Section 5 is
-the design for tiers not yet built. The growth and substrate equations in section 4 were checked against the
+**Status.** Sections 3, 4 and 5 (the 4K, 40K and 400K models) are implemented and tested. Section
+5b is the design for the tier not yet built. The growth and substrate equations in section 4 were checked against the
 published papers on 2026-11-09 ([research/09-boswell-check.md](research/09-boswell-check.md)).
 Their coefficients were calibrated on *Rhizoctonia solani*, which is not a mushroom former, so
 they are a starting point and not species data.
@@ -259,16 +259,85 @@ the tree flows they correct. Nothing else has been compared with measurements.
   are marked `unknown` in the species files. The uptake rate is simply set so that one feeding
   segment can supply about one growing tip.
 
-## 5. The 400K and 4M models (outline)
+## 5. The 400K model: a block of soil (implemented)
 
-**400K, 3D.** Section 4 in a volume. Steering reads gridded fields so cost stays linear. Fusion
-uses a capture radius. Flow and field relaxation run in a Worker and are applied at a fixed lag.
-Electrical activity as three switchable modes on links: integrate-and-fire, FitzHugh-Nagumo with
-a per-species time scale, and a voltage derived from flow. Roots as sources of carbon for
-mycorrhizal families; wood blocks whose mass decays as `M = M0·exp(−k·t)` with a Q10 temperature
-factor. Meetings between individuals: same genet fuses; different genets of one species form a
-dead barrier; different species deadlock or replace by a combat score tied to the
-fast-versus-dense trait. Parametric 3D fruiting bodies.
+The 40K model moved into three dimensions, in `engines/400k/`. Everything in section 4 applies
+unless stated here. The core runs in a Web Worker; the page only displays what it sends.
+
+**Space.** A block 25.6 mm square and 12.8 mm deep; `z` is depth below the surface. Fields live on
+a 64 × 64 × 32 grid (cells of 400 µm). Up to 262,144 segments. Soil is layered: leaf litter to
+0.8 mm, organic soil to 4 mm, mineral soil below. Five worlds: a block of agar, buried wood, deep
+litter, tree roots (lines that descend through the soil, with root tips along them), and a
+half-buried log.
+
+**Tips in 3D.** A tip's heading is a unit vector. Each segment it adds a random wobble, turns down
+the gradient of its own individual's inhibitor, and drifts weakly toward the family's preferred
+depth. At the surface it turns back down. A branch leaves at the branch angle in a random
+direction around its parent. Lines in 3D never exactly meet, so a tip fuses when it comes within
+a capture radius of 40 µm of one of its own hyphae in a dense place.
+
+**More than one individual.** Each individual has its own inhibitor field, so rivals do not repel
+each other. When a tip comes within 200 µm of a rival's hypha, that hypha dies. If the rival is
+the same species (a different genet), the tip dies too and a barrier is left. If it is another
+species, the tip wins with probability `0.6 × its score ÷ (sum of the two scores)` and grows on
+into the rival's ground; otherwise it dies (deadlock). Scores are family values inferred from the
+published combat hierarchy.
+
+**Weather.** Surface temperature is the mean plus a yearly and a daily cycle, damped with depth.
+Rain falls at random (about once per 60 hours) or on demand, wets the surface, and soaks down;
+the surface dries between rains. Growth and uptake respond through the same temperature and
+moisture curves as before, evaluated per depth layer.
+
+**Electrical activity** runs on a coarser graph, one node per 0.8 mm of hypha, on its own faster
+clock (up to 120 sub-steps per growth step). Three switchable models:
+- *Excitable network* (FitzHugh-Nagumo, a = 0.7, b = 0.8, ε = 0.08): nodes holding a growing tip
+  are driven and fire rhythmically; the rest of the network is excitable and carries the spikes;
+  rain excites the top 1.6 mm. Time is scaled so a driven node's period (40 model time units,
+  checked numerically) equals the species' measured spike interval.
+- *Integrate and fire*: charge builds faster where there is growth; a spike kicks the neighbours.
+- *Voltage follows flow*: no dynamics, the potential is a saturating function of flux.
+Two electrodes sit on the network; the signal is the difference between them, in millivolts
+scaled by the species' measured amplitude, with a known time per sample. This trace is the first
+audio-ready signal in the project.
+
+**Fruiting bodies** start only within 2.4 mm of the surface and are drawn as 3D shapes: a profile
+for each of 16 forms (agaric, bolete, bracket, puffball, coral, morel and so on) spun around the
+stem, in the species' colours. They can be drawn at the species' real size, which is usually
+larger than the block.
+
+**Saving.** Signals and the voltage trace save as CSV. The network saves as JSON with the recipe
+that reproduces it (species, seed, world, settings, number of steps) and every segment's end
+points, cross-section, reserve, flux, state and individual.
+
+**What was checked.** Same seed gives the same state for eight species with stored hashes, and for
+two individuals in one block, which must also meet (`tools/test.js`). Every other species gets a
+short run that must grow and stay finite. The FitzHugh-Nagumo period and stability were checked
+numerically before use. In the browser the page drew single colonies, two individuals, the
+voltage trace and the soil with no console errors, in a preview pane that throttles animation, so
+the live frame rate and the fruiting-body shapes have not been checked by eye.
+
+**What it honestly is not.**
+- **Everything in the 40K list still applies** (tuning values, approximate loop flow, simple
+  fusion, guessed uptake fall-off).
+- **The electrical models reproduce disputed measurements.** The spikes may be electrode
+  artefacts (Blatt et al. 2024). No propagation speed has been measured in a fungus; here it is
+  whatever the coupling and node spacing give. Only the first individual's electrical values are
+  used.
+- **Slow growers are under-sampled electrically.** Their growth step is hours long, more than the
+  sub-step cap covers, so each step simulates only part of that time.
+- **Rhizomorph species use intracellular figures** (about 1 Hz), a different kind of measurement
+  from the hour-scale extracellular spikes used for the others.
+- **Combat is a coin weighted by an inferred score.** There is no chemistry, no change of outcome
+  with temperature or territory size, and only two individuals.
+- **Weather is a toy.** Two cycles made of parabolas and random rain, not a climate.
+- **Wood does not change as it decays** beyond losing substrate; white and brown rot differ only
+  in their parameters.
+- **In 3D the same branching rule fills space faster**, so dense species reach the segment limit
+  within days and stop.
+- **Most species are their family.** Of the 90 species, 69 set no parameter of their own and
+  behave exactly as their family default; they differ only in name, colours and fruiting body.
+
+## 5b. The 4M model (outline)
 
 **4M, 3D.** Density fields (active hyphae, inactive hyphae, tips, internal and external
 substrate) plus an explicit cord-scale graph are the state. Fine hyphae near the camera are

@@ -1,0 +1,62 @@
+{
+  "slug": "tuber-melanosporum",
+  "name": "Tuber melanosporum",
+  "common_name": "Perigord black truffle",
+  "family": "ECM-S",
+  "tier": "second",
+  "data_richness": 3,
+  "survey_number": 69,
+  "display": {
+    "mycelium": "#e6dccb",
+    "cap": "#1f1a18"
+  },
+  "taxonomy": {
+    "order": "Pezizales",
+    "family": "Tuberaceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "limestone soil around tree roots",
+    "hosts": "oak, hazel",
+    "biomes": [
+      "MED"
+    ],
+    "continents": [
+      "EU",
+      "AU",
+      "NA",
+      "SA",
+      "AF"
+    ],
+    "season": "ripens in winter (unchecked)"
+  },
+  "fruit": {
+    "form": "truffle",
+    "size_cm": {
+      "value": [
+        2,
+        8
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#1f1a18",
+    "stem_colour": "#1f1a18",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-S",
+    "form": "truffle",
+    "size_cm": 5,
+    "colours": [
+      "#1f1a18",
+      "#1f1a18"
+    ],
+    "biomes": [
+      "MED"
+    ],
+    "abundance": 1
+  },
+  "notes": "Short-distance type, as most ectomycorrhizal ascomycetes are [12]; native to EU, in orchards elsewhere. Tuber species in culture grow only 0.6 to 0.9 mm in 40 days, a genus figure not entered as a tip speed, and a 2025 model study links warm dry summers to soil mycelium growth [24]. Reported (unchecked) to kill surrounding plants in a \"burnt\" circle, to need two mating types and to have a sequenced genome."
+}

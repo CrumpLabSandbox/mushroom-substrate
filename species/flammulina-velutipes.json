@@ -1,0 +1,105 @@
+{
+  "slug": "flammulina-velutipes",
+  "name": "Flammulina velutipes",
+  "common_name": "enoki, velvet shank",
+  "family": "MAT",
+  "tier": "second",
+  "data_richness": 3,
+  "survey_number": 12,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#d98a2b"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Physalacriaceae"
+  },
+  "ecology": {
+    "trophic": "white-rot",
+    "substrate": "broadleaf stumps",
+    "hosts": "",
+    "biomes": [
+      "TBL",
+      "BOR",
+      "URB"
+    ],
+    "continents": [
+      "EU",
+      "NA",
+      "AS"
+    ],
+    "season": "winter; survives freezing (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        2,
+        8
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#d98a2b",
+    "stem_colour": "#4a2f1e",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "agaric",
+    "size_cm": 5,
+    "colours": [
+      "#d98a2b",
+      "#4a2f1e"
+    ],
+    "biomes": [
+      "TBL",
+      "BOR",
+      "URB"
+    ],
+    "abundance": 2
+  },
+  "notes": "Spikes every 102 min on average at 0.3 mV [9]. Reported (unchecked) to be cultivated as a long-stemmed form in the dark at high CO2; cultivated \"enoki\" is now treated as Flammulina filiformis.",
+  "environment": {
+    "t_opt": {
+      "value": 25,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "research/05-fruiting.md [28]",
+      "note": "typical cultivation practice: growth at 25 C; medium confidence"
+    }
+  },
+  "fruiting": {
+    "cold_drop": {
+      "value": 10,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "research/05-fruiting.md [28]",
+      "note": "growth at 25 C, fruiting at 15 C; some strains fruit at 22 C; initiates at continuous 20 C or after 12 h at 15 C (research/05 [2])"
+    }
+  },
+  "electrical": {
+    "spike_interval": {
+      "value": 102,
+      "unit": "min",
+      "basis": "sourced",
+      "source": "research/04-transport-signaling.md [16]",
+      "note": "mean of 958 spikes, fruit bodies; extracellular needle electrodes, 21 C, darkness (Adamatzky 2022); whether such spikes are fungal membrane activity is disputed (research/04 section 2.4)"
+    },
+    "spike_duration": {
+      "value": 64,
+      "unit": "min",
+      "basis": "sourced",
+      "source": "research/04-transport-signaling.md [16]",
+      "note": "given as 64 min within spike trains; the paper abstract states durations of 1 to 21 h across species"
+    },
+    "spike_amplitude": {
+      "value": 0.3,
+      "unit": "mV",
+      "basis": "sourced",
+      "source": "research/04-transport-signaling.md [16]",
+      "note": "mean; 2.1 mV within trains"
+    }
+  }
+}

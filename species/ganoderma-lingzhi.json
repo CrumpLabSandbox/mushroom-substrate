@@ -1,0 +1,69 @@
+{
+  "slug": "ganoderma-lingzhi",
+  "name": "Ganoderma lingzhi",
+  "common_name": "reishi, lingzhi",
+  "family": "MAT",
+  "tier": "second",
+  "data_richness": 3,
+  "survey_number": 10,
+  "display": {
+    "mycelium": "#f0ece2",
+    "cap": "#7a2418"
+  },
+  "taxonomy": {
+    "order": "Polyporales",
+    "family": "Ganodermataceae"
+  },
+  "ecology": {
+    "trophic": "white-rot",
+    "substrate": "broadleaf stumps and roots",
+    "hosts": "",
+    "biomes": [
+      "TBL",
+      "TRF"
+    ],
+    "continents": [
+      "AS",
+      "EU"
+    ],
+    "season": "warm"
+  },
+  "fruit": {
+    "form": "bracket",
+    "size_cm": {
+      "value": [
+        5,
+        20
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#7a2418",
+    "stem_colour": "#3c1a14",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "bracket",
+    "size_cm": 13,
+    "colours": [
+      "#7a2418",
+      "#3c1a14"
+    ],
+    "biomes": [
+      "TBL",
+      "TRF"
+    ],
+    "abundance": 1
+  },
+  "notes": "One file for the G. lingzhi / G. lucidum group, whose species limits are disputed. Reported (unchecked) to be cultivated, to have a sequenced genome, to grow as antlers in high CO2 and to be used in mycelium materials; the related G. resinaceum has spikes 5 to 8 min wide [10].",
+  "electrical": {
+    "spike_duration": {
+      "value": 6.5,
+      "unit": "min",
+      "basis": "inferred",
+      "note": "most common spike width 5 to 8 min in the related Ganoderma resinaceum (research/04 [19], snippet); not this species"
+    }
+  }
+}

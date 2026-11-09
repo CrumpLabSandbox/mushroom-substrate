@@ -1,0 +1,79 @@
+{
+  "slug": "armillaria-ostoyae",
+  "name": "Armillaria ostoyae",
+  "common_name": "dark honey fungus",
+  "family": "RHIZ",
+  "tier": "second",
+  "data_richness": 3,
+  "survey_number": 78,
+  "display": {
+    "mycelium": "#d9c9a3",
+    "cap": "#8a5a32"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Physalacriaceae"
+  },
+  "ecology": {
+    "trophic": "tree-parasite",
+    "substrate": "conifer roots and stumps; soil between them",
+    "hosts": "Douglas-fir, firs, pines, hemlock",
+    "biomes": [
+      "TCF",
+      "BOR"
+    ],
+    "continents": [
+      "NA",
+      "EU",
+      "AS"
+    ],
+    "season": "autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        5,
+        12
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#8a5a32",
+    "stem_colour": "#c9b08a",
+    "bioluminescent": true
+  },
+  "lite": {
+    "family": "RHIZ",
+    "form": "agaric",
+    "size_cm": 8.5,
+    "colours": [
+      "#8a5a32",
+      "#c9b08a"
+    ],
+    "biomes": [
+      "TCF",
+      "BOR"
+    ],
+    "abundance": 3
+  },
+  "notes": "Spreads by rhizomorphs and directly root to root, killing trees in expanding circles; it glows [8]. The Oregon individual covers 965 ha, with isolates up to 3,810 m apart and an age of 1,900 to 8,650 years [6]. Genome reported (unchecked).",
+  "hyphae": {
+    "tip_speed": {
+      "value": 87,
+      "unit": "um/h",
+      "basis": "sourced",
+      "source": "research/08-species-survey.md [6]",
+      "note": "spread through forest of 0.22 to 1.3 m/year (three studies compiled, snippet); the middle, 0.76 m/year, as a year-round average. A stand-scale front rate, not a measured tip speed"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.87,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value tied to tip speed"
+    }
+  }
+}

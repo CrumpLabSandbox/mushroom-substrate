@@ -1,0 +1,65 @@
+{
+  "slug": "coprinus-comatus",
+  "name": "Coprinus comatus",
+  "common_name": "shaggy mane",
+  "family": "DIF",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 32,
+  "display": {
+    "mycelium": "#e6e0d0",
+    "cap": "#eee9dc"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Agaricaceae"
+  },
+  "ecology": {
+    "trophic": "litter-soil",
+    "substrate": "disturbed, compacted, nitrogen-rich soil",
+    "hosts": "",
+    "biomes": [
+      "URB",
+      "GRS"
+    ],
+    "continents": [
+      "NA",
+      "SA",
+      "EU",
+      "AS",
+      "AF",
+      "AU"
+    ],
+    "season": "spring and autumn after rain (unchecked)"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        5,
+        15
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08); height"
+    },
+    "cap_colour": "#eee9dc",
+    "stem_colour": "#f3efe6",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "DIF",
+    "form": "agaric",
+    "size_cm": 10,
+    "colours": [
+      "#eee9dc",
+      "#f3efe6"
+    ],
+    "biomes": [
+      "URB",
+      "GRS"
+    ],
+    "abundance": 3
+  },
+  "notes": "The cap digests itself into ink to release its spores, and it pushes up through asphalt. Reported (unchecked) to attack nematodes; cultivated."
+}

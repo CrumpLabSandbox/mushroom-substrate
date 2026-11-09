@@ -1,0 +1,63 @@
+{
+  "slug": "cantharellus-cibarius",
+  "name": "Cantharellus cibarius",
+  "common_name": "chanterelle",
+  "family": "ECM-M",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 68,
+  "display": {
+    "mycelium": "#e9dcc8",
+    "cap": "#f0b030"
+  },
+  "taxonomy": {
+    "order": "Cantharellales",
+    "family": "Hydnaceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "soil around tree roots",
+    "hosts": "oak, beech, spruce, pine, birch",
+    "biomes": [
+      "BOR",
+      "TBL",
+      "TCF"
+    ],
+    "continents": [
+      "EU",
+      "AS"
+    ],
+    "season": "summer to autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "chanterelle",
+    "size_cm": {
+      "value": [
+        3,
+        10
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#f0b030",
+    "stem_colour": "#f0c060",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-M",
+    "form": "chanterelle",
+    "size_cm": 6.5,
+    "colours": [
+      "#f0b030",
+      "#f0c060"
+    ],
+    "biomes": [
+      "BOR",
+      "TBL",
+      "TCF"
+    ],
+    "abundance": 2
+  },
+  "notes": "Medium-distance smooth type [13]. Reported (unchecked) to have very slow fruit bodies that last weeks and to need bacteria in culture; North American look-alikes are other species."
+}

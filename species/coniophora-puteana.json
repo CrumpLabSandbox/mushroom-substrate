@@ -1,0 +1,67 @@
+{
+  "slug": "coniophora-puteana",
+  "name": "Coniophora puteana",
+  "common_name": "cellar fungus",
+  "family": "CORD-S",
+  "tier": "second",
+  "data_richness": 3,
+  "survey_number": 22,
+  "display": {
+    "mycelium": "#d6ccb0",
+    "cap": "#6e5a34"
+  },
+  "taxonomy": {
+    "order": "Boletales",
+    "family": "Coniophoraceae"
+  },
+  "ecology": {
+    "trophic": "brown-rot",
+    "substrate": "wet timber, conifer logs",
+    "hosts": "",
+    "biomes": [
+      "URB",
+      "TCF",
+      "BOR"
+    ],
+    "continents": [
+      "NA",
+      "SA",
+      "EU",
+      "AS",
+      "AF",
+      "AU"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "crust",
+    "size_cm": {
+      "value": [
+        5,
+        50
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#6e5a34",
+    "stem_colour": "#d9cf9e",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "CORD-S",
+    "form": "crust",
+    "size_cm": 28,
+    "colours": [
+      "#6e5a34",
+      "#d9cf9e"
+    ],
+    "biomes": [
+      "URB",
+      "TCF",
+      "BOR"
+    ],
+    "abundance": 3
+  },
+  "notes": "Reported (unchecked) to form fine dark strands, to be wetter and more heat-tolerant than Serpula lacrymans, to be a standard brown-rot test fungus and to have a sequenced genome. It pumps water into dry wood, lifting it above fibre saturation within days (research/06 [38])."
+}

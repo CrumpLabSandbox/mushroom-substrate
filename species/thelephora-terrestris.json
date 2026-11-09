@@ -1,0 +1,67 @@
+{
+  "slug": "thelephora-terrestris",
+  "name": "Thelephora terrestris",
+  "common_name": "earth fan",
+  "family": "ECM-M",
+  "tier": "third",
+  "data_richness": 2,
+  "survey_number": 72,
+  "display": {
+    "mycelium": "#e9dcc8",
+    "cap": "#5a4032"
+  },
+  "taxonomy": {
+    "order": "Thelephorales",
+    "family": "Thelephoraceae"
+  },
+  "ecology": {
+    "trophic": "ectomycorrhizal",
+    "substrate": "nursery and forest soil around seedling roots",
+    "hosts": "pine and other seedlings",
+    "biomes": [
+      "TCF",
+      "BOR",
+      "URB"
+    ],
+    "continents": [
+      "NA",
+      "SA",
+      "EU",
+      "AS",
+      "AF",
+      "AU"
+    ],
+    "season": ""
+  },
+  "fruit": {
+    "form": "crust",
+    "size_cm": {
+      "value": [
+        2,
+        6
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#5a4032",
+    "stem_colour": "#4a352a",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "ECM-M",
+    "form": "crust",
+    "size_cm": 4,
+    "colours": [
+      "#5a4032",
+      "#4a352a"
+    ],
+    "biomes": [
+      "TCF",
+      "BOR",
+      "URB"
+    ],
+    "abundance": 3
+  },
+  "notes": "A pioneer on seedlings whose fan or crust fruit body climbs stems. Medium-distance smooth type is reported but unchecked."
+}

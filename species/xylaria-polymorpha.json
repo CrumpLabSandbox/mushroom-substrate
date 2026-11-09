@@ -1,0 +1,60 @@
+{
+  "slug": "xylaria-polymorpha",
+  "name": "Xylaria polymorpha",
+  "common_name": "dead man's fingers",
+  "family": "MAT",
+  "tier": "third",
+  "data_richness": 1,
+  "survey_number": 15,
+  "display": {
+    "mycelium": "#e4ddcc",
+    "cap": "#1e1b1a"
+  },
+  "taxonomy": {
+    "order": "Xylariales",
+    "family": "Xylariaceae"
+  },
+  "ecology": {
+    "trophic": "white-rot",
+    "substrate": "buried broadleaf wood and stumps",
+    "hosts": "",
+    "biomes": [
+      "TBL"
+    ],
+    "continents": [
+      "EU",
+      "NA",
+      "AS"
+    ],
+    "season": "persists all year (unchecked)"
+  },
+  "fruit": {
+    "form": "club",
+    "size_cm": {
+      "value": [
+        3,
+        10
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08); height"
+    },
+    "cap_colour": "#1e1b1a",
+    "stem_colour": "#2a2523",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "MAT",
+    "form": "club",
+    "size_cm": 6.5,
+    "colours": [
+      "#1e1b1a",
+      "#2a2523"
+    ],
+    "biomes": [
+      "TBL"
+    ],
+    "abundance": 2
+  },
+  "notes": "An ascomycete wood decayer. Reported (unchecked) to wall itself in with black zone lines, a visible territory boundary."
+}

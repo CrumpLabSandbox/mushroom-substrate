@@ -1,0 +1,60 @@
+{
+  "slug": "cyttaria-darwinii",
+  "name": "Cyttaria darwinii",
+  "common_name": "Darwin's fungus",
+  "family": "HOST",
+  "tier": "third",
+  "data_richness": 1,
+  "survey_number": 85,
+  "display": {
+    "mycelium": "#e8e0cf",
+    "cap": "#e8a03a"
+  },
+  "taxonomy": {
+    "order": "Cyttariales",
+    "family": "Cyttariaceae"
+  },
+  "ecology": {
+    "trophic": "tree-parasite",
+    "substrate": "galls on living branches",
+    "hosts": "southern beech (Nothofagus)",
+    "biomes": [
+      "TBL",
+      "ALP"
+    ],
+    "continents": [
+      "SA"
+    ],
+    "season": "spring, October to December (unchecked)"
+  },
+  "fruit": {
+    "form": "cup",
+    "size_cm": {
+      "value": [
+        2,
+        5
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#e8a03a",
+    "stem_colour": "#e8c070",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "HOST",
+    "form": "cup",
+    "size_cm": 3.5,
+    "colours": [
+      "#e8a03a",
+      "#e8c070"
+    ],
+    "biomes": [
+      "TBL",
+      "ALP"
+    ],
+    "abundance": 2
+  },
+  "notes": "A southern-hemisphere ascomycete, perennial in a branch gall. The fruit body is an orange pitted ball; \"cup\" is the nearest form on the list and does not describe it well."
+}

@@ -1,0 +1,80 @@
+{
+  "slug": "cordyceps-militaris",
+  "name": "Cordyceps militaris",
+  "common_name": "scarlet caterpillar club",
+  "family": "HOST",
+  "tier": "second",
+  "data_richness": 3,
+  "survey_number": 89,
+  "display": {
+    "mycelium": "#e8e0cf",
+    "cap": "#f07a1e"
+  },
+  "taxonomy": {
+    "order": "Hypocreales",
+    "family": "Cordycipitaceae"
+  },
+  "ecology": {
+    "trophic": "insect-parasite",
+    "substrate": "buried moth pupae",
+    "hosts": "moth pupae",
+    "biomes": [
+      "TBL",
+      "BOR",
+      "GRS"
+    ],
+    "continents": [
+      "EU",
+      "NA",
+      "AS"
+    ],
+    "season": "autumn (unchecked)"
+  },
+  "fruit": {
+    "form": "club",
+    "size_cm": {
+      "value": [
+        2,
+        6
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08)"
+    },
+    "cap_colour": "#f07a1e",
+    "stem_colour": "#f0a050",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "HOST",
+    "form": "club",
+    "size_cm": 4,
+    "colours": [
+      "#f07a1e",
+      "#f0a050"
+    ],
+    "biomes": [
+      "TBL",
+      "BOR",
+      "GRS"
+    ],
+    "abundance": 2
+  },
+  "notes": "Spikes every 116 min on average at 0.2 mV, the slowest of four species recorded [9]. Reported (unchecked) to be cultivated on grain at scale and to have a sequenced genome.",
+  "electrical": {
+    "spike_interval": {
+      "value": 116,
+      "unit": "min",
+      "basis": "sourced",
+      "source": "research/04-transport-signaling.md [16]",
+      "note": "mean of 881 spikes, colonised substrate; extracellular needle electrodes, 21 C, darkness (Adamatzky 2022); whether such spikes are fungal membrane activity is disputed (research/04 section 2.4)"
+    },
+    "spike_amplitude": {
+      "value": 0.2,
+      "unit": "mV",
+      "basis": "sourced",
+      "source": "research/04-transport-signaling.md [16]",
+      "note": "mean; detection threshold 0.1 mV"
+    }
+  }
+}

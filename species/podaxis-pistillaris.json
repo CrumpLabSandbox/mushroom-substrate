@@ -1,0 +1,64 @@
+{
+  "slug": "podaxis-pistillaris",
+  "name": "Podaxis pistillaris",
+  "common_name": "desert shaggy mane",
+  "family": "DIF",
+  "tier": "third",
+  "data_richness": 1,
+  "survey_number": 41,
+  "display": {
+    "mycelium": "#e6e0d0",
+    "cap": "#d9cdb4"
+  },
+  "taxonomy": {
+    "order": "Agaricales",
+    "family": "Agaricaceae"
+  },
+  "ecology": {
+    "trophic": "litter-soil",
+    "substrate": "sandy soil; termite mounds in Africa (unchecked)",
+    "hosts": "",
+    "biomes": [
+      "DES",
+      "SAV"
+    ],
+    "continents": [
+      "AF",
+      "AS",
+      "AU",
+      "NA",
+      "SA"
+    ],
+    "season": "after rare rains; the dry fruit body stands for months (unchecked)"
+  },
+  "fruit": {
+    "form": "puffball",
+    "size_cm": {
+      "value": [
+        5,
+        15
+      ],
+      "unit": "cm",
+      "basis": "inferred",
+      "note": "general knowledge, unchecked (research/08); height"
+    },
+    "cap_colour": "#d9cdb4",
+    "stem_colour": "#cdbf9f",
+    "bioluminescent": false
+  },
+  "lite": {
+    "family": "DIF",
+    "form": "puffball",
+    "size_cm": 10,
+    "colours": [
+      "#d9cdb4",
+      "#cdbf9f"
+    ],
+    "biomes": [
+      "DES",
+      "SAV"
+    ],
+    "abundance": 2
+  },
+  "notes": "The main hot-desert representative: a stalked puffball. Its link with termite mounds in Africa is reported but unchecked."
+}

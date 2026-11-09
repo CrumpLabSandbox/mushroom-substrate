@@ -46,10 +46,10 @@
       "note": "how strongly tips turn away from crowding; model coefficient"
     },
     "fusion_probability": {
-      "value": 0.8,
+      "value": 0.15,
       "unit": "",
-      "basis": "unknown",
-      "note": "chance a tip that meets a hypha fuses and does not cross; no measurement found"
+      "basis": "inferred",
+      "note": "fitted so that the engine gives about 1 fusion per 8 branches, as measured in Podospora anserina (research/01 [8]); not measured for this species"
     }
   },
   "network": {

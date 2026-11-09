@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Against measurements</title>
+<link rel="stylesheet" href="site.css">
+<style>
+  .sum { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); margin: 24px 0; }
+  .sum div { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .sum b { font: 600 1.6rem ui-serif, Georgia, serif; display: block; }
+  .sum span { color: var(--muted); font-size: .9rem; }
+  .row { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 0 0 10px; }
+  .row h3 { font-size: 1.02rem; }
+  .row .who { color: var(--muted); font-size: .9rem; margin-bottom: 10px; }
+  .scale { position: relative; height: 34px; margin: 6px 0 2px; }
+  .scale .axis { position: absolute; left: 0; right: 0; top: 16px; height: 2px; background: var(--line); }
+  .scale .band { position: absolute; top: 9px; height: 16px; background: var(--ok); opacity: .28; border-radius: 3px; min-width: 3px; }
+  .scale .mark { position: absolute; top: 3px; width: 3px; height: 28px; background: var(--fg); border-radius: 2px; }
+  .nums { display: flex; flex-wrap: wrap; gap: 4px 18px; font-variant-numeric: tabular-nums; font-size: .92rem; }
+  .tag { display: inline-block; font-size: .78rem; font-weight: 600; border-radius: 4px; padding: 1px 7px; border: 1.5px solid; margin-right: 6px; }
+  .tag.in { color: var(--ok); } .tag.out { color: var(--bad); border-style: dashed; }
+  .tag.check { color: var(--sourced); } .tag.fitted { color: var(--inferred); border-style: dotted; }
+  .how { color: var(--muted); font-size: .86rem; margin-top: 8px; }
+  nav { margin-bottom: 20px; font-size: .92rem; }
+  label { font-size: .9rem; color: var(--muted); margin-right: 14px; }
+</style>
+</head>
+<body>
+<main>
+  <nav><a href="./">Mushroom Substrate</a></nav>
+  <h1>Against measurements</h1>
+  <p class="lede">Each row sets an engine the same task as a published experiment and compares what comes out with what
+  was measured. The green band is the measured range; the dark mark is the engine's result.</p>
+  <div class="sum" id="sum"></div>
+  <p>Read the two kinds of row differently. Where a value was <b>fitted</b> to the measurement, agreement shows only that
+  the fit worked. Where <b>nothing was tuned</b>, agreement means something, though with this few checks not much. Several
+  measurements come from search summaries of papers that were not opened, and the electrical recordings are themselves
+  disputed. The full account, including what was changed and why, is in
+  <a href="https://github.com/CrumpLabSandbox/mushroom-substrate/blob/main/docs/CALIBRATION.md">docs/CALIBRATION.md</a>.</p>
+  <p><label><input type="checkbox" id="onlycheck"> only rows nothing was tuned to</label><label><input type="checkbox" id="onlymiss"> only misses</label></p>
+  <div id="rows"></div>
+</main>
+<script>
+  const f = (v) => v == null ? 'none' : Math.abs(v) >= 100 ? v.toFixed(0) : Math.abs(v) >= 10 ? v.toFixed(1) : Math.abs(v) >= 1 ? v.toFixed(2) : v.toFixed(3);
+  const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  let data;
+  function draw() {
+    const rows = data.results.filter((r) => (!onlycheck.checked || r.role == 'check') && (!onlymiss.checked || !r.ok));
+    document.getElementById('rows').innerHTML = rows.map((r) => {
+      const lo = r.target.lo, hi = r.target.hi, s = r.simulated, top = Math.max(hi, s == null ? 0 : s) * 1.18, pos = (v) => Math.max(0, Math.min(100, v / top * 100));
+      const species = r.species == 'all' ? 'all species' : /test organism/.test(r.species) ? esc(r.species) : '<i>' + esc(r.species) + '</i>';
+      return `<div class="row"><h3>${esc(r.measure[0].toUpperCase() + r.measure.slice(1))}</h3>
+        <div class="who">${species} · ${r.engine} engine</div>
+        <span class="tag ${r.ok ? 'in' : 'out'}">${r.ok ? 'within range' : 'outside range'}</span><span class="tag ${r.role}">${r.role == 'check' ? 'nothing tuned' : 'fitted'}</span>
+        <div class="scale" role="img" aria-label="measured ${f(lo)} to ${f(hi)}, engine ${f(s)} ${esc(r.unit)}"><div class="axis"></div>
+          <div class="band" style="left:${pos(lo)}%;width:${pos(hi) - pos(lo)}%"></div>${s == null ? '' : `<div class="mark" style="left:calc(${pos(s)}% - 1px)"></div>`}</div>
+        <div class="nums"><span>measured <b>${f(lo)} to ${f(hi)}</b> ${esc(r.unit)}</span><span>engine <b>${f(s)}</b> ${esc(r.unit)}</span><span>${esc(r.verdict)}</span></div>
+        <div class="how">Measurement: ${esc(r.target.note)} (${esc(r.target.source)}). Engine: ${esc(r.how)}. Fitting: ${esc(r.fit)}.</div></div>`;
+    }).join('') || '<p class="muted">No rows match.</p>';
+  }
+  fetch('data/calibration.json').then((r) => r.json()).then((d) => {
+    data = d;
+    const fitted = d.total - d.checks;
+    document.getElementById('sum').innerHTML =
+      `<div><b>${d.within} of ${d.total}</b><span>comparisons fall within the measured range</span></div>` +
+      `<div><b>${d.checks_within} of ${d.checks}</b><span>of those nothing was tuned to</span></div>` +
+      `<div><b>${d.within - d.checks_within} of ${fitted}</b><span>of those a value was fitted to</span></div>` +
+      `<div><b>${d.generated}</b><span>last run</span></div>`;
+    onlycheck.onchange = onlymiss.onchange = draw; draw();
+  });
+</script>
+</body>
+</html>

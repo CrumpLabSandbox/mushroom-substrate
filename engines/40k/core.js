@@ -7,7 +7,8 @@ var M = (P, seed, scn) => {
   const W = 25600, L = 100, G = 128, CS = 200, N = 1 << 17, GG = G * G, AF = [A0, A1, A2, A3, A4],
     SE0 = [.6, 400, 60, 40, 25], MOB = [.1, 0, 0, 0, 1], // soil, wood, litter, root tip, agar
     F = () => new Float32Array(N), min = Math.min, max = Math.max, ab = Math.abs,
-    REACH = max(1, min(400, VT / E | 0)), TU = 3000 / E, // hops substrate can be drawn per step; age (h) at which uptake has fallen
+    EV = E * 1.15, // tips wander, so a colony's front advances slower than its tips move; 1.15 is fitted to measured front speeds (docs/CALIBRATION.md)
+    REACH = max(1, min(400, VT / EV | 0)), TU = 3000 / EV, // hops substrate can be drawn per step; age (h) at which uptake has fallen
     x0 = F(), y0 = F(), x1 = F(), y1 = F(), si = F(), ar = F(), Q = F(), qc = F(), qr = F(), dl = F(), born = F(), dep = new Uint16Array(N), fq = [],
     par = new Int32Array(N), nxt = new Int32Array(N), st = new Uint8Array(N), brd = new Uint8Array(N),
     tc = new Uint8Array(N), head = new Int32Array(GG).fill(-1), typ = new Uint8Array(GG),
@@ -63,14 +64,15 @@ var M = (P, seed, scn) => {
   for (i = 0; i < GG; i++) se[i] = SE0[typ[i]]
   { let v = []; for (i = 0; i < 81; i++) v.push(.3 + .6 * r())
     for (i = 0; i < GG; i++) { let gx = (i % G) / 16, gy = (i / G | 0) / 16, u = gx | 0, w = gy | 0, fx = gx - u, fy = gy - w, k = w * 9 + u
-      wet[i] = (v[k] * (1 - fx) + v[k + 1] * fx) * (1 - fy) + (v[k + 9] * (1 - fx) + v[k + 10] * fx) * fy } }
+      wet[i] = (v[k] * (1 - fx) + v[k + 1] * fx) * (1 - fy) + (v[k + 9] * (1 - fx) + v[k + 10] * fx) * fy
+      scn || (wet[i] = WOPT) } } // a dish of agar is evenly wet, at the species' optimum
 
   S = {
     W, L, G, CS, x0, y0, x1, y1, si, ar, Q, qc, st, typ, wet, den, tips, fr, rec, SE0, SMAX, MM,
-    t: 0, dt: L / E * 3600, temp: TOPT - DROP, len: 0, br: 0, fu: 0, res: 0, up: 0, flow: 0, front: 0, cords: 0, fruits: 0, alpha: 0, alphaX: 0, cross: 0, ntips: 0,
+    t: 0, dt: L / EV * 3600, temp: TOPT - DROP, len: 0, br: 0, fu: 0, res: 0, up: 0, flow: 0, front: 0, cords: 0, fruits: 0, alpha: 0, alphaX: 0, cross: 0, ntips: 0,
     get n() { return n }, get se() { return se }, get inh() { return inh },
     step() {
-      const dt = L / E, T = rt(S.temp)
+      const dt = L / EV, T = rt(S.temp)
       let k, p, q, f, u, h, t, b, g, e, m, fsum = 0, ext = 0, res = 0, up = 0, cords = 0
       th += dt; steps++; qr.fill(0, 0, n)
 
@@ -82,6 +84,14 @@ var M = (P, seed, scn) => {
         si[s] < 1 && pull(s, 1 - si[s])
         if (si[s] < 1) { if (++t[4] > 60) { S.ev && S.ev(2, x1[s], y1[s]); kill(i--) } continue }
         t[4] = 0
+        // branching happens in time, at rate E/G per tip (Trinci), whatever the tip's own pace; it starts behind the tip
+        if (tips.length < 6000 && r() < L / GU * T * rw(c) * (1 - den[c] / CAP)) {
+          b = s; for (k = 1 + (r() * 5 | 0); k-- && par[b] >= 0;) b = par[b]
+          if (brd[b] < 2 && st[b] == 1) { // at most two branches from one 0.1 mm piece
+            brd[b]++; tc[b]++; S.br++; S.ev && S.ev(0, x1[b], y1[b])
+            tips.push([b, t[1] + (r() < .5 ? 1 : -1) * (BA + tri() * BS * 2.45) * K, 0, 0, 0])
+          }
+        }
         t[2] += T * rw(c) * min(1, .3 + t[3] * .12) * (typ[c] ? 1 : EXPL)
         if (t[2] < 1) continue
         t[2] -= 1; h = t[1]
@@ -100,13 +110,6 @@ var M = (P, seed, scn) => {
         f = si[s] / 2; si[s] = f; q = add(x1[s], y1[s], u, e, s, f)
         if (q < 0) { kill(i--); continue }
         tc[s]--; tc[q]++; t[0] = q; t[3]++
-        if (tips.length < 6000 && r() < L / GU * (1 - den[c] / CAP)) {
-          b = s; for (k = 1 + (r() * 5 | 0); k-- && par[b] >= 0;) b = par[b]
-          if (!brd[b] && st[b] == 1) {
-            brd[b] = 1; tc[b]++; S.br++; S.ev && S.ev(0, x1[b], y1[b])
-            tips.push([b, h + (r() < .5 ? 1 : -1) * (BA + tri() * BS * 2.45) * K, 0, 0, 0])
-          }
-        }
       }
 
       // 2. every hypha: uptake (needs internal substrate), maintenance, cord thickening, inactivation
@@ -132,7 +135,8 @@ var M = (P, seed, scn) => {
         if (st[i] == 1 && si[i] > 1 && !fr.some(o => (o.x - x1[i]) * (o.x - x1[i]) + (o.y - y1[i]) * (o.y - y1[i]) < 9e6)) { fr.push({ i, x: x1[i], y: y1[i], m: 0, s: 0, z: 0 }); S.ev && S.ev(4, x1[i], y1[i]) }
       }
       for (const o of fr) if (!o.s) {
-        g = dt * .5 * (1 + o.m * .2); st[o.i] == 1 && si[o.i] < g && pull(o.i, g - si[o.i])
+        g = dt * .3 * (1 + o.m * .2); // fitted so an initial takes 4 to 5 days to mature (Coprinopsis cinerea)
+        st[o.i] == 1 && si[o.i] < g && pull(o.i, g - si[o.i])
         g = st[o.i] == 1 ? min(si[o.i], g) : 0
         si[o.i] -= g; o.m += g; qr[o.i] += g
         if (g < .01) { if (++o.z > 80) { o.s = 2; st[o.i] == 1 && (si[o.i] += o.m * .5); S.ev && S.ev(5, o.x, o.y) } } else o.z = 0

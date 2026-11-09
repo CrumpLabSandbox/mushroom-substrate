@@ -14,7 +14,7 @@ var M = (inds, seed, scn) => {
     N = 1 << 18, NE = N >> 2, RC = 4000, MAXI = 8, PP = inds.map(o => o.p),
     EM = Math.max(...PP.map(p => p[E])), dt = Math.min(24, L / EM), // one step is the time the fastest cord takes to grow 1 cm, at most a day
     REACH = Math.max(1, Math.min(400, PP[0][VT] * dt / L | 0)),
-    SE0 = [.3, 3000, 60, 40, 25, 1.5], // mineral soil, wood, leaf litter, root tip, turf, organic soil
+    SE0 = [.3, 800, 60, 40, 25, 1.5], // (wood is set so a colonised log decays at about 0.06 per year: docs/CALIBRATION.md) // mineral soil, wood, leaf litter, root tip, turf, organic soil
     F = n => new Float32Array(n || N), min = Math.min, max = Math.max, ab = Math.abs, sq = Math.sqrt, each = f => Array.from({ length: MAXI }, f),
     x0 = F(), y0 = F(), z0 = F(), x1 = F(), y1 = F(), z1 = F(), si = F(), ar = F(), Q = F(), qc = F(), qr = F(), dl = F(), born = F(),
     par = new Int32Array(N), nxt = new Int32Array(N), en = new Int32Array(N), st = new Uint8Array(N), brd = new Uint8Array(N),
@@ -186,7 +186,7 @@ var M = (inds, seed, scn) => {
         o = own[i]; P = PP[o]; c = ci(x1[i], y1[i], z1[i]); m = P[SMAX] * ar[i]
         u = min(10 * P[E] / L * dt * myc[o][c] * P[AFI[typ[c]]] * rtL[o][z1[i] / CS | 0] * rw(P, c) * se[c] / (se[c] + 5) / dno[o][c], se[c], m - si[i])
         u > 0 && (se[c] -= u, si[i] += u * .9, up += u, upS[o] += u)
-        si[i] = max(0, si[i] - P[C5] * .1 * dt)
+        si[i] = max(0, si[i] - P[C5] * .1 * dt * P[E] / 350) // upkeep scales with how fast the species lives
         g = ab(Q[i] + qc[i]); ar[i] += min(1, dt * P[CR]) * (1 + P[CMAX] * g / (g + 8) - ar[i]); ar[i] > 4 && cords++
         res[o] += si[i]
         if ((i & 7) == (steps & 7) && par[i] >= 0 && !tc[i] && g < .02 && th - born[i] > P[TOLD] * 20 && si[i] < .2 && r() < P[DA] * dt * 1.6) {
@@ -207,7 +207,7 @@ var M = (inds, seed, scn) => {
       for (const v of fr) {
         P = PP[v.o]
         if (!v.s) { // growing: a sink on the cord network; expansion needs water
-          g = dt * .5 * (1 + v.m * .2) * (.3 + wet[ci(v.x, v.y, 0)]); st[v.i] == 1 && si[v.i] < g && pull(v.i, g - si[v.i])
+          g = dt * .3 * (1 + v.m * .2) * (.3 + wet[ci(v.x, v.y, 0)]); st[v.i] == 1 && si[v.i] < g && pull(v.i, g - si[v.i])
           g = st[v.i] == 1 ? min(si[v.i], g) : 0
           si[v.i] -= g; v.m += g; qr[v.i] += g
           if (g < .01) { if (++v.q > 12) { v.s = 2; st[v.i] == 1 && (si[v.i] += v.m * .5); S.ev && S.ev(5, v.x, v.y, v.z) } } else v.q = 0
@@ -279,10 +279,11 @@ var M = (inds, seed, scn) => {
       for (o = 0; o < NI; o++) { inhs[o].set(ibs[o]); myc[o].set(mbs[o]) }
 
       // 7. electrical activity on a coarser graph (one node per 8 cm of cord), on its own faster clock
-      P = PP[0]; g = dt * 60 / P[SPI]; m = min(120, max(1, g * 100 + .5 | 0)); h = min(.4, g * 40 / m)
+      P = PP[0]; g = dt * 60 / P[SPI]; m = min(160, max(1, g * 160 + .5 | 0)); h = min(.25, g * 40 / m)
       S.tdt = h / 40 * P[SPI] * 60
       if (S.emode) {
-        for (k = 0; k < ne; k++) { q = eseg[k]; eI[k] = st[q] == 1 ? (tc[q] ? .5 : 0) + (rain && z1[q] < 8e4 ? .6 : 0) : -9 }
+        for (k = 0; k < ne; k++) { q = eseg[k]; eI[k] = st[q] == 1 ? .45 + (rain && z1[q] < 8e4 ? .5 : 0) : -9 }
+        for (const t of tips) eI[en[t[0]]] > -9 && eI[en[t[0]]] < .5 && (eI[en[t[0]]] += .1)
         for (; m--;) {
           for (k = 0; k < ne; k++) ed[k] = 0
           for (k = 0; k < ne; k++) { p = epar[k]; p >= 0 && eI[k] > -9 && eI[p] > -9 && (g = .12 * (ev[p] - ev[k]), ed[k] += g, ed[p] -= g) }

@@ -11,11 +11,10 @@
   },
   "hyphae": {
     "tip_speed": {
-      "value": 500,
+      "value": 552,
       "unit": "um/h",
-      "basis": "sourced",
-      "source": "research/08-species-survey.md [18]",
-      "note": "12.0 mm/day at 30 C on agar, one study; research/01 [23] gives 233 um/h at 22 C from a snippet"
+      "basis": "inferred",
+      "note": "12.0 mm/day at 30 C on agar (research/08 [18], one study) divided by the fitted temperature factor at 30 C (0.906), to give the rate at the 28 C optimum"
     },
     "growth_unit": {
       "value": 300,
@@ -48,10 +47,10 @@
       "note": "how strongly tips turn away from crowding; model coefficient"
     },
     "fusion_probability": {
-      "value": 0.7,
+      "value": 0.15,
       "unit": "",
-      "basis": "unknown",
-      "note": "chance a tip that meets a hypha fuses and does not cross; no measurement found"
+      "basis": "inferred",
+      "note": "fitted so that the engine gives about 1 fusion per 8 branches, as measured in Podospora anserina (research/01 [8]); not measured for this species"
     }
   },
   "network": {
@@ -82,7 +81,7 @@
   },
   "substrate": {
     "uptake_rate": {
-      "value": 5.0,
+      "value": 5.52,
       "unit": "units/h",
       "basis": "unknown",
       "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
@@ -170,23 +169,22 @@
   },
   "environment": {
     "t_opt": {
-      "value": 30,
+      "value": 28,
       "unit": "C",
-      "basis": "sourced",
-      "source": "research/08-species-survey.md [18]",
-      "note": "fastest of 20, 25 and 30 C in one study; research/06 [36] gives 30 C from an abstract"
+      "basis": "inferred",
+      "note": "fitted: the cardinal temperature curve with these three values reproduces the measured 6.7, 11.7 and 12.0 mm/day at 20, 25 and 30 C (one study). Two ratios cannot pin three values, so this is one of several curves that fit. research/06 [36] gives 30 C from an abstract"
     },
     "t_min": {
-      "value": 4,
+      "value": 8.5,
       "unit": "C",
-      "basis": "unknown",
-      "note": "no measurement found"
+      "basis": "inferred",
+      "note": "fitted: the cardinal temperature curve with these three values reproduces the measured 6.7, 11.7 and 12.0 mm/day at 20, 25 and 30 C (one study). Two ratios cannot pin three values, so this is one of several curves that fit"
     },
     "t_max": {
-      "value": 38,
+      "value": 33,
       "unit": "C",
-      "basis": "unknown",
-      "note": "no measurement found"
+      "basis": "inferred",
+      "note": "fitted: the cardinal temperature curve with these three values reproduces the measured 6.7, 11.7 and 12.0 mm/day at 20, 25 and 30 C (one study). Two ratios cannot pin three values, so this is one of several curves that fit"
     },
     "wet_opt": {
       "value": 0.6,

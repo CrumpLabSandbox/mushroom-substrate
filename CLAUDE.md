@@ -43,5 +43,7 @@ notes are in [notes.md](notes.md).
 | `tools/check.js` | Byte limits, and that every species value has a valid basis |
 | `tools/pack.js` | Writes each engine's packed species files from `species/` |
 | `tools/test.js` | Repeatability (stored hashes in `tools/hashes.json`) and speed |
+| `tools/calibrate.js` | Runs the engines against published measurements; writes `docs/calibration/results.json`. Run by hand after changing an engine or a species |
+| `tools/export.js` | Writes the site's data files, including the Worldbuilder pack |
 | `tools/build-site.js` | Assembles `_site/` for Pages |
 | `site/` | Landing page and, later, the species browser and comparison pages |

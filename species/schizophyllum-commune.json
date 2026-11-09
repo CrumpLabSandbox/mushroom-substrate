@@ -72,16 +72,15 @@
   "notes": "A thin, fast mat former and a model organism for mating and hyphal growth; reported (unchecked) to have a sequenced genome and thousands of mating types. Spikes every 41 min on average at 0.03 mV [9].",
   "hyphae": {
     "tip_speed": {
-      "value": 454,
+      "value": 467,
       "unit": "um/h",
-      "basis": "sourced",
-      "source": "research/08-species-survey.md [21]",
-      "note": "10.9 +/- 0.4 mm/day on malt extract agar, pH 6, 30 C; from a search snippet"
+      "basis": "inferred",
+      "note": "10.9 +/- 0.4 mm/day on malt extract agar at 30 C (search snippet), divided by the temperature factor at 30 C (0.973) to give the rate at the 32 C optimum"
     }
   },
   "substrate": {
     "uptake_rate": {
-      "value": 4.54,
+      "value": 4.67,
       "unit": "units/h",
       "basis": "unknown",
       "note": "tuning value tied to tip speed"

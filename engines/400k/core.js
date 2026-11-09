@@ -119,6 +119,17 @@ var M = (inds, seed, scn) => {
         si[s] < 1 && pull(s, 1 - si[s])
         if (si[s] < 1) { if (++t[6] > 60) { S.ev && S.ev(2, x, y, z); kill(i--) } continue }
         t[6] = 0
+        // branching happens in time, at rate E/G per tip; a branch leaves at the branch angle, in a random direction around the parent
+        if (tips.length < 6000 && r() < P[E] / EM * L / P[GU] * rtL[o][z / CS | 0] * rw(P, c) * (1 - den[c] / (P[CAP] * 2)) * (1 - n / N) * (1 - n / N)) {
+          b = s; for (k = 1 + (r() * 5 | 0); k-- && par[b] >= 0;) b = par[b]
+          if (!brd[b] && st[b] == 1) {
+            dx = t[1]; dy = t[2]; dz = t[3]
+            g = tri(); f = tri(); m = tri(); e = g * dx + f * dy + m * dz; g -= e * dx; f -= e * dy; m -= e * dz; e = sq(g * g + f * f + m * m) + 1e-9
+            k = ((P[BA] + tri() * P[BS] * 2.45) * 256 / 360 & 255) * 2
+            brd[b] = 1; tc[b]++; S.br++; S.ev && S.ev(0, x1[b], y1[b], z1[b])
+            tips.push([b, D[k] * dx + D[k + 1] * g / e, D[k] * dy + D[k + 1] * f / e, D[k] * dz + D[k + 1] * m / e, 0, 0, 0, o])
+          }
+        }
         t[4] += P[E] / EM * rtL[o][z / CS | 0] * rw(P, c) * min(1, .3 + t[5] * .12) * (typ[c] % 5 ? 1 : P[EXPL])
         if (t[4] < 1) continue
         t[4] -= 1
@@ -149,16 +160,6 @@ var M = (inds, seed, scn) => {
         f = si[s] / 2; si[s] = f; q = add(x, y, z, u, e, h, s, f, o)
         if (q < 0) { kill(i--); continue }
         tc[s]--; tc[q]++; t[0] = q; t[5]++
-        if (tips.length < 6000 && r() < L / P[GU] * (1 - den[c] / (P[CAP] * 2)) * (1 - n / N) * (1 - n / N)) { // crowding, and room left in the engine
-          b = s; for (k = 1 + (r() * 5 | 0); k-- && par[b] >= 0;) b = par[b]
-          if (!brd[b] && st[b] == 1) {
-            // a branch leaves at the branch angle, in a random direction around the parent
-            g = tri(); f = tri(); m = tri(); e = g * dx + f * dy + m * dz; g -= e * dx; f -= e * dy; m -= e * dz; e = sq(g * g + f * f + m * m) + 1e-9
-            k = ((P[BA] + tri() * P[BS] * 2.45) * 256 / 360 & 255) * 2
-            brd[b] = 1; tc[b]++; S.br++; S.ev && S.ev(0, x1[b], y1[b], z1[b])
-            tips.push([b, D[k] * dx + D[k + 1] * g / e, D[k] * dy + D[k + 1] * f / e, D[k] * dz + D[k + 1] * m / e, 0, 0, 0, o])
-          }
-        }
       }
 
       // 2. every hypha: uptake (strongest behind the growing front), maintenance, cord thickening, abandonment
@@ -186,7 +187,7 @@ var M = (inds, seed, scn) => {
           }
       }
       for (const v of fr) if (!v.s) {
-        g = dt * .5 * (1 + v.m * .2); st[v.i] == 1 && si[v.i] < g && pull(v.i, g - si[v.i])
+        g = dt * .3 * (1 + v.m * .2); st[v.i] == 1 && si[v.i] < g && pull(v.i, g - si[v.i])
         g = st[v.i] == 1 ? min(si[v.i], g) : 0
         si[v.i] -= g; v.m += g; qr[v.i] += g
         if (g < .01) { if (++v.q > 80) { v.s = 2; st[v.i] == 1 && (si[v.i] += v.m * .5); S.ev && S.ev(5, v.x, v.y, v.z) } } else v.q = 0
@@ -231,16 +232,17 @@ var M = (inds, seed, scn) => {
       scn || NI > 1 || se.set(sb) // (with two individuals the spare buffer is in use, so agar substrate does not spread)
 
       // 7. electrical activity on a coarser graph (one node per 0.8 mm of hypha), on its own faster clock
-      P = PP[0]; g = dt * 60 / P[SPI]; m = min(120, max(1, g * 100 + .5 | 0)); h = min(.4, g * 40 / m) // m sub-steps of h time units; 40 units = one spike interval.
+      P = PP[0]; g = dt * 60 / P[SPI]; m = min(160, max(1, g * 160 + .5 | 0)); h = min(.25, g * 40 / m) // m sub-steps of h time units; 40 units = one spike interval.
       S.tdt = h / 40 * P[SPI] * 60 // seconds per sample. Slow growers would need more sub-steps than the cap allows, so they sample only part of each step
       if (S.emode) {
-        for (k = 0; k < ne; k++) { q = eseg[k]; eI[k] = st[q] == 1 ? (tc[q] ? .5 : 0) + (rain && z1[q] < 1600 ? .6 : 0) : -9 }
+        for (k = 0; k < ne; k++) { q = eseg[k]; eI[k] = st[q] == 1 ? .45 + (rain && z1[q] < 1600 ? .5 : 0) : -9 } // every live node is driven just into its rhythmic range
+        for (const t of tips) eI[en[t[0]]] > -9 && eI[en[t[0]]] < .5 && (eI[en[t[0]]] += .1) // a node with a growing tip on its stretch of hypha runs a little faster and leads
         for (; m--;) {
           for (k = 0; k < ne; k++) ed[k] = 0
           for (k = 0; k < ne; k++) { p = epar[k]; p >= 0 && eI[k] > -9 && eI[p] > -9 && (g = .12 * (ev[p] - ev[k]), ed[k] += g, ed[p] -= g) }
           for (k = 0; k < ne; k++) {
             if (eI[k] < -8) { ev[k] = -1.2; continue }
-            if (S.emode == 2) { // FitzHugh-Nagumo: growing tips are pacemakers, the rest of the network is excitable
+            if (S.emode == 2) { // FitzHugh-Nagumo oscillators coupled along the hyphae; growing tips lead
               g = ev[k]; f = ew[k]; e = g + h * (g - g * g * g / 3 - f + eI[k] + ed[k]); ev[k] = e < -2.5 ? -2.5 : e > 2.5 ? 2.5 : e; ew[k] = f + h * .08 * (g + .7 - .8 * f)
               g < 1 && ev[k] >= 1 && (S.spikes++, k == S.pa && S.pspikes++, S.ev && S.ev(9, x1[eseg[k]], y1[eseg[k]], z1[eseg[k]]))
             } else if (S.emode == 1) { // integrate and fire: charge builds with activity, a spike kicks the neighbours

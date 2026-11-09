@@ -118,3 +118,7 @@
 - Site: species browser, side-by-side page, and `data/worldbuilder.json` (26 KB) for the Worldbuilder globe.
 - Each engine's honest limits are in [docs/MODEL.md](docs/MODEL.md) under "What it honestly is not".
 - Not done from the plan: tip-swarm fruiting bodies, a calibration page against measurements, a C++ port for SynthLand.
+
+## Calibration (2026-11-09)
+- `tools/calibrate.js` compares the engines with 24 published measurements; the site shows it at `calibration.html`.
+- 21 of 24 within range after fitting, but only 4 had nothing tuned to them (3 pass). Details and what changed: [docs/CALIBRATION.md](docs/CALIBRATION.md).

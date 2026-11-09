@@ -8,6 +8,10 @@ published papers on 2026-11-09 ([research/09-boswell-check.md](research/09-boswe
 Their coefficients were calibrated on *Rhizoctonia solani*, which is not a mushroom former, so
 they are a starting point and not species data.
 
+**Calibration.** What the engines give against published measurements, and which values were
+fitted as a result, is in [CALIBRATION.md](CALIBRATION.md). Where this document and that one
+disagree about a constant, the code and CALIBRATION.md are newer.
+
 ## 1. Conventions
 
 **Units.** Length in micrometres (µm). Time in seconds (s). Angles in degrees in species files;

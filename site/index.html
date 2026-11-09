@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mushroom Substrate</title>
+<style>
+  :root {
+    --bg: #f6f3ec; --fg: #23201a; --muted: #6d665a; --line: #d9d2c3; --card: #fffdf8;
+    --accent: #7a5a2e; --ok: #3f7a4a; --bad: #a8402f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17150f; --fg: #ece6d8; --muted: #a0978a; --line: #353026; --card: #1f1c15;
+      --accent: #d2a866; --ok: #7fbf8b; --bad: #e08572;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 48px 16px 64px; }
+  h1 { font: 600 2rem/1.15 ui-serif, Georgia, serif; margin: 0 0 8px; }
+  p { margin: 0 0 16px; }
+  .lede { color: var(--muted); max-width: 60ch; }
+  h2 { font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+    margin: 40px 0 12px; font-weight: 600; }
+  .tiers { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .tier { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 16px; color: inherit; text-decoration: none; display: block; }
+  a.tier:hover { border-color: var(--accent); }
+  .tier b { font: 600 1.4rem ui-serif, Georgia, serif; display: block; }
+  .tier span { color: var(--muted); font-size: 0.9rem; display: block; }
+  .bar { height: 4px; background: var(--line); border-radius: 2px; margin: 12px 0 6px; overflow: hidden; }
+  .bar i { display: block; height: 100%; background: var(--ok); }
+  .bar i.over { background: var(--bad); }
+  .size { font-variant-numeric: tabular-nums; font-size: 0.85rem; color: var(--muted); }
+  a { color: var(--accent); }
+  ul { padding-left: 20px; margin: 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Mushroom Substrate</h1>
+  <p class="lede">Physical simulators of how fungi grow: mycelial networks, what moves through
+  them, the mushrooms they produce and the substrate around them. One simulator at each of four
+  sizes, and up to 100 kinds of mushroom to load into them.</p>
+
+  <h2>The four engines</h2>
+  <div class="tiers" id="tiers"></div>
+
+  <h2>Read more</h2>
+  <ul>
+    <li><a href="https://github.com/CrumpLabSandbox/mushroom-substrate/blob/main/docs/PLAN.md">The plan</a></li>
+    <li><a href="https://github.com/CrumpLabSandbox/mushroom-substrate/tree/main/docs/research">The research</a></li>
+    <li><a href="https://github.com/CrumpLabSandbox/mushroom-substrate">The repository</a></li>
+  </ul>
+</main>
+<script>
+  const ABOUT = {
+    '4k': ['4K', '2D. A network that grows, branches and fuses.'],
+    '40k': ['40K', '2D. A colony in patchy substrate, with cords and simple mushrooms.'],
+    '400k': ['400K', '3D. Soil and wood, flow, electrical activity, roots and weather.'],
+    '4m': ['4M', '3D. Multi-scale plots, growing mushrooms and spore release.'],
+  };
+  const el = document.getElementById('tiers');
+  function draw(tiers) {
+    el.innerHTML = '';
+    for (const id of Object.keys(ABOUT)) {
+      const t = tiers.find((x) => x.tier === id) || { built: false };
+      const card = document.createElement(t.built ? 'a' : 'div');
+      card.className = 'tier';
+      if (t.built) card.href = 'engines/' + id + '/';
+      const [name, text] = ABOUT[id];
+      let size = 'Not built yet';
+      let pct = 0;
+      if (t.built) {
+        pct = Math.min(100, (100 * t.total) / t.limit);
+        size = t.total.toLocaleString() + ' of ' + t.limit.toLocaleString() + ' bytes';
+      }
+      card.innerHTML = '<b>' + name + '</b><span>' + text + '</span>' +
+        '<div class="bar"><i class="' + (t.built && !t.ok ? 'over' : '') + '" style="width:' + pct + '%"></i></div>' +
+        '<div class="size">' + size + '</div>';
+      el.appendChild(card);
+    }
+  }
+  draw([]);
+  fetch('tiers.json').then((r) => r.json()).then(draw).catch(() => {});
+</script>
+</body>
+</html>

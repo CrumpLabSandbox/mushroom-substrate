@@ -1,0 +1,95 @@
+# Project Notes
+
+## Git / Workflow
+- Work directly on `main` and push everything to `main` (no feature branches/PRs).
+  - Note: local branch is currently `master`; will need to align with `main`.
+- GitHub Pages will be turned on (by Matt) using GitHub Actions as the source, so we can build and view a website later if needed.
+
+## Project Purpose
+- Build **physical modeling simulators of mushroom growth** and related mushroom processes.
+- There are many kinds of mushrooms, so we may need to model different species/types.
+- Aim for detailed simulation, like a 3D physical simulator of anything else. Analogies Matt gave:
+  - A physical model of a tuning fork that produces sound.
+  - Sam's "Watertownies" repo, a SimCity-style simulation of the city of Watertown. (Possible reference for approach/style; look at it later.)
+- Focus: model mushroom growth processes and mushroom processes in depth.
+
+## Scoping: "Orders of Magnitude" Concept
+- Matt will provide context to help decide **how much computational effort** to put in.
+- We'll use an **orders of magnitude** framing to scale effort and detail (details to come).
+- Matt will list many things he wants; collect them here before planning.
+- **Source:** borrowed from the `style` repo (`../style`, StyleVoyager). That repo got it from DemoVoyager's `magnitude/` idea: one subject, several size limits, each step adding what can be expressed.
+- Tier limits used in `style` (bytes of source per tier):
+
+  | Tier | Limit | What the size buys (style repo's framing) |
+  |---|---|---|
+  | 4K | 4,096 B | The single core trick, one self-contained file |
+  | 40K | 40,960 B | Several mechanisms, real parameters, variation by seed |
+  | 400K | 409,600 B | Libraries of components, richer synthesis, many seeds |
+  | 4M | 4,194,304 B | Embedded reference data / asset banks, maybe a small learned piece |
+  | 40M | 41,943,040 B | Room for a small model or large data; closest emulation |
+
+  - In `style`, each tier is a self-contained, seedable generator. Tiers are built from 4K up, and each reuses ideas from the one below. A build script checks each tier against its byte limit.
+  - The Rust version (`voyager-rs/src/tiers/`) has one source file per tier, a `limit` constant, and a list of the files counted against it.
+- **Apply here:** the same ladder for **growing simulated mushroom substrates**. Each tier is a mushroom-growth simulator capped at that code size. What each tier means for mushrooms is still to be decided.
+
+## Future: Worldbuilder Connection (fun idea, think ahead)
+- Matt's **Worldbuilder** repo (`../Worldbuilder`) is a procedurally generated globe built with Three.js and Vite. You can fly around it, explore and build on it. It's self-hosted on Coolify via Docker.
+- This repo stays **separate** (digital mushroom substrates). At some point, though, connect it to Worldbuilder to create a **mushroom network across the entire world**.
+- Research in this repo should build up knowledge of **many kinds of mushrooms**. Later, place as many individuals of those kinds as possible across the globe, so there are different kinds of mushrooms everywhere.
+- It must be **lightweight** in Worldbuilder: it must not slow the world down or add much computational cost.
+- Implications to keep in mind now:
+  - Keep species data in a clean, portable format (e.g. JSON) that Worldbuilder could import.
+  - Probably needs a cheap "low tier" representation for the globe (placement + simple visuals/growth), separate from the heavy simulators here.
+  - Placement could depend on species habitat (climate, biome, substrate), mapped to Worldbuilder's terrain or biomes.
+- Not in scope yet. Just design so it's possible later.
+
+## Simulation Ambition
+- Build **process descriptions and simulations that are as detailed as possible**. Real time where we can.
+- Subjects: **mushroom networks** and **different kinds of mycelial networks**, not just fruiting bodies.
+
+## Future: Sonification / "What does the network sound like?"
+- Later goal: be able to **audio record what these networks hypothetically sound like**.
+- Possible routes:
+  1. **Physical sound:** some modeled processes might actually emit sound, if they're simulated in a pretend physical environment that we can "record" from. (Unknown whether this is real; worth researching.)
+  2. **Amplification:** take the real frequencies of processes and make them loud enough to hear.
+  3. **Time-scaling:** speed processes up (or shift them) so their frequencies fall in the audible range (~20 Hz–20 kHz).
+- **Requirement for now:** once the substrates are built, they must be **parameterized** with exposed time series, rates, frequencies and physical quantities. That way the audio work can tap into them later without rewriting the simulators.
+- Design implications to keep in mind:
+  - Simulators should log or stream state variables over time (growth-front speed, branching events, nutrient/water flow, electrical spiking, etc.) with known time units.
+  - Keep sim time separate from wall-clock time so the speed-up factors are explicit.
+  - Possible later research: fungal electrical spiking, hydraulic/cytoplasmic flow pulses, and acoustic emissions from hyphal growth.
+
+## Future: SynthLand "Mushroom" Plugin (very experimental)
+- Matt's **SynthLand** project (`../SynthLandExplorer`, with web build in `../SynthLandWeb` and app in `../synthland-studio`) is a family of GPLv3 synth/reverb plugins. Each is written once in plain C++ and shipped as VST3/AU, WebAssembly and standalone. Every preset parameter is a host parameter and every preset is a JSON file.
+- Idea: a **mushroom sound plugin**. It loads one of our digital mycelial-network simulations, and that simulation **becomes the plugin's sound engine**.
+- Later work, not now. Design implications to keep in mind:
+  - Simulation state should be exportable or loadable (a saved network or seed + parameters as JSON, matching SynthLand's preset style).
+  - A port of the core sim to C++ (or another engine that compiles to WASM) may eventually be needed to run inside a plugin. Keep the core model separable from rendering/UI.
+  - Simulation parameters should map cleanly onto plugin/host parameters.
+  - Ties into the sonification section above: the plugin is one way to hear the networks.
+
+## Current Focus (what to do first)
+- **Physical modeling of mycelial networks**, with **different kinds of networks for different mushroom types**.
+- Worldbuilder, sonification and the SynthLand plugin are all later. Design for them, don't build them yet.
+
+## Research Mandate
+- Do **as much in-depth research as possible** about mushrooms:
+  - how they grow (spore → germination → hyphae → mycelium → primordia → fruiting body)
+  - what is known about their networks (structure, branching, fusion/anastomosis, transport, signaling, mycorrhizal networks)
+  - differences between species and types (growth forms, substrates, habitats)
+  - everything needed to build **as detailed a simulation as possible** for all the aims above
+- Research results should feed a species database (also needed for Worldbuilder placement) and the simulator models.
+
+## Guardrails
+- **Size cap:** no individual mushroom substrate goes beyond **4 MB** for now (so the ladder is 4K / 40K / 400K / 4M; no 40M tier).
+- **Species cap:** at most **100 different types of mushrooms**, even if research turns up thousands. Research decides the actual number and which ones.
+- The approach must be **computationally tractable**; research should work out how.
+
+## Decisions (2026-11-09, Matt's answers to scoping questions)
+- **Structure:** shared engines + species data. One engine per tier; each mushroom type is a parameter file any engine can load.
+- **Stack:** plain browser JavaScript, canvas/WebGL, no build step, on GitHub Pages. Core model kept separate from drawing.
+- **Scope:** all four: mycelial network growth, transport and signaling, fruiting bodies, environment and substrate.
+- **Visuals:** 2D at 4K and 40K; 3D at 400K and 4M.
+
+## Plan
+- The comprehensive plan is in [docs/PLAN.md](docs/PLAN.md).

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compare engines: Mushroom Substrate</title>
+<link rel="stylesheet" href="site.css">
+<style>
+  .controls { display: grid; gap: 10px; grid-template-columns: minmax(0, 1fr) 110px auto; align-items: end;
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+  @media (max-width: 520px) { .controls { grid-template-columns: minmax(0, 1fr) 96px; } .controls button { grid-column: 1 / -1; } }
+  .controls button { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; padding: 7px 16px; }
+  #about { margin: 12px 0 0; font-size: 0.9rem; color: var(--muted); }
+  .engines { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); margin-top: 20px; }
+  .engine { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px;
+    display: flex; flex-direction: column; min-width: 0; }
+  .engine h3 { font-size: 1.4rem; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+  .engine h3 small { font: 400 0.9rem ui-sans-serif, system-ui, sans-serif; color: var(--muted); }
+  .engine p { font-size: 0.93rem; margin: 0 0 4px; }
+  .engine .bar { margin-top: auto; }
+  .engine .bar-wrap { margin-top: auto; padding-top: 8px; }
+  .frame { margin-top: 12px; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #14110c;
+    height: min(78vh, 760px); min-height: 420px; display: grid; }
+  .frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .frame .ask { place-self: center; text-align: center; padding: 20px; color: #a89c82; font-size: 0.9rem; max-width: 34ch; }
+  .frame .ask button { display: block; margin: 0 auto 10px; background: #221e16; color: #e9dcbc; border-color: #5a4f3a; padding: 8px 16px; }
+  .engine .foot { display: flex; flex-wrap: wrap; gap: 4px 16px; justify-content: space-between; font-size: 0.85rem; margin-top: 8px; }
+</style>
+</head>
+<body>
+<main class="wide">
+  <nav class="top">
+    <a class="home" href="./">Mushroom Substrate</a>
+    <a href="species.html">Species</a>
+    <a href="compare.html" aria-current="page">Compare engines</a>
+  </nav>
+
+  <h1>The same species in every engine</h1>
+  <p class="lede">One species and one seed, run in each engine that is built. Each engine is made from the one below it and keeps
+  what that one did. A seed makes a run repeatable inside one engine; it does not give the same network in another,
+  because each engine draws its random numbers differently and builds a different world. Compare how the species behaves, not
+  hypha for hypha.</p>
+
+  <form class="controls" id="controls">
+    <label class="f">Species <select id="sp" disabled><option>Loading</option></select></label>
+    <label class="f">Seed <input id="seed" type="number" min="1" step="1" value="1" inputmode="numeric"></label>
+    <button type="submit">Run</button>
+  </form>
+  <p id="about"></p>
+
+  <div class="engines" id="engines"></div>
+</main>
+<script>
+'use strict';
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+// What each size adds, from docs/PLAN.md section 5 and docs/MODEL.md. `heavy` engines start only when asked.
+const ENGINES = [
+  { id: '4k', name: '4K', kind: '2D, tips on a bitmap', heavy: false, url: (s) => 'engines/4k/#' + s,
+    text: 'The one trick: a network that grows like a fungus. No graph is stored. Tips move over a bitmap 10.24 mm across; they extend, branch at the species\' rate and angle, steer away from occupied pixels and fuse when the pixel ahead is already taken. One nutrient field, which the tips deplete.' },
+  { id: '40k', name: '40K', kind: '2D, a graph in a patchy world', heavy: false, url: (s, n) => 'engines/40k/?s=' + s + '&seed=' + n,
+    text: 'Adds a real graph of segments and links in a field 25.6 mm across with wood, litter and bare soil. Substrate is taken up, diffuses and flows inside the network toward growing fronts; links that carry flow thicken into cords and unused ones are recycled. Moisture and temperature curves per species, and fruiting sites where the network can afford them.' },
+  { id: '400k', name: '400K', kind: '3D, a block of soil', heavy: true, url: (s, n) => 'engines/400k/?s=' + s + '&seed=' + n,
+    text: 'Moves the 40K model into a block of layered soil 25.6 mm square and 12.8 mm deep, with buried wood and tree roots. Adds weather and seasons, electrical activity (a model of measurements whose meaning is disputed), and rival individuals that fuse if compatible and fight if not. Fruit bodies are drawn in 3D from a shape per species.' },
+  { id: '4m', name: '4M', kind: '3D, stand scale', heavy: true, url: (s, n) => 'engines/4m/?s=' + s + '&seed=' + n,
+    text: 'Stand scale: density fields plus an explicit cord graph over a plot with several trees and logs. Fruit bodies grown by a swarm of steered tips and then expanded by water uptake, and spore release as physical events.' },
+];
+let species = [], tiers = [];
+const loaded = new Set(); // heavy engines the user has asked for
+
+function current() {
+  const seed = Math.max(1, Math.floor(+$('seed').value) || 1);
+  return { slug: $('sp').value, seed };
+}
+
+function frame(e, slug, seed) {
+  const box = $('frame-' + e.id);
+  box.innerHTML = '';
+  const f = document.createElement('iframe'); // a new element each time: changing only the #hash would not reload the 4K page
+  f.title = e.name + ' engine';
+  f.loading = 'lazy';
+  f.src = e.url(encodeURIComponent(slug), seed);
+  if (e.id === '4k') f.addEventListener('load', () => {
+    // The 4K page reads only the species from its address; set its seed box directly (same origin).
+    try { const d = f.contentDocument; d.getElementById('sd').value = seed; d.getElementById('b').click(); } catch (err) { /* leave its own seed */ }
+  });
+  box.appendChild(f);
+  $('open-' + e.id).href = e.url(encodeURIComponent(slug), seed);
+}
+
+function ask(e) {
+  const box = $('frame-' + e.id);
+  box.innerHTML = `<div class="ask"><button type="button">Run the ${e.name} engine here</button>It runs a full simulation in this page, so it starts only when you ask.</div>`;
+  box.querySelector('button').onclick = () => { loaded.add(e.id); const c = current(); frame(e, c.slug, c.seed); };
+}
+
+function run(push) {
+  const { slug, seed } = current();
+  $('seed').value = seed;
+  const s = species.find((x) => x.slug === slug);
+  if (!s) return;
+  $('about').innerHTML = `<i>${esc(s.name)}</i>${s.common_name ? ' (' + esc(s.common_name) + ')' : ''}: family ${esc(s.family)}, ${esc(s.family_name.toLowerCase())}.
+    ${s.counts.own_sourced ? s.counts.own_sourced + ' of its values are sourced' : 'None of its values is sourced'}; ${s.counts.inherited} of ${s.counts.total} come from the family default.
+    <a href="species.html#${esc(s.slug)}">See its data</a>.`;
+  for (const e of ENGINES) {
+    const t = tiers.find((x) => x.tier === e.id);
+    if (!t || !t.built) continue;
+    const u = e.url(encodeURIComponent(slug), seed);
+    $('open-' + e.id).href = u;
+    if (!e.heavy || loaded.has(e.id)) frame(e, slug, seed);
+  }
+  const q = '?s=' + encodeURIComponent(slug) + '&seed=' + seed;
+  if (push && location.search !== q) history.replaceState(null, '', q);
+}
+
+function draw() {
+  $('engines').innerHTML = ENGINES.map((e) => {
+    const t = tiers.find((x) => x.tier === e.id) || { built: false };
+    const pct = t.built ? Math.min(100, (100 * t.total) / t.limit) : 0;
+    const size = t.built ? `${t.total.toLocaleString('en-US')} of ${t.limit.toLocaleString('en-US')} bytes (${((100 * t.total) / t.limit).toFixed(1)}%)${t.ok ? '' : ', over its limit'}`
+      : t.limit ? `Not built yet. Its limit is ${t.limit.toLocaleString('en-US')} bytes.` : 'Not built yet.';
+    return `<section class="engine">
+      <h3>${e.name} <small>${e.kind}</small></h3>
+      <p>${esc(e.text)}</p>
+      <div class="bar-wrap"><div class="bar"><i class="${t.built && !t.ok ? 'over' : ''}" style="width:${pct}%"></i></div>
+      <div class="size">${size}</div></div>
+      ${t.built ? `<div class="frame" id="frame-${e.id}"></div>
+      <div class="foot"><a id="open-${e.id}" href="engines/${e.id}/">Open the ${e.name} engine in its own page</a></div>` : ''}
+    </section>`;
+  }).join('');
+  for (const e of ENGINES) { const t = tiers.find((x) => x.tier === e.id); if (t && t.built && e.heavy) ask(e); }
+}
+
+const json = (url) => fetch(url).then((r) => { if (!r.ok) throw new Error(url + ' ' + r.status); return r.json(); });
+Promise.all([json('data/species.json'), json('tiers.json')]).then(([sp, t]) => {
+  species = sp.slice().sort((a, b) => a.name.localeCompare(b.name)); tiers = t;
+  const sel = $('sp');
+  sel.innerHTML = '';
+  for (const s of species) sel.add(new Option(s.name + (s.common_name ? ' (' + s.common_name + ')' : ''), s.slug));
+  sel.disabled = false;
+  const q = new URLSearchParams(location.search);
+  const want = q.get('s') || location.hash.slice(1);
+  sel.value = species.some((s) => s.slug === want) ? want : (species.some((s) => s.slug === 'phanerochaete-velutina') ? 'phanerochaete-velutina' : species[0].slug);
+  if (q.get('seed')) $('seed').value = q.get('seed');
+  draw();
+  run(false);
+  sel.onchange = () => run(true);
+  $('controls').onsubmit = (ev) => { ev.preventDefault(); run(true); };
+}).catch((e) => { $('about').textContent = 'The data could not be loaded (' + e.message + '). The site is built with node tools/build-site.js.'; });
+</script>
+</body>
+</html>

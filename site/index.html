@@ -4,38 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mushroom Substrate</title>
+<link rel="stylesheet" href="site.css">
 <style>
-  :root {
-    --bg: #f6f3ec; --fg: #23201a; --muted: #6d665a; --line: #d9d2c3; --card: #fffdf8;
-    --accent: #7a5a2e; --ok: #3f7a4a; --bad: #a8402f;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #17150f; --fg: #ece6d8; --muted: #a0978a; --line: #353026; --card: #1f1c15;
-      --accent: #d2a866; --ok: #7fbf8b; --bad: #e08572;
-    }
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--fg);
-    font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
-  main { max-width: 760px; margin: 0 auto; padding: 48px 16px 64px; }
-  h1 { font: 600 2rem/1.15 ui-serif, Georgia, serif; margin: 0 0 8px; }
-  p { margin: 0 0 16px; }
-  .lede { color: var(--muted); max-width: 60ch; }
-  h2 { font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
-    margin: 40px 0 12px; font-weight: 600; }
-  .tiers { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-  .tier { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
-    padding: 16px; color: inherit; text-decoration: none; display: block; }
-  a.tier:hover { border-color: var(--accent); }
-  .tier b { font: 600 1.4rem ui-serif, Georgia, serif; display: block; }
-  .tier span { color: var(--muted); font-size: 0.9rem; display: block; }
-  .bar { height: 4px; background: var(--line); border-radius: 2px; margin: 12px 0 6px; overflow: hidden; }
-  .bar i { display: block; height: 100%; background: var(--ok); }
-  .bar i.over { background: var(--bad); }
-  .size { font-variant-numeric: tabular-nums; font-size: 0.85rem; color: var(--muted); }
-  a { color: var(--accent); }
-  ul { padding-left: 20px; margin: 0; }
+  .real { max-width: 68ch; }
+  .tier.plain b { font-size: 1.15rem; }
 </style>
 </head>
 <body>
@@ -48,9 +20,37 @@
   <h2>The four engines</h2>
   <div class="tiers" id="tiers"></div>
 
+  <h2>The species</h2>
+  <div class="tiers">
+    <a class="tier plain" href="species.html"><b>Species browser</b><span id="sp-count">Every species, its ecology and every
+      parameter, each tagged as sourced, inferred or unknown.</span></a>
+    <a class="tier plain" href="compare.html"><b>Side by side</b><span>The same species and seed in every engine that is
+      built, with what each size adds.</span></a>
+  </div>
+
+  <h2>What is real and what is not</h2>
+  <p class="real">The models follow published work on how hyphae extend, branch, fuse and move resources, and the
+  growth equations were checked against the papers they come from. The numbers are another matter: a small part is measured
+  and most is inferred from relatives or set by hand so the model runs. <span id="real-count">Most species have no
+  measured value of their own and behave as the default for their network family.</span> Sizes, colours and ranges are
+  general knowledge that nobody checked. Every value carries its basis (sourced with a citation, inferred, or unknown),
+  and the <a href="species.html">species browser</a> shows it. The model is specified in
+  <a href="https://github.com/CrumpLabSandbox/mushroom-substrate/blob/main/docs/MODEL.md">docs/MODEL.md</a>, and what
+  it rests on is in <a href="https://github.com/CrumpLabSandbox/mushroom-substrate/tree/main/docs/research">docs/research</a>.</p>
+
+  <h2>The data</h2>
+  <ul>
+    <li><a href="data/worldbuilder.json">worldbuilder.json</a>: a small pack of every species (form, size, colours,
+      biomes, abundance) for placing mushrooms in another project without running a simulator.
+      <a href="data/README-worldbuilder.md">What its fields mean</a>.</li>
+    <li><a href="data/species.json">species.json</a> and <a href="data/families.json">families.json</a>: what the
+      species browser reads, with every parameter after family inheritance.</li>
+  </ul>
+
   <h2>Read more</h2>
   <ul>
     <li><a href="https://github.com/CrumpLabSandbox/mushroom-substrate/blob/main/docs/PLAN.md">The plan</a></li>
+    <li><a href="https://github.com/CrumpLabSandbox/mushroom-substrate/blob/main/docs/MODEL.md">The model specification</a></li>
     <li><a href="https://github.com/CrumpLabSandbox/mushroom-substrate/tree/main/docs/research">The research</a></li>
     <li><a href="https://github.com/CrumpLabSandbox/mushroom-substrate">The repository</a></li>
   </ul>
@@ -59,8 +59,8 @@
   const ABOUT = {
     '4k': ['4K', '2D. A network that grows, branches and fuses.'],
     '40k': ['40K', '2D. A colony in patchy substrate, with cords and simple mushrooms.'],
-    '400k': ['400K', '3D. Soil and wood, flow, electrical activity, roots and weather.'],
-    '4m': ['4M', '3D. Multi-scale plots, growing mushrooms and spore release.'],
+    '400k': ['400K', '3D. A block of soil with weather, electrical activity and rival individuals.'],
+    '4m': ['4M', '3D. A 2.5 m plot over years: cords, fine mycelium, real-size mushrooms, spores and sound.'],
   };
   const el = document.getElementById('tiers');
   function draw(tiers) {
@@ -85,6 +85,13 @@
   }
   draw([]);
   fetch('tiers.json').then((r) => r.json()).then(draw).catch(() => {});
+  fetch('data/summary.json').then((r) => r.json()).then((n) => {
+    document.getElementById('sp-count').textContent = n.species + ' species in ' + n.families +
+      ' network families, with their ecology and every parameter, each tagged as sourced, inferred or unknown.';
+    document.getElementById('real-count').textContent = 'Of ' + n.values.toLocaleString() + ' values across ' + n.species +
+      ' species, ' + n.sourced_values + ' are sourced from a publication. ' + n.species_with_sourced + ' species have a measured value of their own; ' +
+      (n.species - n.species_with_own_parameters) + ' set no growth parameter at all and behave as the default for their network family.';
+  }).catch(() => {});
 </script>
 </body>
 </html>

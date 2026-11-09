@@ -91,5 +91,7 @@ $('csv').onclick = () => {
 }
 fetch('list.json').then(r => r.json()).then(list => {
   for (const [slug, name, common] of list) $('sp').add(new Option(name + (common ? ' (' + common + ')' : ''), slug))
-  $('sp').value = 'phanerochaete-velutina'; load().then(tick)
+  const q = new URLSearchParams(location.search)
+  $('sp').value = q.get('s') || 'phanerochaete-velutina'; $('sp').value || ($('sp').value = 'phanerochaete-velutina'); q.get('seed') && ($('seed').value = q.get('seed'))
+  load().then(tick)
 })

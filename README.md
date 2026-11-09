@@ -13,9 +13,10 @@ each a research-backed data file, loaded into one of four simulator engines of i
 ## Status
 
 The first research pass is done ([docs/research/README.md](docs/research/README.md)), the model
-is specified ([docs/MODEL.md](docs/MODEL.md)), and the 4K, 40K and 400K engines are built. There
-are 90 species in 12 families ([species/README.md](species/README.md)). The 4M engine is not
-built yet.
+is specified ([docs/MODEL.md](docs/MODEL.md)), and all four engines are built. There are 90
+species in 12 families ([species/README.md](species/README.md)); 21 set any growth value of their
+own and the rest behave as their family default. The site has a species browser, a side-by-side
+page and a small data pack for the Worldbuilder project.
 
 ## Run
 

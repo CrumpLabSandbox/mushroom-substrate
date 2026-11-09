@@ -111,3 +111,10 @@
 - `engines/40k/`: a lattice-free graph model with seven species, five worlds, flow, cord thickening, pruning and fruiting sites. About 20 KB of the 41 KB limit.
 - Its limits are listed under "What it honestly is not" in [docs/MODEL.md](docs/MODEL.md) section 4. The biggest: flow ignores loops, and most coefficients are tuning values.
 - Fricker 2017 has been read in full: [docs/research/10-fricker-2017.md](docs/research/10-fricker-2017.md).
+
+## Full build (2026-11-09)
+- All four engines are built: 4K (bitmap), 40K (2D graph), 400K (3D block of soil, in a worker, WebGL), 4M (2.56 m plot over years, with sound).
+- 90 species in 12 families; 10 slots held back. Only 21 species set any growth value of their own.
+- Site: species browser, side-by-side page, and `data/worldbuilder.json` (26 KB) for the Worldbuilder globe.
+- Each engine's honest limits are in [docs/MODEL.md](docs/MODEL.md) under "What it honestly is not".
+- Not done from the plan: tip-swarm fruiting bodies, a calibration page against measurements, a C++ port for SynthLand.

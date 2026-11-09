@@ -185,7 +185,9 @@ function tick() {
 fetch('list.json').then(r => r.json()).then(list => {
   for (const [slug, name, common] of list) { const label = name + (common ? ' (' + common + ')' : ''); $('sp').add(new Option(label, slug)); $('sp2').add(new Option(label, slug)) }
   SCN.forEach((s, i) => $('scn').add(new Option(s, i)))
-  $('sp').value = 'phanerochaete-velutina'; load(); tick()
+  const q = new URLSearchParams(location.search)
+  $('sp').value = q.get('s') || 'phanerochaete-velutina'; $('sp').value || ($('sp').value = 'phanerochaete-velutina'); q.get('seed') && ($('seed').value = q.get('seed'))
+  load(); tick()
 })
 $('sp').onchange = () => load()
 $('sp2').onchange = $('scn').onchange = $('seed').onchange = $('go').onclick = () => load(1)

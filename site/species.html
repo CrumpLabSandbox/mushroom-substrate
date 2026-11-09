@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Species: Mushroom Substrate</title>
+<link rel="stylesheet" href="site.css">
+<style>
+  .filters { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+  .filters .search { grid-column: 1 / -1; }
+  .filters .check { display: flex; gap: 8px; align-items: center; font-size: 0.9rem; grid-column: 1 / -1; }
+  .filters .check input { width: auto; }
+  .status { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin: 14px 0 10px; font-size: 0.9rem; color: var(--muted); }
+  .status button { font-size: 0.85rem; padding: 3px 8px; }
+  .grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); list-style: none; padding: 0; margin: 0; }
+  .sp { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 4px 12px; align-items: start; height: 100%;
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px;
+    color: inherit; text-decoration: none; }
+  .sp:hover { border-color: var(--accent); }
+  .sp svg { width: 52px; height: 52px; grid-row: span 2; }
+  .sp .nm { font: italic 600 1.02rem/1.25 ui-serif, Georgia, serif; overflow-wrap: anywhere; }
+  .sp .cn { font-size: 0.875rem; color: var(--muted); }
+  .sp .meta { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+  .sp .how { grid-column: 1 / -1; margin-top: 6px; font-size: 0.8rem; color: var(--muted); display: grid; gap: 4px; }
+  .sp .how b { color: var(--fg); font-weight: 600; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; font-size: 0.85rem; color: var(--muted); margin: 0 0 16px; }
+
+  .back { display: inline-block; margin-bottom: 16px; }
+  .head { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; align-items: center; margin-bottom: 16px; }
+  .head svg { width: 96px; height: 96px; }
+  .head h1 { font-style: italic; overflow-wrap: anywhere; }
+  .head p { margin: 0; color: var(--muted); }
+  .open { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 8px; }
+  .open a { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 5px 12px; text-decoration: none; font-size: 0.9rem; }
+  .open a:hover { border-color: var(--accent); }
+  .cols { display: grid; gap: 0 32px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
+  dl.facts { display: grid; grid-template-columns: minmax(84px, max-content) minmax(0, 1fr); gap: 6px 14px; margin: 0; font-size: 0.95rem; }
+  dl.facts dt { color: var(--muted); }
+  dl.facts dd { margin: 0; overflow-wrap: anywhere; }
+  .sw { display: inline-block; width: 0.85em; height: 0.85em; border-radius: 3px; border: 1px solid var(--glyph-line); vertical-align: -1px; margin-right: 4px; }
+  .summary { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 8px; }
+  .summary p { margin: 0; }
+  .ptools { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin: 14px 0 0; font-size: 0.85rem; color: var(--muted); }
+  .ptools button { font-size: 0.85rem; padding: 3px 8px; }
+  .sec { margin-top: 22px; }
+  .sec h3 { border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-bottom: 0; }
+  .prow { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr) 100px 84px; gap: 4px 12px;
+    align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 0.93rem; }
+  .prow .k { overflow-wrap: anywhere; }
+  .prow .v { font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+  .prow .v small { color: var(--muted); font-size: 0.85em; }
+  .from { font-size: 0.82rem; color: var(--muted); }
+  .from.own { color: var(--fg); font-weight: 600; }
+  .from.own::before { content: ""; display: inline-block; width: 7px; height: 7px; background: currentColor; margin-right: 5px; vertical-align: 1px; }
+  .prow details { grid-column: 1 / -1; font-size: 0.85rem; color: var(--muted); }
+  .prow summary { cursor: pointer; width: max-content; max-width: 100%; }
+  .prow details p { margin: 4px 0 2px; max-width: 76ch; color: var(--fg); }
+  .prow details p b { font-weight: 600; color: var(--muted); }
+  @media (max-width: 560px) {
+    .prow { grid-template-columns: minmax(0, 1fr) auto auto; }
+    .prow .k { grid-column: 1 / -1; font-weight: 600; }
+    .head { grid-template-columns: 64px minmax(0, 1fr); }
+    .head svg { width: 64px; height: 64px; }
+  }
+</style>
+</head>
+<body>
+<main class="wide">
+  <nav class="top">
+    <a class="home" href="./">Mushroom Substrate</a>
+    <a href="species.html" aria-current="page">Species</a>
+    <a href="compare.html">Compare engines</a>
+  </nav>
+
+  <section id="list">
+    <h1>Species</h1>
+    <p class="lede" id="honest">Loading the species data.</p>
+    <p class="legend" id="legend"></p>
+
+    <div class="filters">
+      <label class="f search">Search by scientific or common name
+        <input id="q" type="search" autocomplete="off" placeholder="for example: oyster, Armillaria"></label>
+      <label class="f">Network family <select id="f-family"><option value="">All families</option></select></label>
+      <label class="f">Feeds as <select id="f-trophic"><option value="">Any</option></select></label>
+      <label class="f">Fruit form <select id="f-form"><option value="">Any</option></select></label>
+      <label class="f">Biome <select id="f-biome"><option value="">Any</option></select></label>
+      <label class="f">Tier <select id="f-tier"><option value="">Any</option></select></label>
+      <label class="f">Order by <select id="sort">
+        <option value="name">Name</option><option value="sourced">Most sourced values first</option></select></label>
+      <label class="check"><input id="f-own" type="checkbox"> Only species with a sourced value of their own</label>
+    </div>
+    <div class="status"><span id="count" aria-live="polite"></span><button id="clear" type="button" hidden>Clear filters</button></div>
+    <ul class="grid" id="grid"></ul>
+  </section>
+
+  <section id="detail" hidden></section>
+</main>
+<script>
+'use strict';
+const REPO = 'https://github.com/CrumpLabSandbox/mushroom-substrate';
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const colour = (c, fallback) => (/^#[0-9a-f]{3,8}$/i.test(c || '') ? c : fallback);
+
+const BIOMES = { BOR: 'boreal', TBL: 'temperate broadleaf', TCF: 'temperate conifer', MED: 'Mediterranean',
+  TRF: 'tropical rainforest', SAV: 'savanna', GRS: 'grassland', DES: 'desert and arid', ALP: 'alpine and arctic',
+  URB: 'urban and disturbed' };
+const CONTINENTS = { NA: 'North America', SA: 'South America', EU: 'Europe', AS: 'Asia', AF: 'Africa', AU: 'Australasia' };
+const TIERS = { flagship: 'flagship', second: 'second tier', third: 'third tier' };
+const RICHNESS = { 3: 'model organism with many measurements', 2: 'some published measurements', 1: 'mostly inferred from relatives' };
+const SECTIONS = { hyphae: 'Hyphae', network: 'Network', substrate: 'Substrate and transport', environment: 'Environment',
+  fruiting: 'Fruiting', electrical: 'Electrical activity', combat: 'Combat', tuning_4k: '4K engine tuning', fruit: 'Fruit body' };
+const ENGINES = [['4k', '4K', (s) => 'engines/4k/#' + s], ['40k', '40K', (s) => 'engines/40k/?s=' + s],
+  ['400k', '400K', (s) => 'engines/400k/?s=' + s], ['4m', '4M', (s) => 'engines/4m/?s=' + s]];
+
+// A small silhouette per fruit form, in the species' cap and stem colours.
+function glyph(form, cap, stem, glow) {
+  const C = colour(cap, '#b9a98a'), S = colour(stem, '#e8e2d2');
+  const a = 'stroke="var(--glyph-line)" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"';
+  const c = (d) => `<path d="${d}" fill="${C}" ${a}/>`, s = (d) => `<path d="${d}" fill="${S}" ${a}/>`;
+  const wood = (x, y, w, h, r) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="var(--glyph-line)" opacity="0.35"/>`;
+  const soil = (y) => `<path d="M4 ${y}H44" stroke="var(--glyph-line)" stroke-width="1.2" stroke-dasharray="3 3" fill="none"/>`;
+  const dot = (x, y, r, f, o) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${f}"${o ? ` opacity="${o}"` : ''}/>`;
+  const line = (d, w, col) => `<path d="${d}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  const SHAPES = {
+    agaric: () => s('M21 21L20 42Q24 44 28 42L27 21Z') + c('M5 24Q7 8 24 7Q41 8 43 24Q24 19 5 24Z'),
+    bolete: () => s('M19 24Q15 36 18 43Q24 45 30 43Q33 36 29 24Z') + c('M6 21Q8 7 24 7Q40 7 42 21Q42 27 24 27Q6 27 6 21Z'),
+    bracket: () => wood(6, 4, 7, 40, 2) + s('M13 23Q30 26 42 21Q33 29 13 27Z') + c('M13 12Q38 10 42 21Q30 25 13 23Z') +
+      s('M13 37Q26 39 35 35Q28 41 13 40Z') + c('M13 29Q31 28 35 35Q26 38 13 37Z'),
+    crust: () => wood(4, 25, 40, 13, 6.5) + c('M9 27Q12 20 19 22Q24 18 30 22Q37 20 40 27Q36 31 28 30Q20 33 13 30Z'),
+    puffball: () => c('M24 8C36 8 40 18 38 26C36 33 30 35 29 41L19 41C18 35 12 33 10 26C8 18 12 8 24 8Z') + dot(24, 12, 1.6, 'var(--glyph-line)'),
+    earthstar: () => s('M24 31L4 36L15 27L7 15L20 22L24 8L28 22L41 15L33 27L44 36Z') + `<circle cx="24" cy="25" r="8" fill="${C}" ${a}/>` + dot(24, 19.5, 1.3, 'var(--glyph-line)'),
+    coral: () => { const d = 'M24 44V30M24 34L14 22L10 12M14 22L17 10M24 30V8M24 20L20 10M24 30L34 20L31 9M34 20L39 11'; return line(d, 5.6, 'var(--glyph-line)') + line(d, 3.4, C); },
+    club: () => s('M22 30L21.5 43L26.5 43L26 30Z') + c('M24 5C30 5 31 15 29 23C28 28 27 31 26.5 34L21.5 34C21 31 20 28 19 23C17 15 18 5 24 5Z'),
+    jelly: () => c('M8 30C4 20 12 12 18 16C20 8 30 8 31 16C38 11 46 20 40 29C44 36 34 40 28 35C24 41 14 40 15 34C11 35 9 33 8 30Z') +
+      line('M18 16Q22 22 20 28M31 16Q28 24 32 30', 1.2, 'var(--glyph-line)'),
+    tooth: () => s('M10 20L12 37L15 20L18 40L21 20L24 42L27 20L30 40L33 20L36 37L38 20Z') + c('M9 21Q11 8 24 8Q37 8 39 21Z'),
+    chanterelle: () => c('M6 12Q24 18 42 12Q32 22 28 42Q24 44 20 42Q16 22 6 12Z') + line('M15 17Q21 26 22 40M33 17Q27 26 26 40M24 17V40', 1, 'var(--glyph-line)'),
+    morel: () => s('M20 28L19 42Q24 44 29 42L28 28Z') + c('M24 5C32 8 35 20 32 29Q24 32 16 29C13 20 16 8 24 5Z') +
+      [[24, 10], [21, 15], [27, 16], [20, 22], [24, 21], [28, 23], [23, 27]].map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="1.5" ry="2" fill="var(--glyph-line)" opacity="0.5"/>`).join(''),
+    cup: () => s('M7 20Q10 40 24 40Q38 40 41 20Z') + `<ellipse cx="24" cy="20" rx="17" ry="6" fill="${C}" ${a}/>`,
+    truffle: () => soil(12) + c('M24 17C33 16 40 23 38 31C36 39 28 43 21 41C13 40 8 33 11 26C13 20 18 17 24 17Z') +
+      [[19, 25], [27, 23], [31, 31], [22, 34], [16, 31], [25, 29]].map(([x, y]) => dot(x, y, 1.3, 'var(--glyph-line)', 0.5)).join(''),
+    stinkhorn: () => s('M21 16L20 40L28 40L27 16Z') + s('M15 44Q14 36 24 36Q34 36 33 44Z') + c('M24 4C29 5 31 12 30 18Q24 20 18 18C17 12 19 5 24 4Z'),
+    birdsnest: () => c('M9 18L15 40Q24 43 33 40L39 18Z') + `<ellipse cx="24" cy="18" rx="15" ry="5.5" fill="${S}" ${a}/>` +
+      [[19, 18], [25, 19.5], [29, 17.5]].map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="2.6" ry="1.6" fill="var(--glyph-line)" opacity="0.7"/>`).join(''),
+    none: () => soil(18) + `<circle cx="16" cy="33" r="3.2" fill="${C}" ${a}/><circle cx="26" cy="28" r="4.2" fill="${C}" ${a}/><circle cx="34" cy="35" r="2.8" fill="${C}" ${a}/>`,
+  };
+  const halo = glow ? '<circle cx="24" cy="24" r="22.5" fill="var(--glow)" opacity="0.22"/><circle cx="24" cy="24" r="22.5" fill="none" stroke="var(--glow)" stroke-width="1" stroke-dasharray="2 3"/>' : '';
+  return `<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">${halo}${(SHAPES[form] || SHAPES.agaric)()}</svg>`;
+}
+
+const badge = (basis) => `<span class="basis ${esc(basis)}">${esc(basis)}</span>`;
+const meter = (n) => `<span class="meter" role="img" aria-label="${n.sourced} sourced, ${n.inferred} inferred, ${n.unknown} unknown">` +
+  `<i class="s" style="width:${(100 * n.sourced) / n.total}%"></i><i class="i" style="width:${(100 * n.inferred) / n.total}%"></i></span>`;
+const fmtValue = (v) => {
+  if (Array.isArray(v)) {
+    if (v.length === 2 && v[0] == null && v[1] != null) return 'up to ' + v[1];
+    if (v.length === 2 && v[1] == null && v[0] != null) return 'from ' + v[0];
+    return v.filter((x) => x != null).join(' to ');
+  }
+  return v == null ? 'not recorded' : String(v);
+};
+const plural = (n, one, many) => n + ' ' + (n === 1 ? one : many);
+
+let species = [], families = [], built = null, listScroll = 0;
+const bySlug = new Map();
+
+function fillSelect(id, values, label) {
+  for (const v of values) $(id).add(new Option(label ? label(v) : v, v));
+}
+
+function matches(s) {
+  const q = $('q').value.trim().toLowerCase();
+  if (q && !(s.name + ' ' + s.common_name).toLowerCase().includes(q)) return false;
+  if ($('f-family').value && s.family !== $('f-family').value) return false;
+  if ($('f-trophic').value && s.ecology.trophic !== $('f-trophic').value) return false;
+  if ($('f-form').value && s.fruit.form !== $('f-form').value) return false;
+  if ($('f-biome').value && !(s.ecology.biomes || []).includes($('f-biome').value)) return false;
+  if ($('f-tier').value && s.tier !== $('f-tier').value) return false;
+  if ($('f-own').checked && !s.counts.own_sourced) return false;
+  return true;
+}
+
+function drawList() {
+  const shown = species.filter(matches);
+  if ($('sort').value === 'sourced') shown.sort((a, b) => b.counts.sourced - a.counts.sourced || a.name.localeCompare(b.name));
+  else shown.sort((a, b) => a.name.localeCompare(b.name));
+  $('grid').innerHTML = shown.map((s) => `<li><a class="sp" href="#${esc(s.slug)}">
+    ${glyph(s.fruit.form, s.fruit.cap_colour, s.fruit.stem_colour, s.fruit.bioluminescent)}
+    <span><span class="nm">${esc(s.name)}</span>${s.common_name ? `<br><span class="cn">${esc(s.common_name)}</span>` : ''}</span>
+    <span class="meta">${esc(s.family)} · ${esc(s.ecology.trophic || '')} · ${esc(s.fruit.form)}${s.fruit.bioluminescent ? ' · glows' : ''}</span>
+    <span class="how">${meter(s.counts)}<span><b>${s.counts.sourced} sourced</b> of ${s.counts.total} values, ${s.counts.own} its own</span></span>
+  </a></li>`).join('');
+  $('count').textContent = shown.length === species.length ? `All ${species.length} species` : `${shown.length} of ${species.length} species`;
+  const filtered = $('q').value || $('f-own').checked || ['f-family', 'f-trophic', 'f-form', 'f-biome', 'f-tier'].some((id) => $(id).value);
+  $('clear').hidden = !filtered;
+}
+
+function drawDetail(s) {
+  const fam = families.find((f) => f.code === s.family) || { name: s.family_name, description: '' };
+  const eco = s.ecology || {}, n = s.counts;
+  const links = built === null ? '' : ENGINES.filter(([id]) => built.includes(id))
+    .map(([id, name, url]) => `<a href="${url(esc(s.slug))}">Open in the ${name} engine</a>`).join('');
+  const fact = (k, v) => (v ? `<dt>${k}</dt><dd>${v}</dd>` : '');
+  const size = s.fruit.size_cm == null ? 'not recorded' : fmtValue(s.fruit.size_cm) + ' cm';
+  const groups = {};
+  for (const p of s.params) { const g = p.key.split('.')[0]; (groups[g] = groups[g] || []).push(p); }
+  const rows = (list) => list.map((p) => {
+    const label = p.key.split('.').slice(1).join(' ').replace(/_/g, ' ');
+    const more = (p.source ? `<p><b>Source:</b> ${esc(p.source)}</p>` : '') + (p.note ? `<p><b>Note:</b> ${esc(p.note)}</p>` : '');
+    return `<div class="prow"><span class="k">${esc(label)}</span>
+      <span class="v">${esc(fmtValue(p.value))}${p.unit ? ` <small>${esc(p.unit)}</small>` : ''}</span>
+      ${badge(p.basis)}
+      <span class="from${p.from === 'species' ? ' own' : ''}">${p.from === 'species' ? 'its own' : p.from === 'family' ? 'from family' : 'engine default'}</span>
+      ${more ? `<details><summary>${p.source ? 'Source and note' : 'Note'}</summary>${more}</details>` : ''}</div>`;
+  }).join('');
+  const sections = Object.keys(SECTIONS).filter((g) => groups[g]).concat(Object.keys(groups).filter((g) => !SECTIONS[g]))
+    .map((g) => `<div class="sec"><h3>${esc(SECTIONS[g] || g)}</h3>${rows(groups[g])}</div>`).join('');
+  const ownModel = s.params.filter((p) => p.from === 'species' && !p.key.startsWith('fruit.')).length;
+
+  $('detail').innerHTML = `
+    <a class="back" href="#">All species</a>
+    <div class="head">
+      ${glyph(s.fruit.form, s.fruit.cap_colour, s.fruit.stem_colour, s.fruit.bioluminescent)}
+      <div><h1>${esc(s.name)}</h1>
+      <p>${[s.common_name, [s.taxonomy.order, s.taxonomy.family].filter(Boolean).join(': '), TIERS[s.tier] || s.tier].filter(Boolean).map(esc).join(' · ')}</p></div>
+    </div>
+    <div class="open">${links}</div>
+    <p class="small muted">${links ? `<a href="compare.html?s=${esc(s.slug)}">Compare it across the engines</a>. ` : ''}Data file:
+      <a href="species/${esc(s.slug)}.json">species/${esc(s.slug)}.json</a>, family defaults: <a href="species/families/${esc(s.family)}.json">${esc(s.family)}.json</a>.</p>
+
+    <div class="cols">
+      <div>
+        <h2>Ecology</h2>
+        <dl class="facts">
+          ${fact('Feeds as', esc(eco.trophic))}
+          ${fact('Grows on', esc(eco.substrate))}
+          ${fact('Hosts', esc(eco.hosts))}
+          ${fact('Biomes', (eco.biomes || []).map((b) => esc(BIOMES[b] || b)).join(', '))}
+          ${fact('Continents', (eco.continents || []).map((b) => esc(CONTINENTS[b] || b)).join(', '))}
+          ${fact('Season', esc(eco.season))}
+        </dl>
+      </div>
+      <div>
+        <h2>Fruit body</h2>
+        <dl class="facts">
+          ${fact('Form', esc(s.fruit.form === 'none' ? 'none (no fruit body)' : s.fruit.form))}
+          ${fact('Size', esc(size))}
+          ${fact('Colours', `<span class="sw" style="background:${colour(s.fruit.cap_colour, '#b9a98a')}"></span>cap <span class="sw" style="background:${colour(s.fruit.stem_colour, '#e8e2d2')}; margin-left:8px"></span>stem <span class="muted">(display choices, not data)</span>`)}
+          ${fact('Glows', s.fruit.bioluminescent ? 'yes, bioluminescent' : '')}
+          ${fact('Data', esc(RICHNESS[s.data_richness] || ''))}
+        </dl>
+      </div>
+    </div>
+
+    <h2>Network family</h2>
+    <p><b>${esc(s.family)}</b>: ${esc(fam.name)}. ${esc(fam.description)}</p>
+
+    ${s.notes ? `<h2>Notes</h2><p>${esc(s.notes)}</p>
+    <p class="small muted">Bracketed numbers are source numbers in the <a href="${REPO}/blob/main/docs/research/08-species-survey.md">species survey</a> unless another research file is named. "Unchecked" means general knowledge that nobody verified.</p>` : ''}
+
+    <h2>Parameters</h2>
+    <div class="summary">
+      ${meter(n)}
+      <p><b>${plural(n.sourced, 'value is', 'values are')} sourced</b> of ${n.total}; ${n.inferred} inferred and ${n.unknown} unknown.
+      ${n.own ? `${plural(n.own, 'value is', 'values are')} this species' own` : 'None is this species\' own'} and ${n.inherited} ${n.inherited === 1 ? 'comes' : 'come'} from the family ${esc(s.family)}.</p>
+      ${ownModel ? '' : `<p class="muted">This species sets no growth parameter of its own. In the engines it behaves as the ${esc(s.family)} family default${n.own ? ', apart from its fruit body' : ''} and its colours.</p>`}
+    </div>
+    <div class="ptools">
+      <span>${badge('sourced')} measured, with a citation</span>
+      <span>${badge('inferred')} reasoned from relatives or practice</span>
+      <span>${badge('unknown')} a default or tuning value</span>
+      <button id="notes-toggle" type="button">Show all sources and notes</button>
+    </div>
+    ${sections}`;
+  const toggle = $('notes-toggle');
+  toggle.onclick = () => {
+    const open = toggle.dataset.open !== '1';
+    for (const d of $('detail').querySelectorAll('details')) d.open = open;
+    toggle.dataset.open = open ? '1' : '';
+    toggle.textContent = open ? 'Hide all sources and notes' : 'Show all sources and notes';
+  };
+}
+
+function route() {
+  let slug = '';
+  try { slug = decodeURIComponent(location.hash.slice(1)); } catch (e) { /* leave empty */ }
+  const s = bySlug.get(slug);
+  if (s) {
+    if (!$('list').hidden) listScroll = window.scrollY;
+    drawDetail(s);
+    $('list').hidden = true; $('detail').hidden = false;
+    document.title = s.name + ': Mushroom Substrate';
+    window.scrollTo(0, 0);
+  } else {
+    const was = $('list').hidden;
+    $('detail').hidden = true; $('list').hidden = false;
+    document.title = 'Species: Mushroom Substrate';
+    if (was) window.scrollTo(0, listScroll);
+  }
+}
+
+function start([sp, fam, tiers]) {
+  species = sp; families = fam;
+  built = tiers ? tiers.filter((t) => t.built).map((t) => t.tier) : null;
+  for (const s of species) bySlug.set(s.slug, s);
+  const uniq = (f) => [...new Set(species.flatMap(f))].filter(Boolean).sort();
+  fillSelect('f-family', families.map((f) => f.code), (c) => c + ': ' + families.find((f) => f.code === c).name);
+  fillSelect('f-trophic', uniq((s) => [s.ecology.trophic]));
+  fillSelect('f-form', uniq((s) => [s.fruit.form]));
+  fillSelect('f-biome', Object.keys(BIOMES).filter((b) => species.some((s) => (s.ecology.biomes || []).includes(b)))
+    .concat(uniq((s) => s.ecology.biomes || []).filter((b) => !BIOMES[b])), (b) => BIOMES[b] || b);
+  fillSelect('f-tier', ['flagship', 'second', 'third'].filter((t) => species.some((s) => s.tier === t)), (t) => TIERS[t]);
+
+  const total = species.reduce((a, s) => a + s.counts.total, 0), sourced = species.reduce((a, s) => a + s.counts.sourced, 0);
+  const withSourced = species.filter((s) => s.counts.own_sourced).length;
+  const withModel = species.filter((s) => s.params.some((p) => p.from === 'species' && !p.key.startsWith('fruit.'))).length;
+  $('honest').innerHTML = `<b>${withSourced} of the ${species.length} species have at least one measured value of their own</b>, and
+    ${withModel} set any growth parameter of their own. The other ${species.length - withModel} behave in the engines exactly as their
+    network family's default, and differ only in their colours and fruit body. Across all species, ${sourced} of ${total.toLocaleString('en-US')}
+    values are sourced from a publication; the rest are inferred or are tuning values, and nothing here was checked against the primary literature.
+    Every value says which it is.`;
+  $('legend').innerHTML = `<span>${badge('sourced')} measured, with a citation</span><span>${badge('inferred')} reasoned from relatives or practice</span>
+    <span>${badge('unknown')} a default or tuning value</span>`;
+
+  for (const id of ['q', 'f-family', 'f-trophic', 'f-form', 'f-biome', 'f-tier', 'f-own', 'sort']) $(id).addEventListener('input', drawList);
+  $('clear').onclick = () => {
+    for (const id of ['q', 'f-family', 'f-trophic', 'f-form', 'f-biome', 'f-tier']) $(id).value = '';
+    $('f-own').checked = false; drawList();
+  };
+  drawList();
+  route();
+  window.addEventListener('hashchange', route);
+}
+
+const json = (url) => fetch(url).then((r) => { if (!r.ok) throw new Error(url + ' ' + r.status); return r.json(); });
+Promise.all([json('data/species.json'), json('data/families.json'), json('tiers.json').catch(() => null)])
+  .then(start)
+  .catch((e) => { $('honest').textContent = 'The species data could not be loaded (' + e.message + '). The site is built with node tools/build-site.js.'; });
+</script>
+</body>
+</html>

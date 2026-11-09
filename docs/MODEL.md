@@ -3,8 +3,7 @@
 Version 0.1, 2026-11-09. This is the reference the engines are written from, and later the C++
 port. It follows the research in [research/](research/README.md).
 
-**Status.** Sections 3, 4 and 5 (the 4K, 40K and 400K models) are implemented and tested. Section
-5b is the design for the tier not yet built. The growth and substrate equations in section 4 were checked against the
+**Status.** All four engines (sections 3, 4, 5 and 5b) are implemented and tested. The growth and substrate equations in section 4 were checked against the
 published papers on 2026-11-09 ([research/09-boswell-check.md](research/09-boswell-check.md)).
 Their coefficients were calibrated on *Rhizoctonia solani*, which is not a mushroom former, so
 they are a starting point and not species data.
@@ -337,13 +336,70 @@ the live frame rate and the fruiting-body shapes have not been checked by eye.
 - **Most species are their family.** Of the 90 species, 69 set no parameter of their own and
   behave exactly as their family default; they differ only in name, colours and fruiting body.
 
-## 5b. The 4M model (outline)
+## 5b. The 4M model: a plot of ground over years (implemented)
 
-**4M, 3D.** Density fields (active hyphae, inactive hyphae, tips, internal and external
-substrate) plus an explicit cord-scale graph are the state. Fine hyphae near the camera are
-generated from the seed for display and never feed back. Fruiting bodies are grown by a swarm of
-tips following a scheduled steering program (Meškauskas, Fricker & Moore 2004), then expanded by
-water uptake. Spore discharge as events at about 3 × 10⁴ per second per cap.
+Stand scale, in `engines/4m/`. It is not the 400K engine made bigger: the state changes kind.
+
+**Space and time.** A plot 2.56 m square and 64 cm deep. Segments are **cords** 1 cm long; fields
+live on a 64 × 64 × 16 grid of 4 cm cells. One step is the time the fastest cord takes to grow
+1 cm, at most a day, so a year is a few hundred steps. Ground is 4 cm of leaf litter (or turf)
+over organic soil to 16 cm over mineral soil. Five kinds of ground: meadow turf, fallen logs,
+deep litter with fallen branches, trees with their roots and one log, and one big log.
+
+**Two representations, as planned.** Each individual is (1) an explicit graph of cords, which
+explore, carry reserves, thicken with flow, fuse and are abandoned exactly as in sections 4 and
+5, and (2) a **field of fine mycelium**, a number between 0 and 1 per cell. Fine mycelium grows
+where there is food the species can use and room left, seeded by cords and by neighbouring
+cells; it feeds itself; it dies back where food has run out. It does the feeding: each cord in
+a cell receives a share of what that cell's mycelium takes up. Cords themselves do not feed.
+The haze drawn on the page is this field. It is display only in the sense the plan meant:
+nothing about the camera changes the model.
+
+**Mushrooms.** An initial starts on a cord within 12 cm of the surface when the colony is old
+enough, the surface has cooled to `t_opt − cold_drop`, and reserves allow. It grows by drawing
+on the cord network, faster when the surface is wet. When it reaches its mature mass it stands
+for ten days and then rots. The page draws it in the species' form and colours at its real size
+(with a size control, since a 5 cm cap is small on a 2.5 m plot).
+
+**Spores.** A standing mushroom sheds 1.08 × 10⁸ spores per hour (3 × 10⁴ per second, the order
+reported in research/05). A few landing points per step are drawn from a distance rule with a
+median of 8 cm and about 95% within a metre. A spore founds a new individual only if it lands
+on food its species can use, where no mycelium has a hold, and then with probability 0.004. Up
+to 8 individuals. A new individual is a different genet: where its cords meet its parent's,
+both die back and leave a barrier.
+
+**Climate.** The mean yearly temperature defaults to 8 °C below the first species' optimum, with
+a yearly swing of ±8 °C and a daily one of ±3 °C, so most species grow through summer and fruit
+as autumn cools the surface.
+
+**Wood.** Logs lose substrate only as fungi take it up; "wood left" is the remaining fraction.
+
+**Sound.** The page's "listen" button is the project's first sound: each kind of event in a batch
+of steps (branch, fusion, spike, rivals meeting, spore release, rain, a mushroom maturing, a
+spore founding an individual) becomes a short synthesised sound, and the electrode voltage
+bends a drone. It is a mapping chosen by hand, not a recording, and runs in the browser's own
+audio clock, so it is not part of the repeatable model.
+
+**What was checked.** Same seed gives the same state for five species with stored hashes; every
+other species gets a short run that must grow and stay finite. Event counts match the counters,
+including one founding event per extra individual. Headless runs of 900 days show colonies
+spreading 0.2 to 1.3 m, yearly flushes of mushrooms, spores founding individuals and rivals
+meeting. In the browser the page drew a honey fungus colony on a log with its mushrooms and
+plots, with no console errors. The sound has not been listened to.
+
+**What it honestly is not.**
+- **Not the plan's fruiting model.** Mushrooms are not grown by a swarm of steered tips
+  (Meškauskas et al. 2004). They are a mass that grows and a drawn shape.
+- **Nothing here is calibrated at this scale.** Cord growth uses the hyphal tip speed. The
+  feeding rate, the fine-mycelium growth and death rates, the spore-landing rule and the
+  founding probability are tuning values. Logs decay several times faster than real ones.
+- **The fine mycelium is one number per 4 cm cell.** It has no age, no direction and no
+  structure, and the Boswell density equations were not used for it.
+- **Every 4K to 400K caveat about parameters still applies**, and 69 of the 90 species behave
+  as their family default.
+- **Trees are scenery plus root tips that supply carbon.** They do not grow, die or respond.
+- **It uses about 60 KB of its 4 MB.** No embedded reference data, no Three.js, no learned
+  component: the size budget is almost entirely unspent.
 
 ## 6. Signals and events for later sound work
 

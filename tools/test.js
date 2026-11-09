@@ -37,6 +37,15 @@ ENGINES['400k'] = {
   summary: (S) => `segments ${S.n}  tips ${S.ntips}  branches ${S.br}  fusions ${S.fu}  spikes ${S.spikes}  fruits ${S.fruits}`,
   events: (S, ev) => ev[0] === S.br && ev[1] === S.fu && (ev[6] || 0) === S.fruits && (ev[9] || 0) === S.spikes,
 };
+ENGINES['4m'] = {
+  steps: 300,
+  smokeMin: 10,
+  full: ['armillaria-gallica', 'phanerochaete-velutina', 'laccaria-bicolor', 'marasmius-oreades', 'coprinopsis-cinerea'],
+  make: (M, sp, seed) => M([{ id: sp.id, p: sp.p }], seed, sp.s),
+  hash(S) { const h = fnv(), n = S.n; for (const a of [S.x1, S.y1, S.z1, S.si]) for (const b of bytes(a, n)) h.add(b); for (let i = 0; i < n; i++) h.add(S.st[i]); for (const b of bytes(S.mtot, S.mtot.length)) h.add(b); for (const b of bytes(S.trace, 4096)) h.add(b); return h.hex(); },
+  summary: (S) => `segments ${S.n}  cord tips ${S.ntips}  individuals ${S.ni}  mushrooms ${S.fruits}  wood left ${(S.wood * 100).toFixed(0)}%`,
+  events: (S, ev) => ev[0] === S.br && ev[1] === S.fu && (ev[6] || 0) === S.fruits && (ev[9] || 0) === S.spikes && (ev[13] || 0) === S.ni - 1,
+};
 
 const stored = fs.existsSync(HASHES) ? JSON.parse(fs.readFileSync(HASHES, 'utf8')) : {};
 const update = process.argv.includes('--update');
@@ -63,7 +72,7 @@ for (const [tier, eng] of Object.entries(ENGINES)) {
     const key = tier + '/' + file.replace('.json', '');
     if (eng.full && !eng.full.includes(file.replace('.json', ''))) {
       const S = eng.make(M, sp, 1); for (let i = 0; i < 40; i++) S.step();
-      let bad = S.n < 20; for (let i = 0; i < S.n; i++) if (!isFinite(S.si[i]) || !isFinite(S.x1[i])) bad = true;
+      let bad = S.n < (eng.smokeMin || 20); for (let i = 0; i < S.n; i++) if (!isFinite(S.si[i]) || !isFinite(S.x1[i])) bad = true;
       if (bad) { failed = true; console.log(`${key.padEnd(28)} smoke run FAIL (segments ${S.n})`); } else smoke++;
       continue;
     }

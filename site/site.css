@@ -1,0 +1,77 @@
+/* Shared styles for the landing page, the species browser and the comparison page. */
+:root {
+  --bg: #f6f3ec; --fg: #23201a; --muted: #6d665a; --line: #d9d2c3; --card: #fffdf8;
+  --accent: #7a5a2e; --ok: #3f7a4a; --bad: #a8402f;
+  --sourced: #1d5f8a; --inferred: #8a5a00; --unknown: #6d665a; --on-solid: #ffffff;
+  --glyph-line: #5a5244; --glow: #4fae6a;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17150f; --fg: #ece6d8; --muted: #a0978a; --line: #353026; --card: #1f1c15;
+    --accent: #d2a866; --ok: #7fbf8b; --bad: #e08572;
+    --sourced: #8cc4ea; --inferred: #e3b65a; --unknown: #a0978a; --on-solid: #10202c;
+    --glyph-line: #8d8371; --glow: #8fe0a4;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--fg);
+  font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 48px 16px 64px; }
+main.wide { max-width: 1120px; padding-top: 20px; }
+h1 { font: 600 2rem/1.15 ui-serif, Georgia, serif; margin: 0 0 8px; }
+p { margin: 0 0 16px; }
+.lede { color: var(--muted); max-width: 68ch; }
+h2 { font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+  margin: 40px 0 12px; font-weight: 600; }
+h3 { font: 600 1.15rem/1.25 ui-serif, Georgia, serif; margin: 0 0 6px; }
+a { color: var(--accent); }
+ul { padding-left: 20px; margin: 0; }
+.muted { color: var(--muted); }
+.small { font-size: 0.875rem; }
+.num { font-variant-numeric: tabular-nums; }
+[hidden] { display: none !important; }
+
+nav.top { display: flex; flex-wrap: wrap; gap: 4px 18px; align-items: baseline; font-size: 0.9rem;
+  padding-bottom: 12px; margin-bottom: 28px; border-bottom: 1px solid var(--line); }
+nav.top a { text-decoration: none; }
+nav.top a:hover { text-decoration: underline; }
+nav.top a.home { font: 600 1rem ui-serif, Georgia, serif; color: var(--fg); margin-right: auto; }
+nav.top a[aria-current] { color: var(--fg); font-weight: 600; }
+
+/* cards (engines on the landing page, engine panels on the comparison page) */
+.tiers { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.tier { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+  padding: 16px; color: inherit; text-decoration: none; display: block; }
+a.tier:hover { border-color: var(--accent); }
+.tier b { font: 600 1.4rem ui-serif, Georgia, serif; display: block; }
+.tier span { color: var(--muted); font-size: 0.9rem; display: block; }
+.bar { height: 4px; background: var(--line); border-radius: 2px; margin: 12px 0 6px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--ok); }
+.bar i.over { background: var(--bad); }
+.size { font-variant-numeric: tabular-nums; font-size: 0.85rem; color: var(--muted); }
+
+/* form controls */
+input, select, button { font: inherit; color: var(--fg); background: var(--card);
+  border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; max-width: 100%; }
+button { cursor: pointer; }
+button:hover { border-color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+label.f { display: grid; gap: 3px; font-size: 0.78rem; color: var(--muted); min-width: 0; }
+label.f > select, label.f > input { width: 100%; font-size: 0.95rem; }
+
+/* basis tags: a word, a shape and a colour, so none of the three carries the meaning alone */
+.basis { display: inline-flex; align-items: center; gap: 5px; font-size: 0.78rem; font-weight: 600;
+  line-height: 1; padding: 4px 8px 4px 6px; border-radius: 999px; white-space: nowrap; border: 1.5px solid; }
+.basis::before { content: ""; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid currentColor; flex: none; }
+.basis.sourced { background: var(--sourced); border-color: var(--sourced); color: var(--on-solid); }
+.basis.sourced::before { background: currentColor; }
+.basis.inferred { color: var(--inferred); border-color: var(--inferred); }
+.basis.inferred::before { background: linear-gradient(90deg, currentColor 50%, transparent 50%); }
+.basis.unknown { color: var(--unknown); border-color: var(--unknown); border-style: dashed; font-weight: 500; }
+
+/* "how much is measured" bar: solid = sourced, striped = inferred, empty = unknown */
+.meter { display: flex; height: 7px; border: 1px solid var(--unknown); border-radius: 4px; overflow: hidden; background: transparent; }
+.meter i { display: block; height: 100%; }
+.meter .s { background: var(--sourced); }
+.meter .i { background: repeating-linear-gradient(135deg, var(--inferred) 0 2px, transparent 2px 4px); }

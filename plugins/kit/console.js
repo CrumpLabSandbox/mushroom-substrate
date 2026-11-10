@@ -41,13 +41,15 @@ export const makeConsole = (sr, count = 8) => {
   return {
     params: P,
     set(id, v) { if (!(id in P)) return; P[id] = v; if (id.endsWith('hpf') || id.endsWith('lpf')) filters() },
-    // stems: [[L, R] | null, ...] of n samples; writes the master to outL, outR
-    process(stems, outL, outR, n) {
+    // stems: [[L, R] | null, ...] of n samples; writes the master to outL, outR. If `tap` is given ([[L, R], ...]),
+    // each strip's own output (after its filters, rider, dip and fader, before the sum) is also written there, for
+    // a host that places the voices in space itself and so cannot use the stereo sum.
+    process(stems, outL, outR, n, tap) {
       const ceil = dB(P['out.ceiling']), level = dB(P['out.level'] <= -59.9 ? -200 : P['out.level']), thr = P['glue.threshold'], ratio = P['glue.ratio']
       for (let i = 0; i < n; i++) {
         let ml = 0, mr = 0
         for (let k = 0; k < count; k++) {
-          const s = S[k], st = stems[k]; if (!st) { s.active = 0; continue }
+          const s = S[k], st = stems[k]; if (!st) { s.active = 0; if (tap && tap[k]) tap[k][0][i] = tap[k][1][i] = 0; continue }
           const id = s.id, trim = dB(P[id + 'trim']); let l = st[0][i] * trim, r = st[1][i] * trim
           l = s.lp.run(s.hp.run(l, 0), 0); r = s.lp.run(s.hp.run(r, 1), 1)
           const w = P[id + 'width'] / 100; if (w != 1) { const m = (l + r) / 2, d = (l - r) / 2 * w; l = m + d; r = m - d }
@@ -60,7 +62,7 @@ export const makeConsole = (sr, count = 8) => {
             s.duck += (want - s.duck) * (want > s.duck ? duckIn : duckOut) * 16
             s.target = dB(s.ride - s.duck + (P[id + 'mute'] || P[id + 'fader'] <= -59.9 ? -200 : P[id + 'fader'])); s.active = now > -70 ? 1 : 0
           }
-          s.g += ((s.target || 0) - s.g) * fade; l *= s.g; r *= s.g
+          s.g += ((s.target || 0) - s.g) * fade; l *= s.g; r *= s.g; if (tap && tap[k]) { tap[k][0][i] = l; tap[k][1][i] = r }
           const a = Math.abs(l) > Math.abs(r) ? Math.abs(l) : Math.abs(r); if (a > s.peak) s.peak = a
           ml += l; mr += r
         }
@@ -78,6 +80,8 @@ export const makeConsole = (sr, count = 8) => {
       }
       sinceTick += n
     },
+    // the master rider's gain now, as a multiplier: a host mixing the tapped strips itself applies this to keep the loudness target
+    rideGain: () => dB(mride),
     // the same layout as the Stem Console's telemetry: 0..3 master momentary, short-term, integrated LUFS and
     // peak dB; 4 glue and 5 limiter gain reduction; 6 unused; 7 master ride dB; stem k at 8 + 6k: short-term LUFS,
     // peak dBFS, ride dB, 0, duck dB, active

@@ -24,10 +24,11 @@ export const makeSymphony = (sr, cast, conductor = 'together') => {
     for (const k in c.comp || {}) p.comp.set(k, c.comp[k]); for (const k in c.inst || {}) p.inst.set(k, c.inst[k])
     return p
   })
-  const stems = parts.map(p => [p.L, p.R]); let t = 0, x = 0, cycles = 0
+  const stems = parts.map(p => [p.L, p.R]); let t = 0, x = 0, cycles = 0, taps = null
   const stop = p => { if (p.comp.release) for (const ev of p.comp.release()) p.inst.noteOff(ev.off) }
   return {
-    parts, console: con,
+    parts, console: con, tap: false, // set tap to true to also get each voice's strip output in taps() after each process()
+    taps: () => taps, rideGain: () => con.rideGain(),
     load(i, spec) { const p = parts[i]; if (!p) return; stop(p); p.spec = spec; p.comp.load(spec); p.inst.load(spec); for (const k in p.c.comp || {}) p.comp.set(k, p.c.comp[k]); for (const k in p.c.inst || {}) p.inst.set(k, p.c.inst[k]) },
     set(k, v) { if (k in con.params) con.set(k, v); else P[k] = v },
     pset(i, which, k, v) { const p = parts[i]; if (p) (which == 'inst' ? p.inst : p.comp).set(k, v) },
@@ -44,7 +45,8 @@ export const makeSymphony = (sr, cast, conductor = 'together') => {
         p.inst.process(p.L, p.R, null)
         const g0 = p.g; p.g += (p.want - p.g) * Math.min(1, n / (sr * .4)); for (let s = 0; s < n; s++) { const g = g0 + (p.g - g0) * s / n; p.L[s] *= g; p.R[s] *= g }
       }
-      con.process(stems, L, R, n)
+      if (this.tap && (!taps || taps[0][0].length != n)) taps = parts.map(() => [new Float32Array(n), new Float32Array(n)])
+      con.process(stems, L, R, n, this.tap ? taps : undefined)
       if (P.level != 1) for (let s = 0; s < n; s++) { L[s] *= P.level; R[s] *= P.level }
     },
     view() { return { x, t, cycles, want: parts.map(p => p.g), notes: parts.map(p => p.on), parts: parts.map(p => { const v = p.comp.view ? p.comp.view() : {}; return { nps: v.nps || 0, sounding: v.sounding || 0, scaleNote: v.scaleNote || '' } }), tel: con.telemetry() } }

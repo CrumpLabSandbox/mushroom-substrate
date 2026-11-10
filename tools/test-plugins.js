@@ -10,7 +10,7 @@ const ROOT = path.join(__dirname, '..');
 const sizeArg = process.argv.find((a) => a.startsWith('--size=')), SIZE = sizeArg ? sizeArg.slice(7) : '400k';
 process.argv = process.argv.filter((a) => !a.startsWith('--size='));
 (async () => {
-  const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'plugins/plugins.json'), 'utf8')).filter((p) => p.built && !p.symphony && (process.argv.length < 3 || process.argv.slice(2).includes(p.id))); // name plugins to test only those
+  const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'plugins/plugins.json'), 'utf8')).filter((p) => p.built && !p.symphony && p.family !== 'world' && (process.argv.length < 3 || process.argv.slice(2).includes(p.id))); // name plugins to test only those
   // specimens are read at the 400K size unless --size says otherwise
   const SP = path.join(ROOT, 'plugins/specimens', SIZE);
   const species = fs.readdirSync(SP).filter((f) => f.endsWith('.json') && f !== 'index.json').map((f) => f.replace('.json', '')).sort();

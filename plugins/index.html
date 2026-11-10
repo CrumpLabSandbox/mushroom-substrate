@@ -34,7 +34,7 @@
   <a href="https://github.com/CrumpLabSandbox/mushroom-substrate/blob/main/docs/PLUGINS.md">docs/PLUGINS.md</a>.</p>
 </main>
 <script type="module">
-  const KINDS = { P: 'physical model', S: 'model signal', M: 'model as modulator' }, FAMILIES = [['symphony', 'Symphonies: several composers at once, on a console'], ['composer', 'Composers: the fungus plays itself'], ['instrument', 'Playable instruments'], ['atmosphere', 'Atmospheres'], ['effect', 'Effects']]
+  const KINDS = { P: 'physical model', S: 'model signal', M: 'model as modulator' }, FAMILIES = [['world', 'A world to walk through'], ['symphony', 'Symphonies: several composers at once, on a console'], ['composer', 'Composers: the fungus plays itself'], ['instrument', 'Playable instruments'], ['atmosphere', 'Atmospheres'], ['effect', 'Effects']]
   import { PICTURES, picture } from './kit/pictures.js'
   import { ground, network, mushroom, spores } from './kit/art.js'
   const all = await (await fetch('plugins.json')).json(), on = { built: false }

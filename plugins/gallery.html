@@ -17,7 +17,7 @@
 <script type="module">
   import { picture } from './kit/pictures.js'
   import { SCALES, specimenUrl } from './kit/kit.js'
-  const all = (await (await fetch('plugins.json')).json()).filter(p => p.built && !p.symphony), list = await (await fetch('specimens/index.json')).json(), q = new URLSearchParams(location.hash.slice(1))
+  const all = (await (await fetch('plugins.json')).json()).filter(p => p.built && !p.symphony && p.family != 'world'), list = await (await fetch('specimens/index.json')).json(), q = new URLSearchParams(location.hash.slice(1))
   const sp = document.getElementById('sp'), sc = document.getElementById('sc'), G = document.getElementById('g')
   for (const [slug, name] of list) sp.add(new Option(name, slug)); for (const z in SCALES) sc.add(new Option(SCALES[z][0], z)); sp.value = q.get('s') || 'amanita-muscaria'; sc.value = q.get('z') || '400k'
   const items = []

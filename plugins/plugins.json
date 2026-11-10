@@ -1,5 +1,13 @@
 [
   {
+    "id": "walk",
+    "name": "Mushroom Walk",
+    "family": "world",
+    "kind": "S",
+    "built": true,
+    "blurb": "An endless world you walk through at ground level. Mushrooms grow wherever their species would, each playing as one of the plugins, and you hear whatever is near you, where it stands."
+  },
+  {
     "id": "hyphal-harp",
     "name": "Hyphal Harp",
     "family": "instrument",

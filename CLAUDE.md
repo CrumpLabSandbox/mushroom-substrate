@@ -8,7 +8,7 @@ notes are in [notes.md](notes.md).
 - Work on `main` and push to `main`. No feature branches or pull requests.
 - GitHub Pages is built by `.github/workflows/pages.yml` on every push. The build fails if a tier
   is over its byte limit.
-- Before pushing: `node tools/pack.js`, `node tools/check.js`, `node tools/test.js`. If a core's
+- Before pushing: `node tools/pack.js`, `node tools/check.js`, `node tools/test.js`. The full test takes several minutes; the Pages workflow runs `node tools/test.js --quick` (four species per engine, one run each) so a deploy is not held up. If a core's
   behaviour changed on purpose, `node tools/test.js --update` rewrites the stored hashes.
 - No `Math.sin`, `Math.cos`, `Math.exp` or `Math.pow` in a core (not bit-identical across
   browsers). See docs/MODEL.md section 1.

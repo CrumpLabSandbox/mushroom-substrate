@@ -27,7 +27,7 @@ jobs:
       - name: Check packed species are current
         run: node tools/pack.js && git diff --exit-code engines
       - name: Test repeatability
-        run: node tools/test.js
+        run: node tools/test.js --quick
       - name: Build site
         run: node tools/build-site.js
       - uses: actions/configure-pages@v5

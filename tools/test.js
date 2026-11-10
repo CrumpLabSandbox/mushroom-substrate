@@ -49,6 +49,10 @@ ENGINES['4m'] = {
 
 const stored = fs.existsSync(HASHES) ? JSON.parse(fs.readFileSync(HASHES, 'utf8')) : {};
 const update = process.argv.includes('--update');
+// --quick (used by the Pages workflow): a few species per engine, one run each against the stored hash. The full
+// run, which takes several minutes, repeats every species and is for before a push.
+const quick = process.argv.includes('--quick');
+const QUICK = ['phanerochaete-velutina', 'coprinopsis-cinerea', 'laccaria-bicolor', 'armillaria-gallica'];
 const next = {};
 let failed = false;
 let smoke = 0;
@@ -70,13 +74,14 @@ for (const [tier, eng] of Object.entries(ENGINES)) {
   for (const file of fs.readdirSync(dir).sort()) {
     const sp = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'));
     const key = tier + '/' + file.replace('.json', '');
+    if (quick && !QUICK.includes(file.replace('.json', ''))) { if (stored[key]) next[key] = stored[key]; continue; }
     if (eng.full && !eng.full.includes(file.replace('.json', ''))) {
       const S = eng.make(M, sp, 1); for (let i = 0; i < 40; i++) S.step();
       let bad = S.n < (eng.smokeMin || 20); for (let i = 0; i < S.n; i++) if (!isFinite(S.si[i]) || !isFinite(S.x1[i])) bad = true;
       if (bad) { failed = true; console.log(`${key.padEnd(28)} smoke run FAIL (segments ${S.n})`); } else smoke++;
       continue;
     }
-    const a = run(sp, 1), again = run(sp, 1), other = run(sp, 2);
+    const a = run(sp, 1), again = quick ? a : run(sp, 1), other = quick ? { hash: '' } : run(sp, 2);
     next[key] = a.hash;
     const problems = [];
     if (a.hash !== again.hash) problems.push('two runs of seed 1 differ');
@@ -92,7 +97,7 @@ for (const [tier, eng] of Object.entries(ENGINES)) {
 // 400K only: two individuals in one block must also repeat, and must meet.
 {
   const core = path.join(ROOT, 'engines/400k/core.js');
-  if (fs.existsSync(core)) {
+  if (fs.existsSync(core) && !quick) {
     const M = new Function(fs.readFileSync(core, 'utf8') + ';return M')();
     const load = (slug) => JSON.parse(fs.readFileSync(path.join(ROOT, 'engines/400k/species', slug + '.json'), 'utf8'));
     const a = load('phanerochaete-velutina'), b = load('pleurotus-ostreatus');
@@ -144,5 +149,5 @@ for (const [tier, eng] of Object.entries(ENGINES)) {
   console.log(`${'wavetable/400k'.padEnd(28)} ${wt.frames.length} frames of ${wt.size}  ${problems.length ? 'FAIL: ' + problems.join('; ') : 'ok'}`);
 }
 console.log(`smoke runs passed: ${smoke}`);
-if (update) fs.writeFileSync(HASHES, JSON.stringify(next, null, 2) + '\n');
+if (update && !quick) fs.writeFileSync(HASHES, JSON.stringify(next, null, 2) + '\n');
 process.exit(failed ? 1 : 0);

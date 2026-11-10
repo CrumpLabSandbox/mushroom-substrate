@@ -56,5 +56,41 @@
     ],
     "abundance": 2
   },
-  "notes": "The arctic-alpine representative; its hosts are shrubs 5 cm tall. Family is inferred, not sourced."
+  "notes": "The arctic-alpine representative; its hosts are shrubs 5 cm tall. Family is inferred, not sourced.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 12,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): Russulas grow very slowly in culture, and this one lives in cold alpine soil"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.12,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 15,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): arctic and alpine dwarf-willow heath"
+    },
+    "t_min": {
+      "value": -2,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): arctic and alpine dwarf-willow heath"
+    },
+    "t_max": {
+      "value": 24,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): arctic and alpine dwarf-willow heath"
+    }
+  }
 }

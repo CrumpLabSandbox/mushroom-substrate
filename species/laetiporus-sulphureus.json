@@ -10,6 +10,50 @@
     "mycelium": "#f0ece2",
     "cap": "#f0a22e"
   },
+  "hyphae": {
+    "tip_speed": {
+      "value": 325,
+      "unit": "um/h",
+      "basis": "sourced",
+      "source": "Dzyhun 2020, Biology of basidiomycete macromycetes Laetiporus sulphureus and Cerioporus squamosus in culture, PhD thesis abstract, M.G. Kholodny Institute of Botany, National Academy of Sciences of Ukraine",
+      "url": "https://uacademic.info/en/document/0420U102146",
+      "note": "radial growth of 13 strains on agar media ranged from 5.2 to 10.4 mm/day; midpoint 7.8 mm/day x 41.7. Read from the thesis abstract only: the temperature and medium for each figure are not stated there (28 C was the best temperature, beer wort agar the best medium). Luangharn et al. 2014 (Mycology 5:221-227) report 11.5 to 12.2 mm/day at 25 C for two Thai strains of L. sulphureus sensu lato, but their rate calculation is unclear"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 3.25,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 28,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "Dzyhun 2020, Biology of basidiomycete macromycetes Laetiporus sulphureus and Cerioporus squamosus in culture, PhD thesis abstract, M.G. Kholodny Institute of Botany, National Academy of Sciences of Ukraine",
+      "url": "https://uacademic.info/en/document/0420U102146",
+      "note": "best of the temperatures tested, 13 strains (thesis abstract). Luangharn et al. 2014 found two Thai strains fastest at 25 C on malt extract agar"
+    },
+    "t_max": {
+      "value": 38,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "Dzyhun 2020, Biology of basidiomycete macromycetes Laetiporus sulphureus and Cerioporus squamosus in culture, PhD thesis abstract, M.G. Kholodny Institute of Botany, National Academy of Sciences of Ukraine",
+      "url": "https://uacademic.info/en/document/0420U102146",
+      "note": "stated upper limit for the strains (thesis abstract). The two Thai strains of Luangharn et al. 2014 did not grow at 35 C"
+    }
+  },
+  "fruiting": {
+    "cold_drop": {
+      "value": 13,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Pleszczynska et al. 2013 (World J. Microbiol. Biotechnol. 29:753-758, https://pmc.ncbi.nlm.nih.gov/articles/PMC3599174) grew the mycelium at 23 C and got fruiting only after a cold shock: 10 C water injected into the bag (used here, 23 - 10 = 13), or 24 h at 2 to 4 C, which worked less well. A brief shock, not a sustained drop; fruit bodies then formed at 23 C"
+    }
+  },
   "taxonomy": {
     "order": "Polyporales",
     "family": "Laetiporaceae"
@@ -33,11 +77,13 @@
     "size_cm": {
       "value": [
         10,
-        50
+        40
       ],
       "unit": "cm",
-      "basis": "inferred",
-      "note": "general knowledge, unchecked (research/08)"
+      "basis": "sourced",
+      "source": "First Nature (P. O'Reilly), Laetiporus sulphureus, Chicken-of-the-Woods, species page",
+      "url": "https://www.first-nature.com/fungi/laetiporus-sulphureus.php",
+      "note": "width of one bracket; 3 to 12 cm thick. Tiers of brackets are larger. Field-guide web page"
     },
     "cap_colour": "#f0a22e",
     "stem_colour": "#f2d24a",

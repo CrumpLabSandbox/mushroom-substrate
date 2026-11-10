@@ -1,0 +1,66 @@
+{
+  "slug": "cordipulsus-rhythmicus",
+  "name": "Cordipulsus rhythmicus",
+  "common_name": "metronome",
+  "family": "CORD-S",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#ffd27a",
+    "cap": "#ff9f3a"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        4,
+        9
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#ff9f3a",
+    "stem_colour": "#ffe6b0",
+    "bioluminescent": false
+  },
+  "notes": "Spikes every two minutes, sharp and regular, through a cord network that fuses at a third of its meetings. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the CORD-S family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 120,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "fusion_probability": {
+      "value": 0.3,
+      "unit": "",
+      "basis": "invented"
+    }
+  },
+  "electrical": {
+    "spike_interval": {
+      "value": 2,
+      "unit": "min",
+      "basis": "invented"
+    },
+    "spike_duration": {
+      "value": 0.3,
+      "unit": "min",
+      "basis": "invented"
+    },
+    "spike_amplitude": {
+      "value": 10,
+      "unit": "mV",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 1.2,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  }
+}

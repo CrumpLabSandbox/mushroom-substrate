@@ -54,5 +54,47 @@
     ],
     "abundance": 2
   },
-  "notes": "Long-distance exploration type [13]; treated together with R. vesiculosus. Reported (unchecked, Beiler 2010) to be the only species with a mapped tree-to-tree network in a real forest; spores are spread by small mammals."
+  "notes": "Long-distance exploration type [13]; treated together with R. vesiculosus. Reported (unchecked, Beiler 2010) to be the only species with a mapped tree-to-tree network in a real forest; spores are spread by small mammals.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 100,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): forms long rhizomorphs between Douglas-fir trees; below the family default because cultures are slow"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 1.0,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 22,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): Pacific Northwest conifer forest with dry summers"
+    },
+    "t_min": {
+      "value": 2,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): Pacific Northwest conifer forest with dry summers"
+    },
+    "t_max": {
+      "value": 32,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): Pacific Northwest conifer forest with dry summers"
+    },
+    "wet_opt": {
+      "value": 0.45,
+      "unit": "",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): known for carrying water to seedlings in dry soil; guess"
+    }
+  }
 }

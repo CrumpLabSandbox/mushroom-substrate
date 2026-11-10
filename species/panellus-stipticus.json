@@ -57,5 +57,41 @@
     ],
     "abundance": 2
   },
-  "notes": "Reported (unchecked) to be bioluminescent, in mycelium and gills, in eastern North American strains only."
+  "notes": "Reported (unchecked) to be bioluminescent, in mycelium and gills, in eastern North American strains only.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 100,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): small slow white-rot of dead branches; set below half the family default"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 1.0,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 24,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): temperate forests; fruits in autumn and winter"
+    },
+    "t_min": {
+      "value": 2,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): temperate forests; fruits in autumn and winter"
+    },
+    "t_max": {
+      "value": 32,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): temperate forests; fruits in autumn and winter"
+    }
+  }
 }

@@ -68,7 +68,7 @@ var M = (P, seed, scn) => {
       scn || (wet[i] = WOPT) } } // a dish of agar is evenly wet, at the species' optimum
 
   S = {
-    W, L, G, CS, x0, y0, x1, y1, si, ar, Q, qc, st, typ, wet, den, tips, fr, rec, SE0, SMAX, MM,
+    W, L, G, CS, x0, y0, x1, y1, si, ar, Q, qc, st, typ, wet, den, tips, fr, rec, SE0, SMAX, MM, par, dep, fus,
     t: 0, dt: L / EV * 3600, temp: TOPT - DROP, len: 0, br: 0, fu: 0, res: 0, up: 0, flow: 0, front: 0, cords: 0, fruits: 0, alpha: 0, alphaX: 0, cross: 0, ntips: 0,
     get n() { return n }, get se() { return se }, get inh() { return inh },
     step() {

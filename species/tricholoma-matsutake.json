@@ -57,5 +57,49 @@
     ],
     "abundance": 1
   },
-  "notes": "Medium-distance fringe type at genus level [13]; a mycorrhizal fairy ring, reported (unchecked) to form a dense white soil colony (\"shiro\") and to be partly harmful to its host roots. Not cultivated. Tricholoma rings advance about 17 cm/year and the matsutake mat is up to 15 cm deep (research/02 [24])."
+  "notes": "Medium-distance fringe type at genus level [13]; a mycorrhizal fairy ring, reported (unchecked) to form a dense white soil colony (\"shiro\") and to be partly harmful to its host roots. Not cultivated. Tricholoma rings advance about 17 cm/year and the matsutake mat is up to 15 cm deep (research/02 [24]).",
+  "hyphae": {
+    "tip_speed": {
+      "value": 17,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): its colony in soil (the shiro) is reported to advance 10 to 20 cm a year; 15 cm a year is 17 um/h"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.17,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 22,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): cool temperate pine forest; mycelium is said to stop above about 28 C"
+    },
+    "t_min": {
+      "value": 3,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): cool temperate pine forest; mycelium is said to stop above about 28 C"
+    },
+    "t_max": {
+      "value": 28,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): cool temperate pine forest; mycelium is said to stop above about 28 C"
+    }
+  },
+  "fruiting": {
+    "cold_drop": {
+      "value": 4,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): fruits when soil temperature falls below about 19 C in autumn"
+    }
+  }
 }

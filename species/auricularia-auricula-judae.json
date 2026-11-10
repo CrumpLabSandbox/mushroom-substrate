@@ -63,5 +63,41 @@
     ],
     "abundance": 3
   },
-  "notes": "One file for a species group that is cosmopolitan only as a group. Jelly ear form; the Asian A. heimuer is reported (unchecked) to be a major crop."
+  "notes": "One file for a species group that is cosmopolitan only as a group. Jelly ear form; the Asian A. heimuer is reported (unchecked) to be a major crop.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 170,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "62.2 mm colony in 7 days at 30 C on PDA, 90 mm plate, 5 mm plug (Yu, Choi, Jeong, Lee & Choi 2013, Study on characteristic of mycelial culture in ear mushroom, Journal of Mushroom 11(1):15-20, https://koreascience.kr/article/JAKO201307954512226.page); taken as a diameter including the plug: (62.2 - 5) / 2 / 7 = 4.1 mm/day = 170 um/h. The method was read in the paper, but the temperature table would not extract, so its numbers (0, 23.6, 45.6, 49.3, 59.9, 62.2 mm at 10, 15, 20, 25, 27, 30 C) come from a search snippet"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 1.7,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 30,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "sources disagree: abstracts give 25 C (Yu et al. 2013) and 25 to 30 C (Jo, Kim, Seok, Jung & Park 2014, The culture conditions for the mycelial growth of Auricularia auricula-judae, Journal of Mushroom 12(2):88-95, https://koreascience.kr/article/JAKO201424750260007.page); the Yu et al. table as read from a search snippet has the largest colony at 30 C, the highest temperature tested; and A. heimuer, the cultivated member of the group, grew faster at 35 C than at 25 C (Nie, Wei, Wu, Qi, Feng & Wang 2025, Transcriptomic, and metabolic profiling reveals adaptive mechanisms of Auricularia heimuer to temperature stress, PeerJ 13:e19713, https://pmc.ncbi.nlm.nih.gov/articles/PMC12288747/). 30 C taken"
+    },
+    "t_min": {
+      "value": 10,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "no growth in 7 days at 10 C on PDA, 23.6 mm at 15 C (Yu, Choi, Jeong, Lee & Choi 2013, Study on characteristic of mycelial culture in ear mushroom, Journal of Mushroom 11(1):15-20, https://koreascience.kr/article/JAKO201307954512226.page); numbers from a search snippet of the paper's table"
+    },
+    "t_max": {
+      "value": 45,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "A. heimuer, not this species: growth strongly inhibited at 45 C and fastest at 35 C among 15, 25, 35 and 45 C (Nie, Wei, Wu, Qi, Feng & Wang 2025, Transcriptomic, and metabolic profiling reveals adaptive mechanisms of Auricularia heimuer to temperature stress, PeerJ 13:e19713, https://pmc.ncbi.nlm.nih.gov/articles/PMC12288747/); 45 C taken as the limit, though some growth may persist there"
+    }
+  }
 }

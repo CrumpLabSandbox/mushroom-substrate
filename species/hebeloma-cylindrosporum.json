@@ -31,12 +31,14 @@
     "form": "agaric",
     "size_cm": {
       "value": [
-        2,
-        6
+        1.2,
+        4
       ],
       "unit": "cm",
-      "basis": "inferred",
-      "note": "general knowledge, unchecked (research/08)"
+      "basis": "sourced",
+      "source": "Hebeloma Project, Hebeloma cylindrosporum: species description and distribution, hebeloma.org",
+      "url": "https://hebeloma.org/species/cylindrosporum",
+      "note": "cap diameter 12 to 40 mm over 42 collections (extremes 10 to 64 mm); stem 28 to 66 mm long, 3 to 6 mm wide"
     },
     "cap_colour": "#c9a57a",
     "stem_colour": "#e6dcc8",
@@ -56,5 +58,29 @@
     ],
     "abundance": 1
   },
-  "notes": "Medium-distance fringe type at genus level [13]. A lab model that completes its life cycle in culture; a sequenced genome and field-mapped short-lived individuals are reported (unchecked)."
+  "notes": "Medium-distance fringe type at genus level [13]. A lab model that completes its life cycle in culture; a sequenced genome and field-mapped short-lived individuals are reported (unchecked).",
+  "hyphae": {
+    "tip_speed": {
+      "value": 60,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Field figure, not a culture rate: two genets in a pine forest site widened their territories by about 0.45 to 0.60 m per year between 1993 and 1997 (Gryta H, Debaud JC, Marmeisse R 2000, Population dynamics of the symbiotic mushroom Hebeloma cylindrosporum: mycelial persistence and inbreeding, Heredity 84:294-302 (https://doi.org/10.1046/j.1365-2540.2000.00668.x; abstract read through Europe PMC)). Midpoint 0.525 m/year spread over all 8,760 hours of the year = 60 um/h. This is a year-round average, so the rate at the optimum temperature is probably higher. No agar growth rate was found"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.6,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "fruiting": {
+    "cold_drop": {
+      "value": 0,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Fruited in flasks with Pinus pinaster at a constant 18 C, starting about 1.5 months after inoculation; a 5-day thermal shock of 6 C up or down did not change the number of fruit bodies, only their timing (Debaud JC, Gay G 1987, New Phytologist 105:429-435, https://doi.org/10.1111/j.1469-8137.1987.tb00880.x; abstract read through Europe PMC). So no temperature drop is needed"
+    }
+  }
 }

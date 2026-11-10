@@ -60,5 +60,55 @@
     ],
     "abundance": 2
   },
-  "notes": "The main hot-desert representative: a stalked puffball. Its link with termite mounds in Africa is reported but unchecked."
+  "notes": "The main hot-desert representative: a stalked puffball. Its link with termite mounds in Africa is reported but unchecked.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 200,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): fruits within days of desert rain, so the mycelium must use short wet spells; a guess"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 2.0,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 34,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): hot deserts and termite mounds"
+    },
+    "t_min": {
+      "value": 14,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): hot deserts and termite mounds"
+    },
+    "t_max": {
+      "value": 44,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): hot deserts and termite mounds"
+    },
+    "wet_opt": {
+      "value": 0.3,
+      "unit": "",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): desert soil"
+    }
+  },
+  "fruiting": {
+    "cold_drop": {
+      "value": 0,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): fruits after rain in hot weather"
+    }
+  }
 }

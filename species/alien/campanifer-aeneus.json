@@ -1,0 +1,42 @@
+{
+  "slug": "campanifer-aeneus",
+  "name": "Campanifer aeneus",
+  "common_name": "bronze bell",
+  "family": "ECM-L",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#c9a25f",
+    "cap": "#8c6a2f"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "chanterelle",
+    "size_cm": {
+      "value": [
+        60,
+        90
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#8c6a2f",
+    "stem_colour": "#a8843f",
+    "bioluminescent": false
+  },
+  "notes": "Its bowl-shaped fruit body is most of a metre across, ten times the mass of an ordinary mushroom, and needs a hard cold snap to start. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the ECM-L family.",
+  "fruiting": {
+    "mature_mass": {
+      "value": 4000,
+      "unit": "units",
+      "basis": "invented"
+    },
+    "cold_drop": {
+      "value": 12,
+      "unit": "C",
+      "basis": "invented"
+    }
+  }
+}

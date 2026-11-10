@@ -1,0 +1,100 @@
+{
+  "slug": "pyrohypha-celerrima",
+  "name": "Pyrohypha celerrima",
+  "common_name": "fire runner",
+  "family": "DIF",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#ffb347",
+    "cap": "#e2572b"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "morel",
+    "size_cm": {
+      "value": [
+        2,
+        6
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#e2572b",
+    "stem_colour": "#ffd9a0",
+    "bioluminescent": false
+  },
+  "notes": "Appears on ground too hot for anything else and crosses it at the engine's top speed. Its hyphae are abandoned within hours and it fruits in a day. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the DIF family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 1500,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "growth_unit": {
+      "value": 700,
+      "unit": "um",
+      "basis": "invented"
+    },
+    "branch_angle": {
+      "value": 25,
+      "unit": "deg",
+      "basis": "invented"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 52,
+      "unit": "C",
+      "basis": "invented"
+    },
+    "t_min": {
+      "value": 30,
+      "unit": "C",
+      "basis": "invented"
+    },
+    "t_max": {
+      "value": 70,
+      "unit": "C",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "inactivation_age": {
+      "value": 8,
+      "unit": "h",
+      "basis": "invented"
+    },
+    "uptake_rate": {
+      "value": 15.0,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  },
+  "fruiting": {
+    "min_age": {
+      "value": 24,
+      "unit": "h",
+      "basis": "invented"
+    }
+  },
+  "electrical": {
+    "spike_interval": {
+      "value": 3,
+      "unit": "min",
+      "basis": "invented"
+    },
+    "spike_duration": {
+      "value": 0.5,
+      "unit": "min",
+      "basis": "invented"
+    },
+    "spike_amplitude": {
+      "value": 6,
+      "unit": "mV",
+      "basis": "invented"
+    }
+  }
+}

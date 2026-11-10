@@ -10,6 +10,42 @@
     "mycelium": "#f0ece2",
     "cap": "#a8452a"
   },
+  "hyphae": {
+    "tip_speed": {
+      "value": 125,
+      "unit": "um/h",
+      "basis": "sourced",
+      "source": "Chang, Oh & Lee 2004, Mycelial characteristics for artificial cultivation of Fomitopsis pinicola, Journal of Mushroom Science and Production 2(4):207-213",
+      "url": "https://koreascience.kr/article/JAKO200414364646483.pdf",
+      "note": "Table 3, oak dextrose agar, 9 cm plates, fastest of five Korean strains (KNAC 9005): colony diameter 66.1 mm at 25 C and 66.3 mm at 30 C after 10 days from a 6 mm plug. (66.1 - 6) / 2 / 10 = 3.0 mm/day radial x 41.7. Other strains 36 to 63 mm. Korean material may not be the same species as European F. pinicola in the strict sense"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 1.25,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 25,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "Dresch et al. 2015, Fungal strain matters: colony growth and bioactivity of the European medicinal polypores Fomes fomentarius, Fomitopsis pinicola and Piptoporus betulinus, AMB Express 5:4",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4305089",
+      "note": "optimum for most of the Alpine strains from spruce on malt extract agar (two were marginally faster at 30 C, two from alder and larch at 32 C). Chang et al. 2004 found Korean strains equally fast at 25 and 30 C"
+    },
+    "t_max": {
+      "value": 40,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "Chang, Oh & Lee 2004, Mycelial characteristics for artificial cultivation of Fomitopsis pinicola, Journal of Mushroom Science and Production 2(4):207-213",
+      "url": "https://koreascience.kr/article/JAKO200414364646483.pdf",
+      "note": "all five strains grew at 35 C (about 36 mm in 10 days), did not grow at 40 C and did not recover when moved back to 25 C; the true limit lies between 35 and 40 C. Weak growth was recorded at 5 C, so t_min is below 5 C (family default kept)"
+    }
+  },
   "taxonomy": {
     "order": "Polyporales",
     "family": "Fomitopsidaceae"
@@ -33,12 +69,14 @@
     "form": "bracket",
     "size_cm": {
       "value": [
-        10,
-        40
+        8,
+        25
       ],
       "unit": "cm",
-      "basis": "inferred",
-      "note": "general knowledge, unchecked (research/08)"
+      "basis": "sourced",
+      "source": "First Nature (P. O'Reilly), Fomitopsis pinicola, Red-belted Bracket fungus, species page",
+      "url": "https://www.first-nature.com/fungi/fomitopsis-pinicola.php",
+      "note": "bracket width; 5 to 10 cm thick. Field-guide web page. Chang et al. 2004 give 10 to 50 cm in their introduction (Korean material)"
     },
     "cap_colour": "#a8452a",
     "stem_colour": "#3a2c26",

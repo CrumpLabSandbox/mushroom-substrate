@@ -10,6 +10,56 @@
     "mycelium": "#efe6c4",
     "cap": "#7a2f3a"
   },
+  "hyphae": {
+    "tip_speed": {
+      "value": 100,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Hao H et al. 2022 (AMB Express 12:56, https://doi.org/10.1186/s13568-022-01400-2) give 0.293 and 0.181 for strains DQ-1 and DQ-3 on PDA at 25 C, printed as mm/d. Taken as printed that is 12 and 8 um/h, which would need months to cover a plate, so the unit is read here as cm/d: mean 2.37 mm/day x 41.7 = 99 um/h. Supported by per-strain regressions of growth rate on temperature in Chen X-T et al. 2021 (Mycosystema 40:3081-3095, Table 4, units not shown on the page opened), which give about 2.3 to 2.7 at 25 C. Needs checking against a source with clear units"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 26,
+      "unit": "C",
+      "basis": "sourced",
+      "note": "review, citing Chinese cultivation literature (Yan et al. 2001; Chen et al. 2021): mycelium grows from 5 to 35 C with the optimum at 26 C",
+      "source": "Huang L, Si C, He C-M, Liu X-C, Duan J 2025, The rise of Stropharia rugosoannulata industry in China: current state and prospects, Applied Microbiology and Biotechnology 109:188",
+      "url": "https://doi.org/10.1007/s00253-025-13576-1"
+    },
+    "t_min": {
+      "value": 5,
+      "unit": "C",
+      "basis": "sourced",
+      "note": "review: growth stops below 5 C though the mycelium survives",
+      "source": "Huang L, Si C, He C-M, Liu X-C, Duan J 2025, The rise of Stropharia rugosoannulata industry in China: current state and prospects, Applied Microbiology and Biotechnology 109:188",
+      "url": "https://doi.org/10.1007/s00253-025-13576-1"
+    },
+    "t_max": {
+      "value": 35,
+      "unit": "C",
+      "basis": "sourced",
+      "note": "review: above 35 C the mycelium is inhibited or killed. Strains differ: 5 to 34 C for a heat-sensitive strain and 5 to 42 C for a heat-tolerant one (Ren J et al. 2021, Mycoscience 62:95-105, https://doi.org/10.47371/mycosci.2020.11.006)",
+      "source": "Huang L, Si C, He C-M, Liu X-C, Duan J 2025, The rise of Stropharia rugosoannulata industry in China: current state and prospects, Applied Microbiology and Biotechnology 109:188",
+      "url": "https://doi.org/10.1007/s00253-025-13576-1"
+    }
+  },
+  "fruiting": {
+    "cold_drop": {
+      "value": 6,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "primordia form at 10 to 20 C and the mycelial optimum is 26 C (Huang et al. 2025, Appl Microbiol Biotechnol 109:188, https://doi.org/10.1007/s00253-025-13576-1, citing Stamets and Chilton 1983); 26 - 20 = 6 C is the smallest drop that reaches that range"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 1,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
   "taxonomy": {
     "order": "Agaricales",
     "family": "Strophariaceae"
@@ -33,12 +83,14 @@
     "form": "agaric",
     "size_cm": {
       "value": [
-        5,
-        20
+        4,
+        13
       ],
       "unit": "cm",
-      "basis": "inferred",
-      "note": "general knowledge, unchecked (research/08)"
+      "basis": "sourced",
+      "note": "cap width. Caps up to 25 cm are reported in cultivation (Huang et al. 2025, Appl Microbiol Biotechnol 109:188)",
+      "source": "Kuo M 2017, Stropharia rugosoannulata, MushroomExpert.Com",
+      "url": "https://www.mushroomexpert.com/stropharia_rugosoannulata.html"
     },
     "cap_colour": "#7a2f3a",
     "stem_colour": "#ece6d6",

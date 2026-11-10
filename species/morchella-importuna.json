@@ -34,12 +34,14 @@
     "form": "morel",
     "size_cm": {
       "value": [
-        5,
-        15
+        2,
+        9
       ],
       "unit": "cm",
-      "basis": "inferred",
-      "note": "general knowledge, unchecked (research/08); height"
+      "basis": "sourced",
+      "source": "Kuo M 2012, Morchella importuna, MushroomExpert.Com",
+      "url": "https://www.mushroomexpert.com/morchella_importuna.html",
+      "note": "cap width 2 to 9 cm; the cap is 3 to 15 cm tall on a stem 3 to 10 cm high"
     },
     "cap_colour": "#4a3a2c",
     "stem_colour": "#e2d6bc",
@@ -63,18 +65,42 @@
   "notes": "An ascomycete that forms sclerotia [23]. Reported (unchecked) to be field-cultivated in China with external nutrient bags and to have a sequenced genome.",
   "hyphae": {
     "tip_speed": {
-      "value": 860,
+      "value": 540,
       "unit": "um/h",
-      "basis": "inferred",
-      "note": "Morchella on PDA at 26 C: 20.6 mm/day, species not stated; M. angusticeps 5.2 mm/day at 25 C (research/08 [23], snippets). Genus figure, not this species"
+      "basis": "sourced",
+      "source": "Elso M, Sanz-Rocha M, Escobar-Hernandez T, Guillen Y, Gerding M, Chavez D, Machuca A 2026, In vitro physiological characterization of strains from transcontinental and endemic Morchella species from south-central Chile, Journal of Fungi 12(8):572",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13514834/",
+      "note": "Radial growth of nearly 13 mm/day for M. importuna strains I2 and I115 on CYM agar, pH 7, 24 C (13 x 41.7 = 542 um/h). Agrees with strain M04 at 23 C: 0.45 mm/h on glucose CYM and 0.49 to 0.55 mm/h on straw, sawdust and wheat media (Cai et al. 2021, Frontiers in Microbiology 12:636344, https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2021.636344/full). The same Chilean strain reached 21.1 mm/day at pH 8.5. Replaces the earlier genus figure of 860"
     }
   },
   "substrate": {
     "uptake_rate": {
-      "value": 8.6,
+      "value": 5.4,
       "unit": "units/h",
       "basis": "unknown",
-      "note": "tuning value tied to tip speed"
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 24,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "No fitted optimum found. Fastest growth of 13 Morchella strains on PDA was at 20 and 25 C, with growth significantly inhibited at 30 C (Yue et al. 2024, Journal of Fungi 10(3):178, https://pmc.ncbi.nlm.nih.gov/articles/PMC10971721/); two Chilean M. importuna strains kept getting faster up to 28 C, the highest temperature tested (Elso M, Sanz-Rocha M, Escobar-Hernandez T, Guillen Y, Gerding M, Chavez D, Machuca A 2026, In vitro physiological characterization of strains from transcontinental and endemic Morchella species from south-central Chile, Journal of Fungi 12(8):572, https://pmc.ncbi.nlm.nih.gov/articles/PMC13514834/). 24 C sits between the two results"
+    },
+    "t_min": {
+      "value": 0,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "No measured lower limit. Mycelium still grows, thin and sparse, at 5 C (Yue et al. 2024, Journal of Fungi 10(3):178, https://pmc.ncbi.nlm.nih.gov/articles/PMC10971721/) and field spawn running is reported at 2 to 20 C (Hao et al. 2019, AMB Express 9:103, https://pmc.ncbi.nlm.nih.gov/articles/PMC6626090/), so the limit is put just below, at 0 C"
+    }
+  },
+  "fruiting": {
+    "cold_drop": {
+      "value": 10,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Cultivation practice, not a controlled test: mycelium is grown at about 20 C, the beds pass a cold stage of 1 to 3 C for 30 to 40 days, primordia form when the soil returns to 6 to 8 C, and day-night swings of more than 10 C are said to stimulate primordia (Hao et al. 2019, AMB Express 9:103, https://pmc.ncbi.nlm.nih.gov/articles/PMC6626090/). 10 C is that swing"
     }
   }
 }

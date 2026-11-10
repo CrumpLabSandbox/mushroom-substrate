@@ -59,5 +59,47 @@
     ],
     "abundance": 2
   },
-  "notes": "Medium-distance smooth type [13]. Reported (unchecked) to have very slow fruit bodies that last weeks and to need bacteria in culture; North American look-alikes are other species."
+  "notes": "Medium-distance smooth type [13]. Reported (unchecked) to have very slow fruit bodies that last weeks and to need bacteria in culture; North American look-alikes are other species.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 20,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): notoriously slow and hard to grow in culture; set at about a quarter of the family default"
+    },
+    "growth_unit": {
+      "value": 400,
+      "unit": "um",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): sparse mycelium in culture; guess"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.2,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 20,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): cool temperate and boreal forests"
+    },
+    "t_min": {
+      "value": 2,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): cool temperate and boreal forests"
+    },
+    "t_max": {
+      "value": 28,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): cool temperate and boreal forests"
+    }
+  }
 }

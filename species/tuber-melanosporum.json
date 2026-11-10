@@ -34,12 +34,14 @@
     "form": "truffle",
     "size_cm": {
       "value": [
-        2,
-        8
+        3,
+        10
       ],
       "unit": "cm",
-      "basis": "inferred",
-      "note": "general knowledge, unchecked (research/08)"
+      "basis": "sourced",
+      "source": "CNR-IBBR 2025, TuberID database, record 9: Tuber melanosporum Vittad.",
+      "url": "https://www.ibbr.cnr.it/tuberid/record/9",
+      "note": "ascocarp 3 to 5 cm, up to 10 cm; globose or irregular"
     },
     "cap_colour": "#1f1a18",
     "stem_colour": "#1f1a18",
@@ -58,5 +60,41 @@
     ],
     "abundance": 1
   },
-  "notes": "Short-distance type, as most ectomycorrhizal ascomycetes are [12]; native to EU, in orchards elsewhere. Tuber species in culture grow only 0.6 to 0.9 mm in 40 days, a genus figure not entered as a tip speed, and a 2025 model study links warm dry summers to soil mycelium growth [24]. Reported (unchecked) to kill surrounding plants in a \"burnt\" circle, to need two mating types and to have a sequenced genome."
+  "notes": "Short-distance type, as most ectomycorrhizal ascomycetes are [12]; native to EU, in orchards elsewhere. Tuber species in culture grow only 0.6 to 0.9 mm in 40 days, a genus figure not entered as a tip speed, and a 2025 model study links warm dry summers to soil mycelium growth [24]. Reported (unchecked) to kill surrounding plants in a \"burnt\" circle, to need two mating types and to have a sequenced genome.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 8.9,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Iotti M, Amicucci A, Stocchi V, Zambonelli A 2002, Morphological and molecular characterization of mycelia of some Tuber species in pure culture, New Phytologist 155:499-505 (https://doi.org/10.1046/j.1469-8137.2002.00486.x). The abstract, which was read, gives 1.1 to 14 mm/week across six Tuber species; a search snippet of the full text gives 1.1 to 1.9 mm/week for T. melanosporum in the exponential phase (full text not opened). Midpoint 1.5 mm/week = 0.21 mm/day = 8.9 um/h. Medium and temperature not seen"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.089,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 22.5,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Colony growth on YpSs agar at 10, 15, 20, 25, 30 and 33 C was best at 20 and 25 C and worst at 33 C (Liou C-F 2010, doctoral thesis, National Taiwan University, abstract only, https://tdr.lib.ntu.edu.tw/handle/123456789/46767). 22.5 C is the midpoint of the two best temperatures; no colony sizes are given in the abstract"
+    },
+    "t_min": {
+      "value": 5,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Group figure, not this species alone: T. aestivum, T. borchii, T. melanosporum and T. rufum are said to grow between 5 and 34 C with the optimum between 15 and 26 C, in the introduction of Nakano et al. 2022, Mycoscience 63(2):53-57 (https://www.jstage.jst.go.jp/article/mycosci/63/2/63_MYC564/_html/-char/ja), citing older work that was not opened"
+    },
+    "t_max": {
+      "value": 34,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Group figure, not this species alone; see t_min (Nakano et al. 2022, Mycoscience 63(2):53-57, https://www.jstage.jst.go.jp/article/mycosci/63/2/63_MYC564/_html/-char/ja). Consistent with 33 C being the worst temperature in Liou 2010"
+    }
+  }
 }

@@ -10,6 +10,38 @@
     "mycelium": "#f0ece2",
     "cap": "#8a5a33"
   },
+  "hyphae": {
+    "tip_speed": {
+      "value": 338,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "7.1 to 9.1 mm daily radial increment on agar (the German summary says 7.4 to 9.1), midpoint 8.1 mm/day x 41.7. Read from a search snippet of the English summary of a 2002 paper on the Gloeophyllum species of buildings, Zeitschrift fuer Mykologie 68:141-152 (https://www.zobodat.at/pdf/Z-Mykologie_68_2002_0141-0152.pdf); the page refused to open, so authors, medium and temperature are unchecked"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 3.38,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 34,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "Mizumoto 1954, Studies on Lenzites abietina Fr. and some of its allied species, Journal of the Japanese Forestry Society 36(2):48-52",
+      "url": "https://www.jstage.jst.go.jp/article/jjfs1953/36/2/36_2_48/_article/-char/en",
+      "note": "as Lenzites trabea, on agar; very vigorous from 32 to 36 C (abstract; reported together with L. subferruginea). The 2002 Zeitschrift fuer Mykologie paper (snippet only) gives 30 to 37.5 C"
+    },
+    "t_max": {
+      "value": 45,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "search snippet of Zeitschrift fuer Mykologie 68:141-152 (https://www.zobodat.at/pdf/Z-Mykologie_68_2002_0141-0152.pdf, not opened): the mycelium survived three weeks at 45 C. Survival is not growth, so the growth limit is probably a few degrees lower"
+    }
+  },
   "taxonomy": {
     "order": "Gloeophyllales",
     "family": "Gloeophyllaceae"
@@ -37,12 +69,14 @@
     "form": "bracket",
     "size_cm": {
       "value": [
-        2,
+        3,
         8
       ],
       "unit": "cm",
-      "basis": "inferred",
-      "note": "general knowledge, unchecked (research/08)"
+      "basis": "sourced",
+      "source": "J.K. Lindsey, Ecology of Commanster, Gloeophyllum trabeum species page",
+      "url": "https://commanster.eu/Commanster/Fungi/Basidio/SpBasidio/Gloeophyllum.trabeum.html",
+      "note": "cap given as 10x30 to 30x80 mm; the longer dimension is used as the width. Naturalist web page, not a monograph"
     },
     "cap_colour": "#8a5a33",
     "stem_colour": "#70482a",

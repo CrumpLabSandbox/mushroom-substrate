@@ -65,5 +65,55 @@
     ],
     "abundance": 2
   },
-  "notes": "A fire specialist and an ascomycete: extremely fast, first on fresh burns, and it loses to competitors once soil life returns. Reported (unchecked) to have a sequenced genome."
+  "notes": "A fire specialist and an ascomycete: extremely fast, first on fresh burns, and it loses to competitors once soil life returns. Reported (unchecked) to have a sequenced genome.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 900,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): one of the fastest fungi known on freshly burnt or steamed soil, covering a plate in a day or two"
+    },
+    "growth_unit": {
+      "value": 400,
+      "unit": "um",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): wide, fast, sparsely branched hyphae at the colony edge; guess"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 9.0,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 26,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): appears days after fire or soil steaming"
+    },
+    "t_min": {
+      "value": 5,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): appears days after fire or soil steaming"
+    },
+    "t_max": {
+      "value": 36,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): appears days after fire or soil steaming"
+    }
+  },
+  "fruiting": {
+    "min_age": {
+      "value": 48,
+      "unit": "h",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): fruits within days of colonising burnt soil"
+    }
+  }
 }

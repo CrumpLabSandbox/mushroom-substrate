@@ -1,0 +1,66 @@
+{
+  "slug": "densocaespes-pulvinatus",
+  "name": "Densocaespes pulvinatus",
+  "common_name": "cushion",
+  "family": "GARDEN",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#cfe8b0",
+    "cap": "#a4c97a"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "puffball",
+    "size_cm": {
+      "value": [
+        1,
+        3
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#a4c97a",
+    "stem_colour": "#e2f2cf",
+    "bioluminescent": false
+  },
+  "notes": "Branches every fifty micrometres at right angles and packs itself into a cushion that barely moves outward. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the GARDEN family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 40,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "growth_unit": {
+      "value": 50,
+      "unit": "um",
+      "basis": "invented"
+    },
+    "branch_angle": {
+      "value": 90,
+      "unit": "deg",
+      "basis": "invented"
+    },
+    "branch_angle_sd": {
+      "value": 20,
+      "unit": "deg",
+      "basis": "invented"
+    }
+  },
+  "network": {
+    "density_cap": {
+      "value": 30,
+      "unit": "segments per cell",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.4,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  }
+}

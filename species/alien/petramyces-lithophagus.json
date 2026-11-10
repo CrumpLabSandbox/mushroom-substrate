@@ -1,0 +1,68 @@
+{
+  "slug": "petramyces-lithophagus",
+  "name": "Petramyces lithophagus",
+  "common_name": "rock eater",
+  "family": "ECM-S",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#9a9a8a",
+    "cap": "#6b6b5c"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "crust",
+    "size_cm": {
+      "value": [
+        20,
+        100
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#6b6b5c",
+    "stem_colour": "#84847a",
+    "bioluminescent": false
+  },
+  "notes": "The slowest thing here, at the engine's lower limit: five micrometres an hour through mineral soil, in a mat so dense it is nearly solid, and it almost never gives a hypha up. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the ECM-S family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 5,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "growth_unit": {
+      "value": 80,
+      "unit": "um",
+      "basis": "invented"
+    }
+  },
+  "network": {
+    "density_cap": {
+      "value": 24,
+      "unit": "segments per cell",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "inactivation_rate": {
+      "value": 0.001,
+      "unit": "1/h",
+      "basis": "invented"
+    },
+    "uptake_rate": {
+      "value": 0.05,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  },
+  "electrical": {
+    "spike_interval": {
+      "value": 400,
+      "unit": "min",
+      "basis": "invented"
+    }
+  }
+}

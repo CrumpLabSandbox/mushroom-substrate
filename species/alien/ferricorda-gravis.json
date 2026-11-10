@@ -1,0 +1,83 @@
+{
+  "slug": "ferricorda-gravis",
+  "name": "Ferricorda gravis",
+  "common_name": "iron cord",
+  "family": "RHIZ",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#8a5a3c",
+    "cap": "#5c3a2a"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "bracket",
+    "size_cm": {
+      "value": [
+        30,
+        80
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#5c3a2a",
+    "stem_colour": "#3a2418",
+    "bioluminescent": false
+  },
+  "notes": "Slow, and builds the heaviest cords of anything here: rust-coloured cables hundreds of hyphae thick that carry material faster than it grows. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the RHIZ family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 120,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "growth_unit": {
+      "value": 1500,
+      "unit": "um",
+      "basis": "invented"
+    },
+    "branch_angle": {
+      "value": 35,
+      "unit": "deg",
+      "basis": "invented"
+    }
+  },
+  "network": {
+    "cord_max": {
+      "value": 400,
+      "unit": "",
+      "basis": "invented"
+    },
+    "cord_rate": {
+      "value": 0.3,
+      "unit": "1/h",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "transport_speed": {
+      "value": 60000,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "uptake_rate": {
+      "value": 1.2,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  },
+  "electrical": {
+    "spike_interval": {
+      "value": 180,
+      "unit": "min",
+      "basis": "invented"
+    },
+    "spike_amplitude": {
+      "value": 8,
+      "unit": "mV",
+      "basis": "invented"
+    }
+  }
+}

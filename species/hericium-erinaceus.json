@@ -32,12 +32,14 @@
     "form": "tooth",
     "size_cm": {
       "value": [
-        10,
-        30
+        8,
+        24
       ],
       "unit": "cm",
-      "basis": "inferred",
-      "note": "general knowledge, unchecked (research/08)"
+      "basis": "sourced",
+      "source": "Kuo 2022, Hericium erinaceus, MushroomExpert.Com",
+      "url": "https://www.mushroomexpert.com/hericium_erinaceus.html",
+      "note": "fruit body 8 to 24 cm across; spines 1 to 4 cm long; North American collections"
     },
     "cap_colour": "#f1ead8",
     "stem_colour": "#e6dcc4",
@@ -56,5 +58,47 @@
     ],
     "abundance": 1
   },
-  "notes": "A slow heart rot with a tooth-cushion fruit body. Reported (unchecked) to be cultivated and to have a sequenced genome."
+  "notes": "A slow heart rot with a tooth-cushion fruit body. Reported (unchecked) to be cultivated and to have a sequenced genome.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 205,
+      "unit": "um/h",
+      "basis": "sourced",
+      "source": "Lu, Liu, Ren, Hu, Wang, Ji, Wang, Du, Liu, Yang & Yu 2024, Optimization of substrate formulation for Hericium erinaceus by replacing wood by straw and their effect on enzyme activities, Frontiers in Plant Science 15:1436385",
+      "url": "https://www.frontiersin.org/articles/10.3389/fpls.2024.1436385/full",
+      "note": "strain 20190111, growth rate 4.92 mm/day (x 41.7 = 205 um/h); plate tests in that paper were at 25 C in the dark, and its wood-chip control substrate gave 4.43 mm/day. The paper mixes mm/d and cm/d labels; mm/d is used here"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 2.05,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 25,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "Imtiaj, Jayasinghe, Lee, Shim, Rho, Lee, Hur, Lee, Lee & Lee 2008, Vegetative growth of four strains of Hericium erinaceus collected from different habitats, Mycobiology 36(2):88-92",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3755240/",
+      "note": "four strains (Korea, Japan, China) on PDA at pH 6, 15 to 35 C in 5 C steps, 10 days; best at 25 C, good from 20 to 30 C"
+    },
+    "t_max": {
+      "value": 35,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "growth was lowest and sometimes absent at 15 and 35 C (Imtiaj et al. 2008, https://pmc.ncbi.nlm.nih.gov/articles/PMC3755240/); 35 C taken as the upper limit. The lower limit was not reached in that study and is left at the family default"
+    }
+  },
+  "fruiting": {
+    "cold_drop": {
+      "value": 8.5,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "cultivation practice in Lu et al. 2024 (https://www.frontiersin.org/articles/10.3389/fpls.2024.1436385/full): bags colonised at 25 C, fruited at 15 to 18 C; 25 minus the 16.5 C midpoint"
+    }
+  }
 }

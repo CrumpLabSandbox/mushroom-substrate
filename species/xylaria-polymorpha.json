@@ -56,5 +56,47 @@
     ],
     "abundance": 2
   },
-  "notes": "An ascomycete wood decayer. Reported (unchecked) to wall itself in with black zone lines, a visible territory boundary."
+  "notes": "An ascomycete wood decayer. Reported (unchecked) to wall itself in with black zone lines, a visible territory boundary.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 70,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): an ascomycete that holds stumps for years behind black zone lines and grows slowly in culture"
+    },
+    "branch_angle": {
+      "value": 50,
+      "unit": "deg",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): guess; no measurement"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.7,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 25,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): temperate broadleaf forest"
+    },
+    "t_min": {
+      "value": 4,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): temperate broadleaf forest"
+    },
+    "t_max": {
+      "value": 32,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): temperate broadleaf forest"
+    }
+  }
 }

@@ -1,0 +1,64 @@
+{
+  "slug": "spirohypha-helix",
+  "name": "Spirohypha helix",
+  "common_name": "spiral thread",
+  "family": "DIF",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#d7b3ff",
+    "cap": "#9a5cff"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "club",
+    "size_cm": {
+      "value": [
+        3,
+        9
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#9a5cff",
+    "stem_colour": "#ead6ff",
+    "bioluminescent": false
+  },
+  "notes": "Its tips swing through thirty degrees at every step and ignore their neighbours, so every hypha curls. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the DIF family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 220,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "growth_unit": {
+      "value": 600,
+      "unit": "um",
+      "basis": "invented"
+    },
+    "branch_angle": {
+      "value": 30,
+      "unit": "deg",
+      "basis": "invented"
+    },
+    "wobble": {
+      "value": 30,
+      "unit": "deg",
+      "basis": "invented"
+    },
+    "sensitivity": {
+      "value": 0.05,
+      "unit": "",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 2.2,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  }
+}

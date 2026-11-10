@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Every drawing</title>
+<link rel="stylesheet" href="kit/kit.css">
+<style>.g { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } .g a { color: inherit; text-decoration: none; } .g canvas { aspect-ratio: 4 / 3; } .g b { display: block; margin: 4px 0 10px; font: 600 1rem ui-serif, Georgia, serif; }</style>
+</head>
+<body>
+<main>
+  <nav><a href="./">All plugins</a> · <a href="../">Mushroom Substrate</a></nav>
+  <h1>Every drawing</h1>
+  <p class="lede">The picture each plugin draws of its own process, here with the sound off, so only the parts that come from the specimen and the controls are moving. <label style="display:inline">Species <select id="sp" style="width:auto"></select></label> <label style="display:inline">Scale <select id="sc" style="width:auto"></select></label></p>
+  <div class="g" id="g"></div>
+</main>
+<script type="module">
+  import { picture } from './kit/pictures.js'
+  import { SCALES, specimenUrl } from './kit/kit.js'
+  const all = (await (await fetch('plugins.json')).json()).filter(p => p.built && !p.symphony), list = await (await fetch('specimens/index.json')).json(), q = new URLSearchParams(location.hash.slice(1))
+  const sp = document.getElementById('sp'), sc = document.getElementById('sc'), G = document.getElementById('g')
+  for (const [slug, name] of list) sp.add(new Option(name, slug)); for (const z in SCALES) sc.add(new Option(SCALES[z][0], z)); sp.value = q.get('s') || 'amanita-muscaria'; sc.value = q.get('z') || '400k'
+  const items = []
+  for (const p of all) { const def = (await import(`./${p.id}/def.js`)).def, a = document.createElement('a'); a.href = p.id + '/'; a.innerHTML = `<canvas width="960" height="720"></canvas><b>${p.name}</b>`; G.appendChild(a); const params = {}; for (const x of def.params) params[x.id] = x.value; items.push({ id: p.id, g: a.firstChild.getContext('2d'), params, pic: picture(p.id) }) }
+  let spec = null; const load = async () => { spec = await (await fetch(specimenUrl('./', sc.value, sp.value))).json(); window.failed = [] }
+  sp.onchange = sc.onchange = load; await load()
+  const frame = ms => { for (const it of items) { it.g.clearRect(0, 0, 960, 720); it.pic(it.g, 960, 720, { spec, spec2: spec, params: it.params, view: null, iview: null, live: { taps: {}, stage: spec.stages[5] }, t: ms / 1000 }) } requestAnimationFrame(frame) }
+  requestAnimationFrame(frame); window.ready = true
+</script>
+</body>
+</html>

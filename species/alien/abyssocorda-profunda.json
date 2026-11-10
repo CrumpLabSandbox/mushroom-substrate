@@ -1,0 +1,90 @@
+{
+  "slug": "abyssocorda-profunda",
+  "name": "Abyssocorda profunda",
+  "common_name": "deep cord",
+  "family": "RHIZ",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#33415c",
+    "cap": "#1b2438"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "none",
+    "size_cm": {
+      "value": [
+        0.1,
+        0.4
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#1b2438",
+    "stem_colour": "#27314a",
+    "bioluminescent": false
+  },
+  "notes": "Lives deep and cold and makes no mushroom. Thick dark cords with very long unbranched runs; material moves through them a hundred times slower than in a rhizomorph. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the RHIZ family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 60,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "growth_unit": {
+      "value": 1800,
+      "unit": "um",
+      "basis": "invented"
+    }
+  },
+  "network": {
+    "cord_max": {
+      "value": 200,
+      "unit": "",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "transport_speed": {
+      "value": 2000,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "uptake_rate": {
+      "value": 0.6,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 8,
+      "unit": "C",
+      "basis": "invented"
+    },
+    "t_min": {
+      "value": -8,
+      "unit": "C",
+      "basis": "invented"
+    },
+    "t_max": {
+      "value": 16,
+      "unit": "C",
+      "basis": "invented"
+    }
+  },
+  "electrical": {
+    "spike_interval": {
+      "value": 240,
+      "unit": "min",
+      "basis": "invented"
+    },
+    "spike_amplitude": {
+      "value": 3,
+      "unit": "mV",
+      "basis": "invented"
+    }
+  }
+}

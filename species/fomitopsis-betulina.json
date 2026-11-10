@@ -58,5 +58,41 @@
     ],
     "abundance": 3
   },
-  "notes": "One host. Reported (unchecked) to sit latent in the living tree and decay it after death: a latent-then-burst life history."
+  "notes": "One host. Reported (unchecked) to sit latent in the living tree and decay it after death: a latent-then-burst life history.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 150,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): brown-rot confined to birch; set between the measured Fomitopsis pinicola (125 um/h) and Fomes fomentarius (225 um/h) in this collection"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 1.5,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 25,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): boreal and temperate birch woods"
+    },
+    "t_min": {
+      "value": 2,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): boreal and temperate birch woods"
+    },
+    "t_max": {
+      "value": 32,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): boreal and temperate birch woods"
+    }
+  }
 }

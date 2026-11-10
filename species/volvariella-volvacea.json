@@ -37,8 +37,10 @@
         12
       ],
       "unit": "cm",
-      "basis": "inferred",
-      "note": "general knowledge, unchecked (research/08)"
+      "basis": "sourced",
+      "source": "Kuo 2018, Volvariella volvacea, MushroomExpert.Com",
+      "url": "https://www.mushroomexpert.com/volvariella_volvacea.html",
+      "note": "cap 5 to 12 cm across; stem 6 to 12 cm long"
     },
     "cap_colour": "#6f6a66",
     "stem_colour": "#ece8de",
@@ -59,5 +61,53 @@
     ],
     "abundance": 2
   },
-  "notes": "Very fast, and grows from an egg-like sac. Reported (unchecked) to have the fastest crop cycle of the cultivated mushrooms, to be killed by chilling and to have a sequenced genome."
+  "notes": "Very fast, and grows from an egg-like sac. Reported (unchecked) to have the fastest crop cycle of the cultivated mushrooms, to be killed by chilling and to have a sequenced genome.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 503,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "colony radius growth 0.0503 +/- 0.001 cm/h for the undegenerated commercial strain V971 on PDA (Chen, Zhang, Liu, Cui, Miao, Cheng & Zhao 2019, Characteristics analysis reveals the progress of Volvariella volvacea mycelium subculture degeneration, Frontiers in Microbiology 10:2045, https://pmc.ncbi.nlm.nih.gov/articles/PMC6733957/); x 10,000 = 503 um/h. Strains in that paper were kept at 30 C, below the 35 C optimum, and the rate was not corrected, so this is likely a little low. Degenerated subcultures fell to 0.041 cm/h"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 5.03,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 35,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "Kiran Kumar, Krishnamoorthy, Kamalakannan & Amirtham 2016, Influence of temperature and pH on mycelial growth and chlamydospore production of paddy straw mushroom Volvariella volvaceae (Bull. ex Fr.) Sing., The Journal of Research ANGRAU 44(1&2):1-7",
+      "url": "https://epubs.icar.org.in/index.php/TJRA/article/view/140244",
+      "note": "strain CBE TNAU 1505, tested 15 to 40 C; most mycelial growth at about 35 C. Chang & Steinkraus 1982 give 37 C (https://pmc.ncbi.nlm.nih.gov/articles/PMC241845/)"
+    },
+    "t_min": {
+      "value": 15,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "growth was poor below 20 C in a 15 to 40 C series (Kiran Kumar et al. 2016, https://epubs.icar.org.in/index.php/TJRA/article/view/140244), and below 15 C the mycelium is damaged and loses viability (Bao et al. 2013, PLoS ONE 8(3):e58294, https://pmc.ncbi.nlm.nih.gov/articles/PMC3602538/); 15 C taken as the limit. Chang & Steinkraus 1982 give a minimum of 25 C"
+    },
+    "t_max": {
+      "value": 40,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "Chang & Steinkraus 1982, Lignocellulolytic enzymes produced by Volvariella volvacea, the edible straw mushroom, Applied and Environmental Microbiology 43(2):440-446",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC241845/",
+      "note": "abstract: minimum 25 C, optimum 37 C, maximum 40 C; medium and strain not given in the abstract. Kiran Kumar et al. 2016 also found growth poor above 40 C"
+    }
+  },
+  "fruiting": {
+    "cold_drop": {
+      "value": 0,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "growth and fruiting share one warm range, 28 to 35 C, and chilling below 15 C does damage (Bao et al. 2013, PLoS ONE 8(3):e58294, https://pmc.ncbi.nlm.nih.gov/articles/PMC3602538/), so no temperature drop is needed"
+    }
+  }
 }

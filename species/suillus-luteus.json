@@ -35,12 +35,14 @@
     "form": "bolete",
     "size_cm": {
       "value": [
-        5,
-        12
+        4,
+        10
       ],
       "unit": "cm",
-      "basis": "inferred",
-      "note": "general knowledge, unchecked (research/08)"
+      "basis": "sourced",
+      "source": "Kuo M. 2022, Suillus luteus, MushroomExpert.Com (December 2022)",
+      "url": "https://www.mushroomexpert.com/suillus_luteus.html",
+      "note": "cap width"
     },
     "cap_colour": "#7a4a2a",
     "stem_colour": "#e9dfa8",
@@ -63,10 +65,34 @@
   "notes": "Long-distance exploration type [13]; native to EU and AS, invasive with pine in SA, AF and AU. Ectomycorrhizal isolates including Suillus grew 0.25 to 0.95 mm/day on agar at 22 C [25], a group figure that is not entered as this species' tip speed. Its relative S. bovinus is reported (unchecked) to be the classic species in root-window microcosms showing carbon moving between seedlings.",
   "environment": {
     "t_opt": {
-      "value": 22,
+      "value": 24,
       "unit": "C",
       "basis": "inferred",
-      "note": "22 C suited Suillus isolates in one study (research/08 [25], snippet); genus level, not a measured optimum"
+      "note": "of 24, 28 and 32 C on MMN agar, radial growth and biomass were best at 24 C (Garcia-Rodriguez et al. 2017, In vitro growth of ectomycorrhizal fungi associated with Pinus radiata plantations in Chile, Revista Fitotecnia Mexicana 40(4):415-423, https://www.redalyc.org/journal/610/61054247006/html). Nothing below 24 C was tested, so the true optimum may be lower"
+    },
+    "t_max": {
+      "value": 33,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "same study: mycelial biomass 28.5 mg at 24 C, 17.3 mg at 28 C and 1.9 mg at 32 C, so growth has almost stopped at 32 C; the limit is put just above it (Garcia-Rodriguez et al. 2017, https://www.redalyc.org/journal/610/61054247006/html)"
+    }
+  },
+  "hyphae": {
+    "tip_speed": {
+      "value": 25,
+      "unit": "um/h",
+      "basis": "sourced",
+      "source": "Gonzalez M., Quiroz I., Travieso R., Chung P., Garcia E. 2015, Determinacion de medios de cultivo y pH para la masificacion in vitro de cepas de Suillus luteus Aubl. asociadas a Pinus radiata D. Don y Scleroderma citrinum Pers. asociadas a Eucalyptus globulus Labill. de la region del Biobio, Chile, Revista Arvore 39(1):105-113",
+      "url": "https://www.scielo.br/j/rarv/a/jBnZbx5DZc5dspJTXpLvXRP/?lang=es",
+      "note": "mean growth rate on MMN agar 0.59 +/- 0.17 mm/day (Table 2; three Chilean strains, three pH levels, 23 C, 38 days, rate from a linear fit of radial growth); 0.59 x 41.7 = 25 um/h. Strain means 0.56 to 0.69 and single treatments 0.32 to 0.87 mm/day (13 to 36 um/h). 23 C is close to the 24 C taken as the optimum, so no correction. This is growth on agar without a host; rhizomorphs in soil with a pine may extend faster"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.25,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
     }
   }
 }

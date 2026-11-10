@@ -10,6 +10,38 @@
     "mycelium": "#e6e0d0",
     "cap": "#e9e2cf"
   },
+  "hyphae": {
+    "tip_speed": {
+      "value": 590,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "strain ATCC 34541 covered a 9 cm plate in 3 days from a 0.5 cm plug at both 37 and 42 C on a modified low-nitrogen agar with Poly R-478 dye (Khanongnuch C, Wanphrut N, Lumyong S, Watanabe T 2004, Thermotolerant wood rotting fungi isolated from northern Thailand and their potential uses in lignin degrading applications, Fungal Diversity 15:187-196, https://fungaldiversity.org/fdp/sfdp/15-9.pdf). (45 - 2.5) mm / 3 days = 14.2 mm/day x 41.7. A lower bound, since the plate may have been covered before day 3. Separately measured: 585 um/h radial expansion at 25 C on miscanthus agar, 64 um/h on plain agar, strain BRFM 531 (Khalil H et al. 2021, BMC Microbiology 21:318, https://doi.org/10.1186/s12866-021-02350-8)"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 40,
+      "unit": "C",
+      "basis": "sourced",
+      "note": "stated as about 40 C, without the measurements behind it. Consistent with equal growth at 37 and 42 C (Khanongnuch et al. 2004, Fungal Diversity 15:187-196) and with 37 C given as the optimum for the growth phase of strain INA-12 (Asther et al. 1988, Appl Environ Microbiol 54:3194-3196, https://pmc.ncbi.nlm.nih.gov/articles/PMC204453)",
+      "source": "Volk TJ 1997 (revised 2004), Phanerochaete chrysosporium, Tom Volk's Fungus of the Month for May 1997, University of Wisconsin",
+      "url": "https://botit.botany.wisc.edu/toms_fungi/may97.html"
+    },
+    "t_max": {
+      "value": 50,
+      "unit": "C",
+      "basis": "unknown",
+      "note": "no measurement found in a source that could be opened. It must be well above 42 C, where growth is as fast as at 37 C (Khanongnuch et al. 2004, https://fungaldiversity.org/fdp/sfdp/15-9.pdf); 50 C is the commonly repeated figure, unverified. Set because the family maximum (38 C) is below this species' optimum"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 5.9,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
   "taxonomy": {
     "order": "Polyporales",
     "family": "Phanerochaetaceae"

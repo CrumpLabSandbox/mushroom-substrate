@@ -35,12 +35,12 @@
     "form": "agaric",
     "size_cm": {
       "value": [
-        2,
+        1.6,
         8
       ],
       "unit": "cm",
       "basis": "inferred",
-      "note": "general knowledge, unchecked (research/08)"
+      "note": "cap 1.6 to 8 cm, from the Wikipedia article (https://en.wikipedia.org/wiki/Psilocybe_cubensis), which cites Singer & Smith 1958, Mycologia 50; the original was not opened"
     },
     "cap_colour": "#c9a05a",
     "stem_colour": "#ece4d0",
@@ -61,5 +61,43 @@
     ],
     "abundance": 2
   },
-  "notes": "Diffuse with some strands. Very widely grown, so hobby-level growth data are abundant but rarely peer-reviewed; reported (unchecked) to have a sequenced genome. A controlled species in many places (survey section 6 asks whether to keep it)."
+  "notes": "Diffuse with some strands. Very widely grown, so hobby-level growth data are abundant but rarely peer-reviewed; reported (unchecked) to have a sequenced genome. A controlled species in many places (survey section 6 asks whether to keep it).",
+  "hyphae": {
+    "tip_speed": {
+      "value": 90,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "genotype B+ filled 85 mm plates from an 8 mm plug (38.5 mm of radius) on PDA and malt agar by day 20, with areas measured every 5 days (Pepe, Hesami, Fleishmann, Hsiang & Jones 2025, Mycelium growth and development of Psilocybe spp. mother cultures on agar-based media, Journal of Fungi 11(6):450, https://pmc.ncbi.nlm.nih.gov/articles/PMC12194638/); 15 to 20 days gives 1.9 to 2.6 mm/day, about 80 to 107 um/h, and 90 is taken. Room temperature (no figure given), not the 30 C optimum, so the rate at the optimum is probably higher. Other genotypes were slower"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.9,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 30,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "Ulloa & Herrera 1967, Factores que influyen en el crecimiento de los micelios de Psilocybe mexicana (Heim) y Psilocybe cubensis (Earle) Sing., Anales del Instituto de Biologia UNAM, Serie Botanica 38(1):165-192",
+      "url": "https://anales.ib.unam.mx/index.php/SerBot/article/download/1354/1506",
+      "note": "strain 56 from Huautla de Jimenez, Oaxaca; still liquid Kaufmann medium, dry weight after 15 days at 15, 18, 20, 25, 30, 35 and 40 C; most mycelium at 30 C"
+    },
+    "t_min": {
+      "value": 18,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "no mycelium formed from the inoculum at 15 or 18 C in 15 days, and it grew once moved to 25 C (Ulloa & Herrera 1967, https://anales.ib.unam.mx/index.php/SerBot/article/download/1354/1506); the highest no-growth temperature is taken as the limit. Read from a scanned text layer with garbled digits, and a 15-day liquid test may miss very slow growth"
+    },
+    "t_max": {
+      "value": 40,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "no mycelium formed at 40 C; it grew at 35 C (Ulloa & Herrera 1967, https://anales.ib.unam.mx/index.php/SerBot/article/download/1354/1506). Read from a scanned text layer with garbled digits"
+    }
+  }
 }

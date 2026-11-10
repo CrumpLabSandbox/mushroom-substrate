@@ -38,12 +38,14 @@
     "form": "agaric",
     "size_cm": {
       "value": [
-        8,
-        20
+        5,
+        25
       ],
       "unit": "cm",
-      "basis": "inferred",
-      "note": "general knowledge, unchecked (research/08)"
+      "basis": "sourced",
+      "source": "Kuo M 2013, Amanita muscaria var. flavivolvata, MushroomExpert.Com",
+      "url": "https://www.mushroomexpert.com/amanita_muscaria_flavivolvata.html",
+      "note": "cap 5 to 25 cm; stem 5 to 18 cm long and 1 to 3 cm thick. Described from the North American variety flavivolvata"
     },
     "cap_colour": "#d6281c",
     "stem_colour": "#f4f0e6",
@@ -65,5 +67,21 @@
     ],
     "abundance": 3
   },
-  "notes": "Medium-distance smooth exploration type at genus level [13]. Native to NA, EU and AS; invasive in AU, SA and AF, where it is reported (unchecked) to be spreading with planted pines; genome reported (unchecked)."
+  "notes": "Medium-distance smooth exploration type at genus level [13]. Native to NA, EU and AS; invasive in AU, SA and AF, where it is reported (unchecked) to be spreading with planted pines; genome reported (unchecked).",
+  "hyphae": {
+    "tip_speed": {
+      "value": 18,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "0.43 +/- 0.04 mm/day for control cultures on MMN agar at 20 C over 9 weeks (0.58 mm/day beside the helper bacterium Streptomyces AcH 505): Schrey SD, Salo V, Raudaskoski M, Hampp R, Nehls U, Tarkka MT 2007, Current Genetics 52:77-85 (https://doi.org/10.1007/s00294-007-0138-x). The number was read from a search snippet of the full text; only the abstract, which has no numbers, could be opened. 0.43 x 41.7 = 18 um/h. Measured at 20 C; the optimum temperature is not known, so no correction was made"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.18,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  }
 }

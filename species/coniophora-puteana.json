@@ -10,6 +10,26 @@
     "mycelium": "#d6ccb0",
     "cap": "#6e5a34"
   },
+  "hyphae": {
+    "branch_angle": {
+      "value": 80,
+      "unit": "deg",
+      "basis": "sourced",
+      "note": "midpoint of the reported range of mean branching angles, 1.22 to 1.56 rad (70 to 89 deg), from image analysis of strain MUCL 11662 (BAM 15) growing over a bare Petri dish from a malt agar plug, 15 to 30 C and 65 to 80% RH",
+      "source": "De Ligne L, Vidal-Diez de Ulzurrun G, Baetens JM, Van den Bulcke J, Van Acker J, De Baets B 2019, Analysis of spatio-temporal fungal growth dynamics under different environmental conditions, IMA Fungus 10:7",
+      "url": "https://doi.org/10.1186/s43008-019-0009-3"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 24,
+      "unit": "C",
+      "basis": "sourced",
+      "note": "this paper reports, from Schmidt et al. 2002 (Z. Mykologie 68:141-152, not opened), an optimum of 22.5 C for 7 of 15 isolates and 25 C for 8; 24 is the midpoint. The paper's own optimum for growth over a dry inert surface was 20 C at 75% RH, with little growth at 30 C; it lists other reported optima from 20 to 32 C",
+      "source": "De Ligne L, Vidal-Diez de Ulzurrun G, Baetens JM, Van den Bulcke J, Van Acker J, De Baets B 2019, Analysis of spatio-temporal fungal growth dynamics under different environmental conditions, IMA Fungus 10:7",
+      "url": "https://doi.org/10.1186/s43008-019-0009-3"
+    }
+  },
   "taxonomy": {
     "order": "Boletales",
     "family": "Coniophoraceae"

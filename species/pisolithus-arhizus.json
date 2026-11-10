@@ -37,12 +37,14 @@
     "form": "puffball",
     "size_cm": {
       "value": [
-        5,
-        20
+        4,
+        10
       ],
       "unit": "cm",
-      "basis": "inferred",
-      "note": "general knowledge, unchecked (research/08)"
+      "basis": "sourced",
+      "source": "Kuo M. 2018, Pisolithus arhizus, MushroomExpert.Com (December 2018)",
+      "url": "https://www.mushroomexpert.com/pisolithus_arhizus.html",
+      "note": "fruit body width; it stands 5 to 16 cm high"
     },
     "cap_colour": "#5a4326",
     "stem_colour": "#8a6a2e",
@@ -63,5 +65,37 @@
     ],
     "abundance": 2
   },
-  "notes": "One file for a species group (syn. P. tinctorius), cosmopolitan only as a group; long-distance type is reported for the family (unchecked). Reported (unchecked) to be the most used commercial inoculant, to have a sequenced genome and yellow rhizomorphs, and to tolerate mine waste."
+  "notes": "One file for a species group (syn. P. tinctorius), cosmopolitan only as a group; long-distance type is reported for the family (unchecked). Reported (unchecked) to be the most used commercial inoculant, to have a sequenced genome and yellow rhizomorphs, and to tolerate mine waste.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 43,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "worked out, not reported as a rate: two 5 mm plugs of P. tinctorius set 3 cm apart on MMN agar at 25 C met after about 12 days (Baptista et al. 2021, In vitro interactions between the ectomycorrhizal Pisolithus tinctorius and the saprotroph Hypholoma fasciculare fungi, Mycology 12(3):216-229, https://www.tandfonline.com/doi/full/10.1080/21501203.2021.1876778). Each colony edge covered (30 - 5) / 2 = 12.5 mm in 12 days, about 1.0 mm/day or 43 um/h. Assumes the 3 cm is centre to centre. At 25 C, below the 28 C optimum; not corrected"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.43,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 28,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "Marx D.H., Bryan W.C., Davey C.B. 1970, Influence of temperature on aseptic synthesis of ectomycorrhizae by Thelephora terrestris and Pisolithus tinctorius on loblolly pine, Forest Science 16(4):424-431",
+      "url": "https://link.springer.com/article/10.1093/forestscience/16.4.424",
+      "note": "mycelial growth in pure culture was greatest at 28 C (abstract). Optima of single isolates ranged from 21 to 32 C in Cline, France & Reid 1987, Can. J. Bot. 65:869-875 (https://cdnsciencepub.com/doi/10.1139/b87-119)"
+    },
+    "t_max": {
+      "value": 38,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "no upper limit is stated in the abstracts read. Ectomycorrhizae formed best at 34 C, the hottest treatment (Marx et al. 1970, https://link.springer.com/article/10.1093/forestscience/16.4.424), and this species grew best of four at the hotter treatments of a 16 to 38 C series (Cline et al. 1987, https://cdnsciencepub.com/doi/10.1139/b87-119), so the limit is above 34 C; 38 C, the hottest temperature tested there, is used and may be too low"
+    }
+  }
 }

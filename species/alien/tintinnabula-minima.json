@@ -1,0 +1,61 @@
+{
+  "slug": "tintinnabula-minima",
+  "name": "Tintinnabula minima",
+  "common_name": "tiny bells",
+  "family": "LIT",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#ffe9f2",
+    "cap": "#ffd0e0"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "cup",
+    "size_cm": {
+      "value": [
+        0.2,
+        0.5
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#ffd0e0",
+    "stem_colour": "#fff4f8",
+    "bioluminescent": false
+  },
+  "notes": "Fruits early, often and everywhere: cups a few millimetres across, each costing almost nothing to make. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the LIT family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 150,
+      "unit": "um/h",
+      "basis": "invented"
+    }
+  },
+  "fruiting": {
+    "mature_mass": {
+      "value": 10,
+      "unit": "units",
+      "basis": "invented"
+    },
+    "initial_rate": {
+      "value": 4,
+      "unit": "1/h",
+      "basis": "invented"
+    },
+    "reserve_threshold": {
+      "value": 50,
+      "unit": "units",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 1.5,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  }
+}

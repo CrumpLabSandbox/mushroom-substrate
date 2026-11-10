@@ -1,0 +1,88 @@
+{
+  "slug": "symphonema-polyphonum",
+  "name": "Symphonema polyphonum",
+  "common_name": "choir",
+  "family": "ECM-M",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#ffe0a0",
+    "cap": "#ffb347"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "chanterelle",
+    "size_cm": {
+      "value": [
+        5,
+        12
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#ffb347",
+    "stem_colour": "#fff0cf",
+    "bioluminescent": false
+  },
+  "notes": "Built to be the middle of everything: moderate speed, regular branching, plenty of fusion, thin cords, and steady spikes every eight minutes. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the ECM-M family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 180,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "growth_unit": {
+      "value": 350,
+      "unit": "um",
+      "basis": "invented"
+    },
+    "branch_angle": {
+      "value": 72,
+      "unit": "deg",
+      "basis": "invented"
+    },
+    "branch_angle_sd": {
+      "value": 6,
+      "unit": "deg",
+      "basis": "invented"
+    },
+    "fusion_probability": {
+      "value": 0.4,
+      "unit": "",
+      "basis": "invented"
+    }
+  },
+  "network": {
+    "cord_max": {
+      "value": 40,
+      "unit": "",
+      "basis": "invented"
+    }
+  },
+  "electrical": {
+    "spike_interval": {
+      "value": 8,
+      "unit": "min",
+      "basis": "invented"
+    },
+    "spike_duration": {
+      "value": 1,
+      "unit": "min",
+      "basis": "invented"
+    },
+    "spike_amplitude": {
+      "value": 5,
+      "unit": "mV",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 1.8,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  }
+}

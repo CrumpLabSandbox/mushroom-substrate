@@ -1,0 +1,76 @@
+{
+  "slug": "solivaga-recta",
+  "name": "Solivaga recta",
+  "common_name": "lone wanderer",
+  "family": "CORD-L",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#e0e0e0",
+    "cap": "#b0b0b0"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "stinkhorn",
+    "size_cm": {
+      "value": [
+        8,
+        20
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#b0b0b0",
+    "stem_colour": "#f0f0f0",
+    "bioluminescent": false
+  },
+  "notes": "A handful of dead-straight hyphae that hardly ever branch, never fuse, and keep away from each other. The emptiest network there is. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the CORD-L family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 800,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "growth_unit": {
+      "value": 2000,
+      "unit": "um",
+      "basis": "invented"
+    },
+    "branch_angle": {
+      "value": 15,
+      "unit": "deg",
+      "basis": "invented"
+    },
+    "branch_angle_sd": {
+      "value": 1,
+      "unit": "deg",
+      "basis": "invented"
+    },
+    "wobble": {
+      "value": 0.5,
+      "unit": "deg",
+      "basis": "invented"
+    },
+    "fusion_probability": {
+      "value": 0,
+      "unit": "",
+      "basis": "invented"
+    }
+  },
+  "network": {
+    "density_cap": {
+      "value": 1,
+      "unit": "segments per cell",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 8.0,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  }
+}

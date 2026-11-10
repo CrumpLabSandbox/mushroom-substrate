@@ -1,0 +1,61 @@
+{
+  "slug": "somnifila-lenta",
+  "name": "Somnifila lenta",
+  "common_name": "sleeper",
+  "family": "ECM-M",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#6b5e7a",
+    "cap": "#3d3350"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "truffle",
+    "size_cm": {
+      "value": [
+        2,
+        6
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#3d3350",
+    "stem_colour": "#514468",
+    "bioluminescent": false
+  },
+  "notes": "Almost silent. One faint, hour-long spike every ten hours, a slow mycelium, and a fruit body that never comes above ground. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the ECM-M family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 30,
+      "unit": "um/h",
+      "basis": "invented"
+    }
+  },
+  "electrical": {
+    "spike_interval": {
+      "value": 600,
+      "unit": "min",
+      "basis": "invented"
+    },
+    "spike_duration": {
+      "value": 60,
+      "unit": "min",
+      "basis": "invented"
+    },
+    "spike_amplitude": {
+      "value": 0.05,
+      "unit": "mV",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.3,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  }
+}

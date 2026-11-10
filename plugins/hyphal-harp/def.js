@@ -1,25 +1,22 @@
-import { drawNetwork } from '../kit/kit.js'
 export const def = {
   id: 'hyphal-harp', name: 'Hyphal Harp', family: 'instrument', kind: 'P', keys: true, species: 'phanerochaete-velutina',
-  blurb: 'Pluck the network. Each note strikes the web of hyphae at a distance from its centre. The web is resized so its lowest mode is the key you play, and its own pattern of modes, worked out from its shape and the thickness of its cords, gives the tone.',
-  assumed: 'Real hyphae are too damped to ring, so the ring time is a choice. The web is bare strings with no soil around them, reduced to at most 170 points. Resizing the web to the key played keeps its mode ratios and discards its real pitch, which is shown beside the species.',
+  blurb: 'Pluck the network. Each note strikes the web of hyphae at a distance from its centre. The web is resized so its lowest mode is the key you play, and its own pattern of modes, worked out from its shape and the thickness of its cords, gives the tone. A hard strike wakes the high modes more than a soft one. While a key is held the web can go on growing, so the tone drifts toward that of the older network, and the old centre can be left to die back.',
+  assumed: 'Real hyphae are too damped to ring, so the ring time is a choice. The web is bare strings with no soil around them, reduced to at most 170 points. Resizing the web to the key played keeps its mode ratios and discards its real pitch, which is shown beside the species. Growth under a held key is sped up from days to seconds. Dying back is applied as a share of each mode: a mode that moves mostly near the centre loses that share of its loudness and ring, which stands in for removing the strings themselves. That a harder strike is a shorter one is ordinary physics for a struck string, not something measured on hyphae.',
+  scales: {
+    '4k': 'Only tips on a small bitmap: a young, thin web with no cords, so its modes come from shape alone. Nothing is abandoned, so dying back does nothing.',
+    '40k': 'A flat colony with cords: thick cords pull the modes away from a plain string\'s.',
+    '400k': 'A block of soil in three dimensions: the web the harp was first built on.',
+    '4m': 'A plot metres across grown over years. Its real lowest note is below hearing, so it is shrunk much further to reach the key; the mode ratios are still its own.' },
   about: s => `${s.family} · grown ${s.grown.days} days · real lowest note ${s.stages[0].hz[0].toFixed(0)} Hz at first, ${s.stages[s.stages.length - 1].hz[0].toFixed(0)} Hz at the end`,
   params: [
     { id: 'stage', label: 'Stage of growth', min: 0, max: 1, value: .5, show: v => Math.round(v * 100) + '%', trace: 'Which of eight snapshots of the growing network supplies the modes. A young web is small and simple; an old one has cords and loops.', standing: 'from the model' },
     { id: 'pos', label: 'Where it is struck', min: 0, max: 1, value: .35, show: v => v < .2 ? 'centre' : v > .8 ? 'edge' : 'between', trace: 'Distance from the centre, in six rings. Each mode is driven by how much the web moves there in that mode.', standing: 'from the model' },
     { id: 'own', label: 'Its own modes', min: 0, max: 1, value: 1, show: v => Math.round(v * 100) + '%', trace: 'At 100% the overtones are the network\'s own, set by its shape and cord thickness. At 0% they are a plain string\'s.', standing: 'from the model' },
+    { id: 'grow', label: 'Grows while held', min: 0, max: .5, value: .05, show: v => v ? (v * 100).toFixed(0) + '% of the run per s' : 'off', trace: 'While a key is held the network goes on growing from the chosen stage toward the end of its run, and its modes move with it. Real growth takes days.', standing: 'from the model, sped up' },
+    { id: 'age', label: 'Dying back at the centre', min: 0, max: 1, value: 0, show: v => Math.round(v * 100) + '%', trace: 'Old hyphae at the centre are abandoned as the colony moves out. Modes that move mostly in the two inner rings lose loudness and ring time by their share of movement there.', standing: 'from the model; the amount is a choice' },
     { id: 'ring', label: 'Ring time', min: .05, max: 6, value: 1.4, unit: 's', trace: 'How long the web rings. Real hyphae are damped almost at once; the true value is near zero.', standing: 'a choice' },
     { id: 'bright', label: 'High modes ring as long', min: 0, max: 1, value: .6, show: v => Math.round(v * 100) + '%', trace: 'How much faster the higher modes die away than the lowest.', standing: 'a choice' },
     { id: 'level', label: 'Level', min: 0, max: 2, value: .8, trace: 'Loudness only.', standing: 'a choice' },
   ],
-  traces: [['Wave speed', 'A hypha held taut by turgor of 0.5 MPa carries waves at about 22 m/s, whatever its width.', 'research estimate'], ['Stereo', 'Two microphones at the surface; each mode is heard where it moves most.', 'from the model']],
-  draw(g, w, h, { spec, params, view, t }) {
-    const n = spec.stages.length - 1, st = spec.stages[Math.round(params.stage * n)], e = view ? view.energy : 0
-    const box = drawNetwork(g, st, 0, 0, w * .72, h, spec.colours[0], (i, x, y) => { const d = Math.hypot(x, y); return Math.abs(d - params.pos) < .1 ? .25 + e : 0 })
-    g.beginPath(); g.arc(w * .36, h / 2, Math.max(4, params.pos * box.m * box.scale), 0, 7); g.strokeStyle = 'rgba(242,201,76,.5)'; g.setLineDash([6, 8]); g.lineWidth = 2; g.stroke(); g.setLineDash([])
-    g.fillStyle = '#a89c82'; g.font = '22px system-ui'; g.fillText(`day ${st.days} · reaches ${st.reach_mm} mm`, 20, h - 20)
-    const modes = view ? view.modes : []
-    for (let i = 0; i < modes.length; i++) { g.fillStyle = `rgba(210,168,102,${.35 + .65 * e})`; g.fillRect(w * .76, h - 40 - i * (h - 80) / 16, modes[i] * w * .9, (h - 80) / 16 - 4) }
-    g.fillStyle = '#a89c82'; g.fillText('modes struck', w * .76, 30)
-  }
+  traces: [['How hard the key is hit', 'A harder strike is a shorter one, and a shorter push reaches higher modes. A soft key gives a darker note as well as a quieter one.', 'physics'], ['Wave speed', 'A hypha held taut by turgor of 0.5 MPa carries waves at about 22 m/s, whatever its width.', 'research estimate'], ['Stereo', 'Two microphones at the surface; each mode is heard where it moves most.', 'from the model']]
 }

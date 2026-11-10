@@ -35,12 +35,14 @@
     "form": "agaric",
     "size_cm": {
       "value": [
-        5,
+        4,
         15
       ],
       "unit": "cm",
-      "basis": "inferred",
-      "note": "general knowledge, unchecked (research/08)"
+      "basis": "sourced",
+      "source": "Kuo M. 2008, Paxillus involutus, MushroomExpert.Com (February 2008)",
+      "url": "https://www.mushroomexpert.com/paxillus_involutus.html",
+      "note": "cap width"
     },
     "cap_colour": "#8a6238",
     "stem_colour": "#9a7448",
@@ -62,5 +64,31 @@
     ],
     "abundance": 3
   },
-  "notes": "Long-distance exploration type [13]; a gilled relative of the boletes. Reported (unchecked) to be the model for how mycorrhizal fungi break down organic matter, to be easy in culture and to have a sequenced genome."
+  "notes": "Long-distance exploration type [13]; a gilled relative of the boletes. Reported (unchecked) to be the model for how mycorrhizal fungi break down organic matter, to be easy in culture and to have a sequenced genome.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 109,
+      "unit": "um/h",
+      "basis": "sourced",
+      "source": "Kim C.-G., Power S.A., Bell J.N.B. 2004, Effects of cadmium on radial growth and dry mass production of ectomycorrhizal fungi, Korean Journal of Ecology 27(5):301-306",
+      "url": "https://accesson.kr/jecoenv/v.27/5/301/5207",
+      "note": "control (no cadmium) colonies of isolate 87017 on MMN agar at 20 C in the dark: 5.23 +/- 0.10 mm/day, n = 6, from a regression of colony diameter on time (Table 1). Halved to a radius rate of 2.62 mm/day, x 41.7 = 109 um/h. Measured at 20 C; the optimum temperature is not known, so no correction is made. The paper notes that other studies found this species slower than Suillus bovinus, so isolates differ"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 1.09,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    },
+    "transport_speed": {
+      "value": 7500,
+      "unit": "um/h",
+      "basis": "sourced",
+      "source": "Timonen S., Finlay R.D., Olsson S., Soderstrom B. 1996, Dynamics of phosphorus translocation in intact ectomycorrhizal systems: non-destructive monitoring using a beta-scanner, FEMS Microbiology Ecology 19(3):171-180",
+      "url": "https://lup.lub.lu.se/record/2226278",
+      "note": "minimum velocity of 32P-phosphate through intact mycelium to Pinus contorta roots, 7.5 mm/h, from the abstract; a lower bound worked out by the authors from a 15 cm path and the 20 to 50 h lag. Reported for Paxillus involutus and Suillus variegatus together, not separately. The true speed may be higher"
+    }
+  }
 }

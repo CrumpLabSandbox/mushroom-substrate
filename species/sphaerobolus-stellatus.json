@@ -61,5 +61,41 @@
     ],
     "abundance": 2
   },
-  "notes": "A tiny star-shaped cup. The inner cup is reported (unchecked; distance not verified) to flip inside-out and throw a 1 mm spore ball several metres toward light."
+  "notes": "A tiny star-shaped cup. The inner cup is reported (unchecked; distance not verified) to flip inside-out and throw a 1 mm spore ball several metres toward light.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 60,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): small fungus of dung and mulch; set below the family default"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.6,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 22,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): temperate; its spore-throwing fruit bodies form in cool damp weather"
+    },
+    "t_min": {
+      "value": 3,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): temperate; its spore-throwing fruit bodies form in cool damp weather"
+    },
+    "t_max": {
+      "value": 28,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): temperate; its spore-throwing fruit bodies form in cool damp weather"
+    }
+  }
 }

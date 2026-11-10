@@ -10,6 +10,16 @@
     "mycelium": "#f0ece2",
     "cap": "#7a4a7a"
   },
+  "environment": {
+    "t_opt": {
+      "value": 25,
+      "unit": "C",
+      "basis": "sourced",
+      "note": "from the abstract: cultures from yellow birch grew at 5 to 35 C, fastest at 25 C. The family minimum (4 C) and maximum (38 C) are left in place; they agree with growth at 5 C and with most New Zealand isolates still growing at 36 C (Spiers et al. 2000, Mycological Research 104:395-402, abstract)",
+      "source": "Wall RE 1986, Pathogenicity of Chondrostereum purpureum to yellow birch, Plant Disease 70:158-160",
+      "url": "https://europepmc.org/article/AGR/ADL86017524"
+    }
+  },
   "taxonomy": {
     "order": "Agaricales",
     "family": "Cyphellaceae"

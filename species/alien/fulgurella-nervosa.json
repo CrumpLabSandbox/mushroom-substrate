@@ -1,0 +1,66 @@
+{
+  "slug": "fulgurella-nervosa",
+  "name": "Fulgurella nervosa",
+  "common_name": "lightning web",
+  "family": "MAT",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#f6f08a",
+    "cap": "#ffe14d"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "coral",
+    "size_cm": {
+      "value": [
+        5,
+        15
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#ffe14d",
+    "stem_colour": "#fff7b8",
+    "bioluminescent": false
+  },
+  "notes": "The most electrically active species imagined here: large spikes more than once a minute, running through a web that fuses at half of all meetings. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the MAT family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 300,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "fusion_probability": {
+      "value": 0.5,
+      "unit": "",
+      "basis": "invented"
+    }
+  },
+  "electrical": {
+    "spike_interval": {
+      "value": 0.6,
+      "unit": "min",
+      "basis": "invented"
+    },
+    "spike_duration": {
+      "value": 0.05,
+      "unit": "min",
+      "basis": "invented"
+    },
+    "spike_amplitude": {
+      "value": 45,
+      "unit": "mV",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 3.0,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  }
+}

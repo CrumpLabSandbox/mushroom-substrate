@@ -1,0 +1,76 @@
+{
+  "slug": "salifila-crystallina",
+  "name": "Salifila crystallina",
+  "common_name": "salt thread",
+  "family": "LIT",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#f4f4ff",
+    "cap": "#c9c9f0"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "crust",
+    "size_cm": {
+      "value": [
+        5,
+        30
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#c9c9f0",
+    "stem_colour": "#e2e2fa",
+    "bioluminescent": false
+  },
+  "notes": "Grows only where it is nearly dry, in perfectly straight lines that branch at exactly sixty degrees, like frost on glass. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the LIT family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 90,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "growth_unit": {
+      "value": 500,
+      "unit": "um",
+      "basis": "invented"
+    },
+    "branch_angle": {
+      "value": 60,
+      "unit": "deg",
+      "basis": "invented"
+    },
+    "branch_angle_sd": {
+      "value": 0,
+      "unit": "deg",
+      "basis": "invented"
+    },
+    "wobble": {
+      "value": 0,
+      "unit": "deg",
+      "basis": "invented"
+    }
+  },
+  "environment": {
+    "wet_opt": {
+      "value": 0.1,
+      "unit": "",
+      "basis": "invented"
+    },
+    "wet_width": {
+      "value": 0.15,
+      "unit": "",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.9,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "slug": "aerophila-volitans",
+  "name": "Aerophila volitans",
+  "common_name": "spore storm",
+  "family": "DIF",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#e8d9a8",
+    "cap": "#bfa25a"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "earthstar",
+    "size_cm": {
+      "value": [
+        2,
+        5
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#bfa25a",
+    "stem_colour": "#d4be82",
+    "bioluminescent": false
+  },
+  "notes": "Puts nearly everything into spores. It fruits within half a day of starting, at a fraction of the reserves other fungi wait for. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the DIF family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 400,
+      "unit": "um/h",
+      "basis": "invented"
+    }
+  },
+  "fruiting": {
+    "min_age": {
+      "value": 12,
+      "unit": "h",
+      "basis": "invented"
+    },
+    "initial_rate": {
+      "value": 5,
+      "unit": "1/h",
+      "basis": "invented"
+    },
+    "reserve_threshold": {
+      "value": 80,
+      "unit": "units",
+      "basis": "invented"
+    },
+    "mature_mass": {
+      "value": 30,
+      "unit": "units",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 4.0,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "slug": "hydrorete-fluitans",
+  "name": "Hydrorete fluitans",
+  "common_name": "water net",
+  "family": "MAT",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#9ee6d8",
+    "cap": "#3bb7a4"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "tooth",
+    "size_cm": {
+      "value": [
+        10,
+        25
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#3bb7a4",
+    "stem_colour": "#c6f2ea",
+    "bioluminescent": false
+  },
+  "notes": "Needs saturated ground. A loose, fast net that fuses readily and stops dead when things dry out. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the MAT family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 350,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "branch_angle": {
+      "value": 45,
+      "unit": "deg",
+      "basis": "invented"
+    },
+    "fusion_probability": {
+      "value": 0.6,
+      "unit": "",
+      "basis": "invented"
+    }
+  },
+  "network": {
+    "density_cap": {
+      "value": 6,
+      "unit": "segments per cell",
+      "basis": "invented"
+    }
+  },
+  "environment": {
+    "wet_opt": {
+      "value": 0.95,
+      "unit": "",
+      "basis": "invented"
+    },
+    "wet_width": {
+      "value": 0.1,
+      "unit": "",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 3.5,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  }
+}

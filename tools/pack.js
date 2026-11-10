@@ -76,5 +76,15 @@ for (const [tier, def] of Object.entries(TIERS)) {
   }
   // the list of species the engine's page offers (it counts toward the engine's bytes; the 4K page lists its own)
   if (tier !== '4k') fs.writeFileSync(path.join(ROOT, 'engines', tier, 'list.json'), JSON.stringify(list));
+  // Invented species (species/alien) are packed for the plugins only: they are not offered by the engines' own
+  // pages, do not count toward the 100-species cap or an engine's bytes, and never sit beside the real ones.
+  const alienDir = path.join(ROOT, 'species', 'alien'), alienOut = path.join(ROOT, 'plugins', 'aliens', tier);
+  if (fs.existsSync(alienDir)) {
+    fs.rmSync(alienOut, { recursive: true, force: true }); fs.mkdirSync(alienOut, { recursive: true });
+    for (const file of fs.readdirSync(alienDir).filter((f) => f.endsWith('.json'))) {
+      const own = JSON.parse(fs.readFileSync(path.join(alienDir, file), 'utf8')), s = merge(merge(FALLBACK, family(own.family)), own);
+      fs.writeFileSync(path.join(alienOut, file), JSON.stringify({ n: s.name, ...TIERS['400k'].extra(s), ...def.extra(s), p: [...def.keys.map((k) => get(s, k).value), ...(def.tail ? def.tail(s) : [])] }));
+    }
+  }
   console.log(`${tier}: ${count} species, largest ${largest} bytes`);
 }

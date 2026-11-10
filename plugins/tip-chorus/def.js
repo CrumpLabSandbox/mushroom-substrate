@@ -1,7 +1,7 @@
 export const def = {
   id: 'tip-chorus', name: 'Tip Chorus', family: 'composer', kind: 'S', composer: true, instrument: 'hyphal-harp', species: 'coprinopsis-cinerea',
-  blurb: 'Texture from branching. The growth rule itself runs live: tips advance across a field, branching at the species\' rate and angle and fusing when two meet. Left to right across the field is low to high. The music starts as a few lines, thickens as the tips multiply, and thins where they fuse, crowd or leave.',
-  assumed: 'Mapping the field\'s left-to-right axis to pitch is a choice, and so is sounding a tip every few steps. Pitches are continuous, not the network\'s modes. The branching rate, angle and fusion chance come from the species file, where most are family defaults.',
+  blurb: 'Texture from branching. The growth rule itself runs live: tips advance across a field, branching at the species\' rate and angle and fusing when two meet. Left to right across the field is low to high. The music starts as a few lines, thickens as the tips multiply, and thins where they fuse, crowd or leave. Temperature slows or stops the tips by the species\' own curve.',
+  assumed: 'Mapping the field\'s left-to-right axis to pitch is a choice, and so is sounding a tip every few steps. Pitches are continuous, not the network\'s modes, unless they are pulled onto them; then intervals below the centre note mirror the ones above, which is a choice. The branching rate, angle and fusion chance come from the species file, where most are family defaults.',
   about: s => `branches every ${s.numbers.growth_unit_um} µm of hypha per tip, at ${s.numbers.branch_angle_deg}°; fuses ${Math.round(s.numbers.fusion_probability * 100)}% of the times two meet`,
   params: [
     { id: 'pace', label: 'Tip speed', min: 1, max: 20, value: 5, unit: 'steps per s', trace: 'How fast tips advance. One step is 0.1 mm; in life a tip takes minutes to hours over it.', standing: 'sped up' },
@@ -13,14 +13,15 @@ export const def = {
     { id: 'base', label: 'Centre note', min: 36, max: 84, step: 1, value: 60, show: v => 'key ' + Math.round(v), trace: 'The pitch of the middle of the field, where growth starts.', standing: 'a choice' },
     { id: 'span', label: 'Width of the field', min: .5, max: 5, value: 3, unit: 'octaves', trace: 'How much pitch the 12.8 mm field covers.', standing: 'a choice' },
     { id: 'length', label: 'Note length', min: .05, max: 2, value: .3, unit: 's', trace: 'How long each note is held.', standing: 'a choice' },
+    { id: 'temp', needs: 'weather', label: 'Temperature, from the species\' best', min: -30, max: 12, value: 0, show: v => (v >= 0 ? '+' : '') + v.toFixed(1) + ' °C', trace: 'Tip speed follows the species\' temperature curve between its lowest, best and highest temperatures. Away from the best the tips slow; outside the limits they stop and the music stops with them.', standing: 'from the species' },
+    { id: 'own', label: 'Pull toward the network\'s own notes', min: 0, max: 1, value: 0, show: v => Math.round(v * 100) + '%', trace: 'Moves each note\'s distance from the centre note toward the nearest interval that the network\'s modes make with its lowest mode.', standing: 'a choice' },
+    { id: 'octave', label: 'Register', min: -3, max: 3, step: 1, value: 0, show: v => (v > 0 ? '+' : '') + Math.round(v) + ' octaves', trace: 'Moves every note by whole octaves. The intervals between the network\'s notes are kept.', standing: 'a choice' },
+    { id: 'thin', label: 'Share of notes heard', min: .05, max: 1, value: 1, show: v => Math.round(v * 100) + '%', trace: 'The process runs the same; only this share of its events is sounded, picked at random. For playing alongside other composers.', standing: 'a choice' },
   ],
-  draw(g, w, h, { spec, view }) {
-    if (!view) { g.fillStyle = '#a89c82'; g.font = '24px system-ui'; g.fillText('Turn sound on to start', 30, 50); return }
-    const s = Math.min(w, h) * .46, cx = w / 2, cy = h / 2, L = view.lines
-    g.strokeStyle = spec.colours[0]; g.globalAlpha = .7; g.lineWidth = 2; g.beginPath()
-    for (let i = 0; i < L.length; i += 4) { g.moveTo(cx + L[i] * s, cy + L[i + 1] * s); g.lineTo(cx + L[i + 2] * s, cy + L[i + 3] * s) }
-    g.stroke(); g.globalAlpha = 1
-    for (const [x, y] of view.tips) { g.beginPath(); g.arc(cx + x * s, cy + y * s, 7, 0, 7); g.fillStyle = '#f2c94c'; g.fill() }
-    g.fillStyle = '#a89c82'; g.font = '20px system-ui'; g.fillText('low', cx - s, h - 16); g.fillText('high', cx + s - 40, h - 16)
+  scales: {
+    '4k': "This is the 4K engine's own subject: tips, branching and fusion, at a steady temperature.",
+    '40k': "The same, and in a cord-forming species a long-lived line grows louder as it thickens.",
+    '400k': "Adds temperature: the tips slow or stop by the species' curve.",
+    '4m': "Adds spores: new individuals are founded across the field every few seconds, and tips of different individuals do not fuse.",
   }
 }

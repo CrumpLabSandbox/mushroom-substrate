@@ -1,0 +1,78 @@
+{
+  "slug": "lunaphila-nocturna",
+  "name": "Lunaphila nocturna",
+  "common_name": "moon cap",
+  "family": "LIT",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#a8ffd0",
+    "cap": "#5affb0"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        3,
+        7
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#5affb0",
+    "stem_colour": "#d0ffe6",
+    "bioluminescent": true
+  },
+  "notes": "A cold-loving glowing mushroom with slow, strong spikes every half hour. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the LIT family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 70,
+      "unit": "um/h",
+      "basis": "invented"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 10,
+      "unit": "C",
+      "basis": "invented"
+    },
+    "t_min": {
+      "value": -5,
+      "unit": "C",
+      "basis": "invented"
+    },
+    "t_max": {
+      "value": 18,
+      "unit": "C",
+      "basis": "invented"
+    }
+  },
+  "electrical": {
+    "spike_interval": {
+      "value": 30,
+      "unit": "min",
+      "basis": "invented"
+    },
+    "spike_duration": {
+      "value": 4,
+      "unit": "min",
+      "basis": "invented"
+    },
+    "spike_amplitude": {
+      "value": 12,
+      "unit": "mV",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.7,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  }
+}

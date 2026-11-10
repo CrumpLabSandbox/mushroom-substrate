@@ -62,5 +62,49 @@
     ],
     "abundance": 3
   },
-  "notes": "Makes large fairy rings in tropical and subtropical lawns and pasture."
+  "notes": "Makes large fairy rings in tropical and subtropical lawns and pasture.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 80,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): rings on warm lawns widen much faster than Marasmius oreades rings (the family's type species at 23 um/h); a ring radius growing about 0.7 m a year is 80 um/h"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.8,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 30,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): subtropical and tropical lawns; fruits in hot wet weather"
+    },
+    "t_min": {
+      "value": 12,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): subtropical and tropical lawns; fruits in hot wet weather"
+    },
+    "t_max": {
+      "value": 38,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): subtropical and tropical lawns; fruits in hot wet weather"
+    }
+  },
+  "fruiting": {
+    "cold_drop": {
+      "value": 0,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): fruits in warm wet weather without a cold spell"
+    }
+  }
 }

@@ -58,5 +58,47 @@
     ],
     "abundance": 2
   },
-  "notes": "A hot-desert mycorrhiza; family is inferred. Its mycorrhiza form is reported (unchecked) to change with moisture, and it is reported to be cultivated in Spain."
+  "notes": "A hot-desert mycorrhiza; family is inferred. Its mycorrhiza form is reported (unchecked) to change with moisture, and it is reported to be cultivated in Spain.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 40,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): desert truffle with slow mycelium in culture; set at twice the family default because it must cross dry sand to find its host"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.4,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 26,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): hot semi-desert soils around the Mediterranean and Arabia"
+    },
+    "t_min": {
+      "value": 8,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): hot semi-desert soils around the Mediterranean and Arabia"
+    },
+    "t_max": {
+      "value": 36,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): hot semi-desert soils around the Mediterranean and Arabia"
+    },
+    "wet_opt": {
+      "value": 0.3,
+      "unit": "",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): lives in dry sandy soil; the family default assumes moist soil"
+    }
+  }
 }

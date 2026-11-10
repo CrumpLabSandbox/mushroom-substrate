@@ -100,7 +100,7 @@
     "id": "spike-chord",
     "name": "Spike Chord",
     "family": "atmosphere",
-    "kind": "S",
+    "kind": "S/M",
     "blurb": "Several species' measured spike intervals under one speed-up become one chord.",
     "built": true
   },
@@ -224,5 +224,59 @@
     "kind": "S",
     "built": true,
     "blurb": "Interval spread: each note is a spore landing, and a far one can found a new centre."
+  },
+  {
+    "id": "sym-magnitudes",
+    "name": "Orders of Magnitude",
+    "family": "symphony",
+    "kind": "S",
+    "built": true,
+    "symphony": true,
+    "blurb": "One fungus heard at all four sizes of simulator at once, zooming out from tips on a bitmap to a plot of ground over years."
+  },
+  {
+    "id": "sym-succession",
+    "name": "Succession on a Log",
+    "family": "symphony",
+    "kind": "S",
+    "built": true,
+    "symphony": true,
+    "blurb": "Five species rot a log in the order they arrive, each a composer on its own instrument, each giving way to the next."
+  },
+  {
+    "id": "sym-year",
+    "name": "A Year in the Wood",
+    "family": "symphony",
+    "kind": "S",
+    "built": true,
+    "symphony": true,
+    "blurb": "Morels in spring, cords in summer, mushrooms and spores in autumn, velvet shank in winter: a fungus for each season."
+  },
+  {
+    "id": "sym-wood-wide-web",
+    "name": "Wood Wide Web",
+    "family": "symphony",
+    "kind": "S",
+    "built": true,
+    "symphony": true,
+    "blurb": "Five mycorrhizal fungi on the same trees. The trees feed one at a time; it speaks up and the others answer."
+  },
+  {
+    "id": "sym-quartet",
+    "name": "Electrical Quartet",
+    "family": "symphony",
+    "kind": "S",
+    "built": true,
+    "symphony": true,
+    "blurb": "Four species, each spiking at its own measured pace. The rhythm between them is the ratio of their spike intervals."
+  },
+  {
+    "id": "sym-round",
+    "name": "Fairy Ring Round",
+    "family": "symphony",
+    "kind": "S",
+    "built": true,
+    "symphony": true,
+    "blurb": "Four rings of one fungus, each started after the one before, singing the story of their growth as a round."
   }
 ]

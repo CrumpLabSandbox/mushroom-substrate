@@ -10,6 +10,34 @@
     "mycelium": "#f0ece2",
     "cap": "#8e8a82"
   },
+  "hyphae": {
+    "tip_speed": {
+      "value": 225,
+      "unit": "um/h",
+      "basis": "sourced",
+      "source": "Dresch et al. 2015, Fungal strain matters: colony growth and bioactivity of the European medicinal polypores Fomes fomentarius, Fomitopsis pinicola and Piptoporus betulinus, AMB Express 5:4",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4305089",
+      "note": "malt extract agar, 9 cm plates, 25 to 30 C. Three Austrian strains reached a mean colony diameter of 7.0 to 8.1 cm (5 mm plug already subtracted) in 7 days: 5.0 to 5.8 mm/day radial, midpoint 5.4 mm/day x 41.7. The plates were close to full, so this is a lower bound. A fourth strain reached only 5 cm (3.6 mm/day); an Italian strain reached 8.7 cm at 32 C"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 2.25,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 25,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "Dresch et al. 2015, Fungal strain matters: colony growth and bioactivity of the European medicinal polypores Fomes fomentarius, Fomitopsis pinicola and Piptoporus betulinus, AMB Express 5:4",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4305089",
+      "note": "optimum for four of five strains (Austria) on malt extract agar, tested at 10, 20, 25, 30, 32, 37 C; the one Italian strain was fastest at 32 C. Kim & Chai 2004 (J. Mushrooms 2(4):200-206, abstract) give 30 C and growth from about 10 to 30 C for a Korean strain"
+    }
+  },
   "taxonomy": {
     "order": "Polyporales",
     "family": "Polyporaceae"
@@ -37,8 +65,10 @@
         40
       ],
       "unit": "cm",
-      "basis": "inferred",
-      "note": "general knowledge, unchecked (research/08)"
+      "basis": "sourced",
+      "source": "First Nature (P. O'Reilly), Fomes fomentarius, Hoof Fungus / Tinder Fungus, species page",
+      "url": "https://www.first-nature.com/fungi/fomes-fomentarius.php",
+      "note": "bracket width; up to 20 cm deep at the attachment. Field-guide web page, not a monograph"
     },
     "cap_colour": "#8e8a82",
     "stem_colour": "#6b5a48",

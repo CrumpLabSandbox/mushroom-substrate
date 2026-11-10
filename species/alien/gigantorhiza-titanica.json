@@ -1,0 +1,78 @@
+{
+  "slug": "gigantorhiza-titanica",
+  "name": "Gigantorhiza titanica",
+  "common_name": "titan root",
+  "family": "RHIZ",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#2a2a2a",
+    "cap": "#7a3b1a"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        40,
+        70
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#7a3b1a",
+    "stem_colour": "#4a3020",
+    "bioluminescent": false
+  },
+  "notes": "A rhizomorph former scaled up: black cables five hundred hyphae thick that advance a millimetre an hour and feed mushrooms the size of a table. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the RHIZ family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 1000,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "growth_unit": {
+      "value": 2000,
+      "unit": "um",
+      "basis": "invented"
+    },
+    "branch_angle": {
+      "value": 30,
+      "unit": "deg",
+      "basis": "invented"
+    }
+  },
+  "network": {
+    "cord_max": {
+      "value": 500,
+      "unit": "",
+      "basis": "invented"
+    },
+    "cord_rate": {
+      "value": 0.5,
+      "unit": "1/h",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "transport_speed": {
+      "value": 100000,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "uptake_rate": {
+      "value": 10.0,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  },
+  "fruiting": {
+    "mature_mass": {
+      "value": 3000,
+      "unit": "units",
+      "basis": "invented"
+    }
+  }
+}

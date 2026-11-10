@@ -1,0 +1,66 @@
+{
+  "slug": "nodoplexa-anastomosans",
+  "name": "Nodoplexa anastomosans",
+  "common_name": "knot web",
+  "family": "MAT",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#ffc9e0",
+    "cap": "#ff7fb0"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "jelly",
+    "size_cm": {
+      "value": [
+        4,
+        12
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#ff7fb0",
+    "stem_colour": "#ffe3ee",
+    "bioluminescent": false
+  },
+  "notes": "Fuses at nine of every ten meetings, so its mycelium is a mesh of closed loops rather than a tree. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the MAT family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 200,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "growth_unit": {
+      "value": 150,
+      "unit": "um",
+      "basis": "invented"
+    },
+    "branch_angle": {
+      "value": 70,
+      "unit": "deg",
+      "basis": "invented"
+    },
+    "fusion_probability": {
+      "value": 0.9,
+      "unit": "",
+      "basis": "invented"
+    }
+  },
+  "network": {
+    "density_cap": {
+      "value": 20,
+      "unit": "segments per cell",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 2.0,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  }
+}

@@ -59,5 +59,41 @@
     ],
     "abundance": 2
   },
-  "notes": "Thick white cords lead to \"eggs\" that expand in hours; flies carry the spores. Extension rate rises with temperature from 5 to 20 C [14], but the numeric rates were not obtained."
+  "notes": "Thick white cords lead to \"eggs\" that expand in hours; flies carry the spores. Extension rate rises with temperature from 5 to 20 C [14], but the numeric rates were not obtained.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 250,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): forms long cords from buried wood; a little below the family's type species"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 2.5,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 24,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): temperate woodland; cords forage in cool soil"
+    },
+    "t_min": {
+      "value": 3,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): temperate woodland; cords forage in cool soil"
+    },
+    "t_max": {
+      "value": 30,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): temperate woodland; cords forage in cool soil"
+    }
+  }
 }

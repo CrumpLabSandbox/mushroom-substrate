@@ -36,12 +36,14 @@
     "form": "agaric",
     "size_cm": {
       "value": [
-        5,
+        3,
         15
       ],
       "unit": "cm",
-      "basis": "inferred",
-      "note": "general knowledge, unchecked (research/08); height"
+      "basis": "sourced",
+      "source": "Kuo M 2008, Coprinus comatus: the shaggy mane, MushroomExpert.Com",
+      "url": "https://www.mushroomexpert.com/coprinus_comatus.html",
+      "note": "cap 3 to 15 cm; stem 5 to 20 cm long and 1 to 2 cm thick"
     },
     "cap_colour": "#eee9dc",
     "stem_colour": "#f3efe6",
@@ -61,5 +63,39 @@
     ],
     "abundance": 3
   },
-  "notes": "The cap digests itself into ink to release its spores, and it pushes up through asphalt. Reported (unchecked) to attack nematodes; cultivated."
+  "notes": "The cap digests itself into ink to release its spores, and it pushes up through asphalt. Reported (unchecked) to attack nematodes; cultivated.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 134,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Best strain (GMCC 67001) reached 63 mm on PDA after 9 days at 26 C from a 5 mm plug (Jang M-J, Lee Y-H, Liu J-J, Ju Y-C 2009, Optimal conditions for the mycelial growth of Coprinus comatus strains, Mycobiology 37(2):103-108, https://pmc.ncbi.nlm.nih.gov/articles/PMC3749398). Taken as colony diameter: (63 - 5) / 2 / 9 = 3.2 mm/day radius = 134 um/h. The paper does not say whether 63 mm is a diameter; if it were a radius the rate would be about 290 um/h. Per-temperature values are in a table image that could not be read"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 1.34,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 26,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "Jang M-J, Lee Y-H, Liu J-J, Ju Y-C 2009, Optimal conditions for the mycelial growth of Coprinus comatus strains, Mycobiology 37(2):103-108",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3749398",
+      "note": "Seven strains on PDA at 17, 20, 23, 26, 29 and 32 C for 9 days: best range 23 to 26 C, authors chose 26 C; poor growth above 29 C and below 20 C. A second study (Chaiyama et al. 2007, Songklanakarin J Sci Technol 29:261-274, seen only as a search snippet) gives 25 C on malt extract agar"
+    }
+  },
+  "fruiting": {
+    "cold_drop": {
+      "value": 3,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Spawn supplier's growing sheet, not a peer-reviewed measurement: incubation room 21 to 27 C, then a night-time temperature of 18 to 24 C as a shock to start primordia (Mycelia NV, M8102 Coprinus comatus, https://mycelia.be/?p=3732). 3 C is the difference between the two ranges"
+    }
+  }
 }

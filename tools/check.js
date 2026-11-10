@@ -66,6 +66,15 @@ function speciesProblems() {
   const fam = path.join(dir, 'families');
   for (const f of fs.readdirSync(fam).filter((x) => x.endsWith('.json'))) visit('families/' + f, '', JSON.parse(fs.readFileSync(path.join(fam, f), 'utf8')));
   if (files.length > 100) problems.push(`${files.length} species: the cap is 100`);
+  // Invented species live apart in species/alien: every value there is marked invented, and none may claim a source.
+  const alien = path.join(dir, 'alien');
+  if (fs.existsSync(alien)) for (const f of fs.readdirSync(alien).filter((x) => x.endsWith('.json'))) {
+    const d = JSON.parse(fs.readFileSync(path.join(alien, f), 'utf8'));
+    if (d.invented !== true) problems.push(`alien/${f}: not marked invented`);
+    if (fs.existsSync(path.join(dir, f))) problems.push(`alien/${f}: a real species has the same file name`);
+    const walk = (key, v) => { if (!v || typeof v !== 'object') return; if ('value' in v) { if (v.basis !== 'invented') problems.push(`alien/${f}: ${key} must have basis invented`); return; } for (const k of Object.keys(v)) walk(key ? key + '.' + k : k, v[k]); };
+    walk('', d);
+  }
   return problems;
 }
 

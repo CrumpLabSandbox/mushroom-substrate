@@ -57,5 +57,49 @@
     ],
     "abundance": 1
   },
-  "notes": "Forms a sclerotium weighing kilograms. Reported (unchecked) to be farmed in China on buried pine and to have a sequenced genome."
+  "notes": "Forms a sclerotium weighing kilograms. Reported (unchecked) to be farmed in China on buried pine and to have a sequenced genome.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 400,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): a fast brown-rot of warm pine roots that is cultivated on pine logs"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 4.0,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 30,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): warm temperate to subtropical; cultivated in southern China"
+    },
+    "t_min": {
+      "value": 10,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): warm temperate to subtropical; cultivated in southern China"
+    },
+    "t_max": {
+      "value": 38,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): warm temperate to subtropical; cultivated in southern China"
+    }
+  },
+  "fruiting": {
+    "cold_drop": {
+      "value": 0,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): the harvest is an underground sclerotium formed in warm soil"
+    }
+  }
 }

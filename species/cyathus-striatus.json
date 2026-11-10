@@ -58,5 +58,41 @@
     ],
     "abundance": 2
   },
-  "notes": "A brown mat that binds debris (the survey codes it CORD/LIT). Raindrops splash the \"eggs\" out at 67 to 73 degrees and up to 1 m (research/05 [22]); each egg is reported (unchecked) to trail a sticky cord that wraps around a stem."
+  "notes": "A brown mat that binds debris (the survey codes it CORD/LIT). Raindrops splash the \"eggs\" out at 67 to 73 degrees and up to 1 m (research/05 [22]); each egg is reported (unchecked) to trail a sticky cord that wraps around a stem.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 120,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): colonises mulch and woody debris quickly; set above the family default"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 1.2,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 25,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): temperate woodland and gardens"
+    },
+    "t_min": {
+      "value": 3,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): temperate woodland and gardens"
+    },
+    "t_max": {
+      "value": 33,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): temperate woodland and gardens"
+    }
+  }
 }

@@ -1,0 +1,88 @@
+{
+  "slug": "vitrifila-resonans",
+  "name": "Vitrifila resonans",
+  "common_name": "glass thread",
+  "family": "CORD-L",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#bfe9ff",
+    "cap": "#8fd3ff"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "club",
+    "size_cm": {
+      "value": [
+        10,
+        30
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#8fd3ff",
+    "stem_colour": "#e6f6ff",
+    "bioluminescent": false
+  },
+  "notes": "Long, straight, almost unbranched hyphae as clear as glass, drawn taut across open ground. It wastes nothing on side branches and almost never fuses. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the CORD-L family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 600,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "growth_unit": {
+      "value": 2000,
+      "unit": "um",
+      "basis": "invented"
+    },
+    "branch_angle": {
+      "value": 20,
+      "unit": "deg",
+      "basis": "invented"
+    },
+    "branch_angle_sd": {
+      "value": 2,
+      "unit": "deg",
+      "basis": "invented"
+    },
+    "wobble": {
+      "value": 1,
+      "unit": "deg",
+      "basis": "invented"
+    },
+    "fusion_probability": {
+      "value": 0.02,
+      "unit": "",
+      "basis": "invented"
+    }
+  },
+  "network": {
+    "density_cap": {
+      "value": 2,
+      "unit": "segments per cell",
+      "basis": "invented"
+    }
+  },
+  "electrical": {
+    "spike_interval": {
+      "value": 12,
+      "unit": "min",
+      "basis": "invented"
+    },
+    "spike_amplitude": {
+      "value": 2,
+      "unit": "mV",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 6.0,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  }
+}

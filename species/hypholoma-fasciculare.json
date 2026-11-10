@@ -10,6 +10,24 @@
     "mycelium": "#efe6b8",
     "cap": "#d9b23a"
   },
+  "hyphae": {
+    "tip_speed": {
+      "value": 58,
+      "unit": "um/h",
+      "basis": "sourced",
+      "note": "about 0.14 cm/day (1.4 mm/day x 41.7) read from the bar chart in Fig. 3: ungrazed mycelium growing over compressed non-sterile woodland soil at 16 C from 2 x 2 x 1 cm beech blocks, with two other fungi in the dish. Read by eye to about +/- 0.01 cm/day; about 0.13 cm/day at 20 C, not significantly different. Not corrected to the optimum temperature; the grazed treatments ranged from about 0.10 to 0.19 cm/day",
+      "source": "A'Bear AD, Murray W, Webb R, Boddy L, Jones TH 2013, Contrasting effects of elevated temperature and invertebrate grazing regulate multispecies interactions between decomposer fungi, PLoS ONE 8(10):e77610",
+      "url": "https://doi.org/10.1371/journal.pone.0077610"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.58,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
   "taxonomy": {
     "order": "Agaricales",
     "family": "Strophariaceae"
@@ -35,11 +53,13 @@
     "size_cm": {
       "value": [
         2,
-        7
+        5
       ],
       "unit": "cm",
-      "basis": "inferred",
-      "note": "general knowledge, unchecked (research/08)"
+      "basis": "sourced",
+      "note": "cap width",
+      "source": "Kuo M 2014, Hypholoma fasciculare, MushroomExpert.Com",
+      "url": "https://www.mushroomexpert.com/hypholoma_fasciculare.html"
     },
     "cap_colour": "#d9b23a",
     "stem_colour": "#d6c36a",

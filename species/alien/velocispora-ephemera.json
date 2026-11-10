@@ -1,0 +1,66 @@
+{
+  "slug": "velocispora-ephemera",
+  "name": "Velocispora ephemera",
+  "common_name": "mayfly",
+  "family": "DIF",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#fff3b0",
+    "cap": "#ffe14d"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "agaric",
+    "size_cm": {
+      "value": [
+        0.5,
+        2
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#ffe14d",
+    "stem_colour": "#fff9d6",
+    "bioluminescent": false
+  },
+  "notes": "Lives fast. Hyphae are abandoned six hours after they are laid, so the colony is a thin moving ring with nothing behind it, and it fruits in ten hours. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the DIF family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 700,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "growth_unit": {
+      "value": 150,
+      "unit": "um",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "inactivation_age": {
+      "value": 6,
+      "unit": "h",
+      "basis": "invented"
+    },
+    "inactivation_rate": {
+      "value": 0.3,
+      "unit": "1/h",
+      "basis": "invented"
+    },
+    "uptake_rate": {
+      "value": 7.0,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  },
+  "fruiting": {
+    "min_age": {
+      "value": 10,
+      "unit": "h",
+      "basis": "invented"
+    }
+  }
+}

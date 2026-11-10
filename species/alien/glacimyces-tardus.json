@@ -1,0 +1,85 @@
+{
+  "slug": "glacimyces-tardus",
+  "name": "Glacimyces tardus",
+  "common_name": "ice creeper",
+  "family": "LIT",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#d6f0ff",
+    "cap": "#9fd0ee"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "cup",
+    "size_cm": {
+      "value": [
+        0.3,
+        1
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#9fd0ee",
+    "stem_colour": "#c8e6f8",
+    "bioluminescent": false
+  },
+  "notes": "Lives in frozen litter and grows a hair's width an hour. It is densest of all, branching at right angles into a tight mat, and stops entirely above 12 C. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the LIT family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 6,
+      "unit": "um/h",
+      "basis": "invented"
+    },
+    "growth_unit": {
+      "value": 120,
+      "unit": "um",
+      "basis": "invented"
+    },
+    "branch_angle": {
+      "value": 85,
+      "unit": "deg",
+      "basis": "invented"
+    }
+  },
+  "network": {
+    "density_cap": {
+      "value": 16,
+      "unit": "segments per cell",
+      "basis": "invented"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 4,
+      "unit": "C",
+      "basis": "invented"
+    },
+    "t_min": {
+      "value": -18,
+      "unit": "C",
+      "basis": "invented"
+    },
+    "t_max": {
+      "value": 12,
+      "unit": "C",
+      "basis": "invented"
+    }
+  },
+  "electrical": {
+    "spike_interval": {
+      "value": 480,
+      "unit": "min",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.06,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "slug": "aeternifila-perennis",
+  "name": "Aeternifila perennis",
+  "common_name": "evergreen thread",
+  "family": "CORD-L",
+  "invented": true,
+  "tier": "alien",
+  "display": {
+    "mycelium": "#c0b090",
+    "cap": "#807050"
+  },
+  "ecology": {
+    "trophic": "invented"
+  },
+  "fruit": {
+    "form": "bracket",
+    "size_cm": {
+      "value": [
+        20,
+        60
+      ],
+      "unit": "cm",
+      "basis": "invented"
+    },
+    "cap_colour": "#807050",
+    "stem_colour": "#a09070",
+    "bioluminescent": false
+  },
+  "notes": "Never abandons a hypha and never loses one to decay. Everything it has ever grown is still alive and still carrying. Invented by Claude on 2026-11-10 for the plugins: not a real species, and any likeness of the name to a real one is accidental. It takes every value it does not set from the CORD-L family.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 100,
+      "unit": "um/h",
+      "basis": "invented"
+    }
+  },
+  "network": {
+    "cord_max": {
+      "value": 120,
+      "unit": "",
+      "basis": "invented"
+    }
+  },
+  "substrate": {
+    "inactivation_rate": {
+      "value": 0,
+      "unit": "1/h",
+      "basis": "invented"
+    },
+    "inactivation_age": {
+      "value": 10000,
+      "unit": "h",
+      "basis": "invented"
+    },
+    "degradation_rate": {
+      "value": 0,
+      "unit": "1/h",
+      "basis": "invented"
+    },
+    "uptake_rate": {
+      "value": 1.0,
+      "unit": "units/h",
+      "basis": "invented"
+    }
+  }
+}

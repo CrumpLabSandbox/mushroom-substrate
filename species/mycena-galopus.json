@@ -59,5 +59,41 @@
     ],
     "abundance": 3
   },
-  "notes": "Many small individuals per square metre. Reported (unchecked) to be the classic field-studied litter decomposer (Frankland)."
+  "notes": "Many small individuals per square metre. Reported (unchecked) to be the classic field-studied litter decomposer (Frankland).",
+  "hyphae": {
+    "tip_speed": {
+      "value": 90,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): a main decomposer of cool forest litter; close to the family default"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.9,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 18,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): active in cold wet litter through autumn and winter in northern Europe"
+    },
+    "t_min": {
+      "value": -2,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): active in cold wet litter through autumn and winter in northern Europe"
+    },
+    "t_max": {
+      "value": 27,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "Claude's inference from the species' ecology and general knowledge, not from a measurement (2026-11-10): active in cold wet litter through autumn and winter in northern Europe"
+    }
+  }
 }

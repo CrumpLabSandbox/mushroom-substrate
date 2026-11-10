@@ -69,5 +69,35 @@
     ],
     "abundance": 3
   },
-  "notes": "Makes no fruit body at all, only black sclerotia that persist for years; short-distance type [12]. Reported (unchecked) to be possibly the most widespread ectomycorrhizal fungus, drought tolerant, with a sequenced genome. The survey gives the class (Dothideomycetes) where an order is expected; the order here is from general knowledge, unchecked."
+  "notes": "Makes no fruit body at all, only black sclerotia that persist for years; short-distance type [12]. Reported (unchecked) to be possibly the most widespread ectomycorrhizal fungus, drought tolerant, with a sequenced genome. The survey gives the class (Dothideomycetes) where an order is expected; the order here is from general knowledge, unchecked.",
+  "hyphae": {
+    "tip_speed": {
+      "value": 20,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "measured by eye from a published photograph, not reported as a rate: six isolates grown from 7 mm plugs on MMN agar in 9 cm dishes at 25 C had colonies about 31 to 43 mm across after 30 days (Figure 1 of Yan et al. 2022, Effects of high temperature-triggered transcriptomics on the physiological adaptability of Cenococcum geophilum, Microorganisms 10(10):2039, https://pmc.ncbi.nlm.nih.gov/articles/PMC9607556/). Taking 36 mm: (36 - 7) / 2 = 14.5 mm in 30 days = 0.48 mm/day = 20 um/h; range about 17 to 25 um/h. At 25 C, not corrected to the optimum"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 0.2,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 21,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "optimal growth fell between 16 and 27 C depending on the isolate, in a series of 16, 21, 27, 32 and 38 C (Cline, France & Reid 1987, Intraspecific and interspecific growth variation of ectomycorrhizal fungi at different temperatures, Can. J. Bot. 65(5):869-875, abstract, https://cdnsciencepub.com/doi/10.1139/b87-119); the middle treatment is used"
+    },
+    "t_max": {
+      "value": 32,
+      "unit": "C",
+      "basis": "inferred",
+      "note": "the highest temperature with growth was 27 C in a 16, 21, 27, 32, 38 C series, so growth had stopped by 32 C (Cline et al. 1987, https://cdnsciencepub.com/doi/10.1139/b87-119). Isolates differ: at 30 C three isolates made about 6% of their 25 C colony area and three others 108 to 146% (Yan et al. 2022, https://pmc.ncbi.nlm.nih.gov/articles/PMC9607556/)"
+    }
+  }
 }

@@ -3,7 +3,12 @@
 // trace, the keyboard (pointer, computer keys, Web MIDI with controller learn), input sources for
 // effects, the level scope, and the drawing loop. The sound runs in the plugin's own worklet.
 import { PLAYABLE } from './playable.js'
+import { picture } from './pictures.js'
 const KINDS = { P: 'physical model', S: 'model signal', M: 'model as modulator' }
+// The four sizes of simulator. A specimen grown in each is a different kind of thing, and some processes do not exist at some sizes.
+export const SCALES = { '4k': ['4K', 'tips on a bitmap: 10 mm, a day'], '40k': ['40K', 'a flat colony with flow and cords: 25 mm, a day or two'], '400k': ['400K', 'a block of soil with weather and electrical activity: 25 mm'], '4m': ['4M', 'a 2.5 m plot over years, with spores'] }
+const LACKS = { flow: 'flow of material', cords: 'cords', electrical: 'electrical activity', fruit: 'mushrooms', weather: 'weather', spores: 'spores', rivals: 'rival individuals', depth: 'depth' }
+export const specimenUrl = (base, scale, slug) => `${base}specimens/${scale}/${slug}.json`
 const el = (tag, attrs = {}, html = '') => { const e = document.createElement(tag); for (const k in attrs) e.setAttribute(k, attrs[k]); e.innerHTML = html; return e }
 
 export async function start(def) {
@@ -23,6 +28,7 @@ export async function start(def) {
     </div><div>
       <div class="panel"><button id="power">Turn sound on</button><span id="state" class="hint"></span>
         <label><b>Species</b><select id="species"></select><small id="spinfo"></small></label>
+        <label><b>Scale</b><select id="scale"></select><small id="scinfo"></small></label>
         ${def.second ? '<label><b>The other individual</b><select id="species2"></select></label>' : ''}
         ${def.input ? '<label><b>Sound going in</b><select id="source"><option value="clicks">clicks, one a second<option value="noise">bursts of noise<option value="tone">a low sawtooth note<option value="file">a sound file…<option value="mic">the microphone</select><input id="file" type="file" accept="audio/*" hidden></label>' : ''}
         ${def.composer ? '<label><b>Played on</b><select id="inst"></select><small>The composer decides the notes; this instrument sounds them.</small></label>' : ''}
@@ -33,7 +39,7 @@ export async function start(def) {
 
   // ---- parameters
   const post = m => node && node.port.postMessage(m)
-  const saveHash = () => { const s = new URLSearchParams(); s.set('s', $('species').value); def.composer && $('inst').value && s.set('on', $('inst').value); for (const p of def.params) s.set(p.id, +P[p.id].toFixed(4)); history.replaceState(null, '', '#' + s) }
+  const saveHash = () => { const s = new URLSearchParams(); s.set('s', $('species').value); s.set('z', $('scale').value); def.composer && $('inst').value && s.set('on', $('inst').value); for (const p of def.params) s.set(p.id, +P[p.id].toFixed(4)); history.replaceState(null, '', '#' + s) }
   const $ = id => document.getElementById(id)
   const addParam = (p, store, into, key, all) => {
     const l = el('label', {}, `<b>${p.label}</b><span class="midi" title="Click, then move a MIDI controller">MIDI</span><span class="val"></span><input type="range" min="${p.min}" max="${p.max}" step="${p.step || (p.max - p.min) / 200}" value="${store[p.id]}">${p.note ? `<small>${p.note}</small>` : ''}`)
@@ -55,15 +61,16 @@ export async function start(def) {
   const makeNode = () => {
     if (node) node.disconnect()
     node = new AudioWorkletNode(ctx, def.id, { numberOfInputs: def.input ? 1 : 0, outputChannelCount: [2], processorOptions: { instrument: inst && inst.id } })
-    node.connect(analyser); node.port.onmessage = e => { if (e.data.view) { view = e.data.view; iview = e.data.iview } }
+    node.connect(analyser); node.port.onmessage = e => { if (e.data.view) { view = e.data.view; iview = e.data.iview; const n = view.scaleNote || (iview && iview.scaleNote) || ''; if ($('state').textContent != n) $('state').textContent = n } }
     post({ load: spec }); spec2 && post({ load2: spec2 }); post({ set: P }); inst && post({ iset: IP }); grow()
   }
   // ---- a network growing live in its own thread, feeding the sound as it grows
   const grow = async () => {
     if (!def.live || !ctx) return
     if (!grower) { grower = new Worker('../kit/live-worker.js'); grower.onmessage = e => { const m = e.data.live; if (m.stage) live.stage = m.stage; if (m.taps) live.taps = m.taps; post({ live: m }) } }
-    const sp = await (await fetch('../../engines/400k/species/' + $('species').value + '.json')).json()
-    grower.postMessage({ start: { sp, seed: 1, scn: def.live.world }, speed: P[def.live.speed] })
+    const z = $('scale').value, slug = $('species').value, inv = (list.find(r => r[0] == slug) || [])[5]
+    const sp = await (await fetch(inv ? `../aliens/${z}/${slug}.json` : `../../engines/${z}/species/${slug}.json`)).json()
+    live.stage = null; grower.postMessage({ start: { sp, seed: 1, scn: def.live.world, tier: z }, speed: P[def.live.speed] })
   }
   const pickInstrument = async () => {
     inst = (await import('../' + $('inst').value + '/def.js')).def
@@ -80,20 +87,27 @@ export async function start(def) {
 
   // ---- species presets
   const list = await (await fetch('../specimens/index.json')).json()
-  for (const [slug, name, common] of list) $('species').add(new Option(name + (common ? ' (' + common + ')' : ''), slug))
+  const fill = sel => { const real = el('optgroup', { label: 'Species' }), inv = el('optgroup', { label: 'Invented species (not real)' }); for (const [slug, name, common, , , invented] of list) (invented ? inv : real).appendChild(new Option(name + (common ? ' (' + common + ')' : ''), slug)); sel.append(real, inv) }
+  fill($('species'))
+  for (const z in SCALES) $('scale').add(new Option(SCALES[z][0] + ' · ' + SCALES[z][1], z))
+  $('scale').value = q.get('z') || def.scale || '400k'; $('scale').value || ($('scale').value = '400k')
+  // what this size of simulator lacks, and which controls that switches off
+  const fit = () => {
+    const z = $('scale').value, has = spec.has || {}, lacks = Object.keys(LACKS).filter(k => has[k] === false).map(k => LACKS[k])
+    $('scinfo').innerHTML = (def.scales && def.scales[z] ? def.scales[z] + ' ' : '') + (lacks.length ? `<i>This size of simulator has no ${lacks.join(', ').replace(/, ([^,]*)$/, ' or $1')}.</i>` : '')
+    for (const p of controls) if (p.needs) { const off = has[p.needs] === false; p.input.disabled = off; p.input.closest('label').classList.toggle('off', off); p.input.closest('label').title = off ? 'Not modelled at this size: ' + LACKS[p.needs] : '' }
+  }
   const loadSpecies = async () => {
-    spec = await (await fetch('../specimens/' + $('species').value + '.json')).json()
-    $('spinfo').textContent = def.about ? def.about(spec) : `${spec.family} · ${spec.fruit.form}, ${spec.fruit.size_cm.join(' to ')} cm · grown ${spec.grown.days} days`
-    post({ load: spec }); saveHash(); grow()
+    spec = await (await fetch(specimenUrl('../', $('scale').value, $('species').value))).json()
+    $('spinfo').textContent = (spec.invented ? 'INVENTED, not a real species · ' : '') + (def.about ? def.about(spec) : `${spec.family} · ${spec.fruit.form}, ${spec.fruit.size_cm.join(' to ')} cm · grown ${spec.grown.days} days`)
+    if (spec.invented) $('spinfo').title = spec.story || ''
+    fit(); post({ load: spec }); saveHash(); grow(); if (def.second && spec2) load2()
   }
   $('species').value = q.get('s') || def.species || list[0][0]; $('species').value || ($('species').value = list[0][0])
-  $('species').onchange = loadSpecies
+  const load2 = async () => { spec2 = await (await fetch(specimenUrl('../', $('scale').value, $('species2').value))).json(); post({ load2: spec2 }) }
+  $('species').onchange = $('scale').onchange = loadSpecies
   await loadSpecies()
-  if (def.second) {
-    for (const [slug, name, common] of list) $('species2').add(new Option(name + (common ? ' (' + common + ')' : ''), slug))
-    const load2 = async () => { spec2 = await (await fetch('../specimens/' + $('species2').value + '.json')).json(); post({ load2: spec2 }) }
-    $('species2').value = def.second; $('species2').onchange = load2; await load2()
-  }
+  if (def.second) { fill($('species2')); $('species2').value = def.second; $('species2').onchange = load2; await load2() }
 
   // ---- sound
   const power = async () => {
@@ -159,10 +173,10 @@ export async function start(def) {
   }).catch(() => {})
 
   // ---- drawing
-  const cv = $('view'), g = cv.getContext('2d'), sc = $('scope'), sg = sc.getContext('2d'), wave = new Float32Array(2048)
+  const pic = picture(def.id), cv = $('view'), g = cv.getContext('2d'), sc = $('scope'), sg = sc.getContext('2d'), wave = new Float32Array(2048)
   const frame = t => {
     g.clearRect(0, 0, cv.width, cv.height)
-    if (spec) def.draw(g, cv.width, cv.height, { spec, spec2, params: P, view, iview, live, t: t / 1000 })
+    if (spec) { const c = { spec, spec2, params: P, view, iview, live, t: t / 1000 }; pic(g, cv.width, cv.height, c) || def.draw(g, cv.width, cv.height, c) }
     sg.clearRect(0, 0, sc.width, sc.height)
     if (analyser) { analyser.getFloatTimeDomainData(wave); sg.beginPath(); for (let i = 0; i < 960; i++) sg.lineTo(i, 64 - wave[i * 2] * 60); sg.strokeStyle = '#d2a866'; sg.lineWidth = 2; sg.stroke() }
     requestAnimationFrame(frame)

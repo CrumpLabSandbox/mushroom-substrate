@@ -10,6 +10,50 @@
     "mycelium": "#f0ece2",
     "cap": "#8a6f55"
   },
+  "hyphae": {
+    "tip_speed": {
+      "value": 311,
+      "unit": "um/h",
+      "basis": "inferred",
+      "note": "Veena & Pandey 2012 (Indian J. Agric. Sci. 82:672-675, https://epubs.icar.org.in/index.php/IJAgS/article/download/23047/11181/48969) report 14.93 mm/day at 25 C on malt extract agar, one isolate from the Western Ghats, India. The paper says \"linear\" growth and does not say radius or diameter; taken here as colony diameter, so halved to 7.47 mm/day radial and x 41.7. If it was radial the value would be 622 um/h. Other reports, also unclear on radius or diameter: 17.4 mm/day at 25 C (Fabros et al. 2023, Studies in Fungi 8:18, Philippine strain)"
+    }
+  },
+  "substrate": {
+    "uptake_rate": {
+      "value": 3.11,
+      "unit": "units/h",
+      "basis": "unknown",
+      "note": "tuning value, set to tip speed / segment length so that one feeding segment can supply about one growing tip; no measurement found"
+    }
+  },
+  "environment": {
+    "t_opt": {
+      "value": 25,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "Veena & Pandey 2012, Physiological and cultivation requirements of Trametes versicolor, a medicinal mushroom to diversify Indian mushroom industry, Indian Journal of Agricultural Sciences 82(8):672-675",
+      "url": "https://epubs.icar.org.in/index.php/IJAgS/article/download/23047/11181/48969",
+      "note": "malt extract agar, one Indian isolate; rates 8.1, 14.93, 12.73, 12.53 mm/day at 20, 25, 30, 35 C. Reyes et al. 2021 (J. Fungi 7:222) found a Swiss strain fastest at 25 to 30 C; Fabros et al. 2023 found no difference between 25 and 32 C"
+    },
+    "t_max": {
+      "value": 40,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "Veena & Pandey 2012, Physiological and cultivation requirements of Trametes versicolor, a medicinal mushroom to diversify Indian mushroom industry, Indian Journal of Agricultural Sciences 82(8):672-675",
+      "url": "https://epubs.icar.org.in/index.php/IJAgS/article/download/23047/11181/48969",
+      "note": "still fast at 35 C (12.53 mm/day), no growth at 40 C; the true limit lies between the two. The same isolate did not grow at 15 C, which is likely a tropical-isolate trait, so t_min is not set from it"
+    }
+  },
+  "fruiting": {
+    "cold_drop": {
+      "value": 0,
+      "unit": "C",
+      "basis": "sourced",
+      "source": "Veena & Pandey 2012, Physiological and cultivation requirements of Trametes versicolor, a medicinal mushroom to diversify Indian mushroom industry, Indian Journal of Agricultural Sciences 82(8):672-675",
+      "url": "https://epubs.icar.org.in/index.php/IJAgS/article/download/23047/11181/48969",
+      "note": "fruited on sawdust and rice bran at 24 to 25 C after a spawn run at 25 C, with no cold step; one tropical isolate"
+    }
+  },
   "taxonomy": {
     "order": "Polyporales",
     "family": "Polyporaceae"
@@ -38,12 +82,14 @@
     "form": "bracket",
     "size_cm": {
       "value": [
-        2,
-        8
+        1.7,
+        10
       ],
       "unit": "cm",
-      "basis": "inferred",
-      "note": "general knowledge, unchecked (research/08)"
+      "basis": "sourced",
+      "source": "Veena & Pandey 2012, Physiological and cultivation requirements of Trametes versicolor, a medicinal mushroom to diversify Indian mushroom industry, Indian Journal of Agricultural Sciences 82(8):672-675",
+      "url": "https://epubs.icar.org.in/index.php/IJAgS/article/download/23047/11181/48969",
+      "note": "cap width of cultivated fruit bodies, 17 to 100 mm, mean 51 mm, about 1.6 mm thick. First Nature gives up to 10 cm for wild caps (https://www.first-nature.com/fungi/trametes-versicolor.php)"
     },
     "cap_colour": "#8a6f55",
     "stem_colour": "#e8e0cf",

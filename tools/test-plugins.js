@@ -39,7 +39,7 @@ const ROOT = path.join(__dirname, '..');
       let bad = 0, peak = 0, sum = 0, n = 0;
       for (let block = 0; block < sr * 3 / 128; block++) {
         const L = new Float32Array(128), R = new Float32Array(128), x = new Float32Array(128);
-        if (p.family === 'effect' && block % 180 === 0) for (let i = 0; i < 64; i++) x[i] = (1 - i / 64) * (i % 2 ? -1 : 1); // a click every half second
+        if (p.family === 'effect' && block % 180 < 56) for (let i = 0; i < 128; i++) { const t = (block % 180) * 128 + i; x[i] = Math.sin(t * 2 * Math.PI * 220 / sr) * Math.min(1, t / 60) * Math.exp(-t / 3000) * 0.8; } // a plucked 220 Hz note every half second
         if (p.family === 'instrument' && d.noteOn && block % 120 === 0) { d.noteOff && d.noteOff(48 + (block / 120 - 1) * 5); d.noteOn(48 + block / 120 * 5, 0.8); }
         d.process(L, R, p.family === 'effect' ? x : null);
         for (let i = 0; i < 128; i++) { const v = L[i]; if (!isFinite(v) || !isFinite(R[i])) bad++; peak = Math.max(peak, Math.abs(v), Math.abs(R[i])); sum += v * v; n++; }

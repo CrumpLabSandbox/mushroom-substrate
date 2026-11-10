@@ -7,6 +7,8 @@ this file when everything in it is done.
 10% of usage is left (weekly usage was 67% when he said it; stop at 90%, check with the usage tool
 after each batch). Nobody has listened to anything; say so in the morning report.
 
+**Also built and pushed since (6):** Turgor Bow, Rhizomorph Bass, Fairy Ring (instruments, all playable by composers), Decay (atmosphere), Excitable Gate, Spore Granulator (effects). Still left in batch C: kit/live.js, Forest Floor, Foraging. Then batch D.
+
 **Built and pushed (15):** Hyphal Harp, Cap Drums, Spike Table, Coupled Spikes (instruments); Rain on
 Caps, Spore Cloud, Spike Chord (atmospheres); Mycelium Reverb, Cord Delay (effects); Spike Canon,
 Hyphal Walk, Tip Chorus, Growth Form, Season Cycle, Spore Scatter (composers).

@@ -52,21 +52,24 @@
     "name": "Turgor Bow",
     "family": "instrument",
     "kind": "P",
-    "blurb": "The web bowed by the pulsing of its own growing tips."
+    "blurb": "The web bowed by the pulsing of its own growing tips.",
+    "built": true
   },
   {
     "id": "rhizomorph-bass",
     "name": "Rhizomorph Bass",
     "family": "instrument",
     "kind": "P",
-    "blurb": "One long cord as a string with thick and thin stretches."
+    "blurb": "One long cord as a string with thick and thin stretches.",
+    "built": true
   },
   {
     "id": "fairy-ring",
     "name": "Fairy Ring",
     "family": "instrument",
     "kind": "P",
-    "blurb": "A wave travelling round a ring that grows year by year."
+    "blurb": "A wave travelling round a ring that grows year by year.",
+    "built": true
   },
   {
     "id": "gill-comb",
@@ -103,7 +106,8 @@
     "name": "Decay",
     "family": "atmosphere",
     "kind": "P",
-    "blurb": "A fallen log over years, as a wooden bar whose stiffness and weight fall as it rots."
+    "blurb": "A fallen log over years, as a wooden bar whose stiffness and weight fall as it rots.",
+    "built": true
   },
   {
     "id": "foraging",
@@ -139,14 +143,16 @@
     "name": "Excitable Gate",
     "family": "effect",
     "kind": "S",
-    "blurb": "A gate that fires like an excitable cell and must recover before it fires again."
+    "blurb": "A gate that fires like an excitable cell and must recover before it fires again.",
+    "built": true
   },
   {
     "id": "spore-granulator",
     "name": "Spore Granulator",
     "family": "effect",
     "kind": "M",
-    "blurb": "Cuts your sound into grains thrown like spores."
+    "blurb": "Cuts your sound into grains thrown like spores.",
+    "built": true
   },
   {
     "id": "rot-filter",

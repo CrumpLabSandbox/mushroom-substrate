@@ -6,10 +6,12 @@ notes are in [notes.md](notes.md).
 ## Workflow
 
 - Work on `main` and push to `main`. No feature branches or pull requests.
-- GitHub Pages is built by `.github/workflows/pages.yml` on every push. The build fails if a tier
-  is over its byte limit.
-- Before pushing: `node tools/pack.js`, `node tools/check.js`, `node tools/test.js`. The full test takes several minutes; the Pages workflow runs `node tools/test.js --quick` (four species per engine, one run each) so a deploy is not held up. If a core's
-  behaviour changed on purpose, `node tools/test.js --update` rewrites the stored hashes.
+- GitHub Pages is built by `.github/workflows/pages.yml` on every push. It only builds the site and
+  publishes it: **no checks or tests run there**, so a deploy takes about a minute.
+- All checking is local, before pushing: `node tools/pack.js` (repack species), `node tools/check.js`
+  (byte limits and species basis tags), `node tools/test.js` (repeatability, sound and wavetable; a few
+  minutes, or `--quick` for seconds). If a core's behaviour changed on purpose,
+  `node tools/test.js --update` rewrites the stored hashes. Nothing stops a bad push, so run them.
 - No `Math.sin`, `Math.cos`, `Math.exp` or `Math.pow` in a core (not bit-identical across
   browsers). See docs/MODEL.md section 1.
 

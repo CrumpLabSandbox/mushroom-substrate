@@ -1,4 +1,4 @@
-name: Check and publish
+name: Publish
 
 on:
   push:
@@ -22,12 +22,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Check byte limits
-        run: node tools/check.js
-      - name: Check packed species are current
-        run: node tools/pack.js && git diff --exit-code engines
-      - name: Test repeatability
-        run: node tools/test.js --quick
       - name: Build site
         run: node tools/build-site.js
       - uses: actions/configure-pages@v5

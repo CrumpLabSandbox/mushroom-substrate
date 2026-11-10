@@ -127,3 +127,7 @@
 - Recorder, synthesiser and a listening page (`listen.html`). Three layers: electrode voltages played as sound, growth events as short sounds, and a drone that follows flow.
 - Two clocks, two stated speed-ups; recordings stay unscaled. Details: [docs/SOUND.md](docs/SOUND.md).
 - Not yet listened to by anyone. Next layer would be a resonator built from the network's structure.
+
+## Sound: the resonator (2026-11-09)
+- Fourth layer: the network as a web of taut strings, struck by its own growth events. Notes come from its real size, shape and cord thickness; nothing is sped up. Real hyphae are too damped to ring, so the ring time is a choice.
+- The possible mappings (sources, targets, four ways to combine them) are listed in [docs/SOUND.md](docs/SOUND.md).

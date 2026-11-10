@@ -53,6 +53,9 @@
       <label>Electrode voices <input id="g1" type="range" min="0" max="1.5" step=".05" value="1"></label>
       <label>Growth events <input id="g2" type="range" min="0" max="1.5" step=".05" value="1"></label>
       <label>Body drone <input id="g3" type="range" min="0" max="1.5" step=".05" value=".6"></label>
+      <label>Network resonance <input id="g4" type="range" min="0" max="1.5" step=".05" value="1"></label>
+      <label>Ring time <span id="rv"></span><input id="ring" type="range" min=".05" max="1.5" step=".05" value=".35"></label>
+      <label>Size of the resonating network <span id="sv"></span><input id="size" type="range" min="-2" max="2" step=".25" value="0"></label>
     </div>
   </div>
 
@@ -60,6 +63,7 @@
   <dl>
     <dt>Electrode voices</dt><dd>Four electrodes sit on the network. Each one's voltage is played directly as a sound wave, spread from left to right. The engine's electrical rhythm takes minutes to hours per cycle; it is sped up until one cycle lands at the pitch you choose. Voices drift in and out of step as the network grows and its tips move.</dd>
     <dt>Growth events</dt><dd>A tick when a hypha branches, a knock when two fuse, a soft hiss when one is abandoned, a tone when a mushroom matures, a growl where rivals meet, a wash of noise for rain. Left to right is where it happened; higher is shallower, lower is deeper.</dd>
+    <dt>Network resonance</dt><dd>The network treated as a web of taut strings. Each growth event strikes the web where it happened, and the four electrodes act as pickups. The notes are not chosen: they are worked out from the network's real size, its shape and the thickness of its cords, using the wave speed that turgor pressure gives (about 22 metres per second). As the network grows its notes fall. Real hyphae are far too damped to ring, so the ring time is a choice; turning it right down is closest to the truth. Making the network smaller raises every note.</dd>
     <dt>Body drone</dt><dd>A low hum that swells with the flow through the network and brightens with the number of growing tips.</dd>
   </dl>
 
@@ -70,6 +74,7 @@
   electrical activity was listened to at each stage. They are sped up by different amounts, both shown. More in
   <a href="https://github.com/CrumpLabSandbox/mushroom-substrate/blob/main/docs/SOUND.md">docs/SOUND.md</a>.</p>
 </main>
+<script src="sound/resonator.js"></script>
 <script src="sound/synth.js"></script>
 <script>
   const $ = (id) => document.getElementById(id);
@@ -95,11 +100,12 @@
     if (!rec) return;
     const was = playing; stop();
     $('pv').textContent = $('pitch').value + ' Hz';
-    audio = synth(rec, { pitch: +$('pitch').value, voices: +$('g1').value, events: +$('g2').value, body: +$('g3').value });
+    $('rv').textContent = $('ring').value + ' s'; $('sv').textContent = +$('size').value ? 'x' + (2 ** -$('size').value).toFixed(2) : 'real';
+    audio = synth(rec, { pitch: +$('pitch').value, voices: +$('g1').value, events: +$('g2').value, body: +$('g3').value, ring: +$('g4').value, ringTime: +$('ring').value, ringSize: 2 ** +$('size').value });
     $('says').innerHTML = `<b><i>${species.n}</i>, ${audio.seconds.toFixed(1)} seconds.</b> ${audio.info.says}`;
     drawWave(); drawSpec(); offset = 0; if (was) play();
   }
-  for (const id of ['pitch', 'g1', 'g2', 'g3']) $(id).onchange = render;
+  for (const id of ['pitch', 'g1', 'g2', 'g3', 'g4', 'ring', 'size']) $(id).onchange = render;
   $('pitch').oninput = () => $('pv').textContent = $('pitch').value + ' Hz';
 
   function play() {

@@ -112,7 +112,7 @@ var M = (inds, seed, scn) => {
     len: 0, br: 0, fu: 0, wars: 0, res: 0, up: 0, flow: 0, front: 0, cords: 0, fruits: 0, alpha: 0, ntips: 0, spikes: 0, pspikes: 0,
     get n() { return n }, get ne() { return ne }, get se() { return se }, get inh() { return inhs[0] }, get tp() { return tp }, tipsOf: ntip,
     // put the two electrodes on the hyphae nearest to two points
-    elec, eseg, eh: .25,
+    elec, eseg, eh: .25, par, dep, fus,
     probe(ax, ay, az, bx, by, bz) {
       let da = 1e30, db = 1e30, d
       for (let k = 0; k < ne; k++) { let q = eseg[k]; if (st[q] != 1) continue

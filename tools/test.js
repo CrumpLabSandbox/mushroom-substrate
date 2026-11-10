@@ -125,8 +125,13 @@ for (const [tier, eng] of Object.entries(ENGINES)) {
   if (Math.sqrt(sum / L.length) < 0.02) problems.push('nearly silent');
   if (Math.abs(best[0] - 200) > 40) problems.push('voices peak at ' + best[0] + ' Hz, asked for 200');
   if (!rec.events.t.length) problems.push('no events recorded');
+  // the resonator: every snapshot must give finite, rising mode frequencies, and the ring alone must sound
+  const modes = require(path.join(ROOT, 'sound/resonator.js')), last = modes(rec.shots[rec.shots.length - 1]);
+  if (!last.hz.length || last.hz.some((v, i) => !isFinite(v) || v <= 0 || (i && v < last.hz[i - 1] - 1e-6))) problems.push('resonator modes are not finite and rising');
+  const ring = synth(rec, { voices: 0, events: 0, body: 0, ring: 1 }); let rs = 0; for (const v of ring.left) rs += v * v;
+  if (!(Math.sqrt(rs / ring.left.length) > 0.005)) problems.push('the resonator alone is silent');
   if (problems.length) failed = true;
-  console.log(`${'sound/400k'.padEnd(28)} ${a.seconds.toFixed(1)} s  peak ${peak.toFixed(2)}  voices at ${best[0]} Hz (asked 200)  ${rec.events.t.length} events  ${problems.length ? 'FAIL: ' + problems.join('; ') : 'ok'}`);
+  console.log(`${'sound/400k'.padEnd(28)} ${a.seconds.toFixed(1)} s  peak ${peak.toFixed(2)}  voices at ${best[0]} Hz (asked 200)  ${rec.events.t.length} events  lowest note ${last.hz[0].toFixed(0)} Hz  ${problems.length ? 'FAIL: ' + problems.join('; ') : 'ok'}`);
 }
 console.log(`smoke runs passed: ${smoke}`);
 if (update) fs.writeFileSync(HASHES, JSON.stringify(next, null, 2) + '\n');

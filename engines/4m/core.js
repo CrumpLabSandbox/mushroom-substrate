@@ -133,7 +133,7 @@ var M = (inds, seed, scn) => {
     t: 0, mean: PP[0][TOPT] - 8, season: 8, daily: 3, weather: 1, tsurf: 0, rain: 0, emode: 2, volt: 0, pa: 0, pb: 0, ni: inds.length,
     len: 0, br: 0, fu: 0, wars: 0, res: 0, up: 0, flow: 0, front: 0, cords: 0, fruits: 0, alpha: 0, ntips: 0, spikes: 0, pspikes: 0, spores: 0, wood: 1, mycel: 0,
     get n() { return n }, get ne() { return ne }, get se() { return se }, get tp() { return tp }, tipsOf: ntip, speciesOf: () => inds.map(o => o.id),
-    elec, eseg, eh: .25,
+    elec, eseg, eh: .25, par, dep, fus,
     probe(ax, ay, az, bx, by, bz) {
       let da = 1e30, db = 1e30, d
       for (let k = 0; k < ne; k++) { let q = eseg[k]; if (st[q] != 1) continue

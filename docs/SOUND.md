@@ -15,7 +15,8 @@ what the research found ([research/07-sound-rhythm.md](research/07-sound-rhythm.
 | File | What it does |
 |---|---|
 | `sound/record.js` | Runs the 400K or 4M engine and records, unscaled: four electrode voltages in millivolts at the electrical clock's rate, every growth event with its time and place, and the engine's signals once per step |
-| `sound/synth.js` | Turns a recording into stereo audio from three layers, each with its own gain, and writes 32-bit float WAV |
+| `sound/synth.js` | Turns a recording into stereo audio from four layers, each with its own gain, and writes 32-bit float WAV |
+| `sound/resonator.js` | Finds how a snapshot of the network would ring as a web of taut strings: its lowest modes |
 | `sound/worker.js` | Runs the recorder off the main thread for the page |
 | `site/listen.html` | Grow, record, play, see the waveform and spectrogram, change the mapping, save the WAV and the recording |
 | `tools/render-audio.js` | The same from the command line: `node tools/render-audio.js 400k phanerochaete-velutina` writes a WAV and a JSON beside it into `sound/renders/` (not committed) |
@@ -54,6 +55,79 @@ seconds and millivolts, and the speed-ups are properties of a render.
 3. **Body drone.** A 55 Hz hum whose loudness follows flow through the network and whose upper
    harmonics follow the number of growing tips.
 
+## The fourth layer: the network as a resonator
+
+Added after the first three. `sound/resonator.js` treats a snapshot of the network as a web of taut
+strings and works out how it would ring.
+
+- **The physics.** A hypha is a tube held taut by its own turgor pressure, so its tension is
+  pressure × cross-section and its mass per length is density × cross-section. Waves then travel
+  along it at √(pressure ÷ density), about 22 m/s at 0.5 MPa, whatever its width
+  ([research/07](research/07-sound-rhythm.md)). Thick cords are heavier and tighter, so a wave
+  partly reflects where thick meets thin. The fungus is held still where it is anchored in its food.
+- **The modes.** The recorder reduces the network to a graph of at most 170 nodes, eight or nine
+  times during a run. For each, the resonator solves for the lowest 28 modes: a frequency and a
+  pattern of movement over the nodes.
+- **The sound.** Each growth event strikes the web at the node nearest to where it happened, with
+  a strength set by the kind of event. Every mode it reaches rings and dies away. Four pickups at
+  the electrode positions hear it, spread left to right.
+- **Nothing is sped up, and no note is chosen.** A 1.8-day *Phanerochaete velutina* network in the
+  block of soil starts with a lowest note near 2,800 Hz and ends near 90 Hz: the network's notes
+  fall as it grows, and thick cords shift them. At stand scale the lowest notes are below hearing
+  (a metre of cord has a lowest note of a few hertz), so the page has a size control that shrinks
+  the resonating network; the factor is stated.
+- **What is not real.** Hyphae do not ring. The same research estimates their motion is damped out
+  almost at once, so the ring time (0.35 s by default) is a free choice, and the honest setting is
+  near zero. The strings are also idealised: no soil around them, no bending stiffness, one
+  pressure and one diameter for every species. Reducing the network to 170 nodes blurs its fine
+  structure and cuts off its higher modes.
+
+## Possible mappings
+
+A mapping takes something the model produces and lets it control something you hear. What exists
+is one choice per layer; these are the options.
+
+**What the model can supply**
+
+| Source | Kind | Natural pace |
+|---|---|---|
+| Electrode voltage (any number of electrodes, anywhere on the network) | continuous wave | minutes to hours per cycle |
+| Electrical spikes (time and place of each) | events | very many |
+| Branch, fusion, tip stopping, hypha abandoned | events with a place | tens to thousands per simulated hour |
+| Fruiting: initial, abort, mature, rot; spores shed; a spore founding an individual | events with a place | a few per day to a few per year |
+| Rivals meeting (barrier or replacement), rain | events | occasional |
+| Tips, live length, reserve, uptake, flow, front radius, cord count, loopiness | slow curves | change over hours to months |
+| Temperature, moisture, season | slow curves | daily and yearly cycles |
+| Flow or reserve at one chosen place; flow reversing in a loop | curve at a point | hours |
+| The network's shape: its modes, its number of loops, its depth profile, its cord widths | structure | changes as it grows |
+| Fine-mycelium cover and wood left (stand scale) | slow curves | months to years |
+
+**What a source can control**
+
+| Target | Notes |
+|---|---|
+| The waveform itself (audification) | only for continuous waves; pitch follows the speed-up. Used for the electrode voices |
+| When a sound happens | events placed by the growth speed-up. Used for the event layer and the resonator |
+| Pitch | by depth (used), by distance from the centre, by branch order, by cord thickness, by local temperature; or quantised to a scale, which is a musical choice rather than a physical one |
+| Loudness | by kind of event (used), by local flow or reserve, by cord thickness |
+| Left-right position, or full surround | by where it happened (used) |
+| Timbre: brightness, filter, noisiness | by tips (used in the drone), by moisture, by how starved the hypha is |
+| Which resonator it excites, and where | the network's own modes (used), a single cord as a string, a mushroom cap as a drum (the research estimates 45 to 130 Hz), the soil block as a room |
+| Rhythm or tempo | spike trains as pulses, growth steps as beats |
+| A second synthesiser's controls | the route to the SynthLand plugin: curves and events become control signals, the network's modes become its oscillator bank |
+
+**Four ways to put them together**
+
+1. **As it is, faster.** Only audification and event timing, one speed-up, nothing chosen but the
+   speed. Closest to "a recording". The electrode voices and event ticks are this.
+2. **As an instrument that the fungus plays.** The network's structure is the instrument (the
+   resonator) and its activity plays it. No speed-up on pitch. This is the fourth layer.
+3. **As data you can read by ear.** Curves mapped to pitch and loudness so that a listener can
+   tell species or conditions apart: one species per voice, temperature as brightness, a fight as
+   dissonance. Useful for comparing runs.
+4. **As music.** Events quantised to a scale and a pulse, spikes as rhythm, seasons as form. The
+   furthest from the model, and the one most "mushroom music" products make.
+
 ## What was checked
 
 - A short recording renders to finite audio at a sensible level, and the electrode voices come out
@@ -65,9 +139,8 @@ seconds and millivolts, and the speed-ups are properties of a render.
 
 ## What it is not, and what comes next
 
-- **Not physical modelling of sound.** The research's estimate is that hyphae cannot ring (pressure
-  diffuses along them) and that a soft cap would have heavily damped modes at 45 to 130 Hz. None of
-  that is used yet. A resonator built from the network's own structure is the obvious next layer.
+- **Only the first step in physical modelling.** The network resonator exists; a mushroom cap as a
+  drum (the research estimates heavily damped modes at 45 to 130 Hz) and the soil as a room do not.
 - **Not live.** The page grows the whole run, then renders. The 4M engine's "listen" button is the
   only live sound, and it is cruder.
 - **The electrical wave shape is the model's**, a relaxation oscillator, not a recorded shape, and

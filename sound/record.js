@@ -13,7 +13,22 @@ var record = (M, inds, seed, scn, opt) => {
   Object.assign(S, o.set)
   const N = o.steps * o.listen, K = o.electrodes, volts = Array.from({ length: K }, () => new Float32Array(N)),
     ev = { t: [], type: [], x: [], y: [], z: [] }, taps = [], nodes = new Int32Array(K), names = ['t', 'ntips', 'len', 'res', 'up', 'flow', 'front', 'tsurf', 'spikes', 'cords', 'fruits', 'wars', 'n']
-  let w = 0, stepStart = 0, inStep = [], listening = false, sub = 0, total = 0
+  let w = 0, stepStart = 0, inStep = [], listening = false
+  // The network reduced to a graph a resonator can use: at most `max` nodes, each standing for a stretch of
+  // hypha, joined by edges that carry the stretch's length (um) and mean cross-section (in single hyphae).
+  const snapshot = (max = 170) => {
+    const n = S.n, st = S.st, par = S.par, dep = S.dep
+    let k = 4, ids
+    for (; ; k += 2) { ids = []; for (let i = 0; i < n; i++) st[i] == 1 && dep[i] % k == 0 && ids.push(i); if (ids.length <= max) break }
+    const at = new Map(ids.map((id, j) => [id, j])), edges = [], rep = i => { while (i >= 0 && st[i] == 1 && dep[i] % k) i = par[i]; return i >= 0 && st[i] == 1 ? at.get(i) : -1 }
+    ids.forEach((id, j) => {
+      let a = par[id], len = S.L, area = S.ar[id], m = 1
+      while (a >= 0 && st[a] == 1 && dep[a] % k) { len += S.L; area += S.ar[a]; m++; a = par[a] }
+      a >= 0 && st[a] == 1 && at.has(a) && edges.push(j, at.get(a), len, area / m)
+    })
+    for (let f = 0; f < S.fus.length; f += 2) { const a = rep(S.fus[f]), b = rep(S.fus[f + 1]); a >= 0 && b >= 0 && a != b && edges.push(a, b, S.L * k / 2, 1) }
+    return { t: S.t - t0, k, x: ids.map(i => S.x1[i]), y: ids.map(i => S.y1[i]), z: ids.map(i => S.z1[i]), fixed: ids.map(i => par[i] < 0 ? 1 : 0), edges }
+  }, shots = []
   // growth events get an even spread through their step; electrical spikes are counted, not stored (they are in the voltages)
   S.ev = (type, x, y, z) => { if (type == 9) return; inStep.push(type, x, y, z || 0) }
   S.sub = () => { if (!listening) return; for (let k = 0; k < K; k++) volts[k][w] = (S.volts[nodes[k]] + 1.2) * amp; w++ }
@@ -36,13 +51,14 @@ var record = (M, inds, seed, scn, opt) => {
     for (let j = 0; j < m; j++) { ev.t.push(stepStart + (j + .5) / m * S.dt - t0); ev.type.push(inStep[j * 4]); ev.x.push(inStep[j * 4 + 1]); ev.y.push(inStep[j * 4 + 2]); ev.z.push(inStep[j * 4 + 3]) }
     taps.push(names.map(k => S[k]))
     listening = true; S.elec(o.listen); listening = false
+    if (i % Math.max(1, o.steps / 8 | 0) == 0 || i == o.steps - 1) shots.push(snapshot())
     o.progress && o.progress((i + 1) / o.steps)
   }
   return {
     meta: { species: inds.map(d => d.id), seed, world: scn, steps: o.steps, warm: o.warm, growth_seconds: S.t - t0, step_seconds: S.dt,
       electrical_sample_seconds: S.tdt, electrical_samples: w, electrical_seconds: w * S.tdt, spike_interval_minutes: inds[0].p[35],
       electrodes: Array.from(nodes, e => { const q = S.eseg[e]; return [S.x1[q], S.y1[q], S.z1[q]] }), size: [S.W, S.DZ], segments: S.n, tap_names: names },
-    volts: volts.map(v => v.subarray(0, w)), events: { t: Float64Array.from(ev.t), type: Uint8Array.from(ev.type), x: Float32Array.from(ev.x), y: Float32Array.from(ev.y), z: Float32Array.from(ev.z) }, taps
+    shots, volts: volts.map(v => v.subarray(0, w)), events: { t: Float64Array.from(ev.t), type: Uint8Array.from(ev.type), x: Float32Array.from(ev.x), y: Float32Array.from(ev.y), z: Float32Array.from(ev.z) }, taps
   }
 }
 if (typeof module != 'undefined') module.exports = record

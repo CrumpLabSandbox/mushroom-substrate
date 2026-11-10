@@ -7,10 +7,15 @@
 //            left-right by where it happened and higher or lower by how deep it was.
 //   body     a low drone whose loudness follows flow through the network and whose brightness follows
 //            the number of growing tips.
+//   ring     the network itself as a resonator (sound/resonator.js): each growth event strikes the web
+//            of hyphae where it happened, and four pickups at the electrodes hear it ring. The pitches
+//            come from the network's real size, shape and cord thickness, with no speed-up.
 //
 // The two speed-ups are separate because the recording has two clocks. Both are reported with the audio.
 var synth = (rec, map) => {
-  const m = Object.assign({ rate: 48000, pitch: 180, seconds: 0, voices: 1, events: 1, body: .6 }, map)
+  const m = Object.assign({ rate: 48000, pitch: 180, seconds: 0, voices: 1, events: 1, body: .6, ring: 1, ringTime: .35, ringSize: 1 }, map)
+  const modesOf = typeof modes != 'undefined' ? modes : require('./resonator.js')
+  let ringLow = []
   const sr = m.rate, V = rec.volts, n = V[0].length, spikeS = rec.meta.spike_interval_minutes * 60
   // speed-up of the electrical clock that puts the species' spike rate at the chosen pitch
   const eSpeed = m.speed || m.pitch * spikeS, step = eSpeed / (rec.meta.electrical_sample_seconds * sr) // electrical samples per audio sample
@@ -60,13 +65,40 @@ var synth = (rec, map) => {
       L[i] += s; R[i] += s
     }
   }
+  // ---- ring: one bank of resonators per snapshot of the network, struck by the events of its stretch of time
+  if (m.ring && rec.shots && rec.shots.length) {
+    const E = rec.events, LOUD = { 0: .5, 1: 1, 2: .3, 3: .25, 4: .7, 5: .4, 6: 1.2, 7: 1, 8: 1, 13: 1.2 }, tail = Math.min(len, 6 * m.ringTime * sr | 0), el = rec.meta.electrodes
+    const tmp = new Float32Array(len)
+    rec.shots.forEach((shot, si) => {
+      const from = si ? shot.t : 0, to = si + 1 < rec.shots.length ? rec.shots[si + 1].t : Infinity, N = shot.x.length
+      if (N < 3) return
+      const md = modesOf(shot), nearest = (x, y, z) => { let b = 0, bd = 1e30; for (let i = 0; i < N; i++) { const d = (shot.x[i] - x) ** 2 + (shot.y[i] - y) ** 2 + (shot.z[i] - z) ** 2; d < bd && (bd = d, b = i) } return b }
+      const hits = []
+      for (let j = 0; j < E.t.length; j++) if (E.t[j] >= from && E.t[j] < to && LOUD[E.type[j]]) hits.push(E.t[j] / gSpeed * sr | 0, nearest(E.x[j], E.y[j], E.z[j]), LOUD[E.type[j]])
+      if (!hits.length) return
+      const a0 = Math.max(0, hits[0]), a1 = Math.min(len, hits[hits.length - 3] + tail), pick = el.map(p => nearest(p[0], p[1], p[2]))
+      md.hz[0] && ringLow.push(md.hz[0] * m.ringSize)
+      md.hz.forEach((hz, k) => {
+        const f = hz * m.ringSize; if (f < 25 || f > sr * .42) return
+        const w = 6.2832 * f / sr, r = Math.exp(-1 / (m.ringTime / (1 + f / 2500) * sr)), c1 = 2 * r * Math.cos(w), c2 = r * r, sh = md.shape[k]
+        let gl = 0, gr = 0; pick.forEach((p, e) => { const pan = el.length > 1 ? e / (el.length - 1) : .5; gl += Math.cos(pan * 1.5708) * sh[p]; gr += Math.sin(pan * 1.5708) * sh[p] })
+        if (Math.abs(gl) + Math.abs(gr) < 1e-4) return
+        tmp.fill(0, a0, a1)
+        for (let h = 0; h < hits.length; h += 3) hits[h] >= 0 && hits[h] < len && (tmp[hits[h]] += hits[h + 2] * sh[hits[h + 1]] * Math.sin(w))
+        const g = m.ring * .12
+        for (let i = a0, y1 = 0, y2 = 0; i < a1; i++) { const y = c1 * y1 - c2 * y2 + tmp[i]; y2 = y1; y1 = y; L[i] += y * gl * g; R[i] += y * gr * g }
+      })
+    })
+  }
   // ---- level: bring the peak to -3 dB, never by more than is needed
   let peak = 1e-9; for (let i = 0; i < len; i++) peak = Math.max(peak, Math.abs(L[i]), Math.abs(R[i]))
   const gain = .708 / peak; for (let i = 0; i < len; i++) { L[i] *= gain; R[i] *= gain }
   return { left: L, right: R, rate: sr, seconds: dur, info: {
     electrical_speed_up: eSpeed, growth_speed_up: gSpeed, pitch_hz: eSpeed / spikeS,
     says: `Electrical activity is sped up ${fmt(eSpeed)} times, which puts one spike every ${rec.meta.spike_interval_minutes} minutes at ${(eSpeed / spikeS).toFixed(0)} Hz. ` +
-      `Growth is sped up ${fmt(gSpeed)} times: ${(rec.meta.growth_seconds / 86400).toFixed(1)} days in ${dur.toFixed(1)} seconds.` } }
+      `Growth is sped up ${fmt(gSpeed)} times: ${(rec.meta.growth_seconds / 86400).toFixed(1)} days in ${dur.toFixed(1)} seconds.` +
+      (ringLow.length ? ` As a web of taut strings${m.ringSize == 1 ? ' at its real size' : ' at ' + (1 / m.ringSize).toFixed(1) + ' times its real size'}, the network's lowest note goes from ${ringLow[0].toFixed(0)} Hz to ${ringLow[ringLow.length - 1].toFixed(0)} Hz as it grows. Real hyphae are too damped to ring; the ${m.ringTime} second ring is a choice.` : ''),
+    ring_lowest_hz: ringLow } }
 }
 var fmt = v => v >= 1e6 ? (v / 1e6).toFixed(1) + ' million' : v >= 1e3 ? Math.round(v / 1e3) + ' thousand' : v.toFixed(0)
 // 32-bit float stereo WAV

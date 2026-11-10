@@ -34,8 +34,10 @@ var modes = (shot, opt) => {
     }
   }
   const order = Array.from({ length: N }, (_, i) => i).filter(i => A[i * N + i] > 1).sort((a, b) => A[a * N + a] - A[b * N + b]).slice(0, o.count)
-  return { hz: order.map(i => Math.sqrt(A[i * N + i]) / 6.2832),
-    // how far each node moves in each mode (back in real displacement), scaled so the largest is 1
-    shape: order.map(i => { const v = Array.from({ length: N }, (_, k) => V[k * N + i] * s[k]); const m = Math.max(...v.map(Math.abs)) || 1; return v.map(x => x / m) }) }
+  // how far each node moves in each mode (back in real displacement), scaled so the largest is 1,
+  // and the mass that moves with the mode at that scaling, in kg: a strike of impulse J (N s) at node j
+  // sets the mode moving at shape[j] * J / mass metres per second
+  const shape = order.map(i => { const v = Array.from({ length: N }, (_, k) => V[k * N + i] * s[k]); const m = Math.max(...v.map(Math.abs)) || 1; return v.map(x => x / m) })
+  return { hz: order.map(i => Math.sqrt(A[i * N + i]) / 6.2832), shape, mass: shape.map(v => v.reduce((t, x, k) => t + M[k] * x * x, 0)), force: o.pressure * A0 }
 }
 if (typeof module != 'undefined') module.exports = modes

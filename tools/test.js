@@ -107,36 +107,25 @@ for (const [tier, eng] of Object.entries(ENGINES)) {
     console.log(`${key.padEnd(28)} ${h1}  400 steps  segments ${one.n}  tips ${one.tipsOf.join(' + ')}  meetings ${one.wars}  ${problems.length ? 'FAIL: ' + problems.join('; ') : 'ok'}`);
   }
 }
-// Sound: a short recording and render must be finite, not silent, within full scale, and the electrode
-// voices must come out near the pitch asked for.
+// Sound: a short recording must render to finite, audible sound within full scale; the network's modes
+// must be finite and rising; and every sound must come from a named force on a named body.
 {
-  const record = require(path.join(ROOT, 'sound/record.js')), { synth } = require(path.join(ROOT, 'sound/synth.js'));
+  const record = require(path.join(ROOT, 'sound/record.js')), { synth } = require(path.join(ROOT, 'sound/synth.js')), modes = require(path.join(ROOT, 'sound/resonator.js'));
   const M = new Function(fs.readFileSync(path.join(ROOT, 'engines/400k/core.js'), 'utf8') + ';return M')();
   const sp = JSON.parse(fs.readFileSync(path.join(ROOT, 'engines/400k/species/phanerochaete-velutina.json'), 'utf8'));
-  const rec = record(M, [{ id: sp.id, p: sp.p }], 1, sp.s, { steps: 40, listen: 1200, set: { weather: 0 } });
-  const a = synth(rec, { pitch: 200, events: 0, body: 0, ring: 0 }), L = a.left;
-  let bad = 0, peak = 0, sum = 0, best = [0, 0];
-  for (const v of L) { if (!isFinite(v)) bad++; peak = Math.max(peak, Math.abs(v)); sum += v * v; }
-  const slice = L.subarray(L.length >> 1, (L.length >> 1) + 24000);
-  for (let f = 80; f < 500; f += 4) { const c = 2 * Math.cos(2 * Math.PI * f / 48000); let q1 = 0, q2 = 0; for (const v of slice) { const q0 = v + c * q1 - q2; q2 = q1; q1 = q0; } const pw = q1 * q1 + q2 * q2 - c * q1 * q2; if (pw > best[1]) best = [f, pw]; }
+  const rec = record(M, [{ id: sp.id, p: sp.p }], 1, sp.s, { steps: 40, listen: 600, set: { weather: 1 } });
+  const a = synth(rec, { seconds: 3 }), last = modes(rec.shots[rec.shots.length - 1]);
+  let bad = 0, peak = 0, sum = 0;
+  for (const v of a.left) { if (!isFinite(v)) bad++; peak = Math.max(peak, Math.abs(v)); sum += v * v; }
   const problems = [];
   if (bad) problems.push(bad + ' samples are not finite');
   if (peak > 0.72 || peak < 0.3) problems.push('peak ' + peak.toFixed(2));
-  if (Math.sqrt(sum / L.length) < 0.02) problems.push('nearly silent');
-  if (Math.abs(best[0] - 200) > 40) problems.push('voices peak at ' + best[0] + ' Hz, asked for 200');
+  if (Math.sqrt(sum / a.left.length) < 0.003) problems.push('nearly silent');
   if (!rec.events.t.length) problems.push('no events recorded');
-  // the resonator: every snapshot must give finite, rising mode frequencies, and the ring alone must sound
-  const modes = require(path.join(ROOT, 'sound/resonator.js')), last = modes(rec.shots[rec.shots.length - 1]);
-  if (!last.hz.length || last.hz.some((v, i) => !isFinite(v) || v <= 0 || (i && v < last.hz[i - 1] - 1e-6))) problems.push('resonator modes are not finite and rising');
-  const ring = synth(rec, { voices: 0, events: 0, body: 0, ring: 1 }); let rs = 0; for (const v of ring.left) rs += v * v;
-  if (!(Math.sqrt(rs / ring.left.length) > 0.005)) problems.push('the resonator alone is silent');
-  // each way of listening must give finite sound that is not silent
-  for (const way of ['faster', 'instrument', 'data', 'music']) {
-    const w = synth(rec, { way }); let ss = 0, nb = 0; for (const v of w.left) { if (!isFinite(v)) nb++; ss += v * v; }
-    if (nb || !(Math.sqrt(ss / w.left.length) > 0.003) || !w.info.says) problems.push(`way "${way}" is ${nb ? 'not finite' : 'silent or undescribed'}`);
-  }
+  if (!last.hz.length || last.hz.some((v, i) => !isFinite(v) || v <= 0 || (i && v < last.hz[i - 1] - 1e-6)) || last.mass.some((v) => !(v > 0))) problems.push('network modes are not finite and rising');
+  if (!a.info.sources.length || a.info.sources.some((s) => !['growth', 'electrical', 'spores', 'rain'].includes(s.force) || !['web', 'caps'].includes(s.body))) problems.push('a sound has no named force and body');
   if (problems.length) failed = true;
-  console.log(`${'sound/400k'.padEnd(28)} ${a.seconds.toFixed(1)} s  peak ${peak.toFixed(2)}  voices at ${best[0]} Hz (asked 200)  ${rec.events.t.length} events  lowest note ${last.hz[0].toFixed(0)} Hz  ${problems.length ? 'FAIL: ' + problems.join('; ') : 'ok'}`);
+  console.log(`${'sound/400k'.padEnd(28)} ${a.seconds} s  peak ${peak.toFixed(2)}  lowest note ${last.hz[0].toFixed(0)} Hz  heard: ${a.info.sources.map((s) => s.force + ' on ' + s.body).join(', ')}  ${problems.length ? 'FAIL: ' + problems.join('; ') : 'ok'}`);
 }
 console.log(`smoke runs passed: ${smoke}`);
 if (update) fs.writeFileSync(HASHES, JSON.stringify(next, null, 2) + '\n');

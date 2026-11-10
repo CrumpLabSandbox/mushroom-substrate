@@ -1,4 +1,4 @@
-// 4M view: hand-written WebGL2, plus sound. Draws the plot of ground, its logs, roots and trees, each
+// 4M view: hand-written WebGL2. Draws the plot of ground, its logs, roots and trees, each
 // individual's fine mycelium (a display-only haze from the density field), the cords (instanced ribbons),
 // mushrooms at real size, and where spores have landed. The model runs in worker.js.
 const $ = id => document.getElementById(id), cv = $('c'), gl = cv.getContext('webgl2', { antialias: true }),
@@ -6,7 +6,7 @@ const $ = id => document.getElementById(id), cv = $('c'), gl = cv.getContext('we
   RGB = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255),
   TYPECOL = [[0, 0, 0], [.62, .4, .2], [.5, .46, .2], [.85, .38, .38], [.32, .5, .25]]
 let W = 2.56e6, DZ = 6.4e5, H = 1.28e6, worker, sp = [], n = 0, busy = 0, run = 1, sig, fr = [], rec = [], trace, home, cells = 0, roots = [], trees = [], land = [],
-  yaw = .7, pitch = .5, dist = 3.3, meshN = 0, lineN = 0, ptN = 0, recipe, owners = [], GGv = 0, audio, lastSnap = 0
+  yaw = .7, pitch = .5, dist = 3.3, meshN = 0, lineN = 0, ptN = 0, recipe, owners = [], GGv = 0
 
 const mul = (a, b) => { const o = new Float32Array(16); for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) o[j * 4 + i] = a[i] * b[j * 4] + a[4 + i] * b[j * 4 + 1] + a[8 + i] * b[j * 4 + 2] + a[12 + i] * b[j * 4 + 3]; return o },
   persp = (f, asp, nr, fa) => new Float32Array([f / asp, 0, 0, 0, 0, f, 0, 0, 0, 0, (fa + nr) / (nr - fa), -1, 0, 0, 2 * fa * nr / (nr - fa), 0]),
@@ -143,32 +143,6 @@ function readout() {
     `<br>electrodes: ${d(sig.volt, 2)} mV · ${sig.pspikes} spikes at the first one`
 }
 
-// ---------- sound: a first, plain mapping of what the plot is doing ----------
-// Events become short sounds spread over the time until the next snapshot; the electrode voltage bends a drone.
-function listen(events) {
-  if (!audio) return
-  const A = audio.ctx, now = A.currentTime, span = Math.min(.6, Math.max(.1, (performance.now() - lastSnap) / 1000))
-  const blip = (freq, len, vol, type = 'sine') => { const o = A.createOscillator(), g = A.createGain(), t = now + Math.random() * span; o.type = type; o.frequency.value = freq; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .004); g.gain.exponentialRampToValueAtTime(1e-4, t + len); o.connect(g).connect(audio.out); o.start(t); o.stop(t + len + .02) }
-  const hiss = (len, vol, freq) => { const s = A.createBufferSource(), f = A.createBiquadFilter(), g = A.createGain(), t = now + Math.random() * span; s.buffer = audio.noise; f.type = 'bandpass'; f.frequency.value = freq; g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(1e-4, t + len); s.connect(f).connect(g).connect(audio.out); s.start(t, Math.random()); s.stop(t + len) }
-  const some = (k, max) => Math.min(max, events[k] || 0)
-  for (let i = some(0, 12); i--;) blip(1400 + Math.random() * 1200, .03, .03, 'triangle')      // a new cord branches: tick
-  for (let i = some(1, 6); i--;) blip(520 + Math.random() * 80, .09, .05)                        // two cords fuse: soft knock
-  for (let i = some(9, 10); i--;) blip(180 + Math.random() * 160, .12, .035)                     // electrical spike: low ping
-  for (let i = some(7, 4) + some(8, 4); i--;) blip(90 + Math.random() * 30, .2, .06, 'sawtooth') // rivals meet: growl
-  for (let i = some(12, 5); i--;) hiss(.25, .05, 5000)                                           // a mushroom sheds spores: hiss
-  events[10] && hiss(1.2, .08, 1500)                                                             // rain
-  for (let i = some(6, 3); i--;) blip(330, .5, .06)                                              // a mushroom matures: tone
-  for (let i = some(13, 2); i--;) { blip(880, .7, .06); blip(1320, .7, .04) }                    // a spore founds a new individual: chime
-  audio.drone.frequency.setTargetAtTime(70 + 40 * Math.max(-1, Math.min(1, sig.volt)), now, .1)
-}
-$('listen').onclick = () => {
-  if (audio) { audio.ctx.close(); audio = null; $('listen').textContent = 'listen'; return }
-  const ctx = new AudioContext(), out = ctx.createGain(), drone = ctx.createOscillator(), dg = ctx.createGain(), noise = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate), d = noise.getChannelData(0)
-  for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1
-  out.gain.value = .8; out.connect(ctx.destination); drone.frequency.value = 70; dg.gain.value = .04; drone.connect(dg).connect(out); drone.start()
-  audio = { ctx, out, drone, noise }; $('listen').textContent = 'stop listening'
-}
-
 // ---------- the worker ----------
 const settings = () => ({ mean: +$('temp').value, weather: +$('weather').checked, emode: +$('emode').value })
 async function load(keep) {
@@ -198,7 +172,7 @@ async function load(keep) {
     n = m.n; sig = m.sig; fr = m.fr; trace = m.trace; land = m.land; rec.push(...m.rec); busy = 0
     // one colour per individual: its species' colour, shifted a little for each further individual of that species
     owners = Array.from({ length: 8 }, (_, o) => { const c = RGB(spOf(o).c[0]), k = sig.species.slice(0, o).filter(id => id == sig.species[o]).length; return o < sig.ni ? c.map((v, i) => Math.min(1, v * [1, .78, 1.08, .9, .7][k % 5] * (i == (k % 3) ? 1 : 1 - .16 * (k > 0)))) : [1, 1, 1] })
-    buildMeshes(); buildLines(); readout(); listen(m.events || {}); lastSnap = performance.now()
+    buildMeshes(); buildLines(); readout()
     plot($('plot'), [[rec.map(r => r[1]), '#e9dcbc'], [rec.map(r => r[14]), '#b79ad6'], [rec.map(r => r[7]), '#f2c94c'], [rec.map(r => r[8]), '#e08572'], [rec.map(r => r[13]), '#b98a5a']])
     plot($('volt'), [[trace, '#58b4ee', 1]])
   }

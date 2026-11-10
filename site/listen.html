@@ -27,9 +27,9 @@
 <main>
   <nav><a href="./">Mushroom Substrate</a></nav>
   <h1>Listen</h1>
-  <p class="lede">Grow a network, record it, and hear it. No fungus has been recorded making these sounds: mycelium is
-  silent as far as anyone has measured. What you hear is the model's slow rhythms sped up into the range of hearing, by
-  amounts stated under the player.</p>
+  <p class="lede">Grow a network, record it, and hear it as a physical model: bodies that can vibrate, set moving by the
+  forces the simulation says acted on them. No sound is assigned to anything. No fungus has been recorded making these
+  sounds, and real hyphae are too damped to ring at all.</p>
 
   <div class="panel">
     <div class="grid">
@@ -44,45 +44,45 @@
   </div>
 
   <div class="panel" id="player" hidden>
-    <label style="margin-bottom:12px">Way of listening
-      <select id="way">
-        <option value="faster">1. As it is, faster</option>
-        <option value="instrument" selected>2. The fungus plays itself</option>
-        <option value="data">3. Data you can read by ear</option>
-        <option value="music">4. Music</option>
-        <option value="mix">Mix your own from the layers below</option>
-      </select></label>
-    <p id="about" class="cap" style="margin:0 0 12px"></p>
     <button id="play">Play</button><button id="dl" class="quiet">Save the sound (WAV)</button><button id="dlrec" class="quiet">Save the recording (JSON)</button>
     <canvas id="wave" width="1400" height="180"></canvas>
     <canvas id="spec" width="1400" height="360"></canvas>
     <div class="cap">Above: loudness over time (click to jump). Below: pitch over time, low at the bottom, up to 4,000 Hz.</div>
     <p id="says"></p>
-    <div class="cap" style="margin-top:14px">Pitch applies to ways 1 and the mix; ring time and size to way 2 and the mix; the four volume sliders to the mix only.</div>
-    <div class="grid" style="margin-top:8px">
-      <label>Pitch of the spike rhythm <span id="pv"></span><input id="pitch" type="range" min="40" max="600" value="180"></label>
-      <label>Electrode voices <input id="g1" type="range" min="0" max="1.5" step=".05" value="1"></label>
-      <label>Growth events <input id="g2" type="range" min="0" max="1.5" step=".05" value="1"></label>
-      <label>Body drone <input id="g3" type="range" min="0" max="1.5" step=".05" value=".6"></label>
-      <label>Network resonance <input id="g4" type="range" min="0" max="1.5" step=".05" value="1"></label>
-      <label>Ring time <span id="rv"></span><input id="ring" type="range" min=".05" max="1.5" step=".05" value=".35"></label>
-      <label>Size of the resonating network <span id="sv"></span><input id="size" type="range" min="-2" max="2" step=".25" value="0"></label>
+    <div class="grid" style="margin-top:14px">
+      <label>Length of the time-lapse <select id="secs"><option value="8">8 seconds<option value="16" selected>16 seconds<option value="32">32 seconds<option value="64">64 seconds</select></label>
+      <label>Ring time <span id="rv"></span><input id="ring" type="range" min=".02" max="1.5" step=".02" value=".35"></label>
+      <label>Size of everything that rings <span id="sv"></span><input id="size" type="range" min="-2" max="3" step=".25" value="0"></label>
+      <label>Network or mushrooms <input id="bal" type="range" min="0" max="1" step=".05" value=".5"></label>
+      <label>Force: growth <input id="f1" type="range" min="0" max="1.5" step=".05" value="1"></label>
+      <label>Force: electrical spikes <input id="f2" type="range" min="0" max="1.5" step=".05" value="1"></label>
+      <label>Force: spores leaving <input id="f3" type="range" min="0" max="1.5" step=".05" value="1"></label>
+      <label>Force: rain <input id="f4" type="range" min="0" max="1.5" step=".05" value=".6"></label>
     </div>
   </div>
 
-  <h2>What each layer of the mix is</h2>
+  <h2>What vibrates</h2>
   <dl>
-    <dt>Electrode voices</dt><dd>Four electrodes sit on the network. Each one's voltage is played directly as a sound wave, spread from left to right. The engine's electrical rhythm takes minutes to hours per cycle; it is sped up until one cycle lands at the pitch you choose. Voices drift in and out of step as the network grows and its tips move.</dd>
-    <dt>Growth events</dt><dd>A tick when a hypha branches, a knock when two fuse, a soft hiss when one is abandoned, a tone when a mushroom matures, a growl where rivals meet, a wash of noise for rain. Left to right is where it happened; higher is shallower, lower is deeper.</dd>
-    <dt>Network resonance</dt><dd>The network treated as a web of taut strings. Each growth event strikes the web where it happened, and the four electrodes act as pickups. The notes are not chosen: they are worked out from the network's real size, its shape and the thickness of its cords, using the wave speed that turgor pressure gives (about 22 metres per second). As the network grows its notes fall. Real hyphae are far too damped to ring, so the ring time is a choice; turning it right down is closest to the truth. Making the network smaller raises every note.</dd>
-    <dt>Body drone</dt><dd>A low hum that swells with the flow through the network and brightens with the number of growing tips.</dd>
+    <dt>The network</dt><dd>A web of taut strings. A hypha is a tube held taut by its own turgor pressure, which gives a wave speed of about 22 metres per second whatever its width. Thick cords are heavier and tighter, so waves partly reflect where thick meets thin. Its notes are worked out from its real size, shape and cord thickness, eight or nine times as it grows, and they fall as it gets bigger.</dd>
+    <dt>The mushrooms</dt><dd>Each cap is a small plate on a stem. A soft cap 3 cm in radius has a lowest note near 90 Hz, and the note rises as the cap gets smaller, so a cap's note falls while it expands.</dd>
+  </dl>
+
+  <h2>What sets them moving</h2>
+  <dl>
+    <dt>Growth</dt><dd>On the network: a branch breaking out, two walls dissolving where hyphae fuse, a piece losing its pressure when it is abandoned or killed. Each is one hypha's turgor force, about ten millionths of a newton, acting for a millisecond, at the place it happened. On a cap: the same small yields at random, for as long as the cap is expanding.</dd>
+    <dt>Electrical spikes</dt><dd>Each spike at an electrode is taken as a brief 1% change in turgor there. Nobody has measured such a pressure pulse; this is an assumption, and the spike recordings themselves are disputed.</dd>
+    <dt>Spores leaving</dt><dd>A mature cap sheds about 30,000 spores a second at about a metre per second. Each launch pushes back on the cap. Only the stand-scale engine sheds spores.</dd>
+    <dt>Rain</dt><dd>Drops 4 mm across at 9 metres per second, 5 mm of rain in an hour. Drops strike caps directly, and drops on the ground reach the hyphae beneath, weakened with depth.</dd>
   </dl>
 
   <h2>What is real and what is not</h2>
-  <p>The timing is the model's: when things branch, fuse, fruit and spike. The sounds are choices. The electrical
-  rhythm comes from measurements that are themselves disputed, and the model's wave shape is not a recorded one. The
-  recording keeps everything unscaled, with two clocks: the time the network grew for, and the much shorter time its
-  electrical activity was listened to at each stage. They are sped up by different amounts, both shown. More in
+  <p>Every strike rings at its real pitch for its real length; only the schedule is compressed, by the one time-lapse
+  factor shown under the player. The forces differ enormously (a raindrop against a spore), so each is brought to an
+  audible level separately, and the text under the player says how much quieter each really is in the model. Two
+  microphones sit at the surface, a fifth of the way in from each side.</p>
+  <p>What is not physical: the ring. Real hyphae and caps are damped almost at once, so the honest ring time is near
+  zero and the slider is a choice. The strings have no soil around them, the caps no gills or flesh, and several
+  numbers (how long a yield lasts, how many yields a growing cap makes, the pressure of a spike) are assumptions. More in
   <a href="https://github.com/CrumpLabSandbox/mushroom-substrate/blob/main/docs/SOUND.md">docs/SOUND.md</a>.</p>
 </main>
 <script src="sound/resonator.js"></script>
@@ -107,26 +107,18 @@
       $('status').textContent = `${rec.meta.segments.toLocaleString()} pieces of hypha, ${rec.events.t.length.toLocaleString()} events`;
       render();
     };
-    w.postMessage({ tier, inds, seed: +$('seed').value, scn: sp.s, opt: { steps, listen: tier == '4m' ? 1600 : 2400, cap_cm: (sp.z[0] + sp.z[1]) / 2, set: { weather: 1 } } });
+    w.postMessage({ tier, inds, seed: +$('seed').value, scn: sp.s, opt: { steps, listen: 1200, cap_cm: (sp.z[0] + sp.z[1]) / 2, set: { weather: 1 } } });
   };
   function render() {
     if (!rec) return;
     const was = playing; stop();
-    $('pv').textContent = $('pitch').value + ' Hz';
     $('rv').textContent = $('ring').value + ' s'; $('sv').textContent = +$('size').value ? 'x' + (2 ** -$('size').value).toFixed(2) : 'real';
-    $('about').textContent = ABOUT[$('way').value];
-    audio = synth(rec, { way: $('way').value, pitch: +$('pitch').value, voices: +$('g1').value, events: +$('g2').value, body: +$('g3').value, ring: +$('g4').value, ringTime: +$('ring').value, ringSize: 2 ** +$('size').value });
+    audio = synth(rec, { seconds: +$('secs').value, ringTime: +$('ring').value, ringSize: 2 ** +$('size').value, balance: +$('bal').value,
+      growth: +$('f1').value, electrical: +$('f2').value, spores: +$('f3').value, rain: +$('f4').value });
     $('says').innerHTML = `<b><i>${species.n}</i>, ${audio.seconds.toFixed(1)} seconds.</b> ${audio.info.says}`;
     drawWave(); drawSpec(); offset = 0; if (was) play();
   }
-  for (const id of ['way', 'pitch', 'g1', 'g2', 'g3', 'g4', 'ring', 'size']) $(id).onchange = render;
-  const ABOUT = {
-    faster: 'The electrode voltages played as sound waves, and every growth event as the same plain click, left to right where it happened. Nothing is chosen but the speed. The closest thing here to a recording.',
-    instrument: 'The network is the instrument and its own activity plays it. Growth strikes the web of hyphae, electrical spikes bow it, and each mushroom that matures sounds as a small drum sized to its cap. The notes come from the network\u2019s real size and shape; nothing is sped up in pitch.',
-    data: 'One steady voice per individual. Higher means more growing tips, louder means feeding faster, brighter means warmer. Two clashing notes mark rivals meeting, a bell a mature mushroom, a hiss rain. Made for telling runs apart by ear.',
-    music: 'Events snapped to a beat and a five-note scale. Depth picks the note, rising flow drives the kick drum, abandoned hyphae are the hi-hat, and the key moves with the season. The furthest from the model.',
-    mix: 'The four original layers, each with its own volume below: electrode voices, growth events, network resonance and body drone.' };
-  $('pitch').oninput = () => $('pv').textContent = $('pitch').value + ' Hz';
+  for (const id of ['secs', 'ring', 'size', 'bal', 'f1', 'f2', 'f3', 'f4']) $(id).onchange = render;
 
   function play() {
     ctx = ctx || new AudioContext();

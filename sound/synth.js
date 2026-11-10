@@ -1,181 +1,148 @@
-// The synthesiser. Turns a recording (sound/record.js) into stereo audio. Nothing here is a recording
-// of a fungus: it is a set of stated mappings. There are four ways of listening, and a free mix.
+// The synthesiser: physical models only. Every sound is a body that can vibrate, set moving by a force
+// that the simulation says acted on it, and heard through two microphones. Nothing is assigned a sound.
 //
-//   faster      As it is, faster. The electrode voltages played as sound waves and every growth event as
-//               the same plain click, placed left to right where it happened. Only the speed is chosen.
-//   instrument  The fungus plays itself. The network is a web of taut strings (sound/resonator.js); its own
-//               growth strikes it, its electrical spikes bow it, and each mushroom that matures sounds as
-//               a small drum sized to its cap. No speed-up on pitch.
-//   data        Data you can read by ear. One steady voice per individual: its pitch is how many growing
-//               tips it has, its loudness is how fast the colony is feeding, its brightness is the
-//               temperature. A fight is a dissonant pair of notes, a mushroom a bell, rain a hiss.
-//   music       Music. Events are snapped to sixteenth notes and a five-note scale; depth picks the note,
-//               flow drives the kick drum, abandoned hyphae are the hi-hat, the season moves the key.
-//   mix         The original layers, each with its own gain: voices, events, body drone and ring.
+// Bodies
+//   web    the network as a web of taut strings (sound/resonator.js): its modes come from its real size,
+//          shape and cord thickness, and change as it grows.
+//   caps   each fruiting body's cap as a small plate on a stem. Its lowest note is about 90 Hz at 3 cm
+//          radius (docs/research/07) and rises as 1/radius, so a cap's note falls while it expands.
 //
-// A recording has two clocks (growth time and electrical time). They are sped up by different amounts
-// and both are reported with the audio.
+// Forces (all from the recording)
+//   growth      on the web: a hypha breaking out as a branch, two walls dissolving in a fusion, a piece
+//               losing its turgor when abandoned or killed. Each is one hypha's turgor force
+//               (pressure x cross-section, about 10 micronewtons) acting for a millisecond.
+//               on a cap: the same small yields, at random, for as long as the cap is expanding.
+//   electrical  on the web: each spike at an electrode taken as a brief change of turgor there (1% by
+//               default). No such pressure pulse has been measured; this one is an assumption.
+//   spores      on a cap: about 30,000 spores a second leave a mature cap at about 1 m/s. Each launch
+//               pushes back on the cap with the spore's momentum.
+//   rain        on caps and on the ground: 4 mm drops at 9 m/s, 5 mm of rain in an hour. A drop on the
+//               ground reaches the hyphae below it, weakened with depth.
+//
+// Time. A strike rings at its real pitch for its real length. Only the schedule is compressed: days of
+// growth play in seconds (one time-lapse factor for everything, electrical activity included).
+//
+// Loudness. The forces differ by many orders of magnitude (a raindrop against a spore). Each force on
+// each body is rendered separately, brought to an audible level, and mixed; the true differences are
+// reported in decibels with the sound. Within one force on one body, relative loudness is the model's.
+//
+// What is not physical: real hyphae and caps are too damped to ring (the ring time is a stated
+// choice), and nothing radiates into real soil or air: the microphones hear the bodies directly.
 var synth = (rec, map) => {
-  const way = (map && map.way) || 'mix'
-  const preset = { faster: { voices: 1, events: 1, plain: 1, body: 0, ring: 0 }, instrument: { voices: 0, events: 0, body: 0, ring: 1.2, strike: 1, caps: 1 },
-    data: { voices: 0, events: 0, body: 0, ring: 0, data: 1 }, music: { voices: 0, events: 0, body: 0, ring: 0, music: 1 }, mix: {} }[way]
-  const m = Object.assign({ rate: 48000, pitch: 180, seconds: 0, voices: 1, events: 1, body: .6, ring: 1, ringTime: .35, ringSize: 1, plain: 0, strike: 0, caps: 0, data: 0, music: 0, tempo: 96 }, map, preset)
+  const m = Object.assign({ rate: 48000, seconds: 16, ringTime: .35, ringSize: 1, growth: 1, electrical: 1, spores: 1, rain: 1, balance: .5, spikePressure: .01 }, map)
   const modesOf = typeof modes != 'undefined' ? modes : require('./resonator.js')
-  const sr = m.rate, V = rec.volts, n = V[0].length, spikeS = rec.meta.spike_interval_minutes * 60, E = rec.events, T = rec.taps, W = rec.meta.size[0], DZ = rec.meta.size[1]
-  // speed-up of the electrical clock that puts the species' spike rate at the chosen pitch
-  const eSpeed = m.speed || m.pitch * spikeS, step = eSpeed / (rec.meta.electrical_sample_seconds * sr) // electrical samples per audio sample
-  const len = Math.max(1, Math.floor(m.seconds ? m.seconds * sr : n / step)), L = new Float32Array(len), R = new Float32Array(len)
-  const dur = len / sr, gSpeed = rec.meta.growth_seconds / dur // growth seconds per second of audio
-  const col = k => rec.meta.tap_names.indexOf(k), tap = (c, i) => { const x = i / len * (T.length - 1), k = x | 0, f = x - k; return T[k][c] + (T[Math.min(T.length - 1, k + 1)][c] - T[k][c]) * f }
-  const range = c => { let lo = 1e30, hi = -1e30; for (const r of T) { lo = Math.min(lo, r[c]); hi = Math.max(hi, r[c]) } return [lo, hi - lo || 1] }
-  const at = t => t / gSpeed * sr | 0, panOf = x => Math.min(1, Math.max(0, x / W))
+  const sr = m.rate, len = Math.max(1, m.seconds * sr | 0), E = rec.events, V = rec.volts, W = rec.meta.size[0], gSpeed = rec.meta.growth_seconds / m.seconds, at = t => t / gSpeed * sr | 0
   let seed = 12345; const rnd = () => (seed = seed * 1664525 + 1013904223 >>> 0) / 4294967296
-  // a short enveloped sound added at sample `a`: freq 0 means noise
-  const note = (a, freq, secs, vol, pan, attack = 96, curve = 5) => {
-    const dn = Math.min(len - a, secs * sr | 0); if (a < 0 || dn <= 0) return
-    const gl = Math.cos(pan * 1.5708) * vol, gr = Math.sin(pan * 1.5708) * vol, w = 6.2832 * freq / sr
-    for (let i = 0; i < dn; i++) { const s = (freq ? Math.sin(w * i) : rnd() * 2 - 1) * Math.min(1, i / attack) * Math.exp(-curve * i / dn); L[a + i] += s * gl; R[a + i] += s * gr }
-  }
-  const says = []
-  let ringLow = []
+  // the six sounds that can exist: [force][body] -> stereo bus
+  const NAMES = ['growth', 'electrical', 'spores', 'rain'], bus = {}, B = (f, b) => bus[f + b] || (bus[f + b] = { f, b, L: new Float32Array(len), R: new Float32Array(len) })
+  // two microphones at the surface, a fifth of the way in from each side. A moving point is heard at 1/(1 + distance/reach).
+  const MIC = [[W * .2, W / 2, 0], [W * .8, W / 2, 0]], reach = W / 10, hear = (x, y, z, k) => 1 / (1 + Math.hypot(x - MIC[k][0], y - MIC[k][1], z - MIC[k][2]) / reach)
+  const info = { time_lapse: gSpeed, lowest_note_hz: [], sources: [], caps: 0 }
 
-  // ---- voices: electrode voltages as sound waves
-  if (m.voices) {
-    V.forEach((v, k) => {
-      const pan = V.length > 1 ? k / (V.length - 1) : .5, gl = Math.cos(pan * 1.5708), gr = Math.sin(pan * 1.5708)
-      let mean = 0, peak = 1e-9; for (let i = 0; i < n; i++) mean += v[i]; mean /= n
-      for (let i = 0; i < n; i++) peak = Math.max(peak, Math.abs(v[i] - mean))
-      const g = m.voices * .5 / Math.sqrt(V.length) / peak
-      let lp = 0
-      for (let i = 0; i < len; i++) {
-        const x = (i * step) % (n - 1), a = x | 0, f = x - a, s = (v[a] + (v[a + 1] - v[a]) * f - mean) * g
-        lp += .5 * (s - lp); L[i] += lp * gl; R[i] += lp * gr // a gentle low-pass: the model's waveform has hard corners
-      }
+  // ---------- the web ----------
+  const shots = rec.shots || [], J0 = 5e5 * Math.PI * 2.5e-6 * 2.5e-6 * 1e-3 // one hypha's turgor force for a millisecond, N s
+  const strikes = [] // [audio sample, x, y, z, impulse N s, force index]
+  const IMP = { 0: 1, 1: 2, 3: 1, 7: 1, 8: 1 }
+  for (let j = 0; j < E.t.length; j++) IMP[E.type[j]] && strikes.push([at(E.t[j]), E.x[j], E.y[j], E.z[j], IMP[E.type[j]] * J0, 0])
+  // electrical spikes: found in each electrode's recorded stretch for a growth step, then repeated to fill that step's real length
+  {
+    const per = rec.meta.electrical_samples / rec.meta.steps | 0, tdt = rec.meta.electrical_sample_seconds, stepS = rec.meta.step_seconds, el = rec.meta.electrodes
+    const window = per * tdt, rate = 1 / (rec.meta.spike_interval_minutes * 60) * gSpeed
+    if (rate < sr / 6) V.forEach((v, e) => {
+      let mean = 0; for (let i = 0; i < v.length; i++) mean += v[i]; mean /= v.length
+      for (let s = 0; s < rec.meta.steps; s++) for (let i = s * per + 1; i < (s + 1) * per; i++) if (v[i - 1] < mean && v[i] >= mean)
+        for (let rep = 0, tau = (i - s * per) * tdt; tau + rep * window < stepS; rep++) strikes.push([at(s * stepS + tau + rep * window), el[e][0], el[e][1], el[e][2], m.spikePressure * J0, 1])
     })
-    says.push(`Electrical activity is sped up ${fmt(eSpeed)} times, which puts one spike every ${rec.meta.spike_interval_minutes} minutes at ${(eSpeed / spikeS).toFixed(0)} Hz.`)
+    else info.note = `Electrical spikes are left out: at this time-lapse they would come ${fmt(rate)} times a second, too fast to place.`
   }
-
-  // ---- events: each growth event a short sound (or, in the plain form, the same click for all)
-  if (m.events) {
-    // type: [base frequency Hz, length s, loudness, noise or tone]
-    const KIND = { 0: [1500, .035, .10, 0], 1: [520, .11, .16, 0], 2: [240, .09, .05, 0], 3: [0, .12, .035, 1], 4: [660, .25, .12, 0], 5: [200, .2, .06, 0], 6: [330, .7, .22, 0],
-      7: [95, .3, .16, 0], 8: [130, .3, .18, 0], 10: [0, 1.6, .16, 1], 11: [0, .5, .05, 1], 12: [0, .22, .05, 1], 13: [880, 1, .2, 0] }
-    for (let j = 0; j < E.t.length; j++) {
-      const kd = KIND[E.type[j]]; if (!kd) continue
-      if (m.plain) note(at(E.t[j]), 0, .004, m.events * .12, panOf(E.x[j]), 8, 3)
-      else note(at(E.t[j]), kd[3] ? 0 : kd[0] * (1.6 - 1.1 * Math.min(1, E.z[j] / DZ)), kd[1], m.events * kd[2], panOf(E.x[j])) // shallow is higher, deep is lower
-    }
+  // rain on the ground: drops over the whole plot for an hour, each reaching the nearest hypha beneath it, weakened by depth (5 mm scale)
+  const rains = []; for (let j = 0; j < E.t.length; j++) E.type[j] == 10 && rains.push(E.t[j])
+  const DROP = 3.4e-5 * 9, DROPS = 41 // a 4 mm drop (34 mg) at 9 m/s, in N s; drops per square metre per second in 5 mm/h rain
+  for (const tr of rains) {
+    const all = DROPS * (W * 1e-6) * (W * 1e-6) * 3600, n = Math.min(4000, Math.round(all)), scale = Math.sqrt(all / Math.max(1, n))
+    for (let d = 0; d < n; d++) strikes.push([at(tr + rnd() * 3600), rnd() * W, rnd() * W, -1, DROP * scale, 3])
   }
-
-  // ---- body: a drone that follows flow and tip count
-  if (m.body && T.length > 1) {
-    const fi = col('flow'), ti = col('ntips'), fr = range(fi), tr = range(ti)
-    let ph = 0, a = 0, b = 0
-    for (let i = 0; i < len; i++) {
-      a += .0005 * (tap(fi, i) / (fr[0] + fr[1]) - a); b += .0005 * (tap(ti, i) / (tr[0] + tr[1]) - b); ph += 6.2832 * 55 / sr
-      const s = m.body * .16 * a * (Math.sin(ph) + .5 * Math.sin(ph * 1.5) + b * .5 * Math.sin(ph * 3) + b * .25 * Math.sin(ph * 5))
-      L[i] += s; R[i] += s
-    }
-  }
-
-  // ---- ring: the network as a resonator, one bank of modes per snapshot, struck by what happens in its stretch of time
-  if (m.ring && rec.shots && rec.shots.length) {
-    const LOUD = { 0: .5, 1: 1, 2: .3, 3: .25, 4: .7, 5: .4, 6: 1.2, 7: 1, 8: 1, 13: 1.2 }, tail = Math.min(len, 6 * m.ringTime * sr | 0), el = rec.meta.electrodes, tmp = new Float32Array(len)
-    // every strike: [audio sample, x, y, z, loudness]
-    const strikes = []
-    for (let j = 0; j < E.t.length; j++) LOUD[E.type[j]] && strikes.push([at(E.t[j]), E.x[j], E.y[j], E.z[j], LOUD[E.type[j]]])
-    if (m.strike) V.forEach((v, e) => { // each electrical spike at an electrode bows the web there
-      let mean = 0; for (let i = 0; i < n; i++) mean += v[i]; mean /= n
-      for (let i = 1; i < n; i++) v[i - 1] < mean && v[i] >= mean && i / step < len && strikes.push([i / step | 0, el[e][0], el[e][1], el[e][2], .06])
-    })
-    strikes.sort((a, b) => a[0] - b[0])
-    rec.shots.forEach((shot, si) => {
-      const from = si ? at(shot.t) : 0, to = si + 1 < rec.shots.length ? at(rec.shots[si + 1].t) : len, N = shot.x.length
+  strikes.sort((a, b) => a[0] - b[0])
+  if (shots.length) {
+    const tail = Math.min(len, 6 * m.ringTime * sr | 0), tmp = new Float32Array(len)
+    shots.forEach((shot, si) => {
+      const from = si ? at(shot.t) : 0, to = si + 1 < shots.length ? at(shots[si + 1].t) : len, N = shot.x.length
       if (N < 3) return
-      const md = modesOf(shot), nearest = (x, y, z) => { let b = 0, bd = 1e30; for (let i = 0; i < N; i++) { const d = (shot.x[i] - x) ** 2 + (shot.y[i] - y) ** 2 + (shot.z[i] - z) ** 2; d < bd && (bd = d, b = i) } return b }
-      const hits = strikes.filter(s => s[0] >= from && s[0] < to).map(s => [s[0], nearest(s[1], s[2], s[3]), s[4]])
-      if (!hits.length) return
-      const a0 = Math.max(0, hits[0][0]), a1 = Math.min(len, hits[hits.length - 1][0] + tail), pick = el.map(p => nearest(p[0], p[1], p[2]))
-      md.hz[0] && ringLow.push(md.hz[0] * m.ringSize)
+      const md = modesOf(shot)
+      const nearest = (x, y, z) => { let b = 0, bd = 1e30; for (let i = 0; i < N; i++) { const d = (shot.x[i] - x) ** 2 + (shot.y[i] - y) ** 2 + (z < 0 ? 0 : (shot.z[i] - z) ** 2); d < bd && (bd = d, b = i) } return b }
+      const hits = [[], [], [], []]
+      for (const s of strikes) if (s[0] >= from && s[0] < to && s[0] < len) { const node = nearest(s[1], s[2], s[3]); hits[s[5]].push(s[0], node, s[3] < 0 ? s[4] * Math.exp(-shot.z[node] / 5000) : s[4]) }
+      md.hz[0] && info.lowest_note_hz.push(md.hz[0] * m.ringSize)
+      const mic = [0, 1].map(k => shot.x.map((x, i) => hear(x, shot.y[i], shot.z[i], k) / N))
       md.hz.forEach((hz, k) => {
         const f = hz * m.ringSize; if (f < 25 || f > sr * .42) return
-        const w = 6.2832 * f / sr, r = Math.exp(-1 / (m.ringTime / (1 + f / 2500) * sr)), c1 = 2 * r * Math.cos(w), c2 = r * r, sh = md.shape[k]
-        let gl = 0, gr = 0; pick.forEach((p, e) => { const pan = el.length > 1 ? e / (el.length - 1) : .5; gl += Math.cos(pan * 1.5708) * sh[p]; gr += Math.sin(pan * 1.5708) * sh[p] })
-        if (Math.abs(gl) + Math.abs(gr) < 1e-4) return
-        tmp.fill(0, a0, a1)
-        for (const h of hits) tmp[h[0]] += h[2] * sh[h[1]] * Math.sin(w)
-        const g = m.ring * .12
-        for (let i = a0, y1 = 0, y2 = 0; i < a1; i++) { const y = c1 * y1 - c2 * y2 + tmp[i]; y2 = y1; y1 = y; L[i] += y * gl * g; R[i] += y * gr * g }
+        const w = 6.2832 * f / sr, r = Math.exp(-1 / (m.ringTime / (1 + f / 2500) * sr)), c1 = 2 * r * Math.cos(w), c2 = r * r, sh = md.shape[k], mass = md.mass[k]
+        let gl = 0, gr = 0; for (let i = 0; i < N; i++) { gl += sh[i] * mic[0][i]; gr += sh[i] * mic[1][i] }
+        hits.forEach((h, fi) => {
+          if (!h.length) return
+          const a0 = Math.max(0, h[0]), a1 = Math.min(len, h[h.length - 3] + tail), o = B(NAMES[fi], 'web')
+          tmp.fill(0, a0, a1)
+          for (let q = 0; q < h.length; q += 3) tmp[h[q]] += h[q + 2] * sh[h[q + 1]] / mass * Math.sin(w) // metres per second set going by this strike
+          for (let i = a0, y1 = 0, y2 = 0; i < a1; i++) { const y = c1 * y1 - c2 * y2 + tmp[i]; y2 = y1; y1 = y; o.L[i] += y * gl; o.R[i] += y * gr }
+        })
       })
     })
-    ringLow.length && says.push(`As a web of taut strings${m.ringSize == 1 ? ' at its real size' : ' at ' + (1 / m.ringSize).toFixed(1) + ' times its real size'}, the network's lowest note goes from ${ringLow[0].toFixed(0)} Hz to ${ringLow[ringLow.length - 1].toFixed(0)} Hz as it grows. Real hyphae are too damped to ring; the ${m.ringTime} second ring is a choice.` +
-      (m.strike ? ' Electrical spikes at the electrodes also bow the web.' : ''))
-  }
-  // ---- caps: each mushroom that matures sounds as a drum, pitched by the size of its cap (about 90 Hz for a 6 cm cap)
-  if (m.caps) {
-    const f0 = 90 * 6 / rec.meta.cap_cm; let count = 0
-    for (let j = 0; j < E.t.length; j++) if (E.type[j] == 6) { count++; [1, 1.59, 2.14, 2.3, 2.65, 2.92].forEach((p, k) => note(at(E.t[j]), f0 * p, .5 / (1 + k * .4), .3 / (1 + k), panOf(E.x[j]), 24, 6)) }
-    count && says.push(`${count} mushroom${count > 1 ? 's' : ''} matured; each sounds as a drum at ${f0.toFixed(0)} Hz, the estimate for a soft cap ${rec.meta.cap_cm} cm across.`)
   }
 
-  // ---- data: one voice per individual, read by ear
-  if (m.data && T.length > 1) {
-    const two = range(col('tips1'))[0] + range(col('tips1'))[1] > 0, ui = col('up'), ur = range(ui), ci = col('tsurf'), cr = range(ci)
-    ;[['tips0', two ? .25 : .5, 110], ['tips1', .75, 165]].forEach(([name, pan, base], v) => {
-      if (v && !two) return
-      const c = col(name), tr = range(c), lg = x => Math.log(1 + Math.max(0, x)), lo = lg(tr[0]), span = lg(tr[0] + tr[1]) - lo || 1
-      let ph = 0, f = base, a = 0, gl = Math.cos(pan * 1.5708), gr = Math.sin(pan * 1.5708)
-      for (let i = 0; i < len; i++) {
-        const tips = tap(c, i), want = base * Math.pow(2, 3 * (lg(tips) - lo) / span), bright = (tap(ci, i) - cr[0]) / cr[1]
-        f += .002 * (want - f); a += .001 * ((tips > 0 ? .25 + .75 * Math.sqrt(Math.max(0, tap(ui, i)) / (ur[0] + ur[1])) : 0) - a); ph += 6.2832 * f / sr
-        const s = m.data * .3 * a * (Math.sin(ph) + bright * .5 * Math.sin(2 * ph) + bright * .3 * Math.sin(3 * ph))
-        L[i] += s * gl; R[i] += s * gr
-      }
+  // ---------- the caps ----------
+  // each fruiting body: when it started, when it matured, when it ended, and where
+  const caps = []
+  for (let j = 0; j < E.t.length; j++) if (E.type[j] == 4) caps.push({ x: E.x[j], y: E.y[j], t0: E.t[j], tm: Infinity, t1: rec.meta.growth_seconds })
+  for (let j = 0; j < E.t.length; j++) { const t = E.type[j]; if (t != 6 && t != 5 && t != 11) continue; const c = caps.find(c => c.x == E.x[j] && c.y == E.y[j] && c.t0 <= E.t[j] && c.t1 >= E.t[j]); c && (t == 6 ? c.tm = E.t[j] : c.t1 = E.t[j]) }
+  const RF = rec.meta.cap_cm / 200, PART = [1, 1.73, 2.33, 3.91, 4.11] // final cap radius in metres; the first modes of a free round plate
+  const YIELDS = 1000, SPORES = 3e4, SPORE = 2.6e-13 // small yields per second while a cap expands (assumed); spores per second and each one's momentum, N s
+  for (const c of caps) {
+    const a0 = Math.max(0, at(c.t0)), a1 = Math.min(len, at(c.t1)); if (a1 - a0 < 64) continue
+    info.caps++
+    const n = a1 - a0, grow = new Float32Array(n), spore = new Float32Array(n), rain = new Float32Array(n), span = c.tm < Infinity ? c.tm - c.t0 : 4.5 * 86400
+    const size = i => { const u = ((a0 + i) / sr * gSpeed - c.t0) / span; return RF * (.15 + .85 * (u < 0 ? 0 : u > 1 ? 1 : u) * (c.tm < Infinity || u < .6 ? 1 : .6 / u)) } // radius now, metres
+    const tm = c.tm < Infinity ? at(c.tm) - a0 : n, gs = J0 * Math.sqrt(YIELDS * gSpeed / sr), ss = SPORE * Math.sqrt(SPORES * gSpeed / sr)
+    for (let i = 0; i < n; i++) { const z = (rnd() + rnd() + rnd() - 1.5) * 2; i < tm ? grow[i] = z * gs : spore[i] = z * ss } // random pushes: yields while expanding, spore launches once mature
+    for (const tr of rains) { const drops = Math.round(DROPS * Math.PI * RF * RF * 3600); for (let d = 0; d < drops; d++) { const i = at(tr + rnd() * 3600) - a0; i >= 0 && i < n && (rain[i] += DROP) } }
+    const gl = hear(c.x, c.y, 0, 0), gr = hear(c.x, c.y, 0, 1)
+    ;[['growth', grow], ['spores', spore], ['rain', rain]].forEach(([name, ex]) => {
+      let any = false; for (let i = 0; i < n && !any; i += 7) any = ex[i] != 0; if (!any && name != 'rain') return
+      if (name == 'rain' && !rains.length) return
+      const o = B(name, 'caps')
+      PART.forEach((p, k) => {
+        let y1 = 0, y2 = 0, c1 = 0, c2 = 0, sw = 0, mass = 1
+        for (let i = 0; i < n; i++) {
+          if (i % 256 == 0) { // the cap has grown: retune it. A cap's thickness is a quarter of its radius; a quarter of its mass moves.
+            const rad = size(i), f = 90 * .03 / rad * p * m.ringSize, w = 6.2832 * Math.min(f, sr * .42) / sr, r = Math.exp(-1 / (m.ringTime / (1 + k * .6) * sr))
+            c1 = 2 * r * Math.cos(w); c2 = r * r; sw = Math.sin(w); mass = .25 * 700 * Math.PI * rad * rad * rad / 4
+          }
+          const y = c1 * y1 - c2 * y2 + ex[i] / mass * sw; y2 = y1; y1 = y
+          o.L[a0 + i] += y * gl / (1 + k); o.R[a0 + i] += y * gr / (1 + k)
+        }
+      })
     })
-    for (let j = 0; j < E.t.length; j++) {
-      const t = E.type[j], a = at(E.t[j]), pan = panOf(E.x[j])
-      if (t == 7 || t == 8) { note(a, 466, .3, m.data * .12, pan); note(a, 494, .3, m.data * .12, pan) } // rivals meet: two notes a semitone apart
-      else if (t == 6) { note(a, 1320, 1.2, m.data * .2, pan); note(a, 1980, .8, m.data * .08, pan) }    // a mushroom matures: bell
-      else if (t == 10) note(a, 0, 1.2, m.data * .1, .5)                                                  // rain
-      else if (t == 13) note(a, 880, .8, m.data * .15, pan)                                               // a spore founds an individual
-    }
-    says.push(`Each steady voice is one individual${two ? ' (the first on the left, the second on the right and a fifth higher)' : ''}: three octaves of pitch cover its fewest to its most growing tips, loudness is how fast the colony is feeding, and brightness is temperature (${cr[0].toFixed(0)} to ${(cr[0] + cr[1]).toFixed(0)} °C). ` +
-      `Two notes a semitone apart mark rivals meeting, a bell a mature mushroom, a hiss rain.`)
   }
 
-  // ---- music: events snapped to a pulse and a scale
-  if (m.music) {
-    const slot = 60 / m.tempo / 4, slots = Math.floor(dur / slot), SC = [0, 3, 5, 7, 10], ROOTS = [45, 48, 50, 52], hz = k => 440 * Math.pow(2, (k - 69) / 12)
-    const ci = col('tsurf'), cr = range(ci), fi = col('flow'), bins = Array.from({ length: slots }, () => ({ n: 0, z: 0, x: 0, fuse: 0, drop: 0, fruit: 0, rain: 0 }))
-    for (let j = 0; j < E.t.length; j++) {
-      const b = bins[Math.min(slots - 1, E.t[j] / gSpeed / slot | 0)], t = E.type[j]; if (!b) continue
-      if (t == 0 || t == 1) { b.n++; b.z += E.z[j]; b.x += E.x[j]; t == 1 && b.fuse++ } else if (t == 2 || t == 3) b.drop++; else if (t == 6) b.fruit++; else if (t == 10) b.rain++
-    }
-    let prevFlow = 0
-    for (let s = 0; s < slots; s++) {
-      const a = s * slot * sr | 0, b = bins[s], bar = s >> 4, mid = Math.min(len - 1, (bar * 16 + 8) * slot * sr | 0)
-      // the key follows temperature where there is weather, otherwise how far through the run we are
-      const root = ROOTS[Math.min(3, (cr[1] > 1 ? (tap(ci, mid) - cr[0]) / cr[1] : bar * 16 / slots) * 4 | 0)]
-      if (s % 16 == 0) { note(a, hz(root - 12), slot * 15, m.music * .2, .5, 2000, 2); note(a, hz(root - 5), slot * 15, m.music * .08, .5, 2000, 2) } // bass holds the bar
-      if (b.n) { // melody: mean depth picks the note, shallow high; several events at once are louder; a fusion drops an octave
-        const d = 1 - Math.min(1, b.z / b.n / DZ * 3), k = Math.round(d * 9), pitch = root + 12 + 12 * (k / 5 | 0) + SC[k % 5] - (b.fuse ? 12 : 0)
-        note(a, hz(pitch), b.fuse ? .5 : .28, m.music * Math.min(.3, .1 + .05 * Math.log(1 + b.n)), panOf(b.x / b.n), 48, 5)
-        note(a, hz(pitch) * 2, .12, m.music * .04, panOf(b.x / b.n), 48, 6)
-      }
-      if (s % 4 == 0) { const f = tap(fi, Math.min(len - 1, a)); if (s % 16 == 0 || f > prevFlow) { const dn = Math.min(len - a, .22 * sr | 0); for (let i = 0; i < dn; i++) { const e = Math.exp(-7 * i / dn), v = Math.sin(6.2832 * (48 * i / sr + 50 * (1 - Math.exp(-i / 900)) * .012)) * e * m.music * .5; L[a + i] += v; R[a + i] += v } } prevFlow = f } // kick: every bar, and any beat on which flow is rising
-      if (b.drop) note(a, 0, .04, m.music * Math.min(.1, .03 * b.drop), .65, 8, 6) // hi-hat: hyphae stopping or being abandoned
-      if (b.fruit) [0, 7, 12].forEach((iv, k) => note(a + k * slot * sr / 2 | 0, hz(root + 24 + iv), 1.2, m.music * .16, .5)) // a mushroom: three rising notes
-      if (b.rain) note(a, 0, slot * 8, m.music * .1, .5, 4000, 3)
-    }
-    says.push(`Events are snapped to sixteenth notes at ${m.tempo} beats per minute. Branches and fusions play a five-note minor scale, higher for shallower; the kick sounds each bar and on beats where flow is rising; the hi-hat is hyphae stopping or being abandoned; ` +
-      (cr[1] > 1 ? 'the key moves with temperature.' : 'the key rises through the run.') + ' This is the furthest from the model.')
+  // ---------- level and mix ----------
+  const L = new Float32Array(len), R = new Float32Array(len), all = Object.values(bus)
+  for (const o of all) { o.peak = 0; for (let i = 0; i < len; i++) o.peak = Math.max(o.peak, Math.abs(o.L[i]), Math.abs(o.R[i])) }
+  const ref = Math.max(...all.map(o => o.peak), 1e-300)
+  for (const o of all) {
+    if (!(o.peak > 0)) continue
+    const g = m[o.f] * (o.b == 'web' ? 1 - m.balance : m.balance) * 2 / o.peak
+    info.sources.push({ force: o.f, body: o.b, peak_metres_per_second: o.peak, db_below_loudest: 20 * Math.log10(ref / o.peak) })
+    for (let i = 0; i < len; i++) { L[i] += o.L[i] * g; R[i] += o.R[i] * g }
   }
-
-  // ---- level: bring the peak to -3 dB
   let peak = 1e-9; for (let i = 0; i < len; i++) peak = Math.max(peak, Math.abs(L[i]), Math.abs(R[i]))
   const gain = .708 / peak; for (let i = 0; i < len; i++) { L[i] *= gain; R[i] *= gain }
-  says.push(`Growth is sped up ${fmt(gSpeed)} times: ${(rec.meta.growth_seconds / 86400).toFixed(1)} days in ${dur.toFixed(1)} seconds.`)
-  return { left: L, right: R, rate: sr, seconds: dur, info: { way, electrical_speed_up: m.voices || m.strike ? eSpeed : null, growth_speed_up: gSpeed, pitch_hz: eSpeed / spikeS, ring_lowest_hz: ringLow, says: says.join(' ') } }
+  info.sources.sort((a, b) => a.db_below_loudest - b.db_below_loudest)
+  const low = info.lowest_note_hz
+  info.says = `Time-lapse: ${(rec.meta.growth_seconds / 86400).toFixed(1)} days in ${m.seconds} seconds, ${fmt(gSpeed)} times faster than life. Each sound rings at its real pitch. ` +
+    (low.length ? `The network's lowest note goes from ${low[0].toFixed(0)} Hz to ${low[low.length - 1].toFixed(0)} Hz as it grows${m.ringSize == 1 ? '' : ' (heard as if ' + (1 / m.ringSize).toFixed(1) + ' times its real size)'}. ` : '') +
+    (info.caps ? `${info.caps} fruiting bod${info.caps > 1 ? 'ies' : 'y'} sounded. ` : 'No fruiting body formed. ') +
+    (info.sources.length ? 'Heard, with how much quieter each really is than the loudest: ' + info.sources.map(s => `${s.force} on the ${s.body == 'web' ? 'network' : 'caps'} (${s.db_below_loudest < .5 ? 'loudest' : '−' + s.db_below_loudest.toFixed(0) + ' dB'})`).join(', ') + '. ' : 'Nothing acted on anything. ') +
+    (info.note ? info.note + ' ' : '') + `Real hyphae and caps are too damped to ring; the ${m.ringTime} second ring is a choice.`
+  return { left: L, right: R, rate: sr, seconds: m.seconds, info }
 }
 var fmt = v => v >= 1e6 ? (v / 1e6).toFixed(1) + ' million' : v >= 1e3 ? Math.round(v / 1e3) + ' thousand' : v.toFixed(0)
 // 32-bit float stereo WAV

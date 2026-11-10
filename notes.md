@@ -135,3 +135,8 @@
 ## Sound: four ways of listening (2026-11-09)
 - Built all four: as it is faster, the fungus plays itself, data by ear, and music; plus the free mix. Chosen on the listening page or with `--way` in `tools/render-audio.js`.
 - A second individual can be recorded with the first; the data way gives each its own voice.
+
+## Sound rule (2026-11-09, Matt)
+- **All sounds must come from physical modelling.** No sound is assigned to an event. Matt rejected the event ticks, drone, data voices and music; they were removed.
+- A sound exists only if there is a body that can vibrate, a force the simulation says acted on it, and a microphone. Current bodies: the network as taut strings, and each cap as a plate. Current forces: growth, electrical spikes (assumed pressure pulse), spores leaving, rain.
+- Details and what is still not physical: [docs/SOUND.md](docs/SOUND.md).

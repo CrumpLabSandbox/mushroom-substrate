@@ -151,3 +151,8 @@
 - His answers: sounds are allowed if every control is **traceable** to a mushroom process (this relaxes the earlier physical-modelling-only rule for the platform; each plugin is labelled physical model, model signal or model as modulator); families are instruments, atmospheres and effects (not rhythm); hybrid of prebuilt specimens and live engines; on-screen keys, computer keys and Web MIDI.
 - Plan with a 22-plugin catalogue: [docs/PLUGINS.md](docs/PLUGINS.md).
 - Batch A built: the kit, 90 baked specimens, the library page, and Hyphal Harp, Rain on Caps and Mycelium Reverb.
+
+## Composers, and the overnight build (2026-11-09 to 10)
+- Matt asked for a compositional plugin type: ideas from mushroom processes that play the sound engines, so the fungus plays itself; at least five, each emphasising a different aspect. Six are built (Spike Canon, Hyphal Walk, Tip Chorus, Growth Form, Season Cycle, Spore Scatter), plus Cap Drums as a second instrument for them to play.
+- Matt then said: build **all** the planned plugins overnight, on Claude's own recommendations, and **stop if only 10% of usage is left** (weekly usage was 67% at that point; stop at 90%).
+- How a plugin is put together, for whoever continues: a folder in `plugins/` with `dsp.js` (`create(sampleRate)` -> `load, set, noteOn, noteOff, process(L, R, input), view`; composers have `advance(frames)` returning note events instead of `process`), `def.js` (the declaration: params with `trace` and `standing`, `draw`), `plugin.js` (`start(def)`), `worklet.js` (`register` or `registerComposer`), `index.html` (copy any). Add it to `plugins/plugins.json` with `"built": true`; instruments also go in `plugins/kit/instruments.js` and `playable.js`. Check with `node tools/test-plugins.js`.

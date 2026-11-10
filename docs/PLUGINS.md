@@ -10,7 +10,7 @@ them. Species are the presets.
 | Question | Answer |
 |---|---|
 | What sounds are allowed | **Anything traceable.** Every control that shapes the sound must trace to a named mushroom process or measurement. Each plugin is labelled by kind (below). No arbitrary sounds pinned to events |
-| Families | **Playable instruments, atmospheres, effects.** (Rhythm and pattern plugins were not chosen) |
+| Families | **Playable instruments, atmospheres, effects**, and later **composers** (plugins that play the instruments from a mushroom process). Rhythm and pattern plugins as such were not chosen |
 | Where the model comes from | **Hybrid.** Prebuilt specimen files for instant loading, plus a live mode that runs an engine in the browser where it matters |
 | Control | **On-screen keys, computer keys and Web MIDI** (notes and controllers; Chrome and Edge) |
 
@@ -123,6 +123,22 @@ level from section 4. Batch is build order.
 | 14 | **Foraging** | P | A cord-former searching soil for wood, live: quiet exploration, then the route to a find thickening and the rest dying back | 40K engine: flow, thickening, pruning | 2 | C |
 | 15 | **Combat Zone** | P | Two individuals meeting: two webs with different notes, the barrier forming between them | rival meetings, barrier, replacement | 2 | D |
 | 16 | **After Rain** | S | The burst of electrical activity after rain, spreading down from the surface | rain-driven excitation; soil wetting | 1, 2 | D |
+
+### Composers: the fungus plays itself
+
+Added at Matt's request. A composer takes a compositional idea from a mushroom process and plays
+the instruments with it. The composer decides the notes; any playable instrument sounds them
+(chosen on the page). Pitches are never a chosen scale: they are the network's own modes, or a
+position in the model. All six are built.
+
+| # | Composer | Emphasises | What decides the notes | Traces to |
+|---|---|---|---|---|
+| C1 | **Spike Canon** | rhythm and counterpoint | A chain of excitable units runs live; the tip fires on its own and the wave passes down the hypha, each firing a note | the electrical model, its coupling and recovery |
+| C2 | **Hyphal Walk** | melody | Walkers travel the network preferring thick cords; distance from the centre is pitch, stretch length is note length, cord thickness is loudness; a dead end is a rest | network shape and cord thickness |
+| C3 | **Tip Chorus** | texture and polyphony | The growth rule run live: voices multiply by branching at the species' rate and angle, and thin by fusion and crowding | branching kinetics, branch angle, fusion |
+| C4 | **Growth Form** | large-scale form | A whole growth run as one piece: tips give density, flow loudness, reserve note length; the register falls as the network's real modes fall | the model's growth curves and modes by stage |
+| C5 | **Season Cycle** | dynamics and the year | Activity by the species' temperature curve, rain bursts, a flush of mushrooms when autumn cools past its fruiting temperature, silence in winter | temperature response, fruiting trigger, cap expansion |
+| C6 | **Spore Scatter** | spread of intervals, change of key | Each note is a spore landing by the dispersal rule; a far spore can found a new individual and move the centre | spore dispersal and founding |
 
 ### Effects
 

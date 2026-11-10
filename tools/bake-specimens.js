@@ -54,7 +54,7 @@ for (const slug of list) {
   const spec = {
     format: 'mushroom-substrate.specimen/1', slug, name: sp.n, common: full.common_name || '', family: full.family, engine: '400k', seed: 1,
     colours: sp.c, fruit: { form: sp.f, size_cm: sp.z, trophic: full.ecology ? full.ecology.trophic : '' },
-    numbers: { tip_speed_um_h: sp.p[0], growth_unit_um: sp.p[1], branch_angle_deg: sp.p[2], t_opt_c: sp.p[19], spike_interval_min: sp.p[35], spike_amplitude_mv: sp.p[37], transport_um_h: sp.p[16], cord_max: sp.p[18] },
+    numbers: { tip_speed_um_h: sp.p[0], growth_unit_um: sp.p[1], branch_angle_deg: sp.p[2], branch_angle_sd_deg: sp.p[3], fusion_probability: sp.p[6], density_cap: sp.p[7], t_opt_c: sp.p[19], t_min_c: sp.p[20], t_max_c: sp.p[21], cold_drop_c: sp.p[26], spike_interval_min: sp.p[35], spike_amplitude_mv: sp.p[37], transport_um_h: sp.p[16], cord_max: sp.p[18] },
     grown: { days: r(rec.meta.growth_seconds / 86400, 100), segments: rec.meta.segments, size_mm: [W / 1000, rec.meta.size[1] / 1000] },
     stages,
     wavetable: { frames: wt.frames.length, harmonics: H, amps: wt.amps.map((a) => Array.from(a.subarray(0, H), (v) => r(v, 10000))), phases: wt.phases.map((p) => Array.from(p.subarray(0, H), (v) => r(v, 100))) },

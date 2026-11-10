@@ -38,3 +38,14 @@ export class Bank {
 export const soften = (L, R, gain = 1) => { for (let i = 0; i < L.length; i++) { const a = L[i] * gain, b = R[i] * gain; L[i] = a / (1 + Math.abs(a)); R[i] = b / (1 + Math.abs(b)) } }
 // the stage of growth for a 0..1 position, and its neighbour, with the blend between them
 export const stageAt = (spec, pos) => { const n = spec.stages.length - 1, x = clamp(pos, 0, 1) * n, a = Math.min(n, x | 0); return [spec.stages[a], spec.stages[Math.min(n, a + 1)], x - a, a] }
+
+// The network's own notes: the ratios of its modes to its lowest, at a stage of growth, as steps in
+// semitones above the lowest. This is the only pitch material the composers use; no scale is chosen.
+export const ownNotes = (spec, pos, count = 16) => { const [a] = stageAt(spec, pos), out = []; for (let i = 0; i < Math.min(count, a.hz.length); i++) out.push(12 * Math.log2(a.hz[i] / a.hz[0])); return out }
+// Holds the notes a composer has started and ends each after its length. tick(n) returns what is due.
+export class Notes {
+  constructor() { this.live = []; this.out = [] }
+  play(key, vel, samples) { this.out.push({ on: key, vel }); this.live.push([key, samples]) }
+  tick(n) { const out = this.out; this.out = []; for (let i = this.live.length; i--;) if ((this.live[i][1] -= n) <= 0) { out.push({ off: this.live[i][0] }); this.live.splice(i, 1) } return out }
+  count() { return this.live.length }
+}

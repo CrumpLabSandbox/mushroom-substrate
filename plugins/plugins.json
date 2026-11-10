@@ -1,24 +1,208 @@
 [
-  { "id": "hyphal-harp", "name": "Hyphal Harp", "family": "instrument", "kind": "P", "built": true, "blurb": "Pluck the network. The web of hyphae is resized to the key you play, and its own modes give the tone." },
-  { "id": "rain-on-caps", "name": "Rain on Caps", "family": "atmosphere", "kind": "P", "built": true, "blurb": "A square metre of mushrooms in real rain, in real time. Every cap rings at its size." },
-  { "id": "mycelium-reverb", "name": "Mycelium Reverb", "family": "effect", "kind": "P", "built": true, "blurb": "The room is a fungus: your sound shakes the network and you hear it ring." },
-  { "id": "cap-drums", "name": "Cap Drums", "family": "instrument", "kind": "P", "blurb": "Each key is a cap of a different size, struck by a raindrop. The fruit form sets the overtones." },
-  { "id": "spike-table", "name": "Spike Table", "family": "instrument", "kind": "S", "blurb": "A wavetable of electrode voltage, one cycle per stage of growth, scanned as you hold a note." },
-  { "id": "coupled-spikes", "name": "Coupled Spikes", "family": "instrument", "kind": "S", "blurb": "The electrical model itself as the oscillator: excitable units coupled as hyphae are, at audio rate." },
-  { "id": "turgor-bow", "name": "Turgor Bow", "family": "instrument", "kind": "P", "blurb": "The web bowed by the pulsing of its own growing tips." },
-  { "id": "rhizomorph-bass", "name": "Rhizomorph Bass", "family": "instrument", "kind": "P", "blurb": "One long cord as a string with thick and thin stretches." },
-  { "id": "fairy-ring", "name": "Fairy Ring", "family": "instrument", "kind": "P", "blurb": "A wave travelling round a ring that grows year by year." },
-  { "id": "gill-comb", "name": "Gill Comb", "family": "instrument", "kind": "P", "blurb": "The gills as a row of thin plates: a comb of resonances that widens as the cap opens." },
-  { "id": "forest-floor", "name": "Forest Floor", "family": "atmosphere", "kind": "P", "blurb": "A colony growing live: the web struck by its own growth, caps forming, rain, seasons." },
-  { "id": "spore-cloud", "name": "Spore Cloud", "family": "atmosphere", "kind": "P/S", "blurb": "The hiss of tens of thousands of spores a second leaving a cap." },
-  { "id": "spike-chord", "name": "Spike Chord", "family": "atmosphere", "kind": "S", "blurb": "Several species' measured spike intervals under one speed-up become one chord." },
-  { "id": "decay", "name": "Decay", "family": "atmosphere", "kind": "P", "blurb": "A fallen log over years, as a wooden bar whose stiffness and weight fall as it rots." },
-  { "id": "foraging", "name": "Foraging", "family": "atmosphere", "kind": "P", "blurb": "A cord-former searching soil for wood, live." },
-  { "id": "combat-zone", "name": "Combat Zone", "family": "atmosphere", "kind": "P", "blurb": "Two individuals meeting: two webs with different notes and the barrier between them." },
-  { "id": "after-rain", "name": "After Rain", "family": "atmosphere", "kind": "S", "blurb": "The burst of electrical activity after rain, spreading down from the surface." },
-  { "id": "cord-delay", "name": "Cord Delay", "family": "effect", "kind": "P", "blurb": "Echoes that travel the cords, reflecting where thick meets thin." },
-  { "id": "excitable-gate", "name": "Excitable Gate", "family": "effect", "kind": "S", "blurb": "A gate that fires like an excitable cell and must recover before it fires again." },
-  { "id": "spore-granulator", "name": "Spore Granulator", "family": "effect", "kind": "M", "blurb": "Cuts your sound into grains thrown like spores." },
-  { "id": "rot-filter", "name": "Rot Filter", "family": "effect", "kind": "M", "blurb": "Resonances that drift down and blur as decay proceeds." },
-  { "id": "soil-filter", "name": "Soil Filter", "family": "effect", "kind": "P", "blurb": "Sound heard through soil: duller with depth and wetness." }
+  {
+    "id": "hyphal-harp",
+    "name": "Hyphal Harp",
+    "family": "instrument",
+    "kind": "P",
+    "built": true,
+    "blurb": "Pluck the network. The web of hyphae is resized to the key you play, and its own modes give the tone."
+  },
+  {
+    "id": "rain-on-caps",
+    "name": "Rain on Caps",
+    "family": "atmosphere",
+    "kind": "P",
+    "built": true,
+    "blurb": "A square metre of mushrooms in real rain, in real time. Every cap rings at its size."
+  },
+  {
+    "id": "mycelium-reverb",
+    "name": "Mycelium Reverb",
+    "family": "effect",
+    "kind": "P",
+    "built": true,
+    "blurb": "The room is a fungus: your sound shakes the network and you hear it ring."
+  },
+  {
+    "id": "cap-drums",
+    "name": "Cap Drums",
+    "family": "instrument",
+    "kind": "P",
+    "blurb": "Each key is a cap of a different size, struck by a raindrop. The fruit form sets the overtones.",
+    "built": true
+  },
+  {
+    "id": "spike-table",
+    "name": "Spike Table",
+    "family": "instrument",
+    "kind": "S",
+    "blurb": "A wavetable of electrode voltage, one cycle per stage of growth, scanned as you hold a note."
+  },
+  {
+    "id": "coupled-spikes",
+    "name": "Coupled Spikes",
+    "family": "instrument",
+    "kind": "S",
+    "blurb": "The electrical model itself as the oscillator: excitable units coupled as hyphae are, at audio rate."
+  },
+  {
+    "id": "turgor-bow",
+    "name": "Turgor Bow",
+    "family": "instrument",
+    "kind": "P",
+    "blurb": "The web bowed by the pulsing of its own growing tips."
+  },
+  {
+    "id": "rhizomorph-bass",
+    "name": "Rhizomorph Bass",
+    "family": "instrument",
+    "kind": "P",
+    "blurb": "One long cord as a string with thick and thin stretches."
+  },
+  {
+    "id": "fairy-ring",
+    "name": "Fairy Ring",
+    "family": "instrument",
+    "kind": "P",
+    "blurb": "A wave travelling round a ring that grows year by year."
+  },
+  {
+    "id": "gill-comb",
+    "name": "Gill Comb",
+    "family": "instrument",
+    "kind": "P",
+    "blurb": "The gills as a row of thin plates: a comb of resonances that widens as the cap opens."
+  },
+  {
+    "id": "forest-floor",
+    "name": "Forest Floor",
+    "family": "atmosphere",
+    "kind": "P",
+    "blurb": "A colony growing live: the web struck by its own growth, caps forming, rain, seasons."
+  },
+  {
+    "id": "spore-cloud",
+    "name": "Spore Cloud",
+    "family": "atmosphere",
+    "kind": "P/S",
+    "blurb": "The hiss of tens of thousands of spores a second leaving a cap."
+  },
+  {
+    "id": "spike-chord",
+    "name": "Spike Chord",
+    "family": "atmosphere",
+    "kind": "S",
+    "blurb": "Several species' measured spike intervals under one speed-up become one chord."
+  },
+  {
+    "id": "decay",
+    "name": "Decay",
+    "family": "atmosphere",
+    "kind": "P",
+    "blurb": "A fallen log over years, as a wooden bar whose stiffness and weight fall as it rots."
+  },
+  {
+    "id": "foraging",
+    "name": "Foraging",
+    "family": "atmosphere",
+    "kind": "P",
+    "blurb": "A cord-former searching soil for wood, live."
+  },
+  {
+    "id": "combat-zone",
+    "name": "Combat Zone",
+    "family": "atmosphere",
+    "kind": "P",
+    "blurb": "Two individuals meeting: two webs with different notes and the barrier between them."
+  },
+  {
+    "id": "after-rain",
+    "name": "After Rain",
+    "family": "atmosphere",
+    "kind": "S",
+    "blurb": "The burst of electrical activity after rain, spreading down from the surface."
+  },
+  {
+    "id": "cord-delay",
+    "name": "Cord Delay",
+    "family": "effect",
+    "kind": "P",
+    "blurb": "Echoes that travel the cords, reflecting where thick meets thin."
+  },
+  {
+    "id": "excitable-gate",
+    "name": "Excitable Gate",
+    "family": "effect",
+    "kind": "S",
+    "blurb": "A gate that fires like an excitable cell and must recover before it fires again."
+  },
+  {
+    "id": "spore-granulator",
+    "name": "Spore Granulator",
+    "family": "effect",
+    "kind": "M",
+    "blurb": "Cuts your sound into grains thrown like spores."
+  },
+  {
+    "id": "rot-filter",
+    "name": "Rot Filter",
+    "family": "effect",
+    "kind": "M",
+    "blurb": "Resonances that drift down and blur as decay proceeds."
+  },
+  {
+    "id": "soil-filter",
+    "name": "Soil Filter",
+    "family": "effect",
+    "kind": "P",
+    "blurb": "Sound heard through soil: duller with depth and wetness."
+  },
+  {
+    "id": "spike-canon",
+    "name": "Spike Canon",
+    "family": "composer",
+    "kind": "S",
+    "built": true,
+    "blurb": "Rhythm and counterpoint: a chain of excitable units fires down the hypha, each firing a note."
+  },
+  {
+    "id": "hyphal-walk",
+    "name": "Hyphal Walk",
+    "family": "composer",
+    "kind": "S",
+    "built": true,
+    "blurb": "Melody: walkers travel the network, preferring thick cords. Distance from the centre is pitch."
+  },
+  {
+    "id": "tip-chorus",
+    "name": "Tip Chorus",
+    "family": "composer",
+    "kind": "S",
+    "built": true,
+    "blurb": "Texture: the growth rule run live. Voices multiply by branching and thin by fusion."
+  },
+  {
+    "id": "growth-form",
+    "name": "Growth Form",
+    "family": "composer",
+    "kind": "S",
+    "built": true,
+    "blurb": "Large-scale form: a whole growth run played as one piece, its register falling as the network grows."
+  },
+  {
+    "id": "season-cycle",
+    "name": "Season Cycle",
+    "family": "composer",
+    "kind": "S",
+    "built": true,
+    "blurb": "The year: activity by temperature, rain, a flush of mushrooms in autumn, silence in winter."
+  },
+  {
+    "id": "spore-scatter",
+    "name": "Spore Scatter",
+    "family": "composer",
+    "kind": "S",
+    "built": true,
+    "blurb": "Interval spread: each note is a spore landing, and a far one can found a new centre."
+  }
 ]

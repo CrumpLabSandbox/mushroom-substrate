@@ -2,13 +2,15 @@
 // calls start({ ... }). The kit supplies the species presets, the parameter panel with each control's
 // trace, the keyboard (pointer, computer keys, Web MIDI with controller learn), input sources for
 // effects, the level scope, and the drawing loop. The sound runs in the plugin's own worklet.
+import { PLAYABLE } from './playable.js'
 const KINDS = { P: 'physical model', S: 'model signal', M: 'model as modulator' }
 const el = (tag, attrs = {}, html = '') => { const e = document.createElement(tag); for (const k in attrs) e.setAttribute(k, attrs[k]); e.innerHTML = html; return e }
 
 export async function start(def) {
   const app = document.getElementById('app'), q = new URLSearchParams(location.hash.slice(1)), P = {}
   for (const p of def.params) P[p.id] = q.has(p.id) ? +q.get(p.id) : p.value
-  let spec = null, ctx = null, node = null, view = null, analyser = null, inputNode = null, learn = null
+  let spec = null, ctx = null, node = null, view = null, iview = null, analyser = null, inputNode = null, learn = null, inst = null
+  const IP = {} // the played instrument's own settings, when this is a composer
   const midiMap = JSON.parse(localStorage.getItem('midi-' + def.id) || '{}')
 
   app.innerHTML = `<nav><a href="../">All plugins</a> · <a href="../../">Mushroom Substrate</a></nav>
@@ -22,26 +24,51 @@ export async function start(def) {
       <div class="panel"><button id="power">Turn sound on</button><span id="state" class="hint"></span>
         <label><b>Species</b><select id="species"></select><small id="spinfo"></small></label>
         ${def.input ? '<label><b>Sound going in</b><select id="source"><option value="clicks">clicks, one a second<option value="noise">bursts of noise<option value="tone">a low sawtooth note<option value="file">a sound file…<option value="mic">the microphone</select><input id="file" type="file" accept="audio/*" hidden></label>' : ''}
-        <div id="params"></div></div>
+        ${def.composer ? '<label><b>Played on</b><select id="inst"></select><small>The composer decides the notes; this instrument sounds them.</small></label>' : ''}
+        <div id="params"></div>${def.composer ? '<h2 style="margin-top:18px">The instrument</h2><div id="iparams"></div>' : ''}</div>
     </div></div>
     <h2>What this traces to</h2><div class="panel"><table id="trace"><tr><th>Control</th><th>Mushroom process or measurement</th><th>Standing</th></tr></table></div>
     <h2>What is assumed</h2><p class="lede">${def.assumed}</p>`
 
   // ---- parameters
   const post = m => node && node.port.postMessage(m)
-  const show = p => { const v = P[p.id]; return (p.show ? p.show(v) : (Math.abs(v) >= 100 ? v.toFixed(0) : +v.toFixed(2))) + (p.unit ? ' ' + p.unit : '') }
-  const saveHash = () => { const s = new URLSearchParams(); s.set('s', $('species').value); for (const p of def.params) s.set(p.id, +P[p.id].toFixed(4)); history.replaceState(null, '', '#' + s) }
+  const saveHash = () => { const s = new URLSearchParams(); s.set('s', $('species').value); def.composer && $('inst').value && s.set('on', $('inst').value); for (const p of def.params) s.set(p.id, +P[p.id].toFixed(4)); history.replaceState(null, '', '#' + s) }
   const $ = id => document.getElementById(id)
-  for (const p of def.params) {
-    const l = el('label', {}, `<b>${p.label}</b><span class="midi" title="Click, then move a MIDI controller">MIDI</span><span class="val"></span><input type="range" min="${p.min}" max="${p.max}" step="${p.step || (p.max - p.min) / 200}" value="${P[p.id]}">${p.note ? `<small>${p.note}</small>` : ''}`)
+  const addParam = (p, store, into, key, all) => {
+    const l = el('label', {}, `<b>${p.label}</b><span class="midi" title="Click, then move a MIDI controller">MIDI</span><span class="val"></span><input type="range" min="${p.min}" max="${p.max}" step="${p.step || (p.max - p.min) / 200}" value="${store[p.id]}">${p.note ? `<small>${p.note}</small>` : ''}`)
     const input = l.querySelector('input'), val = l.querySelector('.val'), midi = l.querySelector('.midi')
-    val.textContent = show(p); p.input = input; p.val = val
-    input.oninput = () => { P[p.id] = +input.value; val.textContent = show(p); post({ set: { [p.id]: P[p.id] } }); saveHash() }
-    midi.onclick = e => { e.preventDefault(); learn = learn == p.id ? null : p.id; document.querySelectorAll('.midi').forEach(m => m.classList.remove('learn')); learn && midi.classList.add('learn') }
-    $('params').appendChild(l)
+    const text = () => (p.show ? p.show(store[p.id]) : (Math.abs(store[p.id]) >= 100 ? store[p.id].toFixed(0) : +store[p.id].toFixed(2))) + (p.unit ? ' ' + p.unit : '')
+    val.textContent = text(); p.input = input; p.val = val
+    input.oninput = () => { store[p.id] = +input.value; val.textContent = text(); post({ [key]: { [p.id]: store[p.id] } }); key == 'set' && saveHash() }
+    midi.onclick = e => { e.preventDefault(); learn = learn == p ? null : p; document.querySelectorAll('.midi').forEach(m => m.classList.remove('learn')); learn && midi.classList.add('learn') }
+    into.appendChild(l); all.push(p)
+  }
+  const controls = [] // every slider on the page, for MIDI controllers
+  for (const p of def.params) {
+    addParam(p, P, $('params'), 'set', controls)
     $('trace').appendChild(el('tr', {}, `<td>${p.label}</td><td>${p.trace}</td><td>${p.standing || 'assumed'}</td>`))
   }
   for (const t of def.traces || []) $('trace').appendChild(el('tr', {}, `<td>${t[0]}</td><td>${t[1]}</td><td>${t[2]}</td>`))
+
+  // ---- the instrument a composer plays
+  const makeNode = () => {
+    if (node) node.disconnect()
+    node = new AudioWorkletNode(ctx, def.id, { numberOfInputs: def.input ? 1 : 0, outputChannelCount: [2], processorOptions: { instrument: inst && inst.id } })
+    node.connect(analyser); node.port.onmessage = e => { if (e.data.view) { view = e.data.view; iview = e.data.iview } }
+    post({ load: spec }); post({ set: P }); inst && post({ iset: IP })
+  }
+  const pickInstrument = async () => {
+    inst = (await import('../' + $('inst').value + '/def.js')).def
+    $('iparams').innerHTML = ''; for (const k in IP) delete IP[k]
+    controls.splice(def.params.length)
+    for (const p of inst.params) { IP[p.id] = p.value; addParam({ ...p }, IP, $('iparams'), 'iset', controls) }
+    if (ctx) makeNode()
+  }
+  if (def.composer) {
+    for (const id of PLAYABLE) { const d = (await import('../' + id + '/def.js')).def; $('inst').add(new Option(d.name, id)) }
+    $('inst').value = q.get('on') || def.instrument || PLAYABLE[0]; $('inst').onchange = pickInstrument
+    await pickInstrument()
+  }
 
   // ---- species presets
   const list = await (await fetch('../specimens/index.json')).json()
@@ -59,10 +86,8 @@ export async function start(def) {
   const power = async () => {
     if (ctx) { ctx.state == 'running' ? await ctx.suspend() : await ctx.resume(); $('power').textContent = ctx.state == 'running' ? 'Turn sound off' : 'Turn sound on'; return }
     ctx = new AudioContext(); await ctx.audioWorklet.addModule('worklet.js')
-    node = new AudioWorkletNode(ctx, def.id, { numberOfInputs: def.input ? 1 : 0, outputChannelCount: [2] })
-    analyser = ctx.createAnalyser(); analyser.fftSize = 2048; node.connect(analyser); analyser.connect(ctx.destination)
-    node.port.onmessage = e => { if (e.data.view) view = e.data.view }
-    post({ load: spec }); post({ set: P })
+    analyser = ctx.createAnalyser(); analyser.fftSize = 2048; analyser.connect(ctx.destination)
+    makeNode()
     if (def.input) source($('source').value)
     $('power').textContent = 'Turn sound off'; $('state').textContent = ''
   }
@@ -113,8 +138,8 @@ export async function start(def) {
       if (cmd == 0x90 && b > 0) def.keys && noteOn(a, b / 127)
       else if (cmd == 0x80 || (cmd == 0x90 && b == 0)) def.keys && noteOff(a)
       else if (cmd == 0xb0) {
-        if (learn) { midiMap[a] = learn; localStorage.setItem('midi-' + def.id, JSON.stringify(midiMap)); learn = null; document.querySelectorAll('.midi').forEach(m => m.classList.remove('learn')) }
-        const p = def.params.find(p => p.id == midiMap[a]); if (p) { p.input.value = p.min + (p.max - p.min) * b / 127; p.input.oninput() }
+        if (learn) { midiMap[a] = controls.indexOf(learn); localStorage.setItem('midi-' + def.id, JSON.stringify(midiMap)); learn = null; document.querySelectorAll('.midi').forEach(m => m.classList.remove('learn')) }
+        const p = controls[midiMap[a]]; if (p) { p.input.value = p.min + (p.max - p.min) * b / 127; p.input.oninput() }
       }
     })
     hook(); access.onstatechange = hook
@@ -124,7 +149,7 @@ export async function start(def) {
   const cv = $('view'), g = cv.getContext('2d'), sc = $('scope'), sg = sc.getContext('2d'), wave = new Float32Array(2048)
   const frame = t => {
     g.clearRect(0, 0, cv.width, cv.height)
-    if (spec) def.draw(g, cv.width, cv.height, { spec, params: P, view, t: t / 1000 })
+    if (spec) def.draw(g, cv.width, cv.height, { spec, params: P, view, iview, t: t / 1000 })
     sg.clearRect(0, 0, sc.width, sc.height)
     if (analyser) { analyser.getFloatTimeDomainData(wave); sg.beginPath(); for (let i = 0; i < 960; i++) sg.lineTo(i, 64 - wave[i * 2] * 60); sg.strokeStyle = '#d2a866'; sg.lineWidth = 2; sg.stroke() }
     requestAnimationFrame(frame)

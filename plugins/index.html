@@ -28,7 +28,7 @@
   <a href="https://github.com/CrumpLabSandbox/mushroom-substrate/blob/main/docs/PLUGINS.md">docs/PLUGINS.md</a>.</p>
 </main>
 <script type="module">
-  const KINDS = { P: 'physical model', S: 'model signal', M: 'model as modulator' }, FAMILIES = [['instrument', 'Playable instruments'], ['atmosphere', 'Atmospheres'], ['effect', 'Effects']]
+  const KINDS = { P: 'physical model', S: 'model signal', M: 'model as modulator' }, FAMILIES = [['composer', 'Composers: the fungus plays itself'], ['instrument', 'Playable instruments'], ['atmosphere', 'Atmospheres'], ['effect', 'Effects']]
   const all = await (await fetch('plugins.json')).json(), on = { built: false }
   const filters = document.getElementById('filters'), list = document.getElementById('list')
   filters.innerHTML = `<span>${all.filter(p => p.built).length} built of ${all.length} planned</span><label><input type="checkbox" id="built"> only the ones built</label>`

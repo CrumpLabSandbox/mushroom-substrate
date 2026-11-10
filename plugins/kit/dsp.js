@@ -49,3 +49,9 @@ export class Notes {
   tick(n) { const out = this.out; this.out = []; for (let i = this.live.length; i--;) if ((this.live[i][1] -= n) <= 0) { out.push({ off: this.live[i][0] }); this.live.splice(i, 1) } return out }
   count() { return this.live.length }
 }
+
+// One excitable unit of the engines' electrical model (FitzHugh-Nagumo), stepped fast enough to be heard.
+// cycles(drive) is how many of the model's time units one cycle takes at a given drive, measured from the
+// model itself (docs/research/04 and a numerical check), so that a unit can be tuned to a pitch.
+export const fhnCycle = drive => { const T = [[.34, 46.5], [.35, 45.7], [.5, 39.8], [.8, 36.9], [1.2, 39.1], [1.35, 40.5]]; if (drive <= T[0][0]) return T[0][1]; for (let i = 1; i < T.length; i++) if (drive <= T[i][0]) { const [a, b] = [T[i - 1], T[i]]; return a[1] + (b[1] - a[1]) * (drive - a[0]) / (b[0] - a[0]) } return T[T.length - 1][1] }
+export const fhnStep = (v, w, i, h, drive, pull) => { const a = v[i]; let x = a + h * (a - a * a * a / 3 - w[i] + drive + pull); v[i] = x < -2.5 ? -2.5 : x > 2.5 ? 2.5 : x; w[i] += h * .08 * (a + .7 - .8 * w[i]) }

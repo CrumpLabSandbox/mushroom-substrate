@@ -36,14 +36,16 @@
     "name": "Spike Table",
     "family": "instrument",
     "kind": "S",
-    "blurb": "A wavetable of electrode voltage, one cycle per stage of growth, scanned as you hold a note."
+    "blurb": "A wavetable of electrode voltage, one cycle per stage of growth, scanned as you hold a note.",
+    "built": true
   },
   {
     "id": "coupled-spikes",
     "name": "Coupled Spikes",
     "family": "instrument",
     "kind": "S",
-    "blurb": "The electrical model itself as the oscillator: excitable units coupled as hyphae are, at audio rate."
+    "blurb": "The electrical model itself as the oscillator: excitable units coupled as hyphae are, at audio rate.",
+    "built": true
   },
   {
     "id": "turgor-bow",
@@ -84,15 +86,17 @@
     "id": "spore-cloud",
     "name": "Spore Cloud",
     "family": "atmosphere",
-    "kind": "P/S",
-    "blurb": "The hiss of tens of thousands of spores a second leaving a cap."
+    "kind": "P",
+    "blurb": "The hiss of tens of thousands of spores a second leaving a cap.",
+    "built": true
   },
   {
     "id": "spike-chord",
     "name": "Spike Chord",
     "family": "atmosphere",
     "kind": "S",
-    "blurb": "Several species' measured spike intervals under one speed-up become one chord."
+    "blurb": "Several species' measured spike intervals under one speed-up become one chord.",
+    "built": true
   },
   {
     "id": "decay",
@@ -127,7 +131,8 @@
     "name": "Cord Delay",
     "family": "effect",
     "kind": "P",
-    "blurb": "Echoes that travel the cords, reflecting where thick meets thin."
+    "blurb": "Echoes that travel the cords, reflecting where thick meets thin.",
+    "built": true
   },
   {
     "id": "excitable-gate",

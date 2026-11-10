@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wavetable</title>
+<link rel="stylesheet" href="site.css">
+<style>
+  nav { margin-bottom: 20px; font-size: .92rem; }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin: 0 0 16px; }
+  .grid { display: grid; gap: 12px 16px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  label { display: block; font-size: .85rem; color: var(--muted); }
+  label.in { display: flex; gap: 8px; align-items: center; color: var(--fg); font-size: .95rem; margin-top: 22px; }
+  select, input[type=number] { font: inherit; width: 100%; margin-top: 4px; padding: 5px 8px; background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; }
+  input[type=range] { width: 100%; margin-top: 8px; }
+  button { font: inherit; padding: 8px 16px; border-radius: 6px; border: 1px solid var(--accent); background: var(--accent); color: var(--bg); cursor: pointer; margin: 0 8px 8px 0; }
+  button.quiet { background: transparent; color: var(--accent); }
+  button:disabled { opacity: .45; cursor: default; }
+  #fall { width: 100%; height: 320px; display: block; border-radius: 6px; background: #14110c; margin: 10px 0; }
+  progress { width: 100%; height: 8px; margin-top: 10px; }
+  .cap { font-size: .86rem; color: var(--muted); }
+  #keys { display: flex; height: 110px; margin: 12px 0 4px; user-select: none; touch-action: none; position: relative; }
+  #keys div { flex: 1; border: 1px solid var(--line); border-radius: 0 0 5px 5px; background: #f6f1e4; margin-right: -1px; cursor: pointer; }
+  #keys div.b { flex: 0 0 0; position: relative; border: 0; }
+  #keys div.b i { position: absolute; left: -11px; top: 0; width: 22px; height: 66px; background: #23201a; border-radius: 0 0 4px 4px; z-index: 2; display: block; }
+  #keys div.on, #keys div.b.on i { background: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <nav><a href="./">Mushroom Substrate</a></nav>
+  <h1>Wavetable</h1>
+  <p class="lede">A morphing wavetable cut from a network's electrical activity. Each frame is one cycle of the voltage
+  between two electrodes, and the 64 frames run from the start of the network's growth to its end. Play it here, or save
+  it for a wavetable synthesiser.</p>
+
+  <div class="panel">
+    <div class="grid">
+      <label>Species <select id="sp"></select></label>
+      <label>Electrical model <select id="model"><option value="2">excitable network<option value="1">integrate and fire</select></label>
+      <label>Seed <input id="seed" type="number" value="1"></label>
+      <label>Growth <select id="steps"><option value="64">short<option value="128" selected>medium<option value="256">long</select></label>
+    </div>
+    <p style="margin:14px 0 0"><button id="go">Grow and cut a table</button><span id="status" class="muted"></span></p>
+    <progress id="bar" value="0" max="1" hidden></progress>
+  </div>
+
+  <div class="panel" id="player" hidden>
+    <canvas id="fall" width="1400" height="640"></canvas>
+    <div class="cap">The 64 frames, earliest growth at the back, latest at the front. The bright one is playing.</div>
+    <div id="keys"></div>
+    <div class="cap">Click or touch the keys, or type A W S E D F T G Y H U J K.</div>
+    <div class="grid" style="margin-top:12px">
+      <label>Position in the table (stage of growth) <input id="pos" type="range" min="0" max="1" step=".001" value="0"></label>
+      <label>Voltage between <select id="pair"><option value="0,1">electrodes 1 and 2<option value="0,2">electrodes 1 and 3<option value="0,3">electrodes 1 and 4<option value="1,3">electrodes 2 and 4<option value="0,-1">electrode 1 on its own</select></label>
+      <label>Release <input id="rel" type="range" min=".05" max="3" step=".05" value=".5"></label>
+      <label class="in"><input id="sweep" type="checkbox" checked> sweep through growth every 8 seconds</label>
+    </div>
+    <p style="margin:14px 0 0"><button id="dl">Save the wavetable (WAV)</button><button id="dlj" class="quiet">Save its harmonics (JSON)</button></p>
+    <p id="says" class="cap" style="margin:8px 0 0"></p>
+  </div>
+
+  <h2>What this is</h2>
+  <p>The engine's electrical model is a set of coupled oscillators along the hyphae, with the growing tips running
+  slightly fast. Two electrodes on the network drift in and out of step as it grows, so the voltage between them changes
+  shape. One cycle is cut out at each of 64 stages of growth, closed into a loop, and reduced to its first 512
+  harmonics. Scanning the table replays that change of shape; the note you play sets the pitch.</p>
+  <p>This is not physical modelling, and it is kept apart from the <a href="listen.html">listening page</a> for that
+  reason: the model's voltage is used directly as an oscillator's shape. The cycle really lasts minutes to hours, and the
+  spike recordings behind the model are disputed.</p>
+
+  <h2>Using the files</h2>
+  <p>The WAV is 64 frames of 2,048 samples end to end, with the marker that Serum and Vital read for the frame size.
+  In Ableton's Wavetable, drop it on an oscillator and set the import to 2,048 samples if it asks. The JSON holds each
+  frame as 512 harmonic amplitudes and phases, the same shape SynthLand's wavetable engine stores its own tables in; it
+  would still need importing there.</p>
+</main>
+<script src="sound/wavetable.js"></script>
+<script>
+  const $ = (id) => document.getElementById(id);
+  let rec, wt, ctx, node, species = {}, playPos = 0, t0 = performance.now();
+  fetch('engines/400k/list.json').then((r) => r.json()).then((list) => {
+    for (const [slug, name, common] of list) $('sp').add(new Option(name + (common ? ' (' + common + ')' : ''), slug));
+    $('sp').value = new URLSearchParams(location.search).get('s') || 'phanerochaete-velutina';
+  });
+  $('go').onclick = async () => {
+    $('go').disabled = true; $('bar').hidden = false; $('bar').value = 0; $('status').textContent = 'growing…';
+    const sp = await (await fetch(`engines/400k/species/${$('sp').value}.json`)).json(); species = sp;
+    const w = new Worker('sound/worker.js');
+    w.onmessage = (e) => {
+      if (e.data.progress) { $('bar').value = e.data.progress; return; }
+      rec = e.data.rec; w.terminate(); $('go').disabled = false; $('bar').hidden = true; $('player').hidden = false; $('status').textContent = '';
+      cut();
+    };
+    w.postMessage({ tier: '400k', inds: [{ id: sp.id, p: sp.p }], seed: +$('seed').value, scn: sp.s, opt: { steps: +$('steps').value, listen: 640, set: { weather: 0, emode: +$('model').value } } });
+  };
+  function cut() {
+    const [a, b] = $('pair').value.split(',').map(Number);
+    wt = wavetable(rec, { a, b });
+    $('says').innerHTML = `<i>${species.n}</i>: ${wt.frames.length} frames from ${wt.meta.growth_days.toFixed(1)} days of growth. ` +
+      (wt.meta.frames_from_one_electrode ? `${wt.meta.frames_from_one_electrode} frames use one electrode alone, because the two were exactly in step. ` : '') +
+      `One cycle really lasts about ${wt.meta.spike_interval_minutes} minutes.`;
+    if (node) node.port.postMessage({ levels: wavetableMips(wt), frames: wt.frames.length, size: wt.size, harmonics: wt.harmonics });
+    draw();
+  }
+  $('pair').onchange = cut;
+  async function audio() {
+    if (ctx) return;
+    ctx = new AudioContext(); await ctx.audioWorklet.addModule('sound/wt-worklet.js');
+    node = new AudioWorkletNode(ctx, 'wavetable', { outputChannelCount: [2] }); node.connect(ctx.destination);
+    node.port.onmessage = (e) => { playPos = e.data.pos; };
+    node.port.postMessage({ levels: wavetableMips(wt), frames: wt.frames.length, size: wt.size, harmonics: wt.harmonics });
+    node.port.postMessage({ attack: .01, release: +$('rel').value });
+  }
+  $('rel').onchange = () => node && node.port.postMessage({ attack: .01, release: +$('rel').value });
+  $('pos').oninput = () => { $('sweep').checked = false; node ? node.port.postMessage({ pos: +$('pos').value }) : (playPos = +$('pos').value); };
+
+  // keyboard: two octaves from C3
+  const NAMES = 'awsedftgyhujk', black = [1, 3, 6, 8, 10];
+  for (let k = 0; k < 25; k++) { const d = document.createElement('div'); d.dataset.k = k; if (black.includes(k % 12)) { d.className = 'b'; d.innerHTML = '<i></i>'; } $('keys').appendChild(d); }
+  const hz = (k) => 130.8128 * Math.pow(2, k / 12), el = (k) => $('keys').children[k];
+  async function on(k) { await audio(); ctx.resume(); node.port.postMessage({ on: hz(k), key: k }); el(k) && el(k).classList.add('on'); }
+  function off(k) { node && node.port.postMessage({ off: k }); el(k) && el(k).classList.remove('on'); }
+  let held = null;
+  const keyAt = (e) => { const t = document.elementFromPoint(e.clientX, e.clientY), d = t && t.closest('#keys > div'); return d ? +d.dataset.k : null; };
+  $('keys').onpointerdown = (e) => { held = keyAt(e); held != null && on(held); $('keys').setPointerCapture(e.pointerId); };
+  $('keys').onpointermove = (e) => { if (held == null) return; const k = keyAt(e); if (k != null && k != held) { off(held); held = k; on(k); } };
+  $('keys').onpointerup = $('keys').onpointercancel = () => { held != null && off(held); held = null; };
+  const down = {};
+  addEventListener('keydown', (e) => { const k = NAMES.indexOf(e.key.toLowerCase()); if (k < 0 || down[k] || !wt || e.target.tagName == 'INPUT' || e.target.tagName == 'SELECT') return; down[k] = 1; on(k + 12); });
+  addEventListener('keyup', (e) => { const k = NAMES.indexOf(e.key.toLowerCase()); if (k < 0) return; down[k] = 0; off(k + 12); });
+
+  function draw() {
+    if (!wt) return;
+    const c = $('fall'), g = c.getContext('2d'), w = c.width, h = c.height, F = wt.frames.length, cur = Math.round(playPos * (F - 1));
+    g.clearRect(0, 0, w, h);
+    for (let f = 0; f < F; f++) {
+      const depth = 1 - f / (F - 1), x0 = 40 + depth * 160, y0 = h - 60 - depth * (h - 150), width = w - 240, amp = 48, fr = wt.frames[f];
+      g.beginPath(); for (let i = 0; i <= 256; i++) { const v = fr[Math.min(wt.size - 1, i * wt.size / 256 | 0)]; g.lineTo(x0 + i / 256 * width, y0 - v * amp); }
+      g.strokeStyle = f == cur ? '#f2c94c' : `rgba(233,220,188,${.18 + .5 * (1 - depth)})`; g.lineWidth = f == cur ? 3 : 1.2; g.stroke();
+    }
+  }
+  (function loop() {
+    if ($('sweep').checked && wt) { const p = ((performance.now() - t0) / 8000) % 2, pos = p < 1 ? p : 2 - p; $('pos').value = pos; node ? node.port.postMessage({ pos }) : (playPos = pos); }
+    draw(); requestAnimationFrame(loop);
+  })();
+  const save = (blob, name) => { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click(); };
+  $('dl').onclick = () => save(new Blob([wavetableWav(wt)], { type: 'audio/wav' }), `${species.id}-wavetable.wav`);
+  $('dlj').onclick = () => { const r = (a, d) => Array.from(a, (v) => Math.round(v * d) / d); save(new Blob([JSON.stringify({ format: 'mushroom-substrate.wavetable/1', name: species.n, slug: species.id, frames: wt.frames.length, frameSize: wt.size, harmonics: wt.harmonics, meta: wt.meta, amps: wt.amps.map((a) => r(a, 1e5)), phases: wt.phases.map((p) => r(p, 1e4)) })], { type: 'application/json' }), `${species.id}-wavetable.json`); };
+</script>
+</body>
+</html>

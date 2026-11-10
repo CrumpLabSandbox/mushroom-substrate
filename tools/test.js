@@ -127,6 +127,22 @@ for (const [tier, eng] of Object.entries(ENGINES)) {
   if (problems.length) failed = true;
   console.log(`${'sound/400k'.padEnd(28)} ${a.seconds} s  peak ${peak.toFixed(2)}  lowest note ${last.hz[0].toFixed(0)} Hz  heard: ${a.info.sources.map((s) => s.force + ' on ' + s.body).join(', ')}  ${problems.length ? 'FAIL: ' + problems.join('; ') : 'ok'}`);
 }
+// Wavetable: 64 frames of 2,048 samples, each finite, full scale, free of offset and closed into a loop; the WAV the right length
+{
+  const record = require(path.join(ROOT, 'sound/record.js')), { wavetable, wavetableWav, wavetableMips } = require(path.join(ROOT, 'sound/wavetable.js'));
+  const M = new Function(fs.readFileSync(path.join(ROOT, 'engines/400k/core.js'), 'utf8') + ';return M')();
+  const sp = JSON.parse(fs.readFileSync(path.join(ROOT, 'engines/400k/species/phanerochaete-velutina.json'), 'utf8'));
+  const wt = wavetable(record(M, [{ id: sp.id, p: sp.p }], 1, sp.s, { steps: 64, listen: 640, set: { weather: 0 } })), problems = [];
+  if (wt.frames.length !== 64) problems.push(wt.frames.length + ' frames');
+  for (const f of wt.frames) {
+    let pk = 0, dc = 0, bad = 0; for (const v of f) { if (!isFinite(v)) bad++; pk = Math.max(pk, Math.abs(v)); dc += v; }
+    if (bad || Math.abs(pk - 1) > 1e-3 || Math.abs(dc / f.length) > 1e-3 || Math.abs(f[0] - f[f.length - 1]) > 0.2) { problems.push('a frame is not finite, full scale, centred and closed'); break; }
+  }
+  if (wavetableWav(wt).byteLength < 64 * 2048 * 4) problems.push('the WAV is too short');
+  if (wavetableMips(wt).length !== 10) problems.push('band-limited copies missing');
+  if (problems.length) failed = true;
+  console.log(`${'wavetable/400k'.padEnd(28)} ${wt.frames.length} frames of ${wt.size}  ${problems.length ? 'FAIL: ' + problems.join('; ') : 'ok'}`);
+}
 console.log(`smoke runs passed: ${smoke}`);
 if (update) fs.writeFileSync(HASHES, JSON.stringify(next, null, 2) + '\n');
 process.exit(failed ? 1 : 0);

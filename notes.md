@@ -140,3 +140,8 @@
 - **All sounds must come from physical modelling.** No sound is assigned to an event. Matt rejected the event ticks, drone, data voices and music; they were removed.
 - A sound exists only if there is a body that can vibrate, a force the simulation says acted on it, and a microphone. Current bodies: the network as taut strings, and each cap as a plate. Current forces: growth, electrical spikes (assumed pressure pulse), spores leaving, rain.
 - Details and what is still not physical: [docs/SOUND.md](docs/SOUND.md).
+
+## Wavetables (2026-11-09, Matt's idea)
+- The voltage between two points on the network as a morphing wavetable: built as `wavetable.html`, `sound/wavetable.js` and `tools/make-wavetable.js`.
+- 64 frames of 2,048 samples, one cycle per stage of growth; same shape as SynthLand's wavetable engine. Exports WAV (Serum, Vital, Ableton) and harmonics JSON.
+- Kept separate from the physical-modelling sound, since it uses the voltage directly as an oscillator shape.

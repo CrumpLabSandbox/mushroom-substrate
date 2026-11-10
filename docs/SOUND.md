@@ -97,6 +97,34 @@ no delay.
   listed the sounds present, with no console errors.
 - **Nobody has listened to it.** It was built and checked by numbers and pictures only.
 
+## Wavetables (a separate thing, by Matt's suggestion)
+
+Matt's idea: the voltage between two points on the network could be a morphing wavetable for a
+wavetable synthesiser. It is built, and kept apart from everything above because it is **not
+physical modelling**: the model's voltage is used directly as an oscillator's shape.
+
+- `sound/wavetable.js` takes a recording and cuts one cycle of the voltage between two electrodes
+  at each of 64 stages of the network's growth. Each cycle is resampled to 2,048 samples, closed
+  into a loop (the second electrode need not repeat in exactly the first one's period), stripped of
+  its mean, reduced to its first 512 harmonics and brought to full scale. If the two electrodes
+  are exactly in step, so that their difference vanishes, that frame uses one electrode alone.
+- The frames change because the electrical model is a set of coupled oscillators with the growing
+  tips running slightly fast: two electrodes drift in and out of step as the network grows.
+  Scanning the table replays that change; the played note sets the pitch.
+- The shape is **64 frames × 2,048 samples, 512 harmonics a frame**, which is what SynthLand's
+  wavetable engine uses for its own tables (`engines/wavetable/tables.json` there).
+- `site/wavetable.html` grows a network, cuts the table, shows the frames, and plays it with a
+  small wavetable oscillator (band-limited copies, eight notes, a keyboard, a scan position that
+  can sweep through growth). The electrode pair and the electrical model can be changed.
+- Two downloads: a mono 32-bit float WAV with the frames end to end and the `clm ` marker Serum and
+  Vital read for the frame size; and a JSON with each frame's harmonic amplitudes and phases.
+- `node tools/make-wavetable.js 400k phanerochaete-velutina` does the same from the command line.
+
+What it is not: the cycle really lasts minutes to hours, the wave shape is the model's
+(FitzHugh-Nagumo or integrate-and-fire), not a recorded one, and the spike recordings behind the
+timing are disputed. The tables are fairly dark: most of the energy is in the first few
+harmonics. Nothing imports the JSON into SynthLand yet.
+
 ## Toward the SynthLand plugin
 
 The recorder, resonator and synthesiser are plain JavaScript with no page in them, and a recording

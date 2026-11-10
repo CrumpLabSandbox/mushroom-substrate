@@ -8,6 +8,8 @@ export const register = (name, create) => registerProcessor(name, class extends 
     this.port.onmessage = e => {
       const m = e.data, d = this.d
       if (m.load) d.load(m.load)
+      if (m.load2) d.load2 && d.load2(m.load2)
+      if (m.live) d.live && d.live(m.live)
       if (m.set) for (const k in m.set) d.set(k, m.set[k])
       if (m.on != null) d.noteOn && d.noteOn(m.on, m.vel == null ? .8 : m.vel)
       if (m.off != null) d.noteOff && d.noteOff(m.off)

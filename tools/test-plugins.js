@@ -41,6 +41,8 @@ const ROOT = path.join(__dirname, '..');
         const L = new Float32Array(128), R = new Float32Array(128), x = new Float32Array(128);
         if (p.family === 'effect' && block % 180 < 56) for (let i = 0; i < 128; i++) { const t = (block % 180) * 128 + i; x[i] = Math.sin(t * 2 * Math.PI * 220 / sr) * Math.min(1, t / 60) * Math.exp(-t / 3000) * 0.8; } // a plucked 220 Hz note every half second
         if (p.family === 'instrument' && d.noteOn && block % 120 === 0) { d.noteOff && d.noteOff(48 + (block / 120 - 1) * 5); d.noteOn(48 + block / 120 * 5, 0.8); }
+        if (p.live && block % 40 === 0) d.live({ events: Array.from({ length: 12 }, (_, k) => [[0, 1, 3][k % 3], k % 6, (k * 0.37) % 1]).concat(block % 400 === 0 ? [[4, 0, 0.5]] : []), taps: { flow: 300, cords: 150, tips: 80 }, stage: block % 800 === 0 ? spec.stages[Math.min(spec.stages.length - 1, 2 + block / 800)] : undefined }); // what the live engine would send
+        if (d.load2 && block === 0) d.load2(JSON.parse(fs.readFileSync(path.join(ROOT, 'plugins/specimens', pick[1] + '.json'), 'utf8')));
         d.process(L, R, p.family === 'effect' ? x : null);
         for (let i = 0; i < 128; i++) { const v = L[i]; if (!isFinite(v) || !isFinite(R[i])) bad++; peak = Math.max(peak, Math.abs(v), Math.abs(R[i])); sum += v * v; n++; }
       }

@@ -37,7 +37,7 @@ plugins/
     kit.css
     worklet-base.js     the audio thread wrapper every plugin shares
     dsp.js              shared sound parts: resonator banks, noise, envelopes, delay lines
-    live.js             runs an engine in a worker and feeds a plugin as the network grows
+    live-worker.js      runs the 400K engine in its own thread and feeds a plugin as the network grows
   specimens/
     index.json          the species that have a specimen
     <slug>.json         one prebuilt specimen per species (section 3)
@@ -82,10 +82,12 @@ Three levels, and each plugin says which it uses:
 1. **The model is the sound engine, at audio rate.** Resonator banks, strings and plates, and the
    electrical model itself run sample by sample. Turning a parameter changes the physics as you
    listen. Most plugins are this.
-2. **A live engine at control rate.** `kit/live.js` runs the 40K or 400K core in a worker while
-   you listen. As the network grows it sends new modes, events and curves, and the sound follows.
-   Solving a network's modes takes 7 to 20 ms, so a growing network can retune a resonator several
-   times a second. Used by the atmospheres and offered as a "grow live" switch on instruments.
+2. **A live engine at control rate.** `kit/live-worker.js` runs the 400K core in its own thread
+   while you listen. Ten times a second it sends what just happened (each event with the ring it
+   happened in and its left-right place) and the engine's signals; once a second it also solves the
+   network's modes (about 120 nodes), and the sound retunes. A plugin asks for it with `live: {...}`
+   in its declaration and receives it as `live(message)` in its dsp. Built into Forest Floor and
+   Foraging. Not built: the 40K engine as a source, and a "grow live" switch on the instruments.
 3. **Prebuilt specimens.** Instant, repeatable, and the default.
 
 To explore: how fast a live network can be allowed to change before retuning is heard as steps;
@@ -172,6 +174,12 @@ Each takes sound in: a built-in test source, a file you drop on the page, or the
   Fairy Ring, Decay, Excitable Gate, Spore Granulator.
 - **D. The rest:** Gill Comb, Combat Zone, After Rain, Rot Filter, Soil Filter.
 
+**All four batches are built: 28 plugins** (8 instruments, 8 atmospheres, 6 effects, 6 composers).
+What changed from the designs above: Foraging runs the 400K engine in its wood-in-soil ground, not
+the 40K engine, and its low tone rests on an assumed link between flow in cords and a push on them.
+Combat Zone uses two prebuilt specimens, with how often they meet and who has the advantage set by
+hand; it does not run the simulator's two-individual mode live. Forest Floor has rain but no seasons.
+
 A plugin is done when its page loads without errors, the offline test renders it finite and
 audible for at least three species, every parameter has its trace, and it has a drawing.
 
@@ -183,5 +191,8 @@ audible for at least three species, every parameter has its trace, and it has a 
 - **Most species are their family** (69 of 90 set no growth value of their own), so many presets
   differ mainly in size, fruit form and network stage.
 - **Web MIDI does not work in Safari.**
+- **The live plugins have only been watched, not heard.** Their pages grow a colony and show a
+  signal on the scope. A colony lasts one to a few minutes at the default speed, then a new one
+  starts; the listening level is turned up automatically, and how that sounds is unknown.
 - **The physical numbers for caps** (stiffness, density, thickness) are estimates from one
   research report, not measurements.

@@ -9,7 +9,7 @@ const el = (tag, attrs = {}, html = '') => { const e = document.createElement(ta
 export async function start(def) {
   const app = document.getElementById('app'), q = new URLSearchParams(location.hash.slice(1)), P = {}
   for (const p of def.params) P[p.id] = q.has(p.id) ? +q.get(p.id) : p.value
-  let spec = null, ctx = null, node = null, view = null, iview = null, analyser = null, inputNode = null, learn = null, inst = null
+  let spec = null, spec2 = null, ctx = null, node = null, view = null, iview = null, analyser = null, inputNode = null, learn = null, inst = null, grower = null, live = { taps: {} }
   const IP = {} // the played instrument's own settings, when this is a composer
   const midiMap = JSON.parse(localStorage.getItem('midi-' + def.id) || '{}')
 
@@ -23,6 +23,7 @@ export async function start(def) {
     </div><div>
       <div class="panel"><button id="power">Turn sound on</button><span id="state" class="hint"></span>
         <label><b>Species</b><select id="species"></select><small id="spinfo"></small></label>
+        ${def.second ? '<label><b>The other individual</b><select id="species2"></select></label>' : ''}
         ${def.input ? '<label><b>Sound going in</b><select id="source"><option value="clicks">clicks, one a second<option value="noise">bursts of noise<option value="tone">a low sawtooth note<option value="file">a sound file…<option value="mic">the microphone</select><input id="file" type="file" accept="audio/*" hidden></label>' : ''}
         ${def.composer ? '<label><b>Played on</b><select id="inst"></select><small>The composer decides the notes; this instrument sounds them.</small></label>' : ''}
         <div id="params"></div>${def.composer ? '<h2 style="margin-top:18px">The instrument</h2><div id="iparams"></div>' : ''}</div>
@@ -39,7 +40,7 @@ export async function start(def) {
     const input = l.querySelector('input'), val = l.querySelector('.val'), midi = l.querySelector('.midi')
     const text = () => (p.show ? p.show(store[p.id]) : (Math.abs(store[p.id]) >= 100 ? store[p.id].toFixed(0) : +store[p.id].toFixed(2))) + (p.unit ? ' ' + p.unit : '')
     val.textContent = text(); p.input = input; p.val = val
-    input.oninput = () => { store[p.id] = +input.value; val.textContent = text(); post({ [key]: { [p.id]: store[p.id] } }); key == 'set' && saveHash() }
+    input.oninput = () => { store[p.id] = +input.value; val.textContent = text(); post({ [key]: { [p.id]: store[p.id] } }); key == 'set' && saveHash(); if (def.live && grower && p.id == def.live.speed) grower.postMessage({ speed: store[p.id] }); if (def.live && grower && p.id == def.live.rain && store[p.id] > .5) grower.postMessage({ rain: 1 }) }
     midi.onclick = e => { e.preventDefault(); learn = learn == p ? null : p; document.querySelectorAll('.midi').forEach(m => m.classList.remove('learn')); learn && midi.classList.add('learn') }
     into.appendChild(l); all.push(p)
   }
@@ -55,7 +56,14 @@ export async function start(def) {
     if (node) node.disconnect()
     node = new AudioWorkletNode(ctx, def.id, { numberOfInputs: def.input ? 1 : 0, outputChannelCount: [2], processorOptions: { instrument: inst && inst.id } })
     node.connect(analyser); node.port.onmessage = e => { if (e.data.view) { view = e.data.view; iview = e.data.iview } }
-    post({ load: spec }); post({ set: P }); inst && post({ iset: IP })
+    post({ load: spec }); spec2 && post({ load2: spec2 }); post({ set: P }); inst && post({ iset: IP }); grow()
+  }
+  // ---- a network growing live in its own thread, feeding the sound as it grows
+  const grow = async () => {
+    if (!def.live || !ctx) return
+    if (!grower) { grower = new Worker('../kit/live-worker.js'); grower.onmessage = e => { const m = e.data.live; if (m.stage) live.stage = m.stage; if (m.taps) live.taps = m.taps; post({ live: m }) } }
+    const sp = await (await fetch('../../engines/400k/species/' + $('species').value + '.json')).json()
+    grower.postMessage({ start: { sp, seed: 1, scn: def.live.world }, speed: P[def.live.speed] })
   }
   const pickInstrument = async () => {
     inst = (await import('../' + $('inst').value + '/def.js')).def
@@ -76,11 +84,16 @@ export async function start(def) {
   const loadSpecies = async () => {
     spec = await (await fetch('../specimens/' + $('species').value + '.json')).json()
     $('spinfo').textContent = def.about ? def.about(spec) : `${spec.family} · ${spec.fruit.form}, ${spec.fruit.size_cm.join(' to ')} cm · grown ${spec.grown.days} days`
-    post({ load: spec }); saveHash()
+    post({ load: spec }); saveHash(); grow()
   }
   $('species').value = q.get('s') || def.species || list[0][0]; $('species').value || ($('species').value = list[0][0])
   $('species').onchange = loadSpecies
   await loadSpecies()
+  if (def.second) {
+    for (const [slug, name, common] of list) $('species2').add(new Option(name + (common ? ' (' + common + ')' : ''), slug))
+    const load2 = async () => { spec2 = await (await fetch('../specimens/' + $('species2').value + '.json')).json(); post({ load2: spec2 }) }
+    $('species2').value = def.second; $('species2').onchange = load2; await load2()
+  }
 
   // ---- sound
   const power = async () => {
@@ -149,7 +162,7 @@ export async function start(def) {
   const cv = $('view'), g = cv.getContext('2d'), sc = $('scope'), sg = sc.getContext('2d'), wave = new Float32Array(2048)
   const frame = t => {
     g.clearRect(0, 0, cv.width, cv.height)
-    if (spec) def.draw(g, cv.width, cv.height, { spec, params: P, view, iview, t: t / 1000 })
+    if (spec) def.draw(g, cv.width, cv.height, { spec, spec2, params: P, view, iview, live, t: t / 1000 })
     sg.clearRect(0, 0, sc.width, sc.height)
     if (analyser) { analyser.getFloatTimeDomainData(wave); sg.beginPath(); for (let i = 0; i < 960; i++) sg.lineTo(i, 64 - wave[i * 2] * 60); sg.strokeStyle = '#d2a866'; sg.lineWidth = 2; sg.stroke() }
     requestAnimationFrame(frame)

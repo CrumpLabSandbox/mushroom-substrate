@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mushroom World</title>
+<link rel="stylesheet" href="../kit/kit.css">
+<style>
+  main { max-width: 1240px; }
+  .frame { position: relative; width: 100%; overflow: hidden; border-radius: 12px; border: 1px solid var(--line); box-shadow: 0 20px 60px #000a; background: #14110c; }
+  .frame iframe { width: 1180px; height: 700px; border: 0; transform-origin: 0 0; display: block; }
+  .three { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+  .three .panel { margin: 0; } .three b { font: 600 1.05rem ui-serif, Georgia, serif; display: block; margin-bottom: 4px; } .three p { margin: 0; color: var(--muted); font-size: .9rem; }
+  code { font-size: .86em; background: #0006; padding: 1px 5px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<main>
+  <nav><a href="../">All plugins</a> · <a href="../../">Mushroom Substrate</a></nav>
+  <h1>Mushroom World</h1>
+  <p><span class="badge f">universal build</span><span class="badge P">physical model</span><span class="badge S">model signal</span><span class="badge M">model as modulator</span></p>
+  <p class="lede">Every mushroom plugin in one: a proposal for how the whole collection could go into SynthLand Explorer as a single plugin. Choose a species and the size of simulator it was grown in. Two voices, each one of eight instruments, played from the keys or by one of six composers. An atmosphere underneath, an effect built from the same network, and a console. Three world controls, growth, wetness and warmth, move every part at once.</p>
+  <div class="frame" id="frame"><iframe src="skin/index.html" title="Mushroom World" id="skin" allow="midi"></iframe></div>
+  <p class="hint">Press <b>Start audio</b>, then play the keys on screen, type A W S E D F T G Y H U J K, or use a MIDI keyboard. Click a part on the left to see its picture and its controls. Drag a knob up and down; double-click it to put it back. The panel is a fixed 1180 by 700, as a SynthLand skin is, and is scaled here to fit the page.</p>
+
+  <h2>What is inside</h2>
+  <div class="three" id="inside"></div>
+
+  <h2>How this is built for SynthLand</h2>
+  <div class="three">
+    <div class="panel"><b>The panel is a SynthLand skin</b><p>The folder <code>skin/</code> holds <code>index.html</code>, <code>skin.css</code> and <code>skin.js</code>, a fixed size, theme colours as <code>--sl-*</code> tokens, system fonts, no network use, and it talks only to <code>window.synthland</code>. Here <code>bridge.js</code> is a web stand-in for the host; in SynthLand the host supplies its own.</p></div>
+    <div class="panel"><b>One parameter table, generated</b><p><code>manifest.json</code> is in the shape of a SynthLand manifest, with every parameter in real units and ids as <code>group.name</code>. It is written by <code>tools/build-world.js</code> from the separate plugins' own declarations, so the combined plugin cannot drift from them.</p></div>
+    <div class="panel"><b>The sound is the plugins' own code</b><p>The engine here runs the same JavaScript as the separate plugin pages. For SynthLand it would be ported to a C++ core. The plan, the options and the costs are in <a href="https://github.com/CrumpLabSandbox/mushroom-substrate/blob/main/docs/SYNTHEXPLORER.md">docs/SYNTHEXPLORER.md</a>.</p></div>
+  </div>
+
+  <h2>What is assumed</h2>
+  <p class="lede">Everything each separate plugin assumes is assumed here too, and each plugin's own page lists it. The console is a small stand-in for SynthLand's Stem Console. The 25 invented species are marked as invented wherever they appear. Nobody has listened to this: it has been checked by rendering every part offline and by loading the page, not by ear.</p>
+</main>
+<script type="module">
+  const frame = document.getElementById('frame'), skin = document.getElementById('skin')
+  const fit = () => { const s = frame.clientWidth / 1180; skin.style.transform = `scale(${s})`; frame.style.height = 700 * s + 'px' }
+  addEventListener('resize', fit); fit()
+  const m = await (await fetch('manifest.json')).json(), n = k => m.slots[k].length, real = m.species.filter(s => !s.invented).length
+  document.getElementById('inside').innerHTML = [[`${real} species and ${m.species.length - real} invented ones`, 'Each is a specimen grown in the simulators, at four sizes: 4K, 40K, 400K and 4M. They are the raw material, not presets of knob positions.'], [`${n('v1')} instruments, ${n('players')} composers`, m.slots.v1.map(i => m.modules[i].name).join(', ') + '. Played by: ' + m.slots.players.map(i => m.modules[i].name).join(', ') + '.'], [`${n('atmo')} atmospheres, ${n('fx')} effects`, m.slots.atmo.map(i => m.modules[i].name).join(', ') + '. ' + m.slots.fx.map(i => m.modules[i].name).join(', ') + '.'], [`${m.parameters.length} parameters`, 'Every control of every part, each with the mushroom process it traces to. Hover over a knob to read it.']].map(([b, p]) => `<div class="panel"><b>${b}</b><p>${p}</p></div>`).join('')
+</script>
+</body>
+</html>

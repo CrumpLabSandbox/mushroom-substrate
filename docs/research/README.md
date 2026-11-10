@@ -142,3 +142,7 @@ From the species survey (its section 6 has all nine):
 3. Keep the three entries that barely or never make a mushroom (*Cenococcum*,
    *Leucoagaricus gongylophorus*, *Lichenomphalia*)?
 4. Use all 100 slots now, or leave about 10 free?
+
+## Species values (2026-11-10)
+
+Measured values for 25 species, found by five agents in parallel, with sources and what was not found: [A](11-species-values-A.md) (cultivated), [B](11-species-values-B.md) (wood-decay polypores), [C](11-species-values-C.md) (cord and rot fungi), [D](11-species-values-D.md) (mycorrhizal), [E](11-species-values-E.md) (others).

@@ -60,8 +60,9 @@ tools/
 
 ## 3. Specimens: the prebuilt models
 
-`node tools/bake-specimens.js` grows each species in the 400K engine on this machine and writes a
-small file (aim: under 60 KB) holding what plugins need:
+`node tools/bake-specimens.js all` grows each species in each of the four engines on this machine
+(section 9) and writes a small file per species and size, `plugins/specimens/<size>/<slug>.json`
+(about 55 KB), holding what plugins need:
 
 | Part | What it is | Used by |
 |---|---|---|
@@ -196,3 +197,83 @@ audible for at least three species, every parameter has its trace, and it has a 
   starts; the listening level is turned up automatically, and how that sounds is unknown.
 - **The physical numbers for caps** (stiffness, density, thickness) are estimates from one
   research report, not measurements.
+
+## 9. Scale: the four sizes of simulator (2026-11-10)
+
+Matt: the orders of magnitude must be in the plugins, and a plugin must adjust when something is
+not there at a size. Every plugin page has a **Scale** switch. The specimen it loads was grown in
+the engine of that size, by the same baker, through one wrapper (`plugins/kit/grow.js`) that drives
+all four engines the same way.
+
+| Size | What it is | Missing there |
+|---|---|---|
+| 4K | tips on a bitmap, about 10 mm, a day. The engine keeps no network, so the baker rebuilds one by following each tip | flow, cords, electrical activity, mushrooms, weather, spores, rivals, depth |
+| 40K | a flat colony in patchy substrate, 25 mm, with flow, cords and simple mushrooms | electrical activity, weather, spores, rivals, depth |
+| 400K | a block of soil with weather, electrical activity and rivals | spores |
+| 4M | a 2.5 m plot over about two and a half years: cords, real-size mushrooms, spores | nothing |
+
+A specimen says what it has (`spec.engine`, `spec.has`). What is missing is flat, not absent: no
+flow means the flow curves are zero; no cords means every edge is one hypha thick; no electrical
+model means the wavetable was cut from one excitable unit run alone (`wavetable.from == 'unit'`).
+At 4M the network's real notes are a few hertz; at 4K they are thousands.
+
+Each plugin declares what it does at each size (`scales` in its `def.js`, shown under the switch),
+greys out controls that need something the size lacks (`needs` on a parameter), and reports what it
+changed in `view().scaleNote`. Live plugins run the engine of the chosen size.
+`node tools/test-plugins.js --size=4k` (or `40k`, `4m`) runs every plugin on that size's specimens.
+
+## 10. Species as presets: researched, inferred and invented (2026-11-10)
+
+Most species used to behave as their family default. Three things changed that:
+
+- **25 researched** by five agents with web access: values written as `sourced` only where the
+  publication was opened and read, otherwise `inferred` with the reasoning. Write-ups with sources:
+  `docs/research/11-species-values-A.md` to `E.md`. Many papers were behind paywalls, so about half
+  of these values are `inferred` from abstracts, snippets or figures.
+- **25 inferred** by Claude from each species' ecology and general knowledge, with no measurement
+  opened. Each value's note starts "Claude's inference" and gives the reason.
+- **25 invented**, in `species/alien/`. Every value has basis `invented`. They are packed for the
+  plugins only (`plugins/aliens/`), are not offered on the engines' own pages, do not count toward
+  the 100-species cap, and are marked as invented wherever a plugin shows them.
+
+## 11. Symphonies (2026-11-10)
+
+Six pieces in which several composers play at once, each on its own instrument, from its own
+species at its own size, each on its own strip of a console (`plugins/kit/symphony.js`,
+`symphony-page.js`, `console.js`). A conductor, itself a mushroom process, decides how far forward
+each voice is: succession on a log, a year, trees feeding one fungus at a time, a round, the same
+fungus at four sizes.
+
+The console is a small stand-in for SynthLand's Stem Console, written here from that plugin's
+parameter list because SynthLand's repository is private. It has the strip trim, pan, width,
+filters, loudness rider, ducking, fader and mute, and the master rider, glue and limiter, under the
+same control names. It lacks the strip EQ and compressor, bass mono, the master's dynamic EQ and
+true-peak detection. Its loudness readings use an approximate K-weighting.
+
+## 12. Drawings (2026-11-10)
+
+Every plugin's picture is now in one module, `plugins/kit/pictures.js`, drawn with shared parts in
+`plugins/kit/art.js` (the ground in section, a network, a hypha in close-up, fruit bodies by form,
+a cap from below, spores, rain). Each shows the process making the sound from the numbers the
+sound uses. `plugins/gallery.html` shows all of them at once.
+
+## 13. Mushroom World (2026-11-10)
+
+All the plugins in one, as a proposal for SynthLand Explorer: `plugins/mushroom-world/`. Its
+parameter table and manifest are generated by `tools/build-world.js`; `tools/test-world.mjs`
+renders every part through it. The options and costs of a real port are in
+[SYNTHEXPLORER.md](SYNTHEXPLORER.md).
+
+## 14. What changed in the plugins (2026-11-10)
+
+Four agents reviewed the plugins by family and added one to three features each, all traceable.
+In short: instruments respond to velocity and grow while a key is held; several atmospheres can be
+played from the keys; every effect now differs by species where it can; every composer has a
+register and a thinning control so several can play together. Faults fixed on the way: Decay and
+Soil Filter were the same for every species; Combat Zone stayed deadened after the first meeting;
+Hyphal Walk could fall silent for good on a species whose centre point was unconnected; Excitable
+Gate's threshold was off by about three times; Rot Filter was overdriven at its defaults; Rhizomorph
+Bass was sharp with a thick middle; Coupled Spikes was up to half a semitone flat. The controls and
+their traces are on each plugin's page.
+
+Still true: **nobody has listened to any of it.**

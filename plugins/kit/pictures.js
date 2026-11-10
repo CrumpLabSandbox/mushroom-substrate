@@ -248,5 +248,6 @@ P['spore-scatter'] = (g, w, h, { spec, view: v, params: p, t }) => {
   caption(g, w, h, [spore ? 'each note is a spore landing: where it lands is its pitch, and the wind pushes the whole cloud' + (V(v, 'moved', 9) < 3 ? ' · a spore has founded a new individual' : '') : 'no spores at this size of simulator: each note is a new branch inside the growing front', V(v, 'scaleNote', '')])
 }
 export const PICTURES = P
+const FAILED = {}
 // draws a plugin's picture, or says so if it fails (a drawing must never stop the sound)
-export const picture = id => (g, w, h, c) => { const f = P[id]; if (!f) return false; g.save(); try { f(g, w, h, c) } catch (e) { g.restore(); g.save(); text(g, 'drawing: ' + e.message, 20, 30, { size: 16, colour: INK.ember }) } g.restore(); g.globalAlpha = 1; g.setLineDash([]); return true }
+export const picture = id => (g, w, h, c) => { const f = P[id]; if (!f) return false; g.save(); try { f(g, w, h, c) } catch (e) { g.restore(); g.save(); text(g, 'drawing: ' + e.message, 20, 30, { size: 16, colour: INK.ember }); if (!FAILED[id]) { FAILED[id] = 1; console.warn('picture ' + id + ': ' + e.message) } } g.restore(); g.globalAlpha = 1; g.setLineDash([]); return true }

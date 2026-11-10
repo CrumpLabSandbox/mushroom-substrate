@@ -28,7 +28,11 @@ notes are in [notes.md](notes.md).
   separate from real time; the speed-up is one explicit number.
 - **Every species value has a basis:** `sourced` (with a citation), `inferred` or `unknown`.
   Never fill a gap with a guess presented as fact.
-- **At most 100 species.**
+- **At most 100 species.** Invented species are separate: they live in `species/alien/`, every value
+  there has basis `invented`, they are packed for the plugins only, and they must be marked as
+  invented wherever they are shown. They never sit in `species/` and never count toward the 100.
+- **Plugins work at all four sizes.** A plugin loads a specimen grown at 4K, 40K, 400K or 4M and
+  adjusts to what that size lacks (`spec.has`). See docs/PLUGINS.md section 9.
 - **Output signals.** Engines publish named signals with units and a timestamped event stream,
   so the later sound work can use them.
 
@@ -51,7 +55,11 @@ notes are in [notes.md](notes.md).
 | `sound/` | `record.js` (records an engine run, unscaled), `resonator.js` (the network's modes as taut strings), `synth.js` (recording to audio, physical models only), `wavetable.js` and `wt-worklet.js` (wavetables from electrode voltage; not physical modelling, kept separate), `worker.js`. `sound/renders/` is git-ignored |
 | `tools/render-audio.js` | Renders a species to a WAV from the command line |
 | `tools/make-wavetable.js` | Cuts a 64 x 2,048 wavetable from a species' electrical activity |
-| `plugins/` | The plugin platform: `kit/` (shared page builder and sound parts), `specimens/` (prebuilt per-species models, made by `tools/bake-specimens.js`), `plugins.json` (the manifest), one folder per plugin. Plan: `docs/PLUGINS.md` |
-| `tools/bake-specimens.js` | Grows each species locally and writes its specimen |
-| `tools/test-plugins.js` | Renders every built plugin offline with three species |
+| `plugins/` | The plugin platform: `kit/` (shared page builder, sound parts, drawings in `pictures.js` and `art.js`, `grow.js` to drive any engine, the console and symphony engine), `specimens/<size>/` (prebuilt per-species models), `aliens/` (invented species, packed), `plugins.json` (the manifest), one folder per plugin, `sym-*` for symphonies, `mushroom-world/` for the combined plugin. Plan: `docs/PLUGINS.md` |
+| `tools/bake-specimens.js` | Grows each species in each of the four engines and writes its specimens (`plugins/specimens/<size>/`). `all` takes about 25 minutes run nine at a time |
+| `tools/test-plugins.js` | Renders every built plugin and symphony offline with three species; `--size=4k` (or `40k`, `4m`) uses that size's specimens |
+| `tools/build-world.js` | Writes Mushroom World's manifest and parameter table from the plugins' declarations. Run after changing any plugin's parameters |
+| `tools/test-world.mjs` | Renders every part through Mushroom World |
+| `species/alien/` | Invented species, for the plugins only |
+| `docs/SYNTHEXPLORER.md` | Suggestions for packaging the plugins into SynthLand Explorer |
 | `site/` | Landing page and, later, the species browser and comparison pages |

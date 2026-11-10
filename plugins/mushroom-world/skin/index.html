@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1180, initial-scale=1" />
+  <title>Mushroom World</title>
+  <link rel="stylesheet" href="./skin.css" />
+  <script src="./bridge.js"></script>
+  <script type="module" src="./mw-ui.js"></script>
+  <script type="module" src="./skin.js"></script>
+</head>
+<body>
+  <canvas id="bg" width="1180" height="700" aria-hidden="true"></canvas>
+  <header class="top">
+    <div class="logo"><span class="name" id="plugin-name">Mushroom World</span><span class="sub">one fungus, many ways to hear it</span></div>
+    <mw-preset-browser></mw-preset-browser>
+    <div class="top-right">
+      <mw-meter></mw-meter>
+      <button class="audio-btn" id="audio-btn" type="button" hidden>Start audio</button>
+    </div>
+  </header>
+
+  <main class="panel">
+    <nav class="rail" id="rail" aria-label="Parts"></nav>
+
+    <section class="stage">
+      <canvas id="hero" width="960" height="720" role="img" aria-label="A picture of the selected part: the fungus in the ground, or the process that is making the sound."></canvas>
+      <div class="specimen">
+        <button type="button" id="sp-prev" aria-label="Previous species">‹</button>
+        <div class="who"><span class="binomial" id="sp-name"></span><span class="common" id="sp-common"></span><select id="sp-pick" aria-label="Species"></select></div>
+        <button type="button" id="sp-next" aria-label="Next species">›</button>
+        <mw-choice param="world.scale"></mw-choice>
+      </div>
+    </section>
+
+    <section class="detail" id="detail" aria-live="polite"></section>
+
+    <div class="deck">
+    <section class="world">
+      <div class="title">World</div>
+      <div class="row"><mw-knob param="world.growth" label="Growth" size="large"></mw-knob><mw-knob param="world.wet" label="Wet" size="large"></mw-knob><mw-knob param="world.temp" label="Warmth" size="large"></mw-knob></div>
+    </section>
+    <section class="mixer">
+      <div class="title">Console</div>
+      <div class="row">
+        <mw-fader param="v1.level" label="Voice 1" data-stem="0"></mw-fader><mw-fader param="v2.level" label="Voice 2" data-stem="1"></mw-fader>
+        <mw-fader param="atmo.level" label="Atmos" data-stem="2"></mw-fader><mw-fader param="fx.level" label="Effect" data-stem="3"></mw-fader>
+        <mw-knob param="fx.send" label="Send"></mw-knob><mw-knob param="v1.pan" label="Pan 1"></mw-knob><mw-knob param="v2.pan" label="Pan 2"></mw-knob>
+      </div>
+    </section>
+    <section class="master">
+      <div class="title">Master</div>
+      <div class="row"><div class="reads" id="reads"><span><b>—</b><i>LUFS now</i></span><span><b>—</b><i>whole</i></span><span><b>—</b><i>dB held</i></span></div>
+        <mw-knob param="master.target" label="Target"></mw-knob><mw-knob param="out.ceiling" label="Ceiling"></mw-knob><mw-knob param="out.level" label="Level"></mw-knob></div>
+    </section>
+    </div>
+  </main>
+
+  <footer class="bottom"><div class="hint" id="hint">Hover over a control to read which mushroom process or measurement it comes from.</div><mw-keyboard low="36" keys="49"></mw-keyboard></footer>
+</body>
+</html>

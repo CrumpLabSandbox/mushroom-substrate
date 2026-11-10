@@ -159,3 +159,14 @@
 - **Finished (2026-11-10): all 28 plugins are built.** Last three: Forest Floor and Foraging run the 400K engine live beside the sound (`plugins/kit/live-worker.js`); Combat Zone uses two prebuilt specimens and a second species menu.
 - Claude's own choices in the last batch: the live plugins sound 3.3 times lower than real size by default (a young network's lowest note is about 9 kHz at real size); a live colony is restarted when the block fills or growth stops; Foraging's low tone assumes that flow through cords pushes on them.
 - Checked: `node tools/test-plugins.js` renders every plugin offline; every page was loaded and sound turned on in a browser with no errors. **Not checked: nobody has listened to any of it.** MIDI, the microphone and dropped files are untested.
+
+## Scale, species, symphonies, Mushroom World (2026-11-10)
+- Matt asked for: better graphics on every plugin; presets that differ (research 25 species, and either infer 25 more or invent 25 alien ones); symphonic composers mixed on SynthExplorer's stem console; ideas for packaging into SynthExplorer, perhaps as one "mushroom world" plugin; a review of every plugin with new features; and a page showing a universal plugin build in SynthExplorer's visual style. Then, mid-build: **the orders of magnitude must be in the plugins, and a plugin must adjust when something is unavailable at a scale.**
+- Done, on Claude's own choices (Matt was away): all three species options (25 researched, 25 inferred, 25 invented); a Scale switch on every plugin with specimens baked at all four sizes; six symphonies; `docs/SYNTHEXPLORER.md`; `plugins/mushroom-world/`.
+- Choices worth knowing:
+  - Invented species are kept out of `species/` so the 100-species cap and the "every value has a basis" rule still mean what they said. They have their own basis, `invented`.
+  - The stem console in the symphonies is a stand-in written here. SynthLand's repo is private and shared with Sam, and this site is public, so its compiled engine was not copied. Ask Matt.
+  - The 4K engine has no network, so the baker rebuilds one by following tips. Fusions there are placed by nearness, not known exactly.
+  - Four engine-level things changed: the 40K core now exposes `par`, `dep` and `fus` (no change in behaviour); 26 species have new values, so stored hashes were rewritten with `node tools/test.js --update`.
+- Open: nobody has listened. Half the researched values are `inferred` because papers were paywalled. Suillus luteus and Pisolithus now grow 3 to 6 times slower than their family (agar rates; no soil rate found), which may look wrong in the engines.
+- Calibration after the species changes: 20 of 24 (was 21). Trametes versicolor's new researched growth rate makes its log rot 2.2 times too fast at 4M. Not retuned; noted in docs/CALIBRATION.md.

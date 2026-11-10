@@ -1,6 +1,6 @@
 {
- "generated": "2026-11-09",
- "within": 21,
+ "generated": "2026-11-10",
+ "within": 20,
  "total": 24,
  "checks": 4,
  "checks_within": 3,
@@ -435,12 +435,12 @@
     "source": "research/06 (Harmon et al. 2020)",
     "note": "about 0.06 per year at 10 °C, with a 244-fold range worldwide; a threefold band around it is used"
    },
-   "simulated": 0.08232785008755023,
+   "simulated": 0.43225751871348433,
    "how": "ln(wood left at year 1 / wood left at year 4) / 3, one big log; the log is still being colonised",
    "role": "fitted",
    "fit": "the amount of substrate in wood was fitted to this",
-   "verdict": "within the measured range",
-   "ok": true
+   "verdict": "high: 2.16 times the upper bound",
+   "ok": false
   },
   {
    "id": "spore-range",

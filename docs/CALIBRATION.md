@@ -6,6 +6,8 @@ what the first run found and what was changed because of it.
 
 ## The result, read honestly
 
+**Update 2026-11-10: now 20 of 24.** Trametes versicolor was given researched values (a faster tip speed, 311 um/h, and its own temperature limits), and with them the 4M engine rots its log 2.2 times faster than the upper end of the measured range (0.43 against 0.02 to 0.20 a year). Nothing was retuned to hide this. The paragraph below describes the state before that change.
+
 After fitting, **21 of 24** comparisons fall within the measured range. That number flatters the
 model: 20 of the 24 had a value fitted to them, were derived from the same number, or check that
 an input comes back out. Only **4 comparisons had nothing tuned to them, and 3 of those pass**.

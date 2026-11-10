@@ -9,18 +9,24 @@
   .filters { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0 0 16px; font-size: .9rem; color: var(--muted); }
   .filters label { display: inline-flex; gap: 6px; align-items: center; margin: 0; font-size: .9rem; color: var(--fg); }
   .filters input { width: auto; }
+  a.world { display: block; position: relative; border: 1px solid var(--accent); border-radius: 12px; overflow: hidden; margin: 0 0 16px; color: inherit; text-decoration: none; }
+  a.world canvas { aspect-ratio: 4 / 1; border-radius: 0; }
+  a.world span { position: absolute; left: 22px; bottom: 16px; max-width: 60ch; text-shadow: 0 2px 10px #000; } a.world b { display: block; font: 400 1.7rem Georgia, serif; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); } a.world i { font-style: normal; color: var(--fg); font-size: .92rem; }
+  .cardlink canvas { aspect-ratio: 4 / 3; margin-bottom: 10px; }
 </style>
 </head>
 <body>
 <main>
   <nav><a href="../">Mushroom Substrate</a></nav>
   <h1>Mushroom plugins</h1>
-  <p class="lede">Synthesisers, atmospheres and effects built on the mushroom models. Each has its own page, its own
+  <p class="lede">Synthesisers, atmospheres, effects, composers and symphonies built on the mushroom models. Each has its own page, its own
   controls and a drawing of the process that is making the sound. The species are the presets. Every control traces to a
   named mushroom process or measurement, and each plugin says which of its numbers are assumptions.</p>
   <p class="lede"><span class="badge P">physical model</span> a body that vibrates, driven by a force.
   <span class="badge S">model signal</span> something the model computes, used as the sound source.
   <span class="badge M">model as modulator</span> a model quantity moving an ordinary sound path.</p>
+  <a class="world" href="mushroom-world/"><canvas id="worldart" width="1200" height="300"></canvas><span><b>Mushroom World</b><i>Every plugin here in one: two voices, an atmosphere, an effect and a console, built from one fungus. A proposed single plugin for SynthLand Explorer.</i></span></a>
+  <p class="lede"><b>Scale.</b> Every plugin has a Scale switch: the species is grown in the 4K, 40K, 400K or 4M simulator, and the plugin adjusts to what that size has (no flow or cords at 4K, no electrical activity below 400K, years and spores at 4M). <b>Species.</b> 90 real ones and 25 invented ones, which are marked as invented wherever they appear. <a href="gallery.html">See every plugin's drawing at once.</a></p>
   <div class="filters" id="filters"></div>
   <div id="list"></div>
   <p class="hint" style="margin-top:24px">Nothing here is a recording of a fungus: mycelium is silent as far as anyone has measured, and real hyphae are too
@@ -28,8 +34,16 @@
   <a href="https://github.com/CrumpLabSandbox/mushroom-substrate/blob/main/docs/PLUGINS.md">docs/PLUGINS.md</a>.</p>
 </main>
 <script type="module">
-  const KINDS = { P: 'physical model', S: 'model signal', M: 'model as modulator' }, FAMILIES = [['composer', 'Composers: the fungus plays itself'], ['instrument', 'Playable instruments'], ['atmosphere', 'Atmospheres'], ['effect', 'Effects']]
+  const KINDS = { P: 'physical model', S: 'model signal', M: 'model as modulator' }, FAMILIES = [['symphony', 'Symphonies: several composers at once, on a console'], ['composer', 'Composers: the fungus plays itself'], ['instrument', 'Playable instruments'], ['atmosphere', 'Atmospheres'], ['effect', 'Effects']]
+  import { PICTURES, picture } from './kit/pictures.js'
+  import { ground, network, mushroom, spores } from './kit/art.js'
   const all = await (await fetch('plugins.json')).json(), on = { built: false }
+  // each card shows its plugin's own drawing, still, from one specimen; it moves while the pointer is over it
+  const specs = await Promise.all(['amanita-muscaria', 'phanerochaete-velutina', 'ganoderma-lingzhi', 'morchella-importuna', 'fulgurella-nervosa'].map(async s => (await fetch(`specimens/400k/${s}.json`)).json())), defaults = {}
+  const paint = async (cv, t) => { const id = cv.dataset.pic; if (!defaults[id]) { const d = (await import(`./${id}/def.js`)).def; defaults[id] = Object.fromEntries(d.params.map(p => [p.id, p.value])) } const g = cv.getContext('2d'), spec = specs[[...id].reduce((a, c) => a + c.charCodeAt(0), 0) % specs.length]; g.setTransform(.5, 0, 0, .5, 0, 0); g.clearRect(0, 0, 960, 720); picture(id)(g, 960, 720, { spec, spec2: specs[1], params: defaults[id], view: null, iview: null, live: { taps: {}, stage: spec.stages[5] }, t }) }
+  let hot = null; const tick = ms => { hot && paint(hot, ms / 1000); requestAnimationFrame(tick) }; requestAnimationFrame(tick)
+  document.addEventListener('pointerover', e => { const c = e.target.closest && e.target.closest('.cardlink'); hot = c ? c.querySelector('canvas') : null })
+  { const g = document.getElementById('worldart').getContext('2d'), w = 1200, h = 300, y0 = ground(g, w, h, { horizon: .56, seed: 4 }); specs.forEach((s, i) => { const x = w * (.42 + i * .13); network(g, s.stages[7], x - 110, y0 + 4, 220, h - y0, { colour: s.colours[0], tilt: .5, alpha: .8 }); mushroom(g, x, y0 + 3, 60 + i * 9, s.fruit.form, s.colours, { light: .25 }) }); spores(g, 60, 0, 0, w, y0, 3, { colour: '#e9dcb4' }) }
   const filters = document.getElementById('filters'), list = document.getElementById('list')
   filters.innerHTML = `<span>${all.filter(p => p.built).length} built of ${all.length} planned</span><label><input type="checkbox" id="built"> only the ones built</label>`
   const draw = () => {
@@ -37,12 +51,13 @@
       const mine = all.filter(p => p.family == f && (!on.built || p.built)); if (!mine.length) return ''
       return `<h2>${title}</h2><div class="cards">` + mine.map(p => {
         const badges = p.kind.split('/').map(k => `<span class="badge ${k}">${KINDS[k]}</span>`).join('')
-        return p.built ? `<a class="cardlink" href="${p.id}/"><b>${p.name}</b>${badges}<p>${p.blurb}</p></a>` : `<div class="cardlink soon"><b>${p.name}</b>${badges}<span class="badge f">planned</span><p>${p.blurb}</p></div>`
+        return p.built ? `<a class="cardlink" href="${p.id}/">${PICTURES[p.id] ? `<canvas width="480" height="360" data-pic="${p.id}"></canvas>` : ''}<b>${p.name}</b>${badges}<p>${p.blurb}</p></a>` : `<div class="cardlink soon"><b>${p.name}</b>${badges}<span class="badge f">planned</span><p>${p.blurb}</p></div>`
       }).join('') + '</div>'
     }).join('')
   }
-  document.getElementById('built').onchange = e => { on.built = e.target.checked; draw() }
-  draw()
+  const drawAll = () => { draw(); document.querySelectorAll('canvas[data-pic]').forEach(c => paint(c, 2.5)) }
+  document.getElementById('built').onchange = e => { on.built = e.target.checked; drawAll() }
+  drawAll()
 </script>
 </body>
 </html>

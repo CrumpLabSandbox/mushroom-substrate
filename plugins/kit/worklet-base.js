@@ -31,7 +31,7 @@ export const registerComposer = (name, create) => registerProcessor(name, class 
     super(); this.comp = create(sampleRate); this.inst = INSTRUMENTS[o.processorOptions.instrument](sampleRate); this.count = 0
     this.port.onmessage = e => {
       const m = e.data
-      if (m.load) { this.inst.load(m.load); this.comp.load(m.load) }
+      if (m.load) { if (this.comp.release) for (const ev of this.comp.release()) this.inst.noteOff(ev.off); this.inst.load(m.load); this.comp.load(m.load) }
       if (m.set) for (const k in m.set) this.comp.set(k, m.set[k])
       if (m.iset) for (const k in m.iset) this.inst.set(k, m.iset[k])
     }

@@ -57,7 +57,7 @@ var record = (M, inds, seed, scn, opt) => {
   return {
     meta: { species: inds.map(d => d.id), seed, world: scn, steps: o.steps, warm: o.warm, growth_seconds: S.t - t0, step_seconds: S.dt,
       electrical_sample_seconds: S.tdt, electrical_samples: w, electrical_seconds: w * S.tdt, spike_interval_minutes: inds[0].p[35],
-      electrodes: Array.from(nodes, e => { const q = S.eseg[e]; return [S.x1[q], S.y1[q], S.z1[q]] }), size: [S.W, S.DZ], segments: S.n, tap_names: [...names, 'tips0', 'tips1'], cap_cm: o.cap_cm || 6 },
+      electrodes: Array.from(nodes, e => { const q = S.eseg[e]; return [S.x1[q], S.y1[q], S.z1[q]] }), size: [S.W, S.DZ], segments: S.n, home: Array.from(S.home[0]), tap_names: [...names, 'tips0', 'tips1'], cap_cm: o.cap_cm || 6 },
     shots, volts: volts.map(v => v.subarray(0, w)), events: { t: Float64Array.from(ev.t), type: Uint8Array.from(ev.type), x: Float32Array.from(ev.x), y: Float32Array.from(ev.y), z: Float32Array.from(ev.z) }, taps
   }
 }

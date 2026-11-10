@@ -51,4 +51,7 @@ notes are in [notes.md](notes.md).
 | `sound/` | `record.js` (records an engine run, unscaled), `resonator.js` (the network's modes as taut strings), `synth.js` (recording to audio, physical models only), `wavetable.js` and `wt-worklet.js` (wavetables from electrode voltage; not physical modelling, kept separate), `worker.js`. `sound/renders/` is git-ignored |
 | `tools/render-audio.js` | Renders a species to a WAV from the command line |
 | `tools/make-wavetable.js` | Cuts a 64 x 2,048 wavetable from a species' electrical activity |
+| `plugins/` | The plugin platform: `kit/` (shared page builder and sound parts), `specimens/` (prebuilt per-species models, made by `tools/bake-specimens.js`), `plugins.json` (the manifest), one folder per plugin. Plan: `docs/PLUGINS.md` |
+| `tools/bake-specimens.js` | Grows each species locally and writes its specimen |
+| `tools/test-plugins.js` | Renders every built plugin offline with three species |
 | `site/` | Landing page and, later, the species browser and comparison pages |

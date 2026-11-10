@@ -27,6 +27,8 @@ execFileSync(process.execPath, [path.join(__dirname, 'export.js'), path.join(OUT
 // the sound code the listening page loads (not the rendered files)
 fs.mkdirSync(path.join(OUT, 'sound'), { recursive: true });
 for (const f of ['record.js', 'resonator.js', 'synth.js', 'wavetable.js', 'worker.js', 'wt-worklet.js']) fs.copyFileSync(path.join(ROOT, 'sound', f), path.join(OUT, 'sound', f));
+// the plugin platform: its pages, shared kit and prebuilt specimens
+fs.cpSync(path.join(ROOT, 'plugins'), path.join(OUT, 'plugins'), { recursive: true, filter: (p) => !path.basename(p).startsWith('.') });
 // the calibration table (made by tools/calibrate.js, which is run by hand because it takes half a minute)
 const cal = path.join(ROOT, 'docs', 'calibration', 'results.json');
 if (fs.existsSync(cal)) fs.copyFileSync(cal, path.join(OUT, 'data', 'calibration.json'));

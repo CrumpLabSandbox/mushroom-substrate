@@ -145,3 +145,9 @@
 - The voltage between two points on the network as a morphing wavetable: built as `wavetable.html`, `sound/wavetable.js` and `tools/make-wavetable.js`.
 - 64 frames of 2,048 samples, one cycle per stage of growth; same shape as SynthLand's wavetable engine. Exports WAV (Serum, Vital, Ableton) and harmonics JSON.
 - Kept separate from the physical-modelling sound, since it uses the voltage directly as an oscillator shape.
+
+## Plugin platform (2026-11-09)
+- Matt asked for a small exploratory plugin platform for the web, like SynthLand Explorer but built on the mushroom models: many sonifying approaches as adjustable synths, each with its own page, a library page, species as presets.
+- His answers: sounds are allowed if every control is **traceable** to a mushroom process (this relaxes the earlier physical-modelling-only rule for the platform; each plugin is labelled physical model, model signal or model as modulator); families are instruments, atmospheres and effects (not rhythm); hybrid of prebuilt specimens and live engines; on-screen keys, computer keys and Web MIDI.
+- Plan with a 22-plugin catalogue: [docs/PLUGINS.md](docs/PLUGINS.md).
+- Batch A built: the kit, 90 baked specimens, the library page, and Hyphal Harp, Rain on Caps and Mycelium Reverb.

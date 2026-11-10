@@ -49,7 +49,7 @@ var record = (M, inds, seed, scn, opt) => {
     listening = false; S.step()
     const m = inStep.length / 4
     for (let j = 0; j < m; j++) { ev.t.push(stepStart + (j + .5) / m * S.dt - t0); ev.type.push(inStep[j * 4]); ev.x.push(inStep[j * 4 + 1]); ev.y.push(inStep[j * 4 + 2]); ev.z.push(inStep[j * 4 + 3]) }
-    taps.push(names.map(k => S[k]))
+    taps.push([...names.map(k => S[k]), S.tipsOf[0] || 0, S.tipsOf[1] || 0])
     listening = true; S.elec(o.listen); listening = false
     if (i % Math.max(1, o.steps / 8 | 0) == 0 || i == o.steps - 1) shots.push(snapshot())
     o.progress && o.progress((i + 1) / o.steps)
@@ -57,7 +57,7 @@ var record = (M, inds, seed, scn, opt) => {
   return {
     meta: { species: inds.map(d => d.id), seed, world: scn, steps: o.steps, warm: o.warm, growth_seconds: S.t - t0, step_seconds: S.dt,
       electrical_sample_seconds: S.tdt, electrical_samples: w, electrical_seconds: w * S.tdt, spike_interval_minutes: inds[0].p[35],
-      electrodes: Array.from(nodes, e => { const q = S.eseg[e]; return [S.x1[q], S.y1[q], S.z1[q]] }), size: [S.W, S.DZ], segments: S.n, tap_names: names },
+      electrodes: Array.from(nodes, e => { const q = S.eseg[e]; return [S.x1[q], S.y1[q], S.z1[q]] }), size: [S.W, S.DZ], segments: S.n, tap_names: [...names, 'tips0', 'tips1'], cap_cm: o.cap_cm || 6 },
     shots, volts: volts.map(v => v.subarray(0, w)), events: { t: Float64Array.from(ev.t), type: Uint8Array.from(ev.type), x: Float32Array.from(ev.x), y: Float32Array.from(ev.y), z: Float32Array.from(ev.z) }, taps
   }
 }

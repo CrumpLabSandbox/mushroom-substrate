@@ -34,6 +34,7 @@
   <div class="panel">
     <div class="grid">
       <label>Species <select id="sp"></select></label>
+      <label>A second individual <select id="sp2"><option value="">none</select></label>
       <label>Scale <select id="tier"><option value="400k">a block of soil, a few days (400K engine)<option value="4m">a plot of ground, about a year (4M engine)</select></label>
       <label>Seed <input id="seed" type="number" value="1"></label>
       <label>Length <select id="steps"><option value="80">short<option value="160" selected>medium<option value="320">long</select></label>
@@ -43,12 +44,22 @@
   </div>
 
   <div class="panel" id="player" hidden>
+    <label style="margin-bottom:12px">Way of listening
+      <select id="way">
+        <option value="faster">1. As it is, faster</option>
+        <option value="instrument" selected>2. The fungus plays itself</option>
+        <option value="data">3. Data you can read by ear</option>
+        <option value="music">4. Music</option>
+        <option value="mix">Mix your own from the layers below</option>
+      </select></label>
+    <p id="about" class="cap" style="margin:0 0 12px"></p>
     <button id="play">Play</button><button id="dl" class="quiet">Save the sound (WAV)</button><button id="dlrec" class="quiet">Save the recording (JSON)</button>
     <canvas id="wave" width="1400" height="180"></canvas>
     <canvas id="spec" width="1400" height="360"></canvas>
     <div class="cap">Above: loudness over time (click to jump). Below: pitch over time, low at the bottom, up to 4,000 Hz.</div>
     <p id="says"></p>
-    <div class="grid" style="margin-top:14px">
+    <div class="cap" style="margin-top:14px">Pitch applies to ways 1 and the mix; ring time and size to way 2 and the mix; the four volume sliders to the mix only.</div>
+    <div class="grid" style="margin-top:8px">
       <label>Pitch of the spike rhythm <span id="pv"></span><input id="pitch" type="range" min="40" max="600" value="180"></label>
       <label>Electrode voices <input id="g1" type="range" min="0" max="1.5" step=".05" value="1"></label>
       <label>Growth events <input id="g2" type="range" min="0" max="1.5" step=".05" value="1"></label>
@@ -59,7 +70,7 @@
     </div>
   </div>
 
-  <h2>What each sound is</h2>
+  <h2>What each layer of the mix is</h2>
   <dl>
     <dt>Electrode voices</dt><dd>Four electrodes sit on the network. Each one's voltage is played directly as a sound wave, spread from left to right. The engine's electrical rhythm takes minutes to hours per cycle; it is sped up until one cycle lands at the pitch you choose. Voices drift in and out of step as the network grows and its tips move.</dd>
     <dt>Growth events</dt><dd>A tick when a hypha branches, a knock when two fuse, a soft hiss when one is abandoned, a tone when a mushroom matures, a growl where rivals meet, a wash of noise for rain. Left to right is where it happened; higher is shallower, lower is deeper.</dd>
@@ -80,13 +91,15 @@
   const $ = (id) => document.getElementById(id);
   let rec, audio, ctx, src, startedAt = 0, offset = 0, playing = false, species = {};
   fetch('engines/400k/list.json').then((r) => r.json()).then((list) => {
-    for (const [slug, name, common] of list) $('sp').add(new Option(name + (common ? ' (' + common + ')' : ''), slug));
+    for (const [slug, name, common] of list) for (const id of ['sp', 'sp2']) $(id).add(new Option(name + (common ? ' (' + common + ')' : ''), slug));
     $('sp').value = new URLSearchParams(location.search).get('s') || 'phanerochaete-velutina';
   });
   $('go').onclick = async () => {
     stop(); $('go').disabled = true; $('bar').hidden = false; $('bar').value = 0; $('status').textContent = 'growing and recording…';
     const tier = $('tier').value, sp = await (await fetch(`engines/${tier}/species/${$('sp').value}.json`)).json();
     species = sp;
+    const inds = [{ id: sp.id, p: sp.p }], second = $('sp2').value;
+    if (second) { const s2 = await (await fetch(`engines/${tier}/species/${second}.json`)).json(); inds.push({ id: s2.id, p: s2.p }); species = { ...sp, n: sp.n + ' and ' + s2.n }; }
     const steps = +$('steps').value * (tier == '4m' ? 2 : 1), w = new Worker('sound/worker.js');
     w.onmessage = (e) => {
       if (e.data.progress) { $('bar').value = e.data.progress; return; }
@@ -94,18 +107,25 @@
       $('status').textContent = `${rec.meta.segments.toLocaleString()} pieces of hypha, ${rec.events.t.length.toLocaleString()} events`;
       render();
     };
-    w.postMessage({ tier, inds: [{ id: sp.id, p: sp.p }], seed: +$('seed').value, scn: sp.s, opt: { steps, listen: tier == '4m' ? 1600 : 2400, set: { weather: tier == '4m' ? 1 : 0 } } });
+    w.postMessage({ tier, inds, seed: +$('seed').value, scn: sp.s, opt: { steps, listen: tier == '4m' ? 1600 : 2400, cap_cm: (sp.z[0] + sp.z[1]) / 2, set: { weather: 1 } } });
   };
   function render() {
     if (!rec) return;
     const was = playing; stop();
     $('pv').textContent = $('pitch').value + ' Hz';
     $('rv').textContent = $('ring').value + ' s'; $('sv').textContent = +$('size').value ? 'x' + (2 ** -$('size').value).toFixed(2) : 'real';
-    audio = synth(rec, { pitch: +$('pitch').value, voices: +$('g1').value, events: +$('g2').value, body: +$('g3').value, ring: +$('g4').value, ringTime: +$('ring').value, ringSize: 2 ** +$('size').value });
+    $('about').textContent = ABOUT[$('way').value];
+    audio = synth(rec, { way: $('way').value, pitch: +$('pitch').value, voices: +$('g1').value, events: +$('g2').value, body: +$('g3').value, ring: +$('g4').value, ringTime: +$('ring').value, ringSize: 2 ** +$('size').value });
     $('says').innerHTML = `<b><i>${species.n}</i>, ${audio.seconds.toFixed(1)} seconds.</b> ${audio.info.says}`;
     drawWave(); drawSpec(); offset = 0; if (was) play();
   }
-  for (const id of ['pitch', 'g1', 'g2', 'g3', 'g4', 'ring', 'size']) $(id).onchange = render;
+  for (const id of ['way', 'pitch', 'g1', 'g2', 'g3', 'g4', 'ring', 'size']) $(id).onchange = render;
+  const ABOUT = {
+    faster: 'The electrode voltages played as sound waves, and every growth event as the same plain click, left to right where it happened. Nothing is chosen but the speed. The closest thing here to a recording.',
+    instrument: 'The network is the instrument and its own activity plays it. Growth strikes the web of hyphae, electrical spikes bow it, and each mushroom that matures sounds as a small drum sized to its cap. The notes come from the network\u2019s real size and shape; nothing is sped up in pitch.',
+    data: 'One steady voice per individual. Higher means more growing tips, louder means feeding faster, brighter means warmer. Two clashing notes mark rivals meeting, a bell a mature mushroom, a hiss rain. Made for telling runs apart by ear.',
+    music: 'Events snapped to a beat and a five-note scale. Depth picks the note, rising flow drives the kick drum, abandoned hyphae are the hi-hat, and the key moves with the season. The furthest from the model.',
+    mix: 'The four original layers, each with its own volume below: electrode voices, growth events, network resonance and body drone.' };
   $('pitch').oninput = () => $('pv').textContent = $('pitch').value + ' Hz';
 
   function play() {

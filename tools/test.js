@@ -114,7 +114,7 @@ for (const [tier, eng] of Object.entries(ENGINES)) {
   const M = new Function(fs.readFileSync(path.join(ROOT, 'engines/400k/core.js'), 'utf8') + ';return M')();
   const sp = JSON.parse(fs.readFileSync(path.join(ROOT, 'engines/400k/species/phanerochaete-velutina.json'), 'utf8'));
   const rec = record(M, [{ id: sp.id, p: sp.p }], 1, sp.s, { steps: 40, listen: 1200, set: { weather: 0 } });
-  const a = synth(rec, { pitch: 200, events: 0, body: 0 }), L = a.left;
+  const a = synth(rec, { pitch: 200, events: 0, body: 0, ring: 0 }), L = a.left;
   let bad = 0, peak = 0, sum = 0, best = [0, 0];
   for (const v of L) { if (!isFinite(v)) bad++; peak = Math.max(peak, Math.abs(v)); sum += v * v; }
   const slice = L.subarray(L.length >> 1, (L.length >> 1) + 24000);
@@ -130,6 +130,11 @@ for (const [tier, eng] of Object.entries(ENGINES)) {
   if (!last.hz.length || last.hz.some((v, i) => !isFinite(v) || v <= 0 || (i && v < last.hz[i - 1] - 1e-6))) problems.push('resonator modes are not finite and rising');
   const ring = synth(rec, { voices: 0, events: 0, body: 0, ring: 1 }); let rs = 0; for (const v of ring.left) rs += v * v;
   if (!(Math.sqrt(rs / ring.left.length) > 0.005)) problems.push('the resonator alone is silent');
+  // each way of listening must give finite sound that is not silent
+  for (const way of ['faster', 'instrument', 'data', 'music']) {
+    const w = synth(rec, { way }); let ss = 0, nb = 0; for (const v of w.left) { if (!isFinite(v)) nb++; ss += v * v; }
+    if (nb || !(Math.sqrt(ss / w.left.length) > 0.003) || !w.info.says) problems.push(`way "${way}" is ${nb ? 'not finite' : 'silent or undescribed'}`);
+  }
   if (problems.length) failed = true;
   console.log(`${'sound/400k'.padEnd(28)} ${a.seconds.toFixed(1)} s  peak ${peak.toFixed(2)}  voices at ${best[0]} Hz (asked 200)  ${rec.events.t.length} events  lowest note ${last.hz[0].toFixed(0)} Hz  ${problems.length ? 'FAIL: ' + problems.join('; ') : 'ok'}`);
 }

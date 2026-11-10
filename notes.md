@@ -131,3 +131,7 @@
 ## Sound: the resonator (2026-11-09)
 - Fourth layer: the network as a web of taut strings, struck by its own growth events. Notes come from its real size, shape and cord thickness; nothing is sped up. Real hyphae are too damped to ring, so the ring time is a choice.
 - The possible mappings (sources, targets, four ways to combine them) are listed in [docs/SOUND.md](docs/SOUND.md).
+
+## Sound: four ways of listening (2026-11-09)
+- Built all four: as it is faster, the fungus plays itself, data by ear, and music; plus the free mix. Chosen on the listening page or with `--way` in `tools/render-audio.js`.
+- A second individual can be recorded with the first; the data way gives each its own voice.

@@ -116,17 +116,22 @@ is one choice per layer; these are the options.
 | Rhythm or tempo | spike trains as pulses, growth steps as beats |
 | A second synthesiser's controls | the route to the SynthLand plugin: curves and events become control signals, the network's modes become its oscillator bank |
 
-**Four ways to put them together**
+**Four ways to put them together.** All four are built: the page's "way of listening" menu, or
+`--way` on the command line.
 
-1. **As it is, faster.** Only audification and event timing, one speed-up, nothing chosen but the
-   speed. Closest to "a recording". The electrode voices and event ticks are this.
-2. **As an instrument that the fungus plays.** The network's structure is the instrument (the
-   resonator) and its activity plays it. No speed-up on pitch. This is the fourth layer.
-3. **As data you can read by ear.** Curves mapped to pitch and loudness so that a listener can
-   tell species or conditions apart: one species per voice, temperature as brightness, a fight as
-   dissonance. Useful for comparing runs.
-4. **As music.** Events quantised to a scale and a pulse, spikes as rhythm, seasons as form. The
-   furthest from the model, and the one most "mushroom music" products make.
+| Way | What sounds | What is chosen |
+|---|---|---|
+| `faster`: as it is, faster | The electrode voltages as sound waves; every growth event as the same plain click, left to right where it happened | Only the two speed-ups |
+| `instrument`: the fungus plays itself | The network as a web of taut strings. Growth strikes it, electrical spikes at the electrodes bow it, and each mushroom that matures is a drum pitched by its cap (about 90 Hz for 6 cm, from the research estimate) | The ring time; drum and strike loudness |
+| `data`: data you can read by ear | One steady voice per individual: three octaves of pitch from its fewest to its most growing tips, loudness from feeding rate, brightness from temperature. Two notes a semitone apart when rivals meet, a bell for a mature mushroom, a hiss for rain | The whole mapping, but each part carries one quantity and says which |
+| `music` | Events snapped to sixteenth notes at 96 beats per minute and a five-note minor scale. Depth picks the note, a fusion drops an octave, flow rising drives the kick, hyphae stopping or abandoned are the hi-hat, the key moves with temperature | Almost everything. The furthest from the model |
+| `mix` | The four original layers with a volume each | Their balance |
+
+Two individuals can be recorded together (a second species, or a spore-founded one at stand scale);
+the `data` way gives each its own voice, left and right.
+
+None of the four has been listened to. They were checked for being finite, not silent and within
+level, and their descriptions are generated with the sound so the two cannot drift apart.
 
 ## What was checked
 

@@ -405,7 +405,9 @@ plots, with no console errors. The sound has not been listened to.
 - **It uses about 60 KB of its 4 MB.** No embedded reference data, no Three.js, no learned
   component: the size budget is almost entirely unspent.
 
-## 6. Signals and events for later sound work
+## 6. Signals and events for sound work
+
+The first recorder and synthesiser now exist: see [SOUND.md](SOUND.md).
 
 From research/07. Engines publish these as they become able to:
 

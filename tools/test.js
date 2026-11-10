@@ -107,6 +107,27 @@ for (const [tier, eng] of Object.entries(ENGINES)) {
     console.log(`${key.padEnd(28)} ${h1}  400 steps  segments ${one.n}  tips ${one.tipsOf.join(' + ')}  meetings ${one.wars}  ${problems.length ? 'FAIL: ' + problems.join('; ') : 'ok'}`);
   }
 }
+// Sound: a short recording and render must be finite, not silent, within full scale, and the electrode
+// voices must come out near the pitch asked for.
+{
+  const record = require(path.join(ROOT, 'sound/record.js')), { synth } = require(path.join(ROOT, 'sound/synth.js'));
+  const M = new Function(fs.readFileSync(path.join(ROOT, 'engines/400k/core.js'), 'utf8') + ';return M')();
+  const sp = JSON.parse(fs.readFileSync(path.join(ROOT, 'engines/400k/species/phanerochaete-velutina.json'), 'utf8'));
+  const rec = record(M, [{ id: sp.id, p: sp.p }], 1, sp.s, { steps: 40, listen: 1200, set: { weather: 0 } });
+  const a = synth(rec, { pitch: 200, events: 0, body: 0 }), L = a.left;
+  let bad = 0, peak = 0, sum = 0, best = [0, 0];
+  for (const v of L) { if (!isFinite(v)) bad++; peak = Math.max(peak, Math.abs(v)); sum += v * v; }
+  const slice = L.subarray(L.length >> 1, (L.length >> 1) + 24000);
+  for (let f = 80; f < 500; f += 4) { const c = 2 * Math.cos(2 * Math.PI * f / 48000); let q1 = 0, q2 = 0; for (const v of slice) { const q0 = v + c * q1 - q2; q2 = q1; q1 = q0; } const pw = q1 * q1 + q2 * q2 - c * q1 * q2; if (pw > best[1]) best = [f, pw]; }
+  const problems = [];
+  if (bad) problems.push(bad + ' samples are not finite');
+  if (peak > 0.72 || peak < 0.3) problems.push('peak ' + peak.toFixed(2));
+  if (Math.sqrt(sum / L.length) < 0.02) problems.push('nearly silent');
+  if (Math.abs(best[0] - 200) > 40) problems.push('voices peak at ' + best[0] + ' Hz, asked for 200');
+  if (!rec.events.t.length) problems.push('no events recorded');
+  if (problems.length) failed = true;
+  console.log(`${'sound/400k'.padEnd(28)} ${a.seconds.toFixed(1)} s  peak ${peak.toFixed(2)}  voices at ${best[0]} Hz (asked 200)  ${rec.events.t.length} events  ${problems.length ? 'FAIL: ' + problems.join('; ') : 'ok'}`);
+}
 console.log(`smoke runs passed: ${smoke}`);
 if (update) fs.writeFileSync(HASHES, JSON.stringify(next, null, 2) + '\n');
 process.exit(failed ? 1 : 0);

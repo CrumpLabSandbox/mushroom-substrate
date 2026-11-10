@@ -46,4 +46,6 @@ notes are in [notes.md](notes.md).
 | `tools/calibrate.js` | Runs the engines against published measurements; writes `docs/calibration/results.json`. Run by hand after changing an engine or a species |
 | `tools/export.js` | Writes the site's data files, including the Worldbuilder pack |
 | `tools/build-site.js` | Assembles `_site/` for Pages |
+| `sound/` | `record.js` (records an engine run, unscaled), `synth.js` (recording to audio), `worker.js`. `sound/renders/` is git-ignored |
+| `tools/render-audio.js` | Renders a species to a WAV from the command line |
 | `site/` | Landing page and, later, the species browser and comparison pages |

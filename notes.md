@@ -122,3 +122,8 @@
 ## Calibration (2026-11-09)
 - `tools/calibrate.js` compares the engines with 24 published measurements; the site shows it at `calibration.html`.
 - 21 of 24 within range after fitting, but only 4 had nothing tuned to them (3 pass). Details and what changed: [docs/CALIBRATION.md](docs/CALIBRATION.md).
+
+## Sound, first version (2026-11-09)
+- Recorder, synthesiser and a listening page (`listen.html`). Three layers: electrode voltages played as sound, growth events as short sounds, and a drone that follows flow.
+- Two clocks, two stated speed-ups; recordings stay unscaled. Details: [docs/SOUND.md](docs/SOUND.md).
+- Not yet listened to by anyone. Next layer would be a resonator built from the network's structure.

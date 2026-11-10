@@ -24,6 +24,9 @@ try {
 }
 fs.writeFileSync(path.join(OUT, 'tiers.json'), tiers);
 execFileSync(process.execPath, [path.join(__dirname, 'export.js'), path.join(OUT, 'data')], { stdio: 'inherit' });
+// the sound code the listening page loads (not the rendered files)
+fs.mkdirSync(path.join(OUT, 'sound'), { recursive: true });
+for (const f of ['record.js', 'synth.js', 'worker.js']) fs.copyFileSync(path.join(ROOT, 'sound', f), path.join(OUT, 'sound', f));
 // the calibration table (made by tools/calibrate.js, which is run by hand because it takes half a minute)
 const cal = path.join(ROOT, 'docs', 'calibration', 'results.json');
 if (fs.existsSync(cal)) fs.copyFileSync(cal, path.join(OUT, 'data', 'calibration.json'));

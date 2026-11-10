@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listen</title>
+<link rel="stylesheet" href="site.css">
+<style>
+  nav { margin-bottom: 20px; font-size: .92rem; }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin: 0 0 16px; }
+  .grid { display: grid; gap: 12px 16px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  label { display: block; font-size: .85rem; color: var(--muted); }
+  select, input[type=number] { font: inherit; width: 100%; margin-top: 4px; padding: 5px 8px; background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; }
+  input[type=range] { width: 100%; margin-top: 8px; }
+  button { font: inherit; padding: 8px 16px; border-radius: 6px; border: 1px solid var(--accent); background: var(--accent); color: var(--bg); cursor: pointer; margin: 0 8px 8px 0; }
+  button.quiet { background: transparent; color: var(--accent); }
+  button:disabled { opacity: .45; cursor: default; }
+  canvas { width: 100%; display: block; border-radius: 6px; background: #14110c; margin-top: 10px; }
+  #wave { height: 90px; cursor: pointer; } #spec { height: 180px; }
+  progress { width: 100%; height: 8px; margin-top: 10px; }
+  #says { margin: 12px 0 0; } .cap { font-size: .86rem; color: var(--muted); margin-top: 6px; }
+  dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0; }
+  dt { font-weight: 600; } dd { margin: 0; }
+</style>
+</head>
+<body>
+<main>
+  <nav><a href="./">Mushroom Substrate</a></nav>
+  <h1>Listen</h1>
+  <p class="lede">Grow a network, record it, and hear it. No fungus has been recorded making these sounds: mycelium is
+  silent as far as anyone has measured. What you hear is the model's slow rhythms sped up into the range of hearing, by
+  amounts stated under the player.</p>
+
+  <div class="panel">
+    <div class="grid">
+      <label>Species <select id="sp"></select></label>
+      <label>Scale <select id="tier"><option value="400k">a block of soil, a few days (400K engine)<option value="4m">a plot of ground, about a year (4M engine)</select></label>
+      <label>Seed <input id="seed" type="number" value="1"></label>
+      <label>Length <select id="steps"><option value="80">short<option value="160" selected>medium<option value="320">long</select></label>
+    </div>
+    <p style="margin:14px 0 0"><button id="go">Grow and record</button><span id="status" class="muted"></span></p>
+    <progress id="bar" value="0" max="1" hidden></progress>
+  </div>
+
+  <div class="panel" id="player" hidden>
+    <button id="play">Play</button><button id="dl" class="quiet">Save the sound (WAV)</button><button id="dlrec" class="quiet">Save the recording (JSON)</button>
+    <canvas id="wave" width="1400" height="180"></canvas>
+    <canvas id="spec" width="1400" height="360"></canvas>
+    <div class="cap">Above: loudness over time (click to jump). Below: pitch over time, low at the bottom, up to 4,000 Hz.</div>
+    <p id="says"></p>
+    <div class="grid" style="margin-top:14px">
+      <label>Pitch of the spike rhythm <span id="pv"></span><input id="pitch" type="range" min="40" max="600" value="180"></label>
+      <label>Electrode voices <input id="g1" type="range" min="0" max="1.5" step=".05" value="1"></label>
+      <label>Growth events <input id="g2" type="range" min="0" max="1.5" step=".05" value="1"></label>
+      <label>Body drone <input id="g3" type="range" min="0" max="1.5" step=".05" value=".6"></label>
+    </div>
+  </div>
+
+  <h2>What each sound is</h2>
+  <dl>
+    <dt>Electrode voices</dt><dd>Four electrodes sit on the network. Each one's voltage is played directly as a sound wave, spread from left to right. The engine's electrical rhythm takes minutes to hours per cycle; it is sped up until one cycle lands at the pitch you choose. Voices drift in and out of step as the network grows and its tips move.</dd>
+    <dt>Growth events</dt><dd>A tick when a hypha branches, a knock when two fuse, a soft hiss when one is abandoned, a tone when a mushroom matures, a growl where rivals meet, a wash of noise for rain. Left to right is where it happened; higher is shallower, lower is deeper.</dd>
+    <dt>Body drone</dt><dd>A low hum that swells with the flow through the network and brightens with the number of growing tips.</dd>
+  </dl>
+
+  <h2>What is real and what is not</h2>
+  <p>The timing is the model's: when things branch, fuse, fruit and spike. The sounds are choices. The electrical
+  rhythm comes from measurements that are themselves disputed, and the model's wave shape is not a recorded one. The
+  recording keeps everything unscaled, with two clocks: the time the network grew for, and the much shorter time its
+  electrical activity was listened to at each stage. They are sped up by different amounts, both shown. More in
+  <a href="https://github.com/CrumpLabSandbox/mushroom-substrate/blob/main/docs/SOUND.md">docs/SOUND.md</a>.</p>
+</main>
+<script src="sound/synth.js"></script>
+<script>
+  const $ = (id) => document.getElementById(id);
+  let rec, audio, ctx, src, startedAt = 0, offset = 0, playing = false, species = {};
+  fetch('engines/400k/list.json').then((r) => r.json()).then((list) => {
+    for (const [slug, name, common] of list) $('sp').add(new Option(name + (common ? ' (' + common + ')' : ''), slug));
+    $('sp').value = new URLSearchParams(location.search).get('s') || 'phanerochaete-velutina';
+  });
+  $('go').onclick = async () => {
+    stop(); $('go').disabled = true; $('bar').hidden = false; $('bar').value = 0; $('status').textContent = 'growing and recording…';
+    const tier = $('tier').value, sp = await (await fetch(`engines/${tier}/species/${$('sp').value}.json`)).json();
+    species = sp;
+    const steps = +$('steps').value * (tier == '4m' ? 2 : 1), w = new Worker('sound/worker.js');
+    w.onmessage = (e) => {
+      if (e.data.progress) { $('bar').value = e.data.progress; return; }
+      rec = e.data.rec; w.terminate(); $('go').disabled = false; $('bar').hidden = true; $('player').hidden = false;
+      $('status').textContent = `${rec.meta.segments.toLocaleString()} pieces of hypha, ${rec.events.t.length.toLocaleString()} events`;
+      render();
+    };
+    w.postMessage({ tier, inds: [{ id: sp.id, p: sp.p }], seed: +$('seed').value, scn: sp.s, opt: { steps, listen: tier == '4m' ? 1600 : 2400, set: { weather: tier == '4m' ? 1 : 0 } } });
+  };
+  function render() {
+    if (!rec) return;
+    const was = playing; stop();
+    $('pv').textContent = $('pitch').value + ' Hz';
+    audio = synth(rec, { pitch: +$('pitch').value, voices: +$('g1').value, events: +$('g2').value, body: +$('g3').value });
+    $('says').innerHTML = `<b><i>${species.n}</i>, ${audio.seconds.toFixed(1)} seconds.</b> ${audio.info.says}`;
+    drawWave(); drawSpec(); offset = 0; if (was) play();
+  }
+  for (const id of ['pitch', 'g1', 'g2', 'g3']) $(id).onchange = render;
+  $('pitch').oninput = () => $('pv').textContent = $('pitch').value + ' Hz';
+
+  function play() {
+    ctx = ctx || new AudioContext();
+    const b = ctx.createBuffer(2, audio.left.length, audio.rate); b.copyToChannel(audio.left, 0); b.copyToChannel(audio.right, 1);
+    src = ctx.createBufferSource(); src.buffer = b; src.connect(ctx.destination); src.onended = () => { if (playing && ctx.currentTime - startedAt + offset >= audio.seconds - .05) { playing = false; offset = 0; $('play').textContent = 'Play'; drawWave(); } };
+    src.start(0, offset); startedAt = ctx.currentTime; playing = true; $('play').textContent = 'Stop'; tick();
+  }
+  function stop() { if (src) { src.onended = null; try { src.stop(); } catch (e) {} } if (playing) offset = Math.min(audio.seconds, offset + ctx.currentTime - startedAt); playing = false; $('play').textContent = 'Play'; }
+  $('play').onclick = () => (playing ? stop() : play());
+  function tick() { if (!playing) return; drawWave((offset + ctx.currentTime - startedAt) / audio.seconds); requestAnimationFrame(tick); }
+  $('wave').onclick = (e) => { const r = $('wave').getBoundingClientRect(), was = playing; stop(); offset = (e.clientX - r.left) / r.width * audio.seconds; drawWave(offset / audio.seconds); if (was) play(); };
+
+  function drawWave(head) {
+    const c = $('wave'), g = c.getContext('2d'), w = c.width, h = c.height, L = audio.left, R = audio.right, per = L.length / w;
+    g.clearRect(0, 0, w, h); g.fillStyle = '#e9dcbc';
+    for (let x = 0; x < w; x++) { let m = 0; for (let i = x * per | 0, e = (x + 1) * per | 0; i < e; i += 8) m = Math.max(m, Math.abs(L[i]), Math.abs(R[i])); g.fillRect(x, h / 2 - m * h / 2, 1, Math.max(1, m * h)); }
+    if (head != null) { g.fillStyle = '#e08572'; g.fillRect(head * w | 0, 0, 2, h); }
+  }
+  // spectrogram: a plain radix-2 FFT over overlapping windows of the left+right mix
+  function drawSpec() {
+    const c = $('spec'), g = c.getContext('2d'), w = c.width, h = c.height, N = 2048, L = audio.left, R = audio.right, img = g.createImageData(w, h), bins = Math.round(4000 / (audio.rate / N));
+    const re = new Float32Array(N), im = new Float32Array(N), win = Float32Array.from({ length: N }, (_, i) => .5 - .5 * Math.cos(6.2832 * i / N));
+    for (let x = 0; x < w; x++) {
+      const at = Math.min(L.length - N, Math.max(0, x / w * L.length - N / 2 | 0));
+      for (let i = 0; i < N; i++) { re[i] = (L[at + i] + R[at + i]) * win[i]; im[i] = 0; }
+      for (let i = 1, j = 0; i < N; i++) { let b = N >> 1; for (; j & b; b >>= 1) j ^= b; j ^= b; if (i < j) { const t = re[i]; re[i] = re[j]; re[j] = t; } }
+      for (let len = 2; len <= N; len <<= 1) { const a = -6.2832 / len; for (let i = 0; i < N; i += len) for (let k = 0; k < len / 2; k++) { const cs = Math.cos(a * k), sn = Math.sin(a * k), p = i + k, q = p + len / 2, tr = re[q] * cs - im[q] * sn, ti = re[q] * sn + im[q] * cs; re[q] = re[p] - tr; im[q] = im[p] - ti; re[p] += tr; im[p] += ti; } }
+      for (let y = 0; y < h; y++) {
+        const b = Math.max(1, (1 - y / h) * bins | 0), db = 20 * Math.log10(Math.hypot(re[b], im[b]) / N * 4 + 1e-7), v = Math.max(0, Math.min(1, (db + 80) / 70)), o = (y * w + x) * 4;
+        img.data[o] = 20 + 235 * v; img.data[o + 1] = 17 + 200 * v * v; img.data[o + 2] = 12 + 120 * v * v * v; img.data[o + 3] = 255;
+      }
+    }
+    g.putImageData(img, 0, 0);
+  }
+  const save = (blob, name) => { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click(); };
+  $('dl').onclick = () => save(new Blob([wav(audio)], { type: 'audio/wav' }), `${species.id}-${$('tier').value}.wav`);
+  $('dlrec').onclick = () => save(new Blob([JSON.stringify({ about: 'Unscaled recording. Voltages are millivolts per electrode, one value per electrical sample; event times are seconds of growth time from the start of recording.',
+    meta: rec.meta, sound_as_rendered: audio.info, taps: rec.taps, events: { t: Array.from(rec.events.t, (v) => Math.round(v)), type: Array.from(rec.events.type), x: Array.from(rec.events.x, Math.round), y: Array.from(rec.events.y, Math.round), z: Array.from(rec.events.z, Math.round) },
+    event_types: { 0: 'branch', 1: 'fusion', 2: 'tip stopped', 3: 'hypha abandoned', 4: 'fruiting initial', 5: 'initial aborted', 6: 'mushroom mature', 7: 'rivals meet, barrier', 8: 'rivals meet, replacement', 10: 'rain', 11: 'mushroom rotted', 12: 'spores shed', 13: 'spore founds an individual' },
+    volts: rec.volts.map((v) => Array.from(v, (x) => Math.round(x * 1e4) / 1e4)) })], { type: 'application/json' }), `${species.id}-${$('tier').value}-recording.json`);
+</script>
+</body>
+</html>

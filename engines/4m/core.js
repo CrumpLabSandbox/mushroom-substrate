@@ -69,6 +69,28 @@ var M = (inds, seed, scn) => {
         }
     },
     pull = (s, need) => { for (let b = par[s], k = REACH, g; b >= 0 && k-- && need > 0 && st[b] == 1; b = par[b]) g = min(need, si[b] - .3), g > 0 && (si[b] -= g, si[s] += g, need -= g) },
+    // m electrical sub-steps on the network as it stands. Also callable on its own (S.elec), which lets the
+    // sound recorder listen to a network for as long as it likes between growth steps.
+    elec = m => {
+      const h = S.eh, P = PP[0]
+      let k, p, q, g, f, e
+      for (; m--;) {
+        for (k = 0; k < ne; k++) ed[k] = 0
+        for (k = 0; k < ne; k++) { p = epar[k]; p >= 0 && eI[k] > -9 && eI[p] > -9 && (g = .12 * (ev[p] - ev[k]), ed[k] += g, ed[p] -= g) }
+        for (k = 0; k < ne; k++) {
+          if (eI[k] < -8) { ev[k] = -1.2; continue }
+          if (S.emode == 2) { // FitzHugh-Nagumo oscillators coupled along the hyphae; growing tips lead
+            g = ev[k]; f = ew[k]; e = g + h * (g - g * g * g / 3 - f + eI[k] + ed[k]); ev[k] = e < -2.5 ? -2.5 : e > 2.5 ? 2.5 : e; ew[k] = f + h * .08 * (g + .7 - .8 * f)
+            g < 1 && ev[k] >= 1 && (S.spikes++, k == S.pa && S.pspikes++, S.ev && S.ev(9, x1[eseg[k]], y1[eseg[k]], z1[eseg[k]]))
+          } else if (S.emode == 1) { // integrate and fire: charge builds with activity, a spike kicks the neighbours
+            eu[k] += h / 40 * (.4 + eI[k] * 2) + max(0, ed[k]) * .5; ev[k] = -1.2 + (ev[k] + 1.2) * (1 - .2 * h)
+            eu[k] >= 1 && (eu[k] = 0, ev[k] = 2, S.spikes++, k == S.pa && S.pspikes++, S.ev && S.ev(9, x1[eseg[k]], y1[eseg[k]], z1[eseg[k]]))
+          } else { q = eseg[k]; g = Q[q] + qc[q]; ev[k] = -1.2 + 3.2 * ab(g) / (1 + ab(g)) } // a potential that simply follows flow
+        }
+        trace[tp++ & 4095] = S.volt = (ev[S.pa] - ev[S.pb]) * P[SPA] / 2
+        S.sub && S.sub()
+      }
+    },
     kill = i => { tc[tips[i][0]]--; tips[i] = tips[tips.length - 1]; tips.pop() },
     drop = k => { if (st[k] == 1) { let c = ci((x0[k] + x1[k]) / 2, (y0[k] + y1[k]) / 2, (z0[k] + z1[k]) / 2); st[k] = 2; den[c]--; dno[own[k]][c]--; S.len -= L } },
     // a new individual: ten cords from a point, and a first patch of fine mycelium
@@ -111,6 +133,7 @@ var M = (inds, seed, scn) => {
     t: 0, mean: PP[0][TOPT] - 8, season: 8, daily: 3, weather: 1, tsurf: 0, rain: 0, emode: 2, volt: 0, pa: 0, pb: 0, ni: inds.length,
     len: 0, br: 0, fu: 0, wars: 0, res: 0, up: 0, flow: 0, front: 0, cords: 0, fruits: 0, alpha: 0, ntips: 0, spikes: 0, pspikes: 0, spores: 0, wood: 1, mycel: 0,
     get n() { return n }, get ne() { return ne }, get se() { return se }, get tp() { return tp }, tipsOf: ntip, speciesOf: () => inds.map(o => o.id),
+    elec, eseg, eh: .25,
     probe(ax, ay, az, bx, by, bz) {
       let da = 1e30, db = 1e30, d
       for (let k = 0; k < ne; k++) { let q = eseg[k]; if (st[q] != 1) continue
@@ -278,27 +301,15 @@ var M = (inds, seed, scn) => {
       }
       for (o = 0; o < NI; o++) { inhs[o].set(ibs[o]); myc[o].set(mbs[o]) }
 
-      // 7. electrical activity on a coarser graph (one node per 8 cm of cord), on its own faster clock
-      P = PP[0]; g = dt * 60 / P[SPI]; m = min(160, max(1, g * 160 + .5 | 0)); h = min(.25, g * 40 / m)
-      S.tdt = h / 40 * P[SPI] * 60
+      // 7. electrical activity on a coarser graph, on its own faster clock: m sub-steps of h time units each,
+      // where 40 units is one spike interval. Slow growers would need more sub-steps than the cap allows,
+      // so for them each growth step samples only part of its own length.
+      P = PP[0]; g = dt * 60 / P[SPI]; m = min(160, max(1, g * 160 + .5 | 0)); S.eh = min(.25, g * 40 / m)
+      S.tdt = S.eh / 40 * P[SPI] * 60 // seconds of electrical time per sample
       if (S.emode) {
-        for (k = 0; k < ne; k++) { q = eseg[k]; eI[k] = st[q] == 1 ? .45 + (rain && z1[q] < 8e4 ? .5 : 0) : -9 }
-        for (const t of tips) eI[en[t[0]]] > -9 && eI[en[t[0]]] < .5 && (eI[en[t[0]]] += .1)
-        for (; m--;) {
-          for (k = 0; k < ne; k++) ed[k] = 0
-          for (k = 0; k < ne; k++) { p = epar[k]; p >= 0 && eI[k] > -9 && eI[p] > -9 && (g = .12 * (ev[p] - ev[k]), ed[k] += g, ed[p] -= g) }
-          for (k = 0; k < ne; k++) {
-            if (eI[k] < -8) { ev[k] = -1.2; continue }
-            if (S.emode == 2) {
-              g = ev[k]; f = ew[k]; e = g + h * (g - g * g * g / 3 - f + eI[k] + ed[k]); ev[k] = e < -2.5 ? -2.5 : e > 2.5 ? 2.5 : e; ew[k] = f + h * .08 * (g + .7 - .8 * f)
-              g < 1 && ev[k] >= 1 && (S.spikes++, k == S.pa && S.pspikes++, S.ev && S.ev(9, x1[eseg[k]], y1[eseg[k]], z1[eseg[k]]))
-            } else if (S.emode == 1) {
-              eu[k] += h / 40 * (.4 + eI[k] * 2) + max(0, ed[k]) * .5; ev[k] = -1.2 + (ev[k] + 1.2) * (1 - .2 * h)
-              eu[k] >= 1 && (eu[k] = 0, ev[k] = 2, S.spikes++, k == S.pa && S.pspikes++, S.ev && S.ev(9, x1[eseg[k]], y1[eseg[k]], z1[eseg[k]]))
-            } else { q = eseg[k]; g = Q[q] + qc[q]; ev[k] = -1.2 + 3.2 * ab(g) / (1 + ab(g)) }
-          }
-          trace[tp++ & 4095] = S.volt = (ev[S.pa] - ev[S.pb]) * P[SPA] / 2
-        }
+        for (k = 0; k < ne; k++) { q = eseg[k]; eI[k] = st[q] == 1 ? .45 + (rain && z1[q] < 8e4 ? .5 : 0) : -9 } // every live node is driven just into its rhythmic range
+        for (const t of tips) eI[en[t[0]]] > -9 && eI[en[t[0]]] < .5 && (eI[en[t[0]]] += .1) // a node with a growing tip on its stretch runs a little faster and leads
+        elec(m)
       }
 
       // signals

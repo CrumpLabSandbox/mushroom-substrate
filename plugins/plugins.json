@@ -76,7 +76,8 @@
     "name": "Gill Comb",
     "family": "instrument",
     "kind": "P",
-    "blurb": "The gills as a row of thin plates: a comb of resonances that widens as the cap opens."
+    "blurb": "The gills as a row of thin plates: a comb of resonances that widens as the cap opens.",
+    "built": true
   },
   {
     "id": "forest-floor",
@@ -128,7 +129,8 @@
     "name": "After Rain",
     "family": "atmosphere",
     "kind": "S",
-    "blurb": "The burst of electrical activity after rain, spreading down from the surface."
+    "blurb": "The burst of electrical activity after rain, spreading down from the surface.",
+    "built": true
   },
   {
     "id": "cord-delay",
@@ -159,14 +161,16 @@
     "name": "Rot Filter",
     "family": "effect",
     "kind": "M",
-    "blurb": "Resonances that drift down and blur as decay proceeds."
+    "blurb": "Resonances that drift down and blur as decay proceeds.",
+    "built": true
   },
   {
     "id": "soil-filter",
     "name": "Soil Filter",
     "family": "effect",
     "kind": "P",
-    "blurb": "Sound heard through soil: duller with depth and wetness."
+    "blurb": "Sound heard through soil: duller with depth and wetness.",
+    "built": true
   },
   {
     "id": "spike-canon",

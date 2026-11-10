@@ -6,4 +6,5 @@ import { create as spikes } from '../coupled-spikes/dsp.js'
 import { create as bow } from '../turgor-bow/dsp.js'
 import { create as bass } from '../rhizomorph-bass/dsp.js'
 import { create as ring } from '../fairy-ring/dsp.js'
-export const INSTRUMENTS = { 'turgor-bow': bow, 'rhizomorph-bass': bass, 'fairy-ring': ring, 'hyphal-harp': harp, 'cap-drums': drums, 'spike-table': table, 'coupled-spikes': spikes }
+import { create as gills } from '../gill-comb/dsp.js'
+export const INSTRUMENTS = { 'gill-comb': gills, 'turgor-bow': bow, 'rhizomorph-bass': bass, 'fairy-ring': ring, 'hyphal-harp': harp, 'cap-drums': drums, 'spike-table': table, 'coupled-spikes': spikes }

@@ -49,7 +49,7 @@ const loadWorld = async () => {
 
 // ---- walking
 const EYE = 1.7, me = { x: +(q.get('x') || 0), z: +(q.get('z') || 0), y: 0, yaw: 0, pitch: -.06, vx: 0, vz: 0, bob: 0 }, keys = {}
-addEventListener('keydown', e => { if (e.target.tagName == 'INPUT') return; keys[e.code] = true; if (e.code == 'KeyR' && !e.metaKey) reseed() })
+addEventListener('keydown', e => { if (e.target.tagName == 'INPUT') return; keys[e.code] = true; if (e.metaKey || e.ctrlKey) return; if (e.code == 'KeyR') reseed(); if (e.code == 'KeyI') show('top'); if (e.code == 'KeyH') show('listen') })
 addEventListener('keyup', e => keys[e.code] = false)
 const cv = $('world')
 cv.addEventListener('click', () => { start(); if (!matchMedia('(pointer: coarse)').matches && cv.requestPointerLock) { const p = cv.requestPointerLock(); p && p.catch && p.catch(() => {}) } })
@@ -100,7 +100,7 @@ async function start() {
     const s = ctx.createGain(); s.gain.value = 0
     node.connect(p, i); p.connect(comp); p.connect(s).connect(verb); panners.push(p); sends.push(s)
   }
-  $('hint').querySelector('b').textContent = 'Sound is on.'; setTimeout(() => $('hint').classList.add('gone'), 5000)
+  $('hint').classList.add('gone')   // the keys are in the ⓘ panel from now on
 }
 function release(i) { if (slots[i]) { node && node.port.postMessage({ release: i }); slots[i] = null } }
 let lastPick = 0
@@ -129,11 +129,18 @@ const place = () => {
 // ---- the panel
 function reseed() { seed = Math.floor(Math.random() * 1e6); q.delete('x'); me.x = me.z = 0; loadWorld() }
 $('reseed').onclick = e => { e.stopPropagation(); reseed() }
+// the panels stay hidden unless asked for, so the world has the whole screen; the choice is remembered
+const shown = (() => { try { return JSON.parse(localStorage.getItem('walk-panels')) || {} } catch (e) { return {} } })()
+function show(id, on = !shown[id]) { shown[id] = on; $(id).classList.toggle('hidden', !on); $(id == 'top' ? 'info' : 'hearing').classList.toggle('on', on); try { localStorage.setItem('walk-panels', JSON.stringify(shown)) } catch (e) {} }
+show('top', !!shown.top); show('listen', !!shown.listen)
+$('info').onclick = e => { e.stopPropagation(); show('top') }
+$('hearing').onclick = e => { e.stopPropagation(); show('listen') }
 $('random').checked = random; $('random').onchange = e => { random = e.target.checked; loadWorld() }
 $('voices').value = limit; $('vcount').textContent = limit; $('voices').oninput = e => { limit = +e.target.value; $('vcount').textContent = limit; history.replaceState(null, '', `#seed=${seed}${random ? '&random=1' : ''}&voices=${limit}`) }
 $('vol').oninput = e => master && (master.gain.value = +e.target.value)
-for (const el of document.querySelectorAll('.panel, .panel *')) el.addEventListener('click', e => e.stopPropagation())
+for (const el of document.querySelectorAll('.panel, .panel *, #bar, #bar *')) el.addEventListener('click', e => e.stopPropagation())
 const listen = () => {
+  $('nvoices').textContent = slots.filter(Boolean).length
   const rows = slots.map((s, i) => s && { s, i, d: Math.hypot(s.m.x - me.x, s.m.z - me.z) }).filter(Boolean).sort((a, b) => a.d - b.d)
   $('hear').innerHTML = rows.filter(r => specs[r.s.m.sp.slug]).map(({ s, i, d }) => { const a = Math.atan2(s.m.x - me.x, -(s.m.z - me.z)) - me.yaw, dir = ['ahead', 'ahead right', 'right', 'behind right', 'behind', 'behind left', 'left', 'ahead left'][((Math.round(a / (Math.PI / 4)) % 8) + 8) % 8]
     return `<div class="row"><span class="dot" style="--c:${specs[s.m.sp.slug].colours[1]};--l:${clamp(levels[i] * 6)}"></span><span><b>${s.m.sp.name}</b>${s.m.sp.invented ? ' <em>invented</em>' : ''}<br><small>${s.v.label}</small></span><span class="far">${d.toFixed(0)} m<br><small>${dir}</small></span></div>` }).join('') || '<small>Nothing near enough to hear. Walk on.</small>'

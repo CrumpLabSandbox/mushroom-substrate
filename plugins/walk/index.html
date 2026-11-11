@@ -10,7 +10,14 @@
   html, body { margin: 0; height: 100%; overflow: hidden; background: #1a1612; font: 14px/1.4 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink); }
   canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; touch-action: none; cursor: crosshair; }
   .panel { position: fixed; background: color-mix(in srgb, var(--paper) 88%, transparent); border: 2px solid var(--ink); border-radius: 3px; box-shadow: 4px 4px 0 color-mix(in srgb, var(--ink) 55%, transparent); padding: 10px 12px; }
-  #top { left: 14px; top: 14px; max-width: min(380px, calc(100vw - 28px)); }
+  /* a small bar of buttons; everything else stays out of the way until asked for */
+  #bar { position: fixed; left: 14px; top: 14px; display: flex; gap: 8px; align-items: center; }
+  #bar button { height: 34px; }
+  #bar .round { width: 34px; padding: 0; border-radius: 50%; font: 700 15px Georgia, serif; background: color-mix(in srgb, var(--paper) 90%, transparent); }
+  #bar .round.on, #bar .tog.on { background: var(--ink); color: var(--paper); }
+  #bar .tog { background: color-mix(in srgb, var(--paper) 90%, transparent); font-weight: 600; }
+  #top { left: 14px; top: 58px; max-width: min(380px, calc(100vw - 28px)); }
+  .hidden { display: none !important; }
   #top h1 { margin: 0; font: 400 26px/1.05 Georgia, "Times New Roman", serif; letter-spacing: .02em; }
   #top .sub { font-size: 11px; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin: 3px 0 6px; }
   #where { font-size: 12px; } #cast { font-size: 11px; color: var(--muted); margin-top: 6px; } #cast i { color: var(--ink); } #cast b { font-weight: 600; color: var(--ink); text-transform: capitalize; }
@@ -18,35 +25,43 @@
   button { font: 600 12px ui-sans-serif, system-ui; padding: 5px 10px; border: 2px solid var(--ink); background: var(--gold); color: var(--ink); border-radius: 3px; cursor: pointer; box-shadow: 2px 2px 0 var(--ink); }
   button:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--ink); }
   input[type=range] { accent-color: var(--ink); width: 92px; vertical-align: middle; }
-  #listen { right: 14px; bottom: 14px; width: min(340px, calc(100vw - 28px)); max-height: 46vh; overflow: auto; }
-  #listen h2 { margin: 0 0 6px; font: 400 15px Georgia, serif; letter-spacing: .04em; }
-  .row { display: grid; grid-template-columns: 16px 1fr auto; gap: 8px; align-items: center; padding: 4px 0; border-top: 1px solid color-mix(in srgb, var(--ink) 18%, transparent); font-size: 12px; }
+  /* what you hear: a strip across the bottom, one card a voice, nearest first */
+  #listen { left: 14px; right: 14px; bottom: 14px; padding: 8px 10px; display: flex; gap: 10px; align-items: stretch; }
+  #listen h2 { margin: 0; font: 400 14px/1.15 Georgia, serif; letter-spacing: .04em; writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; flex: none; padding: 0 2px; border-left: 1px solid color-mix(in srgb, var(--ink) 25%, transparent); }
+  #hear { display: flex; gap: 8px; overflow-x: auto; flex: 1; scrollbar-width: thin; }
+  #hear > small { align-self: center; }
+  .row { flex: 0 0 auto; width: 196px; display: grid; grid-template-columns: 16px 1fr auto; gap: 4px 7px; align-items: start; padding: 5px 8px; border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent); border-radius: 3px; font-size: 12px; line-height: 1.25; background: color-mix(in srgb, var(--paper) 60%, transparent); }
+  .row .dot { margin-top: 1px; }
   .row b { font-style: italic; font-weight: 500; } .row small { color: var(--muted); } .row em { font-style: normal; font-size: 9px; text-transform: uppercase; letter-spacing: .1em; border: 1px solid; border-radius: 2px; padding: 0 3px; color: #2a8a73; }
   .far { text-align: right; font-variant-numeric: tabular-nums; }
   .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--c); border: 2px solid var(--ink); box-shadow: 0 0 calc(var(--l) * 14px) calc(var(--l) * 4px) var(--gold); }
   #hint { left: 50%; top: 58%; transform: translateX(-50%); width: min(480px, calc(100vw - 40px)); text-align: center; font-size: 13px; transition: opacity .4s; max-width: calc(100vw - 40px); }
   #hint.gone { opacity: 0; pointer-events: none; }
-  #back { position: fixed; right: 14px; top: 14px; font-size: 12px; } #back a { color: var(--ink); }
-  @media (max-width: 700px) { #listen { max-height: 30vh; } #cast { display: none; } #back { display: none; } }
+  #top .links { margin-top: 8px; font-size: 11px; color: var(--muted); } #top .links a { color: var(--ink); }
+  @media (max-width: 700px) { #cast { display: none; } .row { width: 168px; } #listen h2 { display: none; } }
 </style>
 </head>
 <body>
 <canvas id="world"></canvas>
-<div class="panel" id="top">
+<div id="bar">
+  <button id="reseed" title="A new world: new ground, new species, new sounds (R)">Reseed</button>
+  <button class="round" id="info" title="About this world and the settings (I)" aria-label="About this world">i</button>
+  <button class="tog" id="hearing" title="Show or hide what you hear (H)" aria-label="What you hear">♪ <span id="nvoices">0</span></button>
+</div>
+<div class="panel hidden" id="top">
   <h1 id="title">Mushroom Walk</h1>
   <div class="sub" id="seed">growing the ground…</div>
   <div id="where"></div>
   <div class="controls">
-    <button id="reseed" title="A new world: new ground, new species, new sounds (R)">Reseed</button>
     <label><input type="checkbox" id="random"> anything grows anywhere</label>
     <label>voices <input type="range" id="voices" min="1" max="10" step="1" value="8"> <span id="vcount">8</span></label>
     <label>volume <input type="range" id="vol" min="0" max="1.5" step=".01" value=".9"></label>
   </div>
   <div id="cast"></div>
+  <div class="links">Keys: W A S D to walk, Shift to run, R new world, I this panel, H what you hear. <a href="../">All plugins</a></div>
 </div>
-<div class="panel" id="listen"><h2>What you hear</h2><div id="hear"><small>Click the world to start the sound.</small></div></div>
-<div class="panel" id="hint"><b>Click to start the sound and look around.</b><br>W A S D or the arrow keys to walk, Shift to run, R for a new world. Esc lets go of the mouse.<br><small>On a phone: drag on the left to walk, on the right to look. Headphones help: each mushroom is heard where it stands.</small></div>
-<div class="panel" id="back"><a href="../">All plugins</a></div>
+<div class="panel hidden" id="listen"><h2>You hear</h2><div id="hear"><small>Click the world to start the sound.</small></div></div>
+<div class="panel" id="hint"><b>Click to start the sound and look around.</b><br>W A S D or the arrow keys to walk, Shift to run, R for a new world, ⓘ for the settings, ♪ for what you hear. Esc lets go of the mouse.<br><small>On a phone: drag on the left to walk, on the right to look. Headphones help: each mushroom is heard where it stands.</small></div>
 <script type="module" src="walk.js"></script>
 </body>
 </html>
